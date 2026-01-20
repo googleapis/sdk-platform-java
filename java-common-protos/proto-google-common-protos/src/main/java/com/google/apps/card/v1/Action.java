@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ package com.google.apps.card.v1;
  * For example, you can invoke an Apps Script script to handle the form.
  * If the action is triggered, the form values are sent to the server.
  *
- * [Google Workspace Add-ons and Chat
+ * [Google Workspace add-ons and Chat
  * apps](https://developers.google.com/workspace/extend):
  * </pre>
  *
@@ -49,6 +49,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
     parameters_ = java.util.Collections.emptyList();
     loadIndicator_ = 0;
     interaction_ = 0;
+    requiredWidgets_ = com.google.protobuf.LazyStringArrayList.emptyList();
   }
 
   @java.lang.Override
@@ -77,7 +78,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
    * Specifies the loading indicator that the action displays while
    * making the call to the action.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -448,7 +449,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
    * To learn more, see
    * [`CommonEventObject`](https://developers.google.com/workspace/chat/api/reference/rest/v1/Event#commoneventobject).
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -779,7 +780,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      * To learn more, see
      * [`CommonEventObject`](https://developers.google.com/workspace/chat/api/reference/rest/v1/Event#commoneventobject).
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -1273,7 +1274,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A custom function to invoke when the containing element is
-   * clicked or othrwise activated.
+   * clicked or otherwise activated.
    *
    * For example usage, see [Read form
    * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -1301,7 +1302,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A custom function to invoke when the containing element is
-   * clicked or othrwise activated.
+   * clicked or otherwise activated.
    *
    * For example usage, see [Read form
    * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -1543,6 +1544,125 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
     return result == null ? com.google.apps.card.v1.Action.Interaction.UNRECOGNIZED : result;
   }
 
+  public static final int REQUIRED_WIDGETS_FIELD_NUMBER = 6;
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.LazyStringArrayList requiredWidgets_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Fill this list with the names of widgets that this Action
+   * needs for a valid submission.
+   *
+   * If the widgets listed here don't have a value when this Action is invoked,
+   * the form submission is aborted.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>repeated string required_widgets = 6;</code>
+   *
+   * @return A list containing the requiredWidgets.
+   */
+  public com.google.protobuf.ProtocolStringList getRequiredWidgetsList() {
+    return requiredWidgets_;
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Fill this list with the names of widgets that this Action
+   * needs for a valid submission.
+   *
+   * If the widgets listed here don't have a value when this Action is invoked,
+   * the form submission is aborted.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>repeated string required_widgets = 6;</code>
+   *
+   * @return The count of requiredWidgets.
+   */
+  public int getRequiredWidgetsCount() {
+    return requiredWidgets_.size();
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Fill this list with the names of widgets that this Action
+   * needs for a valid submission.
+   *
+   * If the widgets listed here don't have a value when this Action is invoked,
+   * the form submission is aborted.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>repeated string required_widgets = 6;</code>
+   *
+   * @param index The index of the element to return.
+   * @return The requiredWidgets at the given index.
+   */
+  public java.lang.String getRequiredWidgets(int index) {
+    return requiredWidgets_.get(index);
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Fill this list with the names of widgets that this Action
+   * needs for a valid submission.
+   *
+   * If the widgets listed here don't have a value when this Action is invoked,
+   * the form submission is aborted.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>repeated string required_widgets = 6;</code>
+   *
+   * @param index The index of the value to return.
+   * @return The bytes of the requiredWidgets at the given index.
+   */
+  public com.google.protobuf.ByteString getRequiredWidgetsBytes(int index) {
+    return requiredWidgets_.getByteString(index);
+  }
+
+  public static final int ALL_WIDGETS_ARE_REQUIRED_FIELD_NUMBER = 7;
+  private boolean allWidgetsAreRequired_ = false;
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. If this is true, then all widgets are considered required by
+   * this action.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>bool all_widgets_are_required = 7;</code>
+   *
+   * @return The allWidgetsAreRequired.
+   */
+  @java.lang.Override
+  public boolean getAllWidgetsAreRequired() {
+    return allWidgetsAreRequired_;
+  }
+
   private byte memoizedIsInitialized = -1;
 
   @java.lang.Override
@@ -1573,6 +1693,12 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
         != com.google.apps.card.v1.Action.Interaction.INTERACTION_UNSPECIFIED.getNumber()) {
       output.writeEnum(5, interaction_);
     }
+    for (int i = 0; i < requiredWidgets_.size(); i++) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, requiredWidgets_.getRaw(i));
+    }
+    if (allWidgetsAreRequired_ != false) {
+      output.writeBool(7, allWidgetsAreRequired_);
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -1598,6 +1724,17 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
         != com.google.apps.card.v1.Action.Interaction.INTERACTION_UNSPECIFIED.getNumber()) {
       size += com.google.protobuf.CodedOutputStream.computeEnumSize(5, interaction_);
     }
+    {
+      int dataSize = 0;
+      for (int i = 0; i < requiredWidgets_.size(); i++) {
+        dataSize += computeStringSizeNoTag(requiredWidgets_.getRaw(i));
+      }
+      size += dataSize;
+      size += 1 * getRequiredWidgetsList().size();
+    }
+    if (allWidgetsAreRequired_ != false) {
+      size += com.google.protobuf.CodedOutputStream.computeBoolSize(7, allWidgetsAreRequired_);
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -1618,6 +1755,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
     if (loadIndicator_ != other.loadIndicator_) return false;
     if (getPersistValues() != other.getPersistValues()) return false;
     if (interaction_ != other.interaction_) return false;
+    if (!getRequiredWidgetsList().equals(other.getRequiredWidgetsList())) return false;
+    if (getAllWidgetsAreRequired() != other.getAllWidgetsAreRequired()) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -1641,6 +1780,12 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getPersistValues());
     hash = (37 * hash) + INTERACTION_FIELD_NUMBER;
     hash = (53 * hash) + interaction_;
+    if (getRequiredWidgetsCount() > 0) {
+      hash = (37 * hash) + REQUIRED_WIDGETS_FIELD_NUMBER;
+      hash = (53 * hash) + getRequiredWidgetsList().hashCode();
+    }
+    hash = (37 * hash) + ALL_WIDGETS_ARE_REQUIRED_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getAllWidgetsAreRequired());
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -1749,7 +1894,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
    * For example, you can invoke an Apps Script script to handle the form.
    * If the action is triggered, the form values are sent to the server.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -1795,6 +1940,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
       loadIndicator_ = 0;
       persistValues_ = false;
       interaction_ = 0;
+      requiredWidgets_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      allWidgetsAreRequired_ = false;
       return this;
     }
 
@@ -1854,6 +2001,13 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
       }
       if (((from_bitField0_ & 0x00000010) != 0)) {
         result.interaction_ = interaction_;
+      }
+      if (((from_bitField0_ & 0x00000020) != 0)) {
+        requiredWidgets_.makeImmutable();
+        result.requiredWidgets_ = requiredWidgets_;
+      }
+      if (((from_bitField0_ & 0x00000040) != 0)) {
+        result.allWidgetsAreRequired_ = allWidgetsAreRequired_;
       }
     }
 
@@ -1943,6 +2097,19 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
       if (other.interaction_ != 0) {
         setInteractionValue(other.getInteractionValue());
       }
+      if (!other.requiredWidgets_.isEmpty()) {
+        if (requiredWidgets_.isEmpty()) {
+          requiredWidgets_ = other.requiredWidgets_;
+          bitField0_ |= 0x00000020;
+        } else {
+          ensureRequiredWidgetsIsMutable();
+          requiredWidgets_.addAll(other.requiredWidgets_);
+        }
+        onChanged();
+      }
+      if (other.getAllWidgetsAreRequired() != false) {
+        setAllWidgetsAreRequired(other.getAllWidgetsAreRequired());
+      }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
@@ -2006,6 +2173,19 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
                 bitField0_ |= 0x00000010;
                 break;
               } // case 40
+            case 50:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+                ensureRequiredWidgetsIsMutable();
+                requiredWidgets_.add(s);
+                break;
+              } // case 50
+            case 56:
+              {
+                allWidgetsAreRequired_ = input.readBool();
+                bitField0_ |= 0x00000040;
+                break;
+              } // case 56
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -2032,7 +2212,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A custom function to invoke when the containing element is
-     * clicked or othrwise activated.
+     * clicked or otherwise activated.
      *
      * For example usage, see [Read form
      * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -2059,7 +2239,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A custom function to invoke when the containing element is
-     * clicked or othrwise activated.
+     * clicked or otherwise activated.
      *
      * For example usage, see [Read form
      * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -2086,7 +2266,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A custom function to invoke when the containing element is
-     * clicked or othrwise activated.
+     * clicked or otherwise activated.
      *
      * For example usage, see [Read form
      * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -2112,7 +2292,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A custom function to invoke when the containing element is
-     * clicked or othrwise activated.
+     * clicked or otherwise activated.
      *
      * For example usage, see [Read form
      * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -2134,7 +2314,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A custom function to invoke when the containing element is
-     * clicked or othrwise activated.
+     * clicked or otherwise activated.
      *
      * For example usage, see [Read form
      * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -2901,6 +3081,320 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
     public Builder clearInteraction() {
       bitField0_ = (bitField0_ & ~0x00000010);
       interaction_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private com.google.protobuf.LazyStringArrayList requiredWidgets_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
+
+    private void ensureRequiredWidgetsIsMutable() {
+      if (!requiredWidgets_.isModifiable()) {
+        requiredWidgets_ = new com.google.protobuf.LazyStringArrayList(requiredWidgets_);
+      }
+      bitField0_ |= 0x00000020;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Fill this list with the names of widgets that this Action
+     * needs for a valid submission.
+     *
+     * If the widgets listed here don't have a value when this Action is invoked,
+     * the form submission is aborted.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>repeated string required_widgets = 6;</code>
+     *
+     * @return A list containing the requiredWidgets.
+     */
+    public com.google.protobuf.ProtocolStringList getRequiredWidgetsList() {
+      requiredWidgets_.makeImmutable();
+      return requiredWidgets_;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Fill this list with the names of widgets that this Action
+     * needs for a valid submission.
+     *
+     * If the widgets listed here don't have a value when this Action is invoked,
+     * the form submission is aborted.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>repeated string required_widgets = 6;</code>
+     *
+     * @return The count of requiredWidgets.
+     */
+    public int getRequiredWidgetsCount() {
+      return requiredWidgets_.size();
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Fill this list with the names of widgets that this Action
+     * needs for a valid submission.
+     *
+     * If the widgets listed here don't have a value when this Action is invoked,
+     * the form submission is aborted.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>repeated string required_widgets = 6;</code>
+     *
+     * @param index The index of the element to return.
+     * @return The requiredWidgets at the given index.
+     */
+    public java.lang.String getRequiredWidgets(int index) {
+      return requiredWidgets_.get(index);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Fill this list with the names of widgets that this Action
+     * needs for a valid submission.
+     *
+     * If the widgets listed here don't have a value when this Action is invoked,
+     * the form submission is aborted.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>repeated string required_widgets = 6;</code>
+     *
+     * @param index The index of the value to return.
+     * @return The bytes of the requiredWidgets at the given index.
+     */
+    public com.google.protobuf.ByteString getRequiredWidgetsBytes(int index) {
+      return requiredWidgets_.getByteString(index);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Fill this list with the names of widgets that this Action
+     * needs for a valid submission.
+     *
+     * If the widgets listed here don't have a value when this Action is invoked,
+     * the form submission is aborted.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>repeated string required_widgets = 6;</code>
+     *
+     * @param index The index to set the value at.
+     * @param value The requiredWidgets to set.
+     * @return This builder for chaining.
+     */
+    public Builder setRequiredWidgets(int index, java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      ensureRequiredWidgetsIsMutable();
+      requiredWidgets_.set(index, value);
+      bitField0_ |= 0x00000020;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Fill this list with the names of widgets that this Action
+     * needs for a valid submission.
+     *
+     * If the widgets listed here don't have a value when this Action is invoked,
+     * the form submission is aborted.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>repeated string required_widgets = 6;</code>
+     *
+     * @param value The requiredWidgets to add.
+     * @return This builder for chaining.
+     */
+    public Builder addRequiredWidgets(java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      ensureRequiredWidgetsIsMutable();
+      requiredWidgets_.add(value);
+      bitField0_ |= 0x00000020;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Fill this list with the names of widgets that this Action
+     * needs for a valid submission.
+     *
+     * If the widgets listed here don't have a value when this Action is invoked,
+     * the form submission is aborted.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>repeated string required_widgets = 6;</code>
+     *
+     * @param values The requiredWidgets to add.
+     * @return This builder for chaining.
+     */
+    public Builder addAllRequiredWidgets(java.lang.Iterable<java.lang.String> values) {
+      ensureRequiredWidgetsIsMutable();
+      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, requiredWidgets_);
+      bitField0_ |= 0x00000020;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Fill this list with the names of widgets that this Action
+     * needs for a valid submission.
+     *
+     * If the widgets listed here don't have a value when this Action is invoked,
+     * the form submission is aborted.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>repeated string required_widgets = 6;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearRequiredWidgets() {
+      requiredWidgets_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      bitField0_ = (bitField0_ & ~0x00000020);
+      ;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Fill this list with the names of widgets that this Action
+     * needs for a valid submission.
+     *
+     * If the widgets listed here don't have a value when this Action is invoked,
+     * the form submission is aborted.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>repeated string required_widgets = 6;</code>
+     *
+     * @param value The bytes of the requiredWidgets to add.
+     * @return This builder for chaining.
+     */
+    public Builder addRequiredWidgetsBytes(com.google.protobuf.ByteString value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      checkByteStringIsUtf8(value);
+      ensureRequiredWidgetsIsMutable();
+      requiredWidgets_.add(value);
+      bitField0_ |= 0x00000020;
+      onChanged();
+      return this;
+    }
+
+    private boolean allWidgetsAreRequired_;
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. If this is true, then all widgets are considered required by
+     * this action.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>bool all_widgets_are_required = 7;</code>
+     *
+     * @return The allWidgetsAreRequired.
+     */
+    @java.lang.Override
+    public boolean getAllWidgetsAreRequired() {
+      return allWidgetsAreRequired_;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. If this is true, then all widgets are considered required by
+     * this action.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>bool all_widgets_are_required = 7;</code>
+     *
+     * @param value The allWidgetsAreRequired to set.
+     * @return This builder for chaining.
+     */
+    public Builder setAllWidgetsAreRequired(boolean value) {
+
+      allWidgetsAreRequired_ = value;
+      bitField0_ |= 0x00000040;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. If this is true, then all widgets are considered required by
+     * this action.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>bool all_widgets_are_required = 7;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearAllWidgetsAreRequired() {
+      bitField0_ = (bitField0_ & ~0x00000040);
+      allWidgetsAreRequired_ = false;
       onChanged();
       return this;
     }

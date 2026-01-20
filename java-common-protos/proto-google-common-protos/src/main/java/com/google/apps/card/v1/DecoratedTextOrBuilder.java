@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ public interface DecoratedTextOrBuilder
    * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
    *
    * @deprecated google.apps.card.v1.DecoratedText.icon is deprecated. See
-   *     google/apps/card/v1/card.proto;l=796
+   *     google/apps/card/v1/card.proto;l=915
    * @return Whether the icon field is set.
    */
   @java.lang.Deprecated
@@ -50,7 +50,7 @@ public interface DecoratedTextOrBuilder
    * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
    *
    * @deprecated google.apps.card.v1.DecoratedText.icon is deprecated. See
-   *     google/apps/card/v1/card.proto;l=796
+   *     google/apps/card/v1/card.proto;l=915
    * @return The icon.
    */
   @java.lang.Deprecated
@@ -109,6 +109,38 @@ public interface DecoratedTextOrBuilder
    *
    *
    * <pre>
+   * Optional. Vertical alignment of the start icon. If not set, the icon
+   * will be vertically centered.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Widget.VerticalAlignment start_icon_vertical_alignment = 13;</code>
+   *
+   * @return The enum numeric value on the wire for startIconVerticalAlignment.
+   */
+  int getStartIconVerticalAlignmentValue();
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Vertical alignment of the start icon. If not set, the icon
+   * will be vertically centered.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Widget.VerticalAlignment start_icon_vertical_alignment = 13;</code>
+   *
+   * @return The startIconVerticalAlignment.
+   */
+  com.google.apps.card.v1.Widget.VerticalAlignment getStartIconVerticalAlignment();
+
+  /**
+   *
+   *
+   * <pre>
    * The text that appears above `text`. Always truncates.
    * </pre>
    *
@@ -135,6 +167,52 @@ public interface DecoratedTextOrBuilder
    *
    *
    * <pre>
+   * `TextParagraph` equivalent of `top_label`. Always truncates. Allows for
+   * more complex formatting than `top_label`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph top_label_text = 17;</code>
+   *
+   * @return Whether the topLabelText field is set.
+   */
+  boolean hasTopLabelText();
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `top_label`. Always truncates. Allows for
+   * more complex formatting than `top_label`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph top_label_text = 17;</code>
+   *
+   * @return The topLabelText.
+   */
+  com.google.apps.card.v1.TextParagraph getTopLabelText();
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `top_label`. Always truncates. Allows for
+   * more complex formatting than `top_label`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph top_label_text = 17;</code>
+   */
+  com.google.apps.card.v1.TextParagraphOrBuilder getTopLabelTextOrBuilder();
+
+  /**
+   *
+   *
+   * <pre>
    * Required. The primary text.
    *
    * Supports simple formatting. For more information
@@ -144,7 +222,7 @@ public interface DecoratedTextOrBuilder
    * and
    * [Formatting
    * text in Google Workspace
-   * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+   * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
    * </pre>
    *
    * <code>string text = 4;</code>
@@ -166,7 +244,7 @@ public interface DecoratedTextOrBuilder
    * and
    * [Formatting
    * text in Google Workspace
-   * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+   * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
    * </pre>
    *
    * <code>string text = 4;</code>
@@ -174,6 +252,52 @@ public interface DecoratedTextOrBuilder
    * @return The bytes for text.
    */
   com.google.protobuf.ByteString getTextBytes();
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `text`. Allows for more complex formatting
+   * than `text`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph content_text = 18;</code>
+   *
+   * @return Whether the contentText field is set.
+   */
+  boolean hasContentText();
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `text`. Allows for more complex formatting
+   * than `text`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph content_text = 18;</code>
+   *
+   * @return The contentText.
+   */
+  com.google.apps.card.v1.TextParagraph getContentText();
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `text`. Allows for more complex formatting
+   * than `text`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph content_text = 18;</code>
+   */
+  com.google.apps.card.v1.TextParagraphOrBuilder getContentTextOrBuilder();
 
   /**
    *
@@ -216,6 +340,52 @@ public interface DecoratedTextOrBuilder
    * @return The bytes for bottomLabel.
    */
   com.google.protobuf.ByteString getBottomLabelBytes();
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `bottom_label`. Always wraps. Allows for
+   * more complex formatting than `bottom_label`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph bottom_label_text = 19;</code>
+   *
+   * @return Whether the bottomLabelText field is set.
+   */
+  boolean hasBottomLabelText();
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `bottom_label`. Always wraps. Allows for
+   * more complex formatting than `bottom_label`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph bottom_label_text = 19;</code>
+   *
+   * @return The bottomLabelText.
+   */
+  com.google.apps.card.v1.TextParagraph getBottomLabelText();
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `bottom_label`. Always wraps. Allows for
+   * more complex formatting than `bottom_label`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph bottom_label_text = 19;</code>
+   */
+  com.google.apps.card.v1.TextParagraphOrBuilder getBottomLabelTextOrBuilder();
 
   /**
    *

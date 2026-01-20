@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ package com.google.apps.card.v1;
  * to `MULTIPLE_LINE`.
  *
  * [Google Workspace
- * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+ * add-ons and Chat apps](https://developers.google.com/workspace/extend):
  * </pre>
  *
  * Protobuf type {@code google.apps.card.v1.Suggestions}
@@ -137,7 +137,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * One suggested value that users can enter in a text input field.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -480,7 +480,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * One suggested value that users can enter in a text input field.
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -1161,7 +1161,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
    * to `MULTIPLE_LINE`.
    *
    * [Google Workspace
-   * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+   * add-ons and Chat apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
    * Protobuf type {@code google.apps.card.v1.Suggestions}

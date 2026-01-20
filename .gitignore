@@ -13,11 +13,12 @@ target/
 *.vim
 
 # Vscode Settings
-.vscode/settings.json
+.vscode
 
 # Python
 **/__pycache__/
 .venv
+.python-version
 
 # library generation
 **/googleapis

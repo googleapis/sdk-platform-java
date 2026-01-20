@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,13 +46,16 @@ package com.google.apps.card.v1;
  * * On Android devices, the second column wraps if the screen width is
  *   less than or equal to 320 dp.
  *
- * To include more than 2 columns, or to use rows, use the
+ * To include more than two columns, or to use rows, use the
  * [`Grid`][google.apps.card.v1.Grid] widget.
  *
- * [Google Workspace Add-ons and Chat
+ * [Google Workspace add-ons and Chat
  * apps](https://developers.google.com/workspace/extend):
- * Columns for Google Workspace Add-ons are in
- * Developer Preview.
+ * The add-on UIs that support columns include:
+ *
+ * * The dialog displayed when users open the add-on from an email draft.
+ * * The dialog displayed when users open the add-on from the
+ * **Add attachment** menu in a Google Calendar event.
  * </pre>
  *
  * Protobuf type {@code google.apps.card.v1.Columns}
@@ -248,10 +251,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * A column.
    *
-   * [Google Workspace Add-ons and Chat
-   * apps](https://developers.google.com/workspace/extend):
-   * Columns for Google Workspace Add-ons are in
-   * Developer Preview.
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend)
    * </pre>
    *
    * Protobuf type {@code google.apps.card.v1.Columns.Column}
@@ -303,10 +304,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * column depends on both the `HorizontalSizeStyle` and the width of the
      * widgets within the column.
      *
-     * [Google Workspace Add-ons and Chat
-     * apps](https://developers.google.com/workspace/extend):
-     * Columns for Google Workspace Add-ons are in
-     * Developer Preview.
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend)
      * </pre>
      *
      * Protobuf enum {@code google.apps.card.v1.Columns.Column.HorizontalSizeStyle}
@@ -477,10 +476,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * Specifies whether widgets align to the top, bottom, or center of a
      * column.
      *
-     * [Google Workspace Add-ons and Chat
-     * apps](https://developers.google.com/workspace/extend):
-     * Columns for Google Workspace Add-ons are in
-     * Developer Preview.
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend)
      * </pre>
      *
      * Protobuf enum {@code google.apps.card.v1.Columns.Column.VerticalAlignment}
@@ -925,6 +922,43 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        */
       com.google.apps.card.v1.DateTimePickerOrBuilder getDateTimePickerOrBuilder();
 
+      /**
+       *
+       *
+       * <pre>
+       * [ChipList][google.apps.card.v1.ChipList] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ChipList chip_list = 8;</code>
+       *
+       * @return Whether the chipList field is set.
+       */
+      boolean hasChipList();
+
+      /**
+       *
+       *
+       * <pre>
+       * [ChipList][google.apps.card.v1.ChipList] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ChipList chip_list = 8;</code>
+       *
+       * @return The chipList.
+       */
+      com.google.apps.card.v1.ChipList getChipList();
+
+      /**
+       *
+       *
+       * <pre>
+       * [ChipList][google.apps.card.v1.ChipList] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ChipList chip_list = 8;</code>
+       */
+      com.google.apps.card.v1.ChipListOrBuilder getChipListOrBuilder();
+
       com.google.apps.card.v1.Columns.Column.Widgets.DataCase getDataCase();
     }
 
@@ -934,10 +968,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The supported widgets that you can include in a column.
      *
-     * [Google Workspace Add-ons and Chat
-     * apps](https://developers.google.com/workspace/extend):
-     * Columns for Google Workspace Add-ons are in
-     * Developer Preview.
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend)
      * </pre>
      *
      * Protobuf type {@code google.apps.card.v1.Columns.Column.Widgets}
@@ -992,6 +1024,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         TEXT_INPUT(5),
         SELECTION_INPUT(6),
         DATE_TIME_PICKER(7),
+        CHIP_LIST(8),
         DATA_NOT_SET(0);
         private final int value;
 
@@ -1025,6 +1058,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
               return SELECTION_INPUT;
             case 7:
               return DATE_TIME_PICKER;
+            case 8:
+              return CHIP_LIST;
             case 0:
               return DATA_NOT_SET;
             default:
@@ -1419,6 +1454,60 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.DateTimePicker.getDefaultInstance();
       }
 
+      public static final int CHIP_LIST_FIELD_NUMBER = 8;
+
+      /**
+       *
+       *
+       * <pre>
+       * [ChipList][google.apps.card.v1.ChipList] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ChipList chip_list = 8;</code>
+       *
+       * @return Whether the chipList field is set.
+       */
+      @java.lang.Override
+      public boolean hasChipList() {
+        return dataCase_ == 8;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * [ChipList][google.apps.card.v1.ChipList] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ChipList chip_list = 8;</code>
+       *
+       * @return The chipList.
+       */
+      @java.lang.Override
+      public com.google.apps.card.v1.ChipList getChipList() {
+        if (dataCase_ == 8) {
+          return (com.google.apps.card.v1.ChipList) data_;
+        }
+        return com.google.apps.card.v1.ChipList.getDefaultInstance();
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * [ChipList][google.apps.card.v1.ChipList] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ChipList chip_list = 8;</code>
+       */
+      @java.lang.Override
+      public com.google.apps.card.v1.ChipListOrBuilder getChipListOrBuilder() {
+        if (dataCase_ == 8) {
+          return (com.google.apps.card.v1.ChipList) data_;
+        }
+        return com.google.apps.card.v1.ChipList.getDefaultInstance();
+      }
+
       private byte memoizedIsInitialized = -1;
 
       @java.lang.Override
@@ -1453,6 +1542,9 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         if (dataCase_ == 7) {
           output.writeMessage(7, (com.google.apps.card.v1.DateTimePicker) data_);
+        }
+        if (dataCase_ == 8) {
+          output.writeMessage(8, (com.google.apps.card.v1.ChipList) data_);
         }
         getUnknownFields().writeTo(output);
       }
@@ -1498,6 +1590,11 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
               com.google.protobuf.CodedOutputStream.computeMessageSize(
                   7, (com.google.apps.card.v1.DateTimePicker) data_);
         }
+        if (dataCase_ == 8) {
+          size +=
+              com.google.protobuf.CodedOutputStream.computeMessageSize(
+                  8, (com.google.apps.card.v1.ChipList) data_);
+        }
         size += getUnknownFields().getSerializedSize();
         memoizedSize = size;
         return size;
@@ -1536,6 +1633,9 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             break;
           case 7:
             if (!getDateTimePicker().equals(other.getDateTimePicker())) return false;
+            break;
+          case 8:
+            if (!getChipList().equals(other.getChipList())) return false;
             break;
           case 0:
           default:
@@ -1579,6 +1679,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           case 7:
             hash = (37 * hash) + DATE_TIME_PICKER_FIELD_NUMBER;
             hash = (53 * hash) + getDateTimePicker().hashCode();
+            break;
+          case 8:
+            hash = (37 * hash) + CHIP_LIST_FIELD_NUMBER;
+            hash = (53 * hash) + getChipList().hashCode();
             break;
           case 0:
           default:
@@ -1691,10 +1795,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * <pre>
        * The supported widgets that you can include in a column.
        *
-       * [Google Workspace Add-ons and Chat
-       * apps](https://developers.google.com/workspace/extend):
-       * Columns for Google Workspace Add-ons are in
-       * Developer Preview.
+       * [Google Workspace add-ons and Chat
+       * apps](https://developers.google.com/workspace/extend)
        * </pre>
        *
        * Protobuf type {@code google.apps.card.v1.Columns.Column.Widgets}
@@ -1750,6 +1852,9 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           }
           if (dateTimePickerBuilder_ != null) {
             dateTimePickerBuilder_.clear();
+          }
+          if (chipListBuilder_ != null) {
+            chipListBuilder_.clear();
           }
           dataCase_ = 0;
           data_ = null;
@@ -1815,6 +1920,9 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           }
           if (dataCase_ == 7 && dateTimePickerBuilder_ != null) {
             result.data_ = dateTimePickerBuilder_.build();
+          }
+          if (dataCase_ == 8 && chipListBuilder_ != null) {
+            result.data_ = chipListBuilder_.build();
           }
         }
 
@@ -1902,6 +2010,11 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
                 mergeDateTimePicker(other.getDateTimePicker());
                 break;
               }
+            case CHIP_LIST:
+              {
+                mergeChipList(other.getChipList());
+                break;
+              }
             case DATA_NOT_SET:
               {
                 break;
@@ -1979,6 +2092,12 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
                     dataCase_ = 7;
                     break;
                   } // case 58
+                case 66:
+                  {
+                    input.readMessage(getChipListFieldBuilder().getBuilder(), extensionRegistry);
+                    dataCase_ = 8;
+                    break;
+                  } // case 66
                 default:
                   {
                     if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -3526,6 +3645,220 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           return dateTimePickerBuilder_;
         }
 
+        private com.google.protobuf.SingleFieldBuilderV3<
+                com.google.apps.card.v1.ChipList,
+                com.google.apps.card.v1.ChipList.Builder,
+                com.google.apps.card.v1.ChipListOrBuilder>
+            chipListBuilder_;
+
+        /**
+         *
+         *
+         * <pre>
+         * [ChipList][google.apps.card.v1.ChipList] widget.
+         * </pre>
+         *
+         * <code>.google.apps.card.v1.ChipList chip_list = 8;</code>
+         *
+         * @return Whether the chipList field is set.
+         */
+        @java.lang.Override
+        public boolean hasChipList() {
+          return dataCase_ == 8;
+        }
+
+        /**
+         *
+         *
+         * <pre>
+         * [ChipList][google.apps.card.v1.ChipList] widget.
+         * </pre>
+         *
+         * <code>.google.apps.card.v1.ChipList chip_list = 8;</code>
+         *
+         * @return The chipList.
+         */
+        @java.lang.Override
+        public com.google.apps.card.v1.ChipList getChipList() {
+          if (chipListBuilder_ == null) {
+            if (dataCase_ == 8) {
+              return (com.google.apps.card.v1.ChipList) data_;
+            }
+            return com.google.apps.card.v1.ChipList.getDefaultInstance();
+          } else {
+            if (dataCase_ == 8) {
+              return chipListBuilder_.getMessage();
+            }
+            return com.google.apps.card.v1.ChipList.getDefaultInstance();
+          }
+        }
+
+        /**
+         *
+         *
+         * <pre>
+         * [ChipList][google.apps.card.v1.ChipList] widget.
+         * </pre>
+         *
+         * <code>.google.apps.card.v1.ChipList chip_list = 8;</code>
+         */
+        public Builder setChipList(com.google.apps.card.v1.ChipList value) {
+          if (chipListBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            data_ = value;
+            onChanged();
+          } else {
+            chipListBuilder_.setMessage(value);
+          }
+          dataCase_ = 8;
+          return this;
+        }
+
+        /**
+         *
+         *
+         * <pre>
+         * [ChipList][google.apps.card.v1.ChipList] widget.
+         * </pre>
+         *
+         * <code>.google.apps.card.v1.ChipList chip_list = 8;</code>
+         */
+        public Builder setChipList(com.google.apps.card.v1.ChipList.Builder builderForValue) {
+          if (chipListBuilder_ == null) {
+            data_ = builderForValue.build();
+            onChanged();
+          } else {
+            chipListBuilder_.setMessage(builderForValue.build());
+          }
+          dataCase_ = 8;
+          return this;
+        }
+
+        /**
+         *
+         *
+         * <pre>
+         * [ChipList][google.apps.card.v1.ChipList] widget.
+         * </pre>
+         *
+         * <code>.google.apps.card.v1.ChipList chip_list = 8;</code>
+         */
+        public Builder mergeChipList(com.google.apps.card.v1.ChipList value) {
+          if (chipListBuilder_ == null) {
+            if (dataCase_ == 8 && data_ != com.google.apps.card.v1.ChipList.getDefaultInstance()) {
+              data_ =
+                  com.google.apps.card.v1.ChipList.newBuilder(
+                          (com.google.apps.card.v1.ChipList) data_)
+                      .mergeFrom(value)
+                      .buildPartial();
+            } else {
+              data_ = value;
+            }
+            onChanged();
+          } else {
+            if (dataCase_ == 8) {
+              chipListBuilder_.mergeFrom(value);
+            } else {
+              chipListBuilder_.setMessage(value);
+            }
+          }
+          dataCase_ = 8;
+          return this;
+        }
+
+        /**
+         *
+         *
+         * <pre>
+         * [ChipList][google.apps.card.v1.ChipList] widget.
+         * </pre>
+         *
+         * <code>.google.apps.card.v1.ChipList chip_list = 8;</code>
+         */
+        public Builder clearChipList() {
+          if (chipListBuilder_ == null) {
+            if (dataCase_ == 8) {
+              dataCase_ = 0;
+              data_ = null;
+              onChanged();
+            }
+          } else {
+            if (dataCase_ == 8) {
+              dataCase_ = 0;
+              data_ = null;
+            }
+            chipListBuilder_.clear();
+          }
+          return this;
+        }
+
+        /**
+         *
+         *
+         * <pre>
+         * [ChipList][google.apps.card.v1.ChipList] widget.
+         * </pre>
+         *
+         * <code>.google.apps.card.v1.ChipList chip_list = 8;</code>
+         */
+        public com.google.apps.card.v1.ChipList.Builder getChipListBuilder() {
+          return getChipListFieldBuilder().getBuilder();
+        }
+
+        /**
+         *
+         *
+         * <pre>
+         * [ChipList][google.apps.card.v1.ChipList] widget.
+         * </pre>
+         *
+         * <code>.google.apps.card.v1.ChipList chip_list = 8;</code>
+         */
+        @java.lang.Override
+        public com.google.apps.card.v1.ChipListOrBuilder getChipListOrBuilder() {
+          if ((dataCase_ == 8) && (chipListBuilder_ != null)) {
+            return chipListBuilder_.getMessageOrBuilder();
+          } else {
+            if (dataCase_ == 8) {
+              return (com.google.apps.card.v1.ChipList) data_;
+            }
+            return com.google.apps.card.v1.ChipList.getDefaultInstance();
+          }
+        }
+
+        /**
+         *
+         *
+         * <pre>
+         * [ChipList][google.apps.card.v1.ChipList] widget.
+         * </pre>
+         *
+         * <code>.google.apps.card.v1.ChipList chip_list = 8;</code>
+         */
+        private com.google.protobuf.SingleFieldBuilderV3<
+                com.google.apps.card.v1.ChipList,
+                com.google.apps.card.v1.ChipList.Builder,
+                com.google.apps.card.v1.ChipListOrBuilder>
+            getChipListFieldBuilder() {
+          if (chipListBuilder_ == null) {
+            if (!(dataCase_ == 8)) {
+              data_ = com.google.apps.card.v1.ChipList.getDefaultInstance();
+            }
+            chipListBuilder_ =
+                new com.google.protobuf.SingleFieldBuilderV3<
+                    com.google.apps.card.v1.ChipList,
+                    com.google.apps.card.v1.ChipList.Builder,
+                    com.google.apps.card.v1.ChipListOrBuilder>(
+                    (com.google.apps.card.v1.ChipList) data_, getParentForChildren(), isClean());
+            data_ = null;
+          }
+          dataCase_ = 8;
+          onChanged();
+          return chipListBuilder_;
+        }
+
         @java.lang.Override
         public final Builder setUnknownFields(
             final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -4004,10 +4337,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * A column.
      *
-     * [Google Workspace Add-ons and Chat
-     * apps](https://developers.google.com/workspace/extend):
-     * Columns for Google Workspace Add-ons are in
-     * Developer Preview.
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend)
      * </pre>
      *
      * Protobuf type {@code google.apps.card.v1.Columns.Column}
@@ -5297,13 +5628,16 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
    * * On Android devices, the second column wraps if the screen width is
    *   less than or equal to 320 dp.
    *
-   * To include more than 2 columns, or to use rows, use the
+   * To include more than two columns, or to use rows, use the
    * [`Grid`][google.apps.card.v1.Grid] widget.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
-   * Columns for Google Workspace Add-ons are in
-   * Developer Preview.
+   * The add-on UIs that support columns include:
+   *
+   * * The dialog displayed when users open the add-on from an email draft.
+   * * The dialog displayed when users open the add-on from the
+   * **Add attachment** menu in a Google Calendar event.
    * </pre>
    *
    * Protobuf type {@code google.apps.card.v1.Columns}

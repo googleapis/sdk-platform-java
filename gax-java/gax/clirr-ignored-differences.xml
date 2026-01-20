@@ -150,4 +150,14 @@
     <method>com.google.api.gax.rpc.EndpointContext$Builder setMtlsProvider(com.google.api.gax.rpc.mtls.MtlsProvider)</method>
     <to>com.google.api.gax.rpc.EndpointContext$Builder setMtlsProvider(com.google.auth.mtls.MtlsProvider)</to>
   </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/TransportChannelProvider</className>
+    <method>* needsBackgroundExecutor()</method>
+  </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/TransportChannelProvider</className>
+    <method>* withBackgroundExecutor(*)</method>
+  </difference>
 </differences>

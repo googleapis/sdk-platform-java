@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,4 +49,54 @@ public interface TextParagraphOrBuilder
    * @return The bytes for text.
    */
   com.google.protobuf.ByteString getTextBytes();
+
+  /**
+   *
+   *
+   * <pre>
+   * The maximum number of lines of text that are displayed in the widget. If
+   * the text exceeds the specified maximum number of lines, the excess
+   * content is concealed behind a **show more** button. If the text is equal or
+   * shorter than the specified maximum number of lines, a **show more** button
+   * isn't displayed.
+   *
+   * The default value is 0, in which case
+   * all context is displayed. Negative values are ignored.
+   * </pre>
+   *
+   * <code>int32 max_lines = 2;</code>
+   *
+   * @return The maxLines.
+   */
+  int getMaxLines();
+
+  /**
+   *
+   *
+   * <pre>
+   * The syntax of the text. If not set, the text is rendered as HTML.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph.TextSyntax text_syntax = 4;</code>
+   *
+   * @return The enum numeric value on the wire for textSyntax.
+   */
+  int getTextSyntaxValue();
+
+  /**
+   *
+   *
+   * <pre>
+   * The syntax of the text. If not set, the text is rendered as HTML.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph.TextSyntax text_syntax = 4;</code>
+   *
+   * @return The textSyntax.
+   */
+  com.google.apps.card.v1.TextParagraph.TextSyntax getTextSyntax();
 }

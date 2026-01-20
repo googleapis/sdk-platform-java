@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ package com.google.apps.card.v1;
  * Google Chat apps, see [Display text with decorative
  * text](https://developers.google.com/workspace/chat/add-text-image-card-dialog#display_text_with_decorative_elements).
  *
- * [Google Workspace Add-ons and Chat
+ * [Google Workspace add-ons and Chat
  * apps](https://developers.google.com/workspace/extend):
  * </pre>
  *
@@ -47,6 +47,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
   }
 
   private DecoratedText() {
+    startIconVerticalAlignment_ = 0;
     topLabel_ = "";
     text_ = "";
     bottomLabel_ = "";
@@ -201,7 +202,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * How the switch appears in the user interface.
      *
-     * [Google Workspace Add-ons
+     * [Google Workspace add-ons
      * and Chat apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -217,7 +218,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * How the switch appears in the user interface.
      *
-     * [Google Workspace Add-ons
+     * [Google Workspace add-ons
      * and Chat apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -234,7 +235,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Either a toggle-style switch or a checkbox inside a `decoratedText` widget.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    *
    * Only supported in the `decoratedText` widget.
@@ -286,7 +287,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * How the switch appears in the user interface.
      *
-     * [Google Workspace Add-ons
+     * [Google Workspace add-ons
      * and Chat apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -647,7 +648,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * How the switch appears in the user interface.
      *
-     * [Google Workspace Add-ons
+     * [Google Workspace add-ons
      * and Chat apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -666,7 +667,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * How the switch appears in the user interface.
      *
-     * [Google Workspace Add-ons
+     * [Google Workspace add-ons
      * and Chat apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -894,7 +895,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Either a toggle-style switch or a checkbox inside a `decoratedText` widget.
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      *
      * Only supported in the `decoratedText` widget.
@@ -1670,7 +1671,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * <pre>
        * How the switch appears in the user interface.
        *
-       * [Google Workspace Add-ons
+       * [Google Workspace add-ons
        * and Chat apps](https://developers.google.com/workspace/extend):
        * </pre>
        *
@@ -1689,7 +1690,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * <pre>
        * How the switch appears in the user interface.
        *
-       * [Google Workspace Add-ons
+       * [Google Workspace add-ons
        * and Chat apps](https://developers.google.com/workspace/extend):
        * </pre>
        *
@@ -1711,7 +1712,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * <pre>
        * How the switch appears in the user interface.
        *
-       * [Google Workspace Add-ons
+       * [Google Workspace add-ons
        * and Chat apps](https://developers.google.com/workspace/extend):
        * </pre>
        *
@@ -1734,7 +1735,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * <pre>
        * How the switch appears in the user interface.
        *
-       * [Google Workspace Add-ons
+       * [Google Workspace add-ons
        * and Chat apps](https://developers.google.com/workspace/extend):
        * </pre>
        *
@@ -1760,7 +1761,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * <pre>
        * How the switch appears in the user interface.
        *
-       * [Google Workspace Add-ons
+       * [Google Workspace add-ons
        * and Chat apps](https://developers.google.com/workspace/extend):
        * </pre>
        *
@@ -1906,7 +1907,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
    *
    * @deprecated google.apps.card.v1.DecoratedText.icon is deprecated. See
-   *     google/apps/card/v1/card.proto;l=796
+   *     google/apps/card/v1/card.proto;l=915
    * @return Whether the icon field is set.
    */
   @java.lang.Override
@@ -1925,7 +1926,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
    *
    * @deprecated google.apps.card.v1.DecoratedText.icon is deprecated. See
-   *     google/apps/card/v1/card.proto;l=796
+   *     google/apps/card/v1/card.proto;l=915
    * @return The icon.
    */
   @java.lang.Override
@@ -1998,6 +1999,49 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     return startIcon_ == null ? com.google.apps.card.v1.Icon.getDefaultInstance() : startIcon_;
   }
 
+  public static final int START_ICON_VERTICAL_ALIGNMENT_FIELD_NUMBER = 13;
+  private int startIconVerticalAlignment_ = 0;
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Vertical alignment of the start icon. If not set, the icon
+   * will be vertically centered.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Widget.VerticalAlignment start_icon_vertical_alignment = 13;</code>
+   *
+   * @return The enum numeric value on the wire for startIconVerticalAlignment.
+   */
+  @java.lang.Override
+  public int getStartIconVerticalAlignmentValue() {
+    return startIconVerticalAlignment_;
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Vertical alignment of the start icon. If not set, the icon
+   * will be vertically centered.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Widget.VerticalAlignment start_icon_vertical_alignment = 13;</code>
+   *
+   * @return The startIconVerticalAlignment.
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.Widget.VerticalAlignment getStartIconVerticalAlignment() {
+    com.google.apps.card.v1.Widget.VerticalAlignment result =
+        com.google.apps.card.v1.Widget.VerticalAlignment.forNumber(startIconVerticalAlignment_);
+    return result == null ? com.google.apps.card.v1.Widget.VerticalAlignment.UNRECOGNIZED : result;
+  }
+
   public static final int TOP_LABEL_FIELD_NUMBER = 3;
 
   @SuppressWarnings("serial")
@@ -2051,6 +2095,68 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     }
   }
 
+  public static final int TOP_LABEL_TEXT_FIELD_NUMBER = 17;
+  private com.google.apps.card.v1.TextParagraph topLabelText_;
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `top_label`. Always truncates. Allows for
+   * more complex formatting than `top_label`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph top_label_text = 17;</code>
+   *
+   * @return Whether the topLabelText field is set.
+   */
+  @java.lang.Override
+  public boolean hasTopLabelText() {
+    return ((bitField0_ & 0x00000004) != 0);
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `top_label`. Always truncates. Allows for
+   * more complex formatting than `top_label`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph top_label_text = 17;</code>
+   *
+   * @return The topLabelText.
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.TextParagraph getTopLabelText() {
+    return topLabelText_ == null
+        ? com.google.apps.card.v1.TextParagraph.getDefaultInstance()
+        : topLabelText_;
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `top_label`. Always truncates. Allows for
+   * more complex formatting than `top_label`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph top_label_text = 17;</code>
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.TextParagraphOrBuilder getTopLabelTextOrBuilder() {
+    return topLabelText_ == null
+        ? com.google.apps.card.v1.TextParagraph.getDefaultInstance()
+        : topLabelText_;
+  }
+
   public static final int TEXT_FIELD_NUMBER = 4;
 
   @SuppressWarnings("serial")
@@ -2069,7 +2175,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * and
    * [Formatting
    * text in Google Workspace
-   * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+   * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
    * </pre>
    *
    * <code>string text = 4;</code>
@@ -2102,7 +2208,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * and
    * [Formatting
    * text in Google Workspace
-   * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+   * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
    * </pre>
    *
    * <code>string text = 4;</code>
@@ -2120,6 +2226,68 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
+  }
+
+  public static final int CONTENT_TEXT_FIELD_NUMBER = 18;
+  private com.google.apps.card.v1.TextParagraph contentText_;
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `text`. Allows for more complex formatting
+   * than `text`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph content_text = 18;</code>
+   *
+   * @return Whether the contentText field is set.
+   */
+  @java.lang.Override
+  public boolean hasContentText() {
+    return ((bitField0_ & 0x00000008) != 0);
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `text`. Allows for more complex formatting
+   * than `text`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph content_text = 18;</code>
+   *
+   * @return The contentText.
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.TextParagraph getContentText() {
+    return contentText_ == null
+        ? com.google.apps.card.v1.TextParagraph.getDefaultInstance()
+        : contentText_;
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `text`. Allows for more complex formatting
+   * than `text`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph content_text = 18;</code>
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.TextParagraphOrBuilder getContentTextOrBuilder() {
+    return contentText_ == null
+        ? com.google.apps.card.v1.TextParagraph.getDefaultInstance()
+        : contentText_;
   }
 
   public static final int WRAP_TEXT_FIELD_NUMBER = 5;
@@ -2197,6 +2365,68 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     }
   }
 
+  public static final int BOTTOM_LABEL_TEXT_FIELD_NUMBER = 19;
+  private com.google.apps.card.v1.TextParagraph bottomLabelText_;
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `bottom_label`. Always wraps. Allows for
+   * more complex formatting than `bottom_label`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph bottom_label_text = 19;</code>
+   *
+   * @return Whether the bottomLabelText field is set.
+   */
+  @java.lang.Override
+  public boolean hasBottomLabelText() {
+    return ((bitField0_ & 0x00000010) != 0);
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `bottom_label`. Always wraps. Allows for
+   * more complex formatting than `bottom_label`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph bottom_label_text = 19;</code>
+   *
+   * @return The bottomLabelText.
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.TextParagraph getBottomLabelText() {
+    return bottomLabelText_ == null
+        ? com.google.apps.card.v1.TextParagraph.getDefaultInstance()
+        : bottomLabelText_;
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * `TextParagraph` equivalent of `bottom_label`. Always wraps. Allows for
+   * more complex formatting than `bottom_label`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph bottom_label_text = 19;</code>
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.TextParagraphOrBuilder getBottomLabelTextOrBuilder() {
+    return bottomLabelText_ == null
+        ? com.google.apps.card.v1.TextParagraph.getDefaultInstance()
+        : bottomLabelText_;
+  }
+
   public static final int ON_CLICK_FIELD_NUMBER = 7;
   private com.google.apps.card.v1.OnClick onClick_;
 
@@ -2213,7 +2443,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public boolean hasOnClick() {
-    return ((bitField0_ & 0x00000004) != 0);
+    return ((bitField0_ & 0x00000020) != 0);
   }
 
   /**
@@ -2458,7 +2688,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(bottomLabel_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 6, bottomLabel_);
     }
-    if (((bitField0_ & 0x00000004) != 0)) {
+    if (((bitField0_ & 0x00000020) != 0)) {
       output.writeMessage(7, getOnClick());
     }
     if (controlCase_ == 8) {
@@ -2472,6 +2702,20 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     }
     if (((bitField0_ & 0x00000002) != 0)) {
       output.writeMessage(12, getStartIcon());
+    }
+    if (startIconVerticalAlignment_
+        != com.google.apps.card.v1.Widget.VerticalAlignment.VERTICAL_ALIGNMENT_UNSPECIFIED
+            .getNumber()) {
+      output.writeEnum(13, startIconVerticalAlignment_);
+    }
+    if (((bitField0_ & 0x00000004) != 0)) {
+      output.writeMessage(17, getTopLabelText());
+    }
+    if (((bitField0_ & 0x00000008) != 0)) {
+      output.writeMessage(18, getContentText());
+    }
+    if (((bitField0_ & 0x00000010) != 0)) {
+      output.writeMessage(19, getBottomLabelText());
     }
     getUnknownFields().writeTo(output);
   }
@@ -2497,7 +2741,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(bottomLabel_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, bottomLabel_);
     }
-    if (((bitField0_ & 0x00000004) != 0)) {
+    if (((bitField0_ & 0x00000020) != 0)) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(7, getOnClick());
     }
     if (controlCase_ == 8) {
@@ -2517,6 +2761,21 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     }
     if (((bitField0_ & 0x00000002) != 0)) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(12, getStartIcon());
+    }
+    if (startIconVerticalAlignment_
+        != com.google.apps.card.v1.Widget.VerticalAlignment.VERTICAL_ALIGNMENT_UNSPECIFIED
+            .getNumber()) {
+      size +=
+          com.google.protobuf.CodedOutputStream.computeEnumSize(13, startIconVerticalAlignment_);
+    }
+    if (((bitField0_ & 0x00000004) != 0)) {
+      size += com.google.protobuf.CodedOutputStream.computeMessageSize(17, getTopLabelText());
+    }
+    if (((bitField0_ & 0x00000008) != 0)) {
+      size += com.google.protobuf.CodedOutputStream.computeMessageSize(18, getContentText());
+    }
+    if (((bitField0_ & 0x00000010) != 0)) {
+      size += com.google.protobuf.CodedOutputStream.computeMessageSize(19, getBottomLabelText());
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -2541,10 +2800,23 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     if (hasStartIcon()) {
       if (!getStartIcon().equals(other.getStartIcon())) return false;
     }
+    if (startIconVerticalAlignment_ != other.startIconVerticalAlignment_) return false;
     if (!getTopLabel().equals(other.getTopLabel())) return false;
+    if (hasTopLabelText() != other.hasTopLabelText()) return false;
+    if (hasTopLabelText()) {
+      if (!getTopLabelText().equals(other.getTopLabelText())) return false;
+    }
     if (!getText().equals(other.getText())) return false;
+    if (hasContentText() != other.hasContentText()) return false;
+    if (hasContentText()) {
+      if (!getContentText().equals(other.getContentText())) return false;
+    }
     if (getWrapText() != other.getWrapText()) return false;
     if (!getBottomLabel().equals(other.getBottomLabel())) return false;
+    if (hasBottomLabelText() != other.hasBottomLabelText()) return false;
+    if (hasBottomLabelText()) {
+      if (!getBottomLabelText().equals(other.getBottomLabelText())) return false;
+    }
     if (hasOnClick() != other.hasOnClick()) return false;
     if (hasOnClick()) {
       if (!getOnClick().equals(other.getOnClick())) return false;
@@ -2582,14 +2854,28 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + START_ICON_FIELD_NUMBER;
       hash = (53 * hash) + getStartIcon().hashCode();
     }
+    hash = (37 * hash) + START_ICON_VERTICAL_ALIGNMENT_FIELD_NUMBER;
+    hash = (53 * hash) + startIconVerticalAlignment_;
     hash = (37 * hash) + TOP_LABEL_FIELD_NUMBER;
     hash = (53 * hash) + getTopLabel().hashCode();
+    if (hasTopLabelText()) {
+      hash = (37 * hash) + TOP_LABEL_TEXT_FIELD_NUMBER;
+      hash = (53 * hash) + getTopLabelText().hashCode();
+    }
     hash = (37 * hash) + TEXT_FIELD_NUMBER;
     hash = (53 * hash) + getText().hashCode();
+    if (hasContentText()) {
+      hash = (37 * hash) + CONTENT_TEXT_FIELD_NUMBER;
+      hash = (53 * hash) + getContentText().hashCode();
+    }
     hash = (37 * hash) + WRAP_TEXT_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getWrapText());
     hash = (37 * hash) + BOTTOM_LABEL_FIELD_NUMBER;
     hash = (53 * hash) + getBottomLabel().hashCode();
+    if (hasBottomLabelText()) {
+      hash = (37 * hash) + BOTTOM_LABEL_TEXT_FIELD_NUMBER;
+      hash = (53 * hash) + getBottomLabelText().hashCode();
+    }
     if (hasOnClick()) {
       hash = (37 * hash) + ON_CLICK_FIELD_NUMBER;
       hash = (53 * hash) + getOnClick().hashCode();
@@ -2720,7 +3006,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * Google Chat apps, see [Display text with decorative
    * text](https://developers.google.com/workspace/chat/add-text-image-card-dialog#display_text_with_decorative_elements).
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -2759,6 +3045,9 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         getIconFieldBuilder();
         getStartIconFieldBuilder();
+        getTopLabelTextFieldBuilder();
+        getContentTextFieldBuilder();
+        getBottomLabelTextFieldBuilder();
         getOnClickFieldBuilder();
       }
     }
@@ -2777,10 +3066,26 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         startIconBuilder_.dispose();
         startIconBuilder_ = null;
       }
+      startIconVerticalAlignment_ = 0;
       topLabel_ = "";
+      topLabelText_ = null;
+      if (topLabelTextBuilder_ != null) {
+        topLabelTextBuilder_.dispose();
+        topLabelTextBuilder_ = null;
+      }
       text_ = "";
+      contentText_ = null;
+      if (contentTextBuilder_ != null) {
+        contentTextBuilder_.dispose();
+        contentTextBuilder_ = null;
+      }
       wrapText_ = false;
       bottomLabel_ = "";
+      bottomLabelText_ = null;
+      if (bottomLabelTextBuilder_ != null) {
+        bottomLabelTextBuilder_.dispose();
+        bottomLabelTextBuilder_ = null;
+      }
       onClick_ = null;
       if (onClickBuilder_ != null) {
         onClickBuilder_.dispose();
@@ -2844,20 +3149,38 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         to_bitField0_ |= 0x00000002;
       }
       if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.topLabel_ = topLabel_;
+        result.startIconVerticalAlignment_ = startIconVerticalAlignment_;
       }
       if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.text_ = text_;
+        result.topLabel_ = topLabel_;
       }
       if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.wrapText_ = wrapText_;
+        result.topLabelText_ =
+            topLabelTextBuilder_ == null ? topLabelText_ : topLabelTextBuilder_.build();
+        to_bitField0_ |= 0x00000004;
       }
       if (((from_bitField0_ & 0x00000020) != 0)) {
-        result.bottomLabel_ = bottomLabel_;
+        result.text_ = text_;
       }
       if (((from_bitField0_ & 0x00000040) != 0)) {
+        result.contentText_ =
+            contentTextBuilder_ == null ? contentText_ : contentTextBuilder_.build();
+        to_bitField0_ |= 0x00000008;
+      }
+      if (((from_bitField0_ & 0x00000080) != 0)) {
+        result.wrapText_ = wrapText_;
+      }
+      if (((from_bitField0_ & 0x00000100) != 0)) {
+        result.bottomLabel_ = bottomLabel_;
+      }
+      if (((from_bitField0_ & 0x00000200) != 0)) {
+        result.bottomLabelText_ =
+            bottomLabelTextBuilder_ == null ? bottomLabelText_ : bottomLabelTextBuilder_.build();
+        to_bitField0_ |= 0x00000010;
+      }
+      if (((from_bitField0_ & 0x00000400) != 0)) {
         result.onClick_ = onClickBuilder_ == null ? onClick_ : onClickBuilder_.build();
-        to_bitField0_ |= 0x00000004;
+        to_bitField0_ |= 0x00000020;
       }
       result.bitField0_ |= to_bitField0_;
     }
@@ -2927,23 +3250,35 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       if (other.hasStartIcon()) {
         mergeStartIcon(other.getStartIcon());
       }
+      if (other.startIconVerticalAlignment_ != 0) {
+        setStartIconVerticalAlignmentValue(other.getStartIconVerticalAlignmentValue());
+      }
       if (!other.getTopLabel().isEmpty()) {
         topLabel_ = other.topLabel_;
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         onChanged();
+      }
+      if (other.hasTopLabelText()) {
+        mergeTopLabelText(other.getTopLabelText());
       }
       if (!other.getText().isEmpty()) {
         text_ = other.text_;
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000020;
         onChanged();
+      }
+      if (other.hasContentText()) {
+        mergeContentText(other.getContentText());
       }
       if (other.getWrapText() != false) {
         setWrapText(other.getWrapText());
       }
       if (!other.getBottomLabel().isEmpty()) {
         bottomLabel_ = other.bottomLabel_;
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000100;
         onChanged();
+      }
+      if (other.hasBottomLabelText()) {
+        mergeBottomLabelText(other.getBottomLabelText());
       }
       if (other.hasOnClick()) {
         mergeOnClick(other.getOnClick());
@@ -3004,31 +3339,31 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
             case 26:
               {
                 topLabel_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
+                bitField0_ |= 0x00000008;
                 break;
               } // case 26
             case 34:
               {
                 text_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000008;
+                bitField0_ |= 0x00000020;
                 break;
               } // case 34
             case 40:
               {
                 wrapText_ = input.readBool();
-                bitField0_ |= 0x00000010;
+                bitField0_ |= 0x00000080;
                 break;
               } // case 40
             case 50:
               {
                 bottomLabel_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000020;
+                bitField0_ |= 0x00000100;
                 break;
               } // case 50
             case 58:
               {
                 input.readMessage(getOnClickFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000040;
+                bitField0_ |= 0x00000400;
                 break;
               } // case 58
             case 66:
@@ -3055,6 +3390,30 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
                 bitField0_ |= 0x00000002;
                 break;
               } // case 98
+            case 104:
+              {
+                startIconVerticalAlignment_ = input.readEnum();
+                bitField0_ |= 0x00000004;
+                break;
+              } // case 104
+            case 138:
+              {
+                input.readMessage(getTopLabelTextFieldBuilder().getBuilder(), extensionRegistry);
+                bitField0_ |= 0x00000010;
+                break;
+              } // case 138
+            case 146:
+              {
+                input.readMessage(getContentTextFieldBuilder().getBuilder(), extensionRegistry);
+                bitField0_ |= 0x00000040;
+                break;
+              } // case 146
+            case 154:
+              {
+                input.readMessage(getBottomLabelTextFieldBuilder().getBuilder(), extensionRegistry);
+                bitField0_ |= 0x00000200;
+                break;
+              } // case 154
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -3105,7 +3464,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
      *
      * @deprecated google.apps.card.v1.DecoratedText.icon is deprecated. See
-     *     google/apps/card/v1/card.proto;l=796
+     *     google/apps/card/v1/card.proto;l=915
      * @return Whether the icon field is set.
      */
     @java.lang.Deprecated
@@ -3123,7 +3482,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
      *
      * @deprecated google.apps.card.v1.DecoratedText.icon is deprecated. See
-     *     google/apps/card/v1/card.proto;l=796
+     *     google/apps/card/v1/card.proto;l=915
      * @return The icon.
      */
     @java.lang.Deprecated
@@ -3480,6 +3839,124 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       return startIconBuilder_;
     }
 
+    private int startIconVerticalAlignment_ = 0;
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Vertical alignment of the start icon. If not set, the icon
+     * will be vertically centered.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Widget.VerticalAlignment start_icon_vertical_alignment = 13;
+     * </code>
+     *
+     * @return The enum numeric value on the wire for startIconVerticalAlignment.
+     */
+    @java.lang.Override
+    public int getStartIconVerticalAlignmentValue() {
+      return startIconVerticalAlignment_;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Vertical alignment of the start icon. If not set, the icon
+     * will be vertically centered.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Widget.VerticalAlignment start_icon_vertical_alignment = 13;
+     * </code>
+     *
+     * @param value The enum numeric value on the wire for startIconVerticalAlignment to set.
+     * @return This builder for chaining.
+     */
+    public Builder setStartIconVerticalAlignmentValue(int value) {
+      startIconVerticalAlignment_ = value;
+      bitField0_ |= 0x00000004;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Vertical alignment of the start icon. If not set, the icon
+     * will be vertically centered.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Widget.VerticalAlignment start_icon_vertical_alignment = 13;
+     * </code>
+     *
+     * @return The startIconVerticalAlignment.
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.Widget.VerticalAlignment getStartIconVerticalAlignment() {
+      com.google.apps.card.v1.Widget.VerticalAlignment result =
+          com.google.apps.card.v1.Widget.VerticalAlignment.forNumber(startIconVerticalAlignment_);
+      return result == null
+          ? com.google.apps.card.v1.Widget.VerticalAlignment.UNRECOGNIZED
+          : result;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Vertical alignment of the start icon. If not set, the icon
+     * will be vertically centered.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Widget.VerticalAlignment start_icon_vertical_alignment = 13;
+     * </code>
+     *
+     * @param value The startIconVerticalAlignment to set.
+     * @return This builder for chaining.
+     */
+    public Builder setStartIconVerticalAlignment(
+        com.google.apps.card.v1.Widget.VerticalAlignment value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      bitField0_ |= 0x00000004;
+      startIconVerticalAlignment_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Vertical alignment of the start icon. If not set, the icon
+     * will be vertically centered.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Widget.VerticalAlignment start_icon_vertical_alignment = 13;
+     * </code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearStartIconVerticalAlignment() {
+      bitField0_ = (bitField0_ & ~0x00000004);
+      startIconVerticalAlignment_ = 0;
+      onChanged();
+      return this;
+    }
+
     private java.lang.Object topLabel_ = "";
 
     /**
@@ -3545,7 +4022,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       topLabel_ = value;
-      bitField0_ |= 0x00000004;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -3563,7 +4040,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder clearTopLabel() {
       topLabel_ = getDefaultInstance().getTopLabel();
-      bitField0_ = (bitField0_ & ~0x00000004);
+      bitField0_ = (bitField0_ & ~0x00000008);
       onChanged();
       return this;
     }
@@ -3586,9 +4063,230 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       }
       checkByteStringIsUtf8(value);
       topLabel_ = value;
-      bitField0_ |= 0x00000004;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
+    }
+
+    private com.google.apps.card.v1.TextParagraph topLabelText_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.apps.card.v1.TextParagraph,
+            com.google.apps.card.v1.TextParagraph.Builder,
+            com.google.apps.card.v1.TextParagraphOrBuilder>
+        topLabelTextBuilder_;
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `top_label`. Always truncates. Allows for
+     * more complex formatting than `top_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph top_label_text = 17;</code>
+     *
+     * @return Whether the topLabelText field is set.
+     */
+    public boolean hasTopLabelText() {
+      return ((bitField0_ & 0x00000010) != 0);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `top_label`. Always truncates. Allows for
+     * more complex formatting than `top_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph top_label_text = 17;</code>
+     *
+     * @return The topLabelText.
+     */
+    public com.google.apps.card.v1.TextParagraph getTopLabelText() {
+      if (topLabelTextBuilder_ == null) {
+        return topLabelText_ == null
+            ? com.google.apps.card.v1.TextParagraph.getDefaultInstance()
+            : topLabelText_;
+      } else {
+        return topLabelTextBuilder_.getMessage();
+      }
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `top_label`. Always truncates. Allows for
+     * more complex formatting than `top_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph top_label_text = 17;</code>
+     */
+    public Builder setTopLabelText(com.google.apps.card.v1.TextParagraph value) {
+      if (topLabelTextBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        topLabelText_ = value;
+      } else {
+        topLabelTextBuilder_.setMessage(value);
+      }
+      bitField0_ |= 0x00000010;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `top_label`. Always truncates. Allows for
+     * more complex formatting than `top_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph top_label_text = 17;</code>
+     */
+    public Builder setTopLabelText(com.google.apps.card.v1.TextParagraph.Builder builderForValue) {
+      if (topLabelTextBuilder_ == null) {
+        topLabelText_ = builderForValue.build();
+      } else {
+        topLabelTextBuilder_.setMessage(builderForValue.build());
+      }
+      bitField0_ |= 0x00000010;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `top_label`. Always truncates. Allows for
+     * more complex formatting than `top_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph top_label_text = 17;</code>
+     */
+    public Builder mergeTopLabelText(com.google.apps.card.v1.TextParagraph value) {
+      if (topLabelTextBuilder_ == null) {
+        if (((bitField0_ & 0x00000010) != 0)
+            && topLabelText_ != null
+            && topLabelText_ != com.google.apps.card.v1.TextParagraph.getDefaultInstance()) {
+          getTopLabelTextBuilder().mergeFrom(value);
+        } else {
+          topLabelText_ = value;
+        }
+      } else {
+        topLabelTextBuilder_.mergeFrom(value);
+      }
+      if (topLabelText_ != null) {
+        bitField0_ |= 0x00000010;
+        onChanged();
+      }
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `top_label`. Always truncates. Allows for
+     * more complex formatting than `top_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph top_label_text = 17;</code>
+     */
+    public Builder clearTopLabelText() {
+      bitField0_ = (bitField0_ & ~0x00000010);
+      topLabelText_ = null;
+      if (topLabelTextBuilder_ != null) {
+        topLabelTextBuilder_.dispose();
+        topLabelTextBuilder_ = null;
+      }
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `top_label`. Always truncates. Allows for
+     * more complex formatting than `top_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph top_label_text = 17;</code>
+     */
+    public com.google.apps.card.v1.TextParagraph.Builder getTopLabelTextBuilder() {
+      bitField0_ |= 0x00000010;
+      onChanged();
+      return getTopLabelTextFieldBuilder().getBuilder();
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `top_label`. Always truncates. Allows for
+     * more complex formatting than `top_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph top_label_text = 17;</code>
+     */
+    public com.google.apps.card.v1.TextParagraphOrBuilder getTopLabelTextOrBuilder() {
+      if (topLabelTextBuilder_ != null) {
+        return topLabelTextBuilder_.getMessageOrBuilder();
+      } else {
+        return topLabelText_ == null
+            ? com.google.apps.card.v1.TextParagraph.getDefaultInstance()
+            : topLabelText_;
+      }
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `top_label`. Always truncates. Allows for
+     * more complex formatting than `top_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph top_label_text = 17;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.apps.card.v1.TextParagraph,
+            com.google.apps.card.v1.TextParagraph.Builder,
+            com.google.apps.card.v1.TextParagraphOrBuilder>
+        getTopLabelTextFieldBuilder() {
+      if (topLabelTextBuilder_ == null) {
+        topLabelTextBuilder_ =
+            new com.google.protobuf.SingleFieldBuilderV3<
+                com.google.apps.card.v1.TextParagraph,
+                com.google.apps.card.v1.TextParagraph.Builder,
+                com.google.apps.card.v1.TextParagraphOrBuilder>(
+                getTopLabelText(), getParentForChildren(), isClean());
+        topLabelText_ = null;
+      }
+      return topLabelTextBuilder_;
     }
 
     private java.lang.Object text_ = "";
@@ -3606,7 +4304,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      * </pre>
      *
      * <code>string text = 4;</code>
@@ -3638,7 +4336,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      * </pre>
      *
      * <code>string text = 4;</code>
@@ -3670,7 +4368,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      * </pre>
      *
      * <code>string text = 4;</code>
@@ -3683,7 +4381,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       text_ = value;
-      bitField0_ |= 0x00000008;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -3701,7 +4399,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      * </pre>
      *
      * <code>string text = 4;</code>
@@ -3710,7 +4408,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder clearText() {
       text_ = getDefaultInstance().getText();
-      bitField0_ = (bitField0_ & ~0x00000008);
+      bitField0_ = (bitField0_ & ~0x00000020);
       onChanged();
       return this;
     }
@@ -3728,7 +4426,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      * </pre>
      *
      * <code>string text = 4;</code>
@@ -3742,9 +4440,230 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       }
       checkByteStringIsUtf8(value);
       text_ = value;
-      bitField0_ |= 0x00000008;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
+    }
+
+    private com.google.apps.card.v1.TextParagraph contentText_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.apps.card.v1.TextParagraph,
+            com.google.apps.card.v1.TextParagraph.Builder,
+            com.google.apps.card.v1.TextParagraphOrBuilder>
+        contentTextBuilder_;
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `text`. Allows for more complex formatting
+     * than `text`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph content_text = 18;</code>
+     *
+     * @return Whether the contentText field is set.
+     */
+    public boolean hasContentText() {
+      return ((bitField0_ & 0x00000040) != 0);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `text`. Allows for more complex formatting
+     * than `text`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph content_text = 18;</code>
+     *
+     * @return The contentText.
+     */
+    public com.google.apps.card.v1.TextParagraph getContentText() {
+      if (contentTextBuilder_ == null) {
+        return contentText_ == null
+            ? com.google.apps.card.v1.TextParagraph.getDefaultInstance()
+            : contentText_;
+      } else {
+        return contentTextBuilder_.getMessage();
+      }
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `text`. Allows for more complex formatting
+     * than `text`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph content_text = 18;</code>
+     */
+    public Builder setContentText(com.google.apps.card.v1.TextParagraph value) {
+      if (contentTextBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        contentText_ = value;
+      } else {
+        contentTextBuilder_.setMessage(value);
+      }
+      bitField0_ |= 0x00000040;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `text`. Allows for more complex formatting
+     * than `text`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph content_text = 18;</code>
+     */
+    public Builder setContentText(com.google.apps.card.v1.TextParagraph.Builder builderForValue) {
+      if (contentTextBuilder_ == null) {
+        contentText_ = builderForValue.build();
+      } else {
+        contentTextBuilder_.setMessage(builderForValue.build());
+      }
+      bitField0_ |= 0x00000040;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `text`. Allows for more complex formatting
+     * than `text`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph content_text = 18;</code>
+     */
+    public Builder mergeContentText(com.google.apps.card.v1.TextParagraph value) {
+      if (contentTextBuilder_ == null) {
+        if (((bitField0_ & 0x00000040) != 0)
+            && contentText_ != null
+            && contentText_ != com.google.apps.card.v1.TextParagraph.getDefaultInstance()) {
+          getContentTextBuilder().mergeFrom(value);
+        } else {
+          contentText_ = value;
+        }
+      } else {
+        contentTextBuilder_.mergeFrom(value);
+      }
+      if (contentText_ != null) {
+        bitField0_ |= 0x00000040;
+        onChanged();
+      }
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `text`. Allows for more complex formatting
+     * than `text`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph content_text = 18;</code>
+     */
+    public Builder clearContentText() {
+      bitField0_ = (bitField0_ & ~0x00000040);
+      contentText_ = null;
+      if (contentTextBuilder_ != null) {
+        contentTextBuilder_.dispose();
+        contentTextBuilder_ = null;
+      }
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `text`. Allows for more complex formatting
+     * than `text`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph content_text = 18;</code>
+     */
+    public com.google.apps.card.v1.TextParagraph.Builder getContentTextBuilder() {
+      bitField0_ |= 0x00000040;
+      onChanged();
+      return getContentTextFieldBuilder().getBuilder();
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `text`. Allows for more complex formatting
+     * than `text`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph content_text = 18;</code>
+     */
+    public com.google.apps.card.v1.TextParagraphOrBuilder getContentTextOrBuilder() {
+      if (contentTextBuilder_ != null) {
+        return contentTextBuilder_.getMessageOrBuilder();
+      } else {
+        return contentText_ == null
+            ? com.google.apps.card.v1.TextParagraph.getDefaultInstance()
+            : contentText_;
+      }
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `text`. Allows for more complex formatting
+     * than `text`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph content_text = 18;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.apps.card.v1.TextParagraph,
+            com.google.apps.card.v1.TextParagraph.Builder,
+            com.google.apps.card.v1.TextParagraphOrBuilder>
+        getContentTextFieldBuilder() {
+      if (contentTextBuilder_ == null) {
+        contentTextBuilder_ =
+            new com.google.protobuf.SingleFieldBuilderV3<
+                com.google.apps.card.v1.TextParagraph,
+                com.google.apps.card.v1.TextParagraph.Builder,
+                com.google.apps.card.v1.TextParagraphOrBuilder>(
+                getContentText(), getParentForChildren(), isClean());
+        contentText_ = null;
+      }
+      return contentTextBuilder_;
     }
 
     private boolean wrapText_;
@@ -3786,7 +4705,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     public Builder setWrapText(boolean value) {
 
       wrapText_ = value;
-      bitField0_ |= 0x00000010;
+      bitField0_ |= 0x00000080;
       onChanged();
       return this;
     }
@@ -3806,7 +4725,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearWrapText() {
-      bitField0_ = (bitField0_ & ~0x00000010);
+      bitField0_ = (bitField0_ & ~0x00000080);
       wrapText_ = false;
       onChanged();
       return this;
@@ -3877,7 +4796,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       bottomLabel_ = value;
-      bitField0_ |= 0x00000020;
+      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }
@@ -3895,7 +4814,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder clearBottomLabel() {
       bottomLabel_ = getDefaultInstance().getBottomLabel();
-      bitField0_ = (bitField0_ & ~0x00000020);
+      bitField0_ = (bitField0_ & ~0x00000100);
       onChanged();
       return this;
     }
@@ -3918,9 +4837,231 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       }
       checkByteStringIsUtf8(value);
       bottomLabel_ = value;
-      bitField0_ |= 0x00000020;
+      bitField0_ |= 0x00000100;
       onChanged();
       return this;
+    }
+
+    private com.google.apps.card.v1.TextParagraph bottomLabelText_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.apps.card.v1.TextParagraph,
+            com.google.apps.card.v1.TextParagraph.Builder,
+            com.google.apps.card.v1.TextParagraphOrBuilder>
+        bottomLabelTextBuilder_;
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `bottom_label`. Always wraps. Allows for
+     * more complex formatting than `bottom_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph bottom_label_text = 19;</code>
+     *
+     * @return Whether the bottomLabelText field is set.
+     */
+    public boolean hasBottomLabelText() {
+      return ((bitField0_ & 0x00000200) != 0);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `bottom_label`. Always wraps. Allows for
+     * more complex formatting than `bottom_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph bottom_label_text = 19;</code>
+     *
+     * @return The bottomLabelText.
+     */
+    public com.google.apps.card.v1.TextParagraph getBottomLabelText() {
+      if (bottomLabelTextBuilder_ == null) {
+        return bottomLabelText_ == null
+            ? com.google.apps.card.v1.TextParagraph.getDefaultInstance()
+            : bottomLabelText_;
+      } else {
+        return bottomLabelTextBuilder_.getMessage();
+      }
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `bottom_label`. Always wraps. Allows for
+     * more complex formatting than `bottom_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph bottom_label_text = 19;</code>
+     */
+    public Builder setBottomLabelText(com.google.apps.card.v1.TextParagraph value) {
+      if (bottomLabelTextBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bottomLabelText_ = value;
+      } else {
+        bottomLabelTextBuilder_.setMessage(value);
+      }
+      bitField0_ |= 0x00000200;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `bottom_label`. Always wraps. Allows for
+     * more complex formatting than `bottom_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph bottom_label_text = 19;</code>
+     */
+    public Builder setBottomLabelText(
+        com.google.apps.card.v1.TextParagraph.Builder builderForValue) {
+      if (bottomLabelTextBuilder_ == null) {
+        bottomLabelText_ = builderForValue.build();
+      } else {
+        bottomLabelTextBuilder_.setMessage(builderForValue.build());
+      }
+      bitField0_ |= 0x00000200;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `bottom_label`. Always wraps. Allows for
+     * more complex formatting than `bottom_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph bottom_label_text = 19;</code>
+     */
+    public Builder mergeBottomLabelText(com.google.apps.card.v1.TextParagraph value) {
+      if (bottomLabelTextBuilder_ == null) {
+        if (((bitField0_ & 0x00000200) != 0)
+            && bottomLabelText_ != null
+            && bottomLabelText_ != com.google.apps.card.v1.TextParagraph.getDefaultInstance()) {
+          getBottomLabelTextBuilder().mergeFrom(value);
+        } else {
+          bottomLabelText_ = value;
+        }
+      } else {
+        bottomLabelTextBuilder_.mergeFrom(value);
+      }
+      if (bottomLabelText_ != null) {
+        bitField0_ |= 0x00000200;
+        onChanged();
+      }
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `bottom_label`. Always wraps. Allows for
+     * more complex formatting than `bottom_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph bottom_label_text = 19;</code>
+     */
+    public Builder clearBottomLabelText() {
+      bitField0_ = (bitField0_ & ~0x00000200);
+      bottomLabelText_ = null;
+      if (bottomLabelTextBuilder_ != null) {
+        bottomLabelTextBuilder_.dispose();
+        bottomLabelTextBuilder_ = null;
+      }
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `bottom_label`. Always wraps. Allows for
+     * more complex formatting than `bottom_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph bottom_label_text = 19;</code>
+     */
+    public com.google.apps.card.v1.TextParagraph.Builder getBottomLabelTextBuilder() {
+      bitField0_ |= 0x00000200;
+      onChanged();
+      return getBottomLabelTextFieldBuilder().getBuilder();
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `bottom_label`. Always wraps. Allows for
+     * more complex formatting than `bottom_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph bottom_label_text = 19;</code>
+     */
+    public com.google.apps.card.v1.TextParagraphOrBuilder getBottomLabelTextOrBuilder() {
+      if (bottomLabelTextBuilder_ != null) {
+        return bottomLabelTextBuilder_.getMessageOrBuilder();
+      } else {
+        return bottomLabelText_ == null
+            ? com.google.apps.card.v1.TextParagraph.getDefaultInstance()
+            : bottomLabelText_;
+      }
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * `TextParagraph` equivalent of `bottom_label`. Always wraps. Allows for
+     * more complex formatting than `bottom_label`.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph bottom_label_text = 19;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.apps.card.v1.TextParagraph,
+            com.google.apps.card.v1.TextParagraph.Builder,
+            com.google.apps.card.v1.TextParagraphOrBuilder>
+        getBottomLabelTextFieldBuilder() {
+      if (bottomLabelTextBuilder_ == null) {
+        bottomLabelTextBuilder_ =
+            new com.google.protobuf.SingleFieldBuilderV3<
+                com.google.apps.card.v1.TextParagraph,
+                com.google.apps.card.v1.TextParagraph.Builder,
+                com.google.apps.card.v1.TextParagraphOrBuilder>(
+                getBottomLabelText(), getParentForChildren(), isClean());
+        bottomLabelText_ = null;
+      }
+      return bottomLabelTextBuilder_;
     }
 
     private com.google.apps.card.v1.OnClick onClick_;
@@ -3942,7 +5083,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the onClick field is set.
      */
     public boolean hasOnClick() {
-      return ((bitField0_ & 0x00000040) != 0);
+      return ((bitField0_ & 0x00000400) != 0);
     }
 
     /**
@@ -3982,7 +5123,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       } else {
         onClickBuilder_.setMessage(value);
       }
-      bitField0_ |= 0x00000040;
+      bitField0_ |= 0x00000400;
       onChanged();
       return this;
     }
@@ -4002,7 +5143,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       } else {
         onClickBuilder_.setMessage(builderForValue.build());
       }
-      bitField0_ |= 0x00000040;
+      bitField0_ |= 0x00000400;
       onChanged();
       return this;
     }
@@ -4018,7 +5159,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeOnClick(com.google.apps.card.v1.OnClick value) {
       if (onClickBuilder_ == null) {
-        if (((bitField0_ & 0x00000040) != 0)
+        if (((bitField0_ & 0x00000400) != 0)
             && onClick_ != null
             && onClick_ != com.google.apps.card.v1.OnClick.getDefaultInstance()) {
           getOnClickBuilder().mergeFrom(value);
@@ -4029,7 +5170,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         onClickBuilder_.mergeFrom(value);
       }
       if (onClick_ != null) {
-        bitField0_ |= 0x00000040;
+        bitField0_ |= 0x00000400;
         onChanged();
       }
       return this;
@@ -4045,7 +5186,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
      */
     public Builder clearOnClick() {
-      bitField0_ = (bitField0_ & ~0x00000040);
+      bitField0_ = (bitField0_ & ~0x00000400);
       onClick_ = null;
       if (onClickBuilder_ != null) {
         onClickBuilder_.dispose();
@@ -4065,7 +5206,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
      */
     public com.google.apps.card.v1.OnClick.Builder getOnClickBuilder() {
-      bitField0_ |= 0x00000040;
+      bitField0_ |= 0x00000400;
       onChanged();
       return getOnClickFieldBuilder().getBuilder();
     }

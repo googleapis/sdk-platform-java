@@ -35,9 +35,11 @@ import java.util.concurrent.ScheduledExecutorService;
 public final class FixedExecutorProvider implements ExecutorProvider {
 
   private final ScheduledExecutorService executor;
+  private final boolean autoClose;
 
-  private FixedExecutorProvider(ScheduledExecutorService executor) {
+  private FixedExecutorProvider(ScheduledExecutorService executor, boolean autoClose) {
     this.executor = executor;
+    this.autoClose = autoClose;
   }
 
   @Override
@@ -47,11 +49,16 @@ public final class FixedExecutorProvider implements ExecutorProvider {
 
   @Override
   public boolean shouldAutoClose() {
-    return false;
+    return autoClose;
   }
 
   /** Creates a FixedExecutorProvider. */
   public static FixedExecutorProvider create(ScheduledExecutorService executor) {
-    return new FixedExecutorProvider(executor);
+    return new FixedExecutorProvider(executor, false);
+  }
+
+  /** Create a FixedExecutorProvider and specify if it should auto close. */
+  public static FixedExecutorProvider create(ScheduledExecutorService executor, boolean autoClose) {
+    return new FixedExecutorProvider(executor, autoClose);
   }
 }

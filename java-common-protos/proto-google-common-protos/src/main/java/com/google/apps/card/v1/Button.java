@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ package com.google.apps.card.v1;
  * `onClick` action.
  *
  * [Google Workspace
- * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+ * add-ons and Chat apps](https://developers.google.com/workspace/extend):
  * </pre>
  *
  * Protobuf type {@code google.apps.card.v1.Button}
@@ -53,6 +53,7 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
   private Button() {
     text_ = "";
     altText_ = "";
+    type_ = 0;
   }
 
   @java.lang.Override
@@ -72,6 +73,231 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
         .internal_static_google_apps_card_v1_Button_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             com.google.apps.card.v1.Button.class, com.google.apps.card.v1.Button.Builder.class);
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The
+   * [type](https://m3.material.io/components/all-buttons#9134ac95-678e-49ae-a50a-e71948011b05)
+   * of a button. If `color` field is set, the `type` is forced to `FILLED`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * Protobuf enum {@code google.apps.card.v1.Button.Type}
+   */
+  public enum Type implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     *
+     *
+     * <pre>
+     * Don't use. Unspecified.
+     * </pre>
+     *
+     * <code>TYPE_UNSPECIFIED = 0;</code>
+     */
+    TYPE_UNSPECIFIED(0),
+    /**
+     *
+     *
+     * <pre>
+     * Outlined buttons are medium-emphasis buttons. They usually contain
+     * actions that are important, but aren’t the primary action in a Chat app
+     * or an add-on.
+     * </pre>
+     *
+     * <code>OUTLINED = 1;</code>
+     */
+    OUTLINED(1),
+    /**
+     *
+     *
+     * <pre>
+     * A filled button has a container with a solid color. It has the most
+     * visual impact and is recommended for the important and primary action in
+     * a Chat app or an add-on.
+     * </pre>
+     *
+     * <code>FILLED = 2;</code>
+     */
+    FILLED(2),
+    /**
+     *
+     *
+     * <pre>
+     * A filled tonal button is an alternative middle ground between filled and
+     * outlined buttons. They’re useful in contexts where a lower-priority
+     * button requires slightly more emphasis than an outline button would give.
+     * </pre>
+     *
+     * <code>FILLED_TONAL = 3;</code>
+     */
+    FILLED_TONAL(3),
+    /**
+     *
+     *
+     * <pre>
+     * A button does not have an invisible container in its default state. It is
+     * often used for the lowest priority actions, especially when presenting
+     * multiple options.
+     * </pre>
+     *
+     * <code>BORDERLESS = 4;</code>
+     */
+    BORDERLESS(4),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     *
+     *
+     * <pre>
+     * Don't use. Unspecified.
+     * </pre>
+     *
+     * <code>TYPE_UNSPECIFIED = 0;</code>
+     */
+    public static final int TYPE_UNSPECIFIED_VALUE = 0;
+
+    /**
+     *
+     *
+     * <pre>
+     * Outlined buttons are medium-emphasis buttons. They usually contain
+     * actions that are important, but aren’t the primary action in a Chat app
+     * or an add-on.
+     * </pre>
+     *
+     * <code>OUTLINED = 1;</code>
+     */
+    public static final int OUTLINED_VALUE = 1;
+
+    /**
+     *
+     *
+     * <pre>
+     * A filled button has a container with a solid color. It has the most
+     * visual impact and is recommended for the important and primary action in
+     * a Chat app or an add-on.
+     * </pre>
+     *
+     * <code>FILLED = 2;</code>
+     */
+    public static final int FILLED_VALUE = 2;
+
+    /**
+     *
+     *
+     * <pre>
+     * A filled tonal button is an alternative middle ground between filled and
+     * outlined buttons. They’re useful in contexts where a lower-priority
+     * button requires slightly more emphasis than an outline button would give.
+     * </pre>
+     *
+     * <code>FILLED_TONAL = 3;</code>
+     */
+    public static final int FILLED_TONAL_VALUE = 3;
+
+    /**
+     *
+     *
+     * <pre>
+     * A button does not have an invisible container in its default state. It is
+     * often used for the lowest priority actions, especially when presenting
+     * multiple options.
+     * </pre>
+     *
+     * <code>BORDERLESS = 4;</code>
+     */
+    public static final int BORDERLESS_VALUE = 4;
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static Type valueOf(int value) {
+      return forNumber(value);
+    }
+
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     */
+    public static Type forNumber(int value) {
+      switch (value) {
+        case 0:
+          return TYPE_UNSPECIFIED;
+        case 1:
+          return OUTLINED;
+        case 2:
+          return FILLED;
+        case 3:
+          return FILLED_TONAL;
+        case 4:
+          return BORDERLESS;
+        default:
+          return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<Type> internalGetValueMap() {
+      return internalValueMap;
+    }
+
+    private static final com.google.protobuf.Internal.EnumLiteMap<Type> internalValueMap =
+        new com.google.protobuf.Internal.EnumLiteMap<Type>() {
+          public Type findValueByNumber(int number) {
+            return Type.forNumber(number);
+          }
+        };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
+      return getDescriptor().getValues().get(ordinal());
+    }
+
+    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
+      return getDescriptor();
+    }
+
+    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
+      return com.google.apps.card.v1.Button.getDescriptor().getEnumTypes().get(0);
+    }
+
+    private static final Type[] VALUES = values();
+
+    public static Type valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private Type(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:google.apps.card.v1.Button.Type)
   }
 
   private int bitField0_;
@@ -135,8 +361,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * The icon image. If both `icon` and `text` are set, then the icon appears
-   * before the text.
+   * An icon displayed inside the button. If both `icon` and `text` are set,
+   * then the icon appears before the text.
    * </pre>
    *
    * <code>.google.apps.card.v1.Icon icon = 2;</code>
@@ -152,8 +378,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * The icon image. If both `icon` and `text` are set, then the icon appears
-   * before the text.
+   * An icon displayed inside the button. If both `icon` and `text` are set,
+   * then the icon appears before the text.
    * </pre>
    *
    * <code>.google.apps.card.v1.Icon icon = 2;</code>
@@ -169,8 +395,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * The icon image. If both `icon` and `text` are set, then the icon appears
-   * before the text.
+   * An icon displayed inside the button. If both `icon` and `text` are set,
+   * then the icon appears before the text.
    * </pre>
    *
    * <code>.google.apps.card.v1.Icon icon = 2;</code>
@@ -187,38 +413,29 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * If set, the button is filled with a solid background color and the font
-   * color changes to maintain contrast with the background color. For example,
-   * setting a blue background likely results in white text.
+   * Optional. The color of the button. If set, the button `type` is set to
+   * `FILLED` and the color of `text` and `icon` fields are set to a
+   * contrasting color for readability. For example, if the button color is
+   * set to blue, any text or icons in the button are set to white.
    *
-   * If unset, the image background is white and the font color is blue.
+   * To set the button color, specify a value for the `red`, `green`, and `blue`
+   * fields.
+   * The value must be a float number between 0 and 1 based on the RGB color
+   * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+   * represents the maximum intensity of the color.
    *
-   * For red, green, and blue, the value of each field is a `float` number that
-   * you can express in either of two ways: as a number between 0 and 255
-   * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-   * the absence of a color and 1 or 255/255 represent the full presence of that
-   * color on the RGB scale.
-   *
-   * Optionally set `alpha`, which sets a level of transparency using this
-   * equation:
-   *
-   * ```
-   * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-   * ```
-   *
-   * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-   * `0` corresponds with a completely transparent color.
-   *
-   * For example, the following color represents a half transparent red:
+   * For example, the following sets the color to red at its maximum intensity:
    *
    * ```
    * "color": {
    *    "red": 1,
    *    "green": 0,
    *    "blue": 0,
-   *    "alpha": 0.5
    * }
    * ```
+   *
+   * The `alpha` field is unavailable for button color. If specified, this field
+   * is ignored.
    * </pre>
    *
    * <code>.google.type.Color color = 3;</code>
@@ -234,38 +451,29 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * If set, the button is filled with a solid background color and the font
-   * color changes to maintain contrast with the background color. For example,
-   * setting a blue background likely results in white text.
+   * Optional. The color of the button. If set, the button `type` is set to
+   * `FILLED` and the color of `text` and `icon` fields are set to a
+   * contrasting color for readability. For example, if the button color is
+   * set to blue, any text or icons in the button are set to white.
    *
-   * If unset, the image background is white and the font color is blue.
+   * To set the button color, specify a value for the `red`, `green`, and `blue`
+   * fields.
+   * The value must be a float number between 0 and 1 based on the RGB color
+   * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+   * represents the maximum intensity of the color.
    *
-   * For red, green, and blue, the value of each field is a `float` number that
-   * you can express in either of two ways: as a number between 0 and 255
-   * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-   * the absence of a color and 1 or 255/255 represent the full presence of that
-   * color on the RGB scale.
-   *
-   * Optionally set `alpha`, which sets a level of transparency using this
-   * equation:
-   *
-   * ```
-   * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-   * ```
-   *
-   * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-   * `0` corresponds with a completely transparent color.
-   *
-   * For example, the following color represents a half transparent red:
+   * For example, the following sets the color to red at its maximum intensity:
    *
    * ```
    * "color": {
    *    "red": 1,
    *    "green": 0,
    *    "blue": 0,
-   *    "alpha": 0.5
    * }
    * ```
+   *
+   * The `alpha` field is unavailable for button color. If specified, this field
+   * is ignored.
    * </pre>
    *
    * <code>.google.type.Color color = 3;</code>
@@ -281,38 +489,29 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * If set, the button is filled with a solid background color and the font
-   * color changes to maintain contrast with the background color. For example,
-   * setting a blue background likely results in white text.
+   * Optional. The color of the button. If set, the button `type` is set to
+   * `FILLED` and the color of `text` and `icon` fields are set to a
+   * contrasting color for readability. For example, if the button color is
+   * set to blue, any text or icons in the button are set to white.
    *
-   * If unset, the image background is white and the font color is blue.
+   * To set the button color, specify a value for the `red`, `green`, and `blue`
+   * fields.
+   * The value must be a float number between 0 and 1 based on the RGB color
+   * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+   * represents the maximum intensity of the color.
    *
-   * For red, green, and blue, the value of each field is a `float` number that
-   * you can express in either of two ways: as a number between 0 and 255
-   * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-   * the absence of a color and 1 or 255/255 represent the full presence of that
-   * color on the RGB scale.
-   *
-   * Optionally set `alpha`, which sets a level of transparency using this
-   * equation:
-   *
-   * ```
-   * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-   * ```
-   *
-   * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-   * `0` corresponds with a completely transparent color.
-   *
-   * For example, the following color represents a half transparent red:
+   * For example, the following sets the color to red at its maximum intensity:
    *
    * ```
    * "color": {
    *    "red": 1,
    *    "green": 0,
    *    "blue": 0,
-   *    "alpha": 0.5
    * }
    * ```
+   *
+   * The `alpha` field is unavailable for button color. If specified, this field
+   * is ignored.
    * </pre>
    *
    * <code>.google.type.Color color = 3;</code>
@@ -457,6 +656,47 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
     }
   }
 
+  public static final int TYPE_FIELD_NUMBER = 7;
+  private int type_ = 0;
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The type of a button. If unset, button type defaults to
+   * `OUTLINED`. If the `color` field is set, the button type is forced to
+   * `FILLED` and any value set for this field is ignored.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Button.Type type = 7;</code>
+   *
+   * @return The enum numeric value on the wire for type.
+   */
+  @java.lang.Override
+  public int getTypeValue() {
+    return type_;
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The type of a button. If unset, button type defaults to
+   * `OUTLINED`. If the `color` field is set, the button type is forced to
+   * `FILLED` and any value set for this field is ignored.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Button.Type type = 7;</code>
+   *
+   * @return The type.
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.Button.Type getType() {
+    com.google.apps.card.v1.Button.Type result =
+        com.google.apps.card.v1.Button.Type.forNumber(type_);
+    return result == null ? com.google.apps.card.v1.Button.Type.UNRECOGNIZED : result;
+  }
+
   private byte memoizedIsInitialized = -1;
 
   @java.lang.Override
@@ -489,6 +729,9 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(altText_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 6, altText_);
     }
+    if (type_ != com.google.apps.card.v1.Button.Type.TYPE_UNSPECIFIED.getNumber()) {
+      output.writeEnum(7, type_);
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -515,6 +758,9 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
     }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(altText_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, altText_);
+    }
+    if (type_ != com.google.apps.card.v1.Button.Type.TYPE_UNSPECIFIED.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream.computeEnumSize(7, type_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -546,6 +792,7 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
     }
     if (getDisabled() != other.getDisabled()) return false;
     if (!getAltText().equals(other.getAltText())) return false;
+    if (type_ != other.type_) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -575,6 +822,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getDisabled());
     hash = (37 * hash) + ALT_TEXT_FIELD_NUMBER;
     hash = (53 * hash) + getAltText().hashCode();
+    hash = (37 * hash) + TYPE_FIELD_NUMBER;
+    hash = (53 * hash) + type_;
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -690,7 +939,7 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    * `onClick` action.
    *
    * [Google Workspace
-   * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+   * add-ons and Chat apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
    * Protobuf type {@code google.apps.card.v1.Button}
@@ -753,6 +1002,7 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       }
       disabled_ = false;
       altText_ = "";
+      type_ = 0;
       return this;
     }
 
@@ -809,6 +1059,9 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       }
       if (((from_bitField0_ & 0x00000020) != 0)) {
         result.altText_ = altText_;
+      }
+      if (((from_bitField0_ & 0x00000040) != 0)) {
+        result.type_ = type_;
       }
       result.bitField0_ |= to_bitField0_;
     }
@@ -880,6 +1133,9 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
         bitField0_ |= 0x00000020;
         onChanged();
       }
+      if (other.type_ != 0) {
+        setTypeValue(other.getTypeValue());
+      }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
@@ -942,6 +1198,12 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
                 bitField0_ |= 0x00000020;
                 break;
               } // case 50
+            case 56:
+              {
+                type_ = input.readEnum();
+                bitField0_ |= 0x00000040;
+                break;
+              } // case 56
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -1083,8 +1345,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The icon image. If both `icon` and `text` are set, then the icon appears
-     * before the text.
+     * An icon displayed inside the button. If both `icon` and `text` are set,
+     * then the icon appears before the text.
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon icon = 2;</code>
@@ -1099,8 +1361,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The icon image. If both `icon` and `text` are set, then the icon appears
-     * before the text.
+     * An icon displayed inside the button. If both `icon` and `text` are set,
+     * then the icon appears before the text.
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon icon = 2;</code>
@@ -1119,8 +1381,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The icon image. If both `icon` and `text` are set, then the icon appears
-     * before the text.
+     * An icon displayed inside the button. If both `icon` and `text` are set,
+     * then the icon appears before the text.
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon icon = 2;</code>
@@ -1143,8 +1405,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The icon image. If both `icon` and `text` are set, then the icon appears
-     * before the text.
+     * An icon displayed inside the button. If both `icon` and `text` are set,
+     * then the icon appears before the text.
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon icon = 2;</code>
@@ -1164,8 +1426,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The icon image. If both `icon` and `text` are set, then the icon appears
-     * before the text.
+     * An icon displayed inside the button. If both `icon` and `text` are set,
+     * then the icon appears before the text.
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon icon = 2;</code>
@@ -1193,8 +1455,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The icon image. If both `icon` and `text` are set, then the icon appears
-     * before the text.
+     * An icon displayed inside the button. If both `icon` and `text` are set,
+     * then the icon appears before the text.
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon icon = 2;</code>
@@ -1214,8 +1476,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The icon image. If both `icon` and `text` are set, then the icon appears
-     * before the text.
+     * An icon displayed inside the button. If both `icon` and `text` are set,
+     * then the icon appears before the text.
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon icon = 2;</code>
@@ -1230,8 +1492,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The icon image. If both `icon` and `text` are set, then the icon appears
-     * before the text.
+     * An icon displayed inside the button. If both `icon` and `text` are set,
+     * then the icon appears before the text.
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon icon = 2;</code>
@@ -1248,8 +1510,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The icon image. If both `icon` and `text` are set, then the icon appears
-     * before the text.
+     * An icon displayed inside the button. If both `icon` and `text` are set,
+     * then the icon appears before the text.
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon icon = 2;</code>
@@ -1280,38 +1542,29 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * If set, the button is filled with a solid background color and the font
-     * color changes to maintain contrast with the background color. For example,
-     * setting a blue background likely results in white text.
+     * Optional. The color of the button. If set, the button `type` is set to
+     * `FILLED` and the color of `text` and `icon` fields are set to a
+     * contrasting color for readability. For example, if the button color is
+     * set to blue, any text or icons in the button are set to white.
      *
-     * If unset, the image background is white and the font color is blue.
+     * To set the button color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
      *
-     * For red, green, and blue, the value of each field is a `float` number that
-     * you can express in either of two ways: as a number between 0 and 255
-     * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-     * the absence of a color and 1 or 255/255 represent the full presence of that
-     * color on the RGB scale.
-     *
-     * Optionally set `alpha`, which sets a level of transparency using this
-     * equation:
-     *
-     * ```
-     * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-     * ```
-     *
-     * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-     * `0` corresponds with a completely transparent color.
-     *
-     * For example, the following color represents a half transparent red:
+     * For example, the following sets the color to red at its maximum intensity:
      *
      * ```
      * "color": {
      *    "red": 1,
      *    "green": 0,
      *    "blue": 0,
-     *    "alpha": 0.5
      * }
      * ```
+     *
+     * The `alpha` field is unavailable for button color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color color = 3;</code>
@@ -1326,38 +1579,29 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * If set, the button is filled with a solid background color and the font
-     * color changes to maintain contrast with the background color. For example,
-     * setting a blue background likely results in white text.
+     * Optional. The color of the button. If set, the button `type` is set to
+     * `FILLED` and the color of `text` and `icon` fields are set to a
+     * contrasting color for readability. For example, if the button color is
+     * set to blue, any text or icons in the button are set to white.
      *
-     * If unset, the image background is white and the font color is blue.
+     * To set the button color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
      *
-     * For red, green, and blue, the value of each field is a `float` number that
-     * you can express in either of two ways: as a number between 0 and 255
-     * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-     * the absence of a color and 1 or 255/255 represent the full presence of that
-     * color on the RGB scale.
-     *
-     * Optionally set `alpha`, which sets a level of transparency using this
-     * equation:
-     *
-     * ```
-     * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-     * ```
-     *
-     * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-     * `0` corresponds with a completely transparent color.
-     *
-     * For example, the following color represents a half transparent red:
+     * For example, the following sets the color to red at its maximum intensity:
      *
      * ```
      * "color": {
      *    "red": 1,
      *    "green": 0,
      *    "blue": 0,
-     *    "alpha": 0.5
      * }
      * ```
+     *
+     * The `alpha` field is unavailable for button color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color color = 3;</code>
@@ -1376,38 +1620,29 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * If set, the button is filled with a solid background color and the font
-     * color changes to maintain contrast with the background color. For example,
-     * setting a blue background likely results in white text.
+     * Optional. The color of the button. If set, the button `type` is set to
+     * `FILLED` and the color of `text` and `icon` fields are set to a
+     * contrasting color for readability. For example, if the button color is
+     * set to blue, any text or icons in the button are set to white.
      *
-     * If unset, the image background is white and the font color is blue.
+     * To set the button color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
      *
-     * For red, green, and blue, the value of each field is a `float` number that
-     * you can express in either of two ways: as a number between 0 and 255
-     * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-     * the absence of a color and 1 or 255/255 represent the full presence of that
-     * color on the RGB scale.
-     *
-     * Optionally set `alpha`, which sets a level of transparency using this
-     * equation:
-     *
-     * ```
-     * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-     * ```
-     *
-     * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-     * `0` corresponds with a completely transparent color.
-     *
-     * For example, the following color represents a half transparent red:
+     * For example, the following sets the color to red at its maximum intensity:
      *
      * ```
      * "color": {
      *    "red": 1,
      *    "green": 0,
      *    "blue": 0,
-     *    "alpha": 0.5
      * }
      * ```
+     *
+     * The `alpha` field is unavailable for button color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color color = 3;</code>
@@ -1430,38 +1665,29 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * If set, the button is filled with a solid background color and the font
-     * color changes to maintain contrast with the background color. For example,
-     * setting a blue background likely results in white text.
+     * Optional. The color of the button. If set, the button `type` is set to
+     * `FILLED` and the color of `text` and `icon` fields are set to a
+     * contrasting color for readability. For example, if the button color is
+     * set to blue, any text or icons in the button are set to white.
      *
-     * If unset, the image background is white and the font color is blue.
+     * To set the button color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
      *
-     * For red, green, and blue, the value of each field is a `float` number that
-     * you can express in either of two ways: as a number between 0 and 255
-     * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-     * the absence of a color and 1 or 255/255 represent the full presence of that
-     * color on the RGB scale.
-     *
-     * Optionally set `alpha`, which sets a level of transparency using this
-     * equation:
-     *
-     * ```
-     * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-     * ```
-     *
-     * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-     * `0` corresponds with a completely transparent color.
-     *
-     * For example, the following color represents a half transparent red:
+     * For example, the following sets the color to red at its maximum intensity:
      *
      * ```
      * "color": {
      *    "red": 1,
      *    "green": 0,
      *    "blue": 0,
-     *    "alpha": 0.5
      * }
      * ```
+     *
+     * The `alpha` field is unavailable for button color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color color = 3;</code>
@@ -1481,38 +1707,29 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * If set, the button is filled with a solid background color and the font
-     * color changes to maintain contrast with the background color. For example,
-     * setting a blue background likely results in white text.
+     * Optional. The color of the button. If set, the button `type` is set to
+     * `FILLED` and the color of `text` and `icon` fields are set to a
+     * contrasting color for readability. For example, if the button color is
+     * set to blue, any text or icons in the button are set to white.
      *
-     * If unset, the image background is white and the font color is blue.
+     * To set the button color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
      *
-     * For red, green, and blue, the value of each field is a `float` number that
-     * you can express in either of two ways: as a number between 0 and 255
-     * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-     * the absence of a color and 1 or 255/255 represent the full presence of that
-     * color on the RGB scale.
-     *
-     * Optionally set `alpha`, which sets a level of transparency using this
-     * equation:
-     *
-     * ```
-     * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-     * ```
-     *
-     * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-     * `0` corresponds with a completely transparent color.
-     *
-     * For example, the following color represents a half transparent red:
+     * For example, the following sets the color to red at its maximum intensity:
      *
      * ```
      * "color": {
      *    "red": 1,
      *    "green": 0,
      *    "blue": 0,
-     *    "alpha": 0.5
      * }
      * ```
+     *
+     * The `alpha` field is unavailable for button color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color color = 3;</code>
@@ -1540,38 +1757,29 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * If set, the button is filled with a solid background color and the font
-     * color changes to maintain contrast with the background color. For example,
-     * setting a blue background likely results in white text.
+     * Optional. The color of the button. If set, the button `type` is set to
+     * `FILLED` and the color of `text` and `icon` fields are set to a
+     * contrasting color for readability. For example, if the button color is
+     * set to blue, any text or icons in the button are set to white.
      *
-     * If unset, the image background is white and the font color is blue.
+     * To set the button color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
      *
-     * For red, green, and blue, the value of each field is a `float` number that
-     * you can express in either of two ways: as a number between 0 and 255
-     * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-     * the absence of a color and 1 or 255/255 represent the full presence of that
-     * color on the RGB scale.
-     *
-     * Optionally set `alpha`, which sets a level of transparency using this
-     * equation:
-     *
-     * ```
-     * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-     * ```
-     *
-     * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-     * `0` corresponds with a completely transparent color.
-     *
-     * For example, the following color represents a half transparent red:
+     * For example, the following sets the color to red at its maximum intensity:
      *
      * ```
      * "color": {
      *    "red": 1,
      *    "green": 0,
      *    "blue": 0,
-     *    "alpha": 0.5
      * }
      * ```
+     *
+     * The `alpha` field is unavailable for button color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color color = 3;</code>
@@ -1591,38 +1799,29 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * If set, the button is filled with a solid background color and the font
-     * color changes to maintain contrast with the background color. For example,
-     * setting a blue background likely results in white text.
+     * Optional. The color of the button. If set, the button `type` is set to
+     * `FILLED` and the color of `text` and `icon` fields are set to a
+     * contrasting color for readability. For example, if the button color is
+     * set to blue, any text or icons in the button are set to white.
      *
-     * If unset, the image background is white and the font color is blue.
+     * To set the button color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
      *
-     * For red, green, and blue, the value of each field is a `float` number that
-     * you can express in either of two ways: as a number between 0 and 255
-     * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-     * the absence of a color and 1 or 255/255 represent the full presence of that
-     * color on the RGB scale.
-     *
-     * Optionally set `alpha`, which sets a level of transparency using this
-     * equation:
-     *
-     * ```
-     * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-     * ```
-     *
-     * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-     * `0` corresponds with a completely transparent color.
-     *
-     * For example, the following color represents a half transparent red:
+     * For example, the following sets the color to red at its maximum intensity:
      *
      * ```
      * "color": {
      *    "red": 1,
      *    "green": 0,
      *    "blue": 0,
-     *    "alpha": 0.5
      * }
      * ```
+     *
+     * The `alpha` field is unavailable for button color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color color = 3;</code>
@@ -1637,38 +1836,29 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * If set, the button is filled with a solid background color and the font
-     * color changes to maintain contrast with the background color. For example,
-     * setting a blue background likely results in white text.
+     * Optional. The color of the button. If set, the button `type` is set to
+     * `FILLED` and the color of `text` and `icon` fields are set to a
+     * contrasting color for readability. For example, if the button color is
+     * set to blue, any text or icons in the button are set to white.
      *
-     * If unset, the image background is white and the font color is blue.
+     * To set the button color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
      *
-     * For red, green, and blue, the value of each field is a `float` number that
-     * you can express in either of two ways: as a number between 0 and 255
-     * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-     * the absence of a color and 1 or 255/255 represent the full presence of that
-     * color on the RGB scale.
-     *
-     * Optionally set `alpha`, which sets a level of transparency using this
-     * equation:
-     *
-     * ```
-     * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-     * ```
-     *
-     * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-     * `0` corresponds with a completely transparent color.
-     *
-     * For example, the following color represents a half transparent red:
+     * For example, the following sets the color to red at its maximum intensity:
      *
      * ```
      * "color": {
      *    "red": 1,
      *    "green": 0,
      *    "blue": 0,
-     *    "alpha": 0.5
      * }
      * ```
+     *
+     * The `alpha` field is unavailable for button color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color color = 3;</code>
@@ -1685,38 +1875,29 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * If set, the button is filled with a solid background color and the font
-     * color changes to maintain contrast with the background color. For example,
-     * setting a blue background likely results in white text.
+     * Optional. The color of the button. If set, the button `type` is set to
+     * `FILLED` and the color of `text` and `icon` fields are set to a
+     * contrasting color for readability. For example, if the button color is
+     * set to blue, any text or icons in the button are set to white.
      *
-     * If unset, the image background is white and the font color is blue.
+     * To set the button color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
      *
-     * For red, green, and blue, the value of each field is a `float` number that
-     * you can express in either of two ways: as a number between 0 and 255
-     * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-     * the absence of a color and 1 or 255/255 represent the full presence of that
-     * color on the RGB scale.
-     *
-     * Optionally set `alpha`, which sets a level of transparency using this
-     * equation:
-     *
-     * ```
-     * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-     * ```
-     *
-     * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-     * `0` corresponds with a completely transparent color.
-     *
-     * For example, the following color represents a half transparent red:
+     * For example, the following sets the color to red at its maximum intensity:
      *
      * ```
      * "color": {
      *    "red": 1,
      *    "green": 0,
      *    "blue": 0,
-     *    "alpha": 0.5
      * }
      * ```
+     *
+     * The `alpha` field is unavailable for button color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color color = 3;</code>
@@ -2125,6 +2306,111 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       altText_ = value;
       bitField0_ |= 0x00000020;
+      onChanged();
+      return this;
+    }
+
+    private int type_ = 0;
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. The type of a button. If unset, button type defaults to
+     * `OUTLINED`. If the `color` field is set, the button type is forced to
+     * `FILLED` and any value set for this field is ignored.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Button.Type type = 7;</code>
+     *
+     * @return The enum numeric value on the wire for type.
+     */
+    @java.lang.Override
+    public int getTypeValue() {
+      return type_;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. The type of a button. If unset, button type defaults to
+     * `OUTLINED`. If the `color` field is set, the button type is forced to
+     * `FILLED` and any value set for this field is ignored.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Button.Type type = 7;</code>
+     *
+     * @param value The enum numeric value on the wire for type to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTypeValue(int value) {
+      type_ = value;
+      bitField0_ |= 0x00000040;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. The type of a button. If unset, button type defaults to
+     * `OUTLINED`. If the `color` field is set, the button type is forced to
+     * `FILLED` and any value set for this field is ignored.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Button.Type type = 7;</code>
+     *
+     * @return The type.
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.Button.Type getType() {
+      com.google.apps.card.v1.Button.Type result =
+          com.google.apps.card.v1.Button.Type.forNumber(type_);
+      return result == null ? com.google.apps.card.v1.Button.Type.UNRECOGNIZED : result;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. The type of a button. If unset, button type defaults to
+     * `OUTLINED`. If the `color` field is set, the button type is forced to
+     * `FILLED` and any value set for this field is ignored.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Button.Type type = 7;</code>
+     *
+     * @param value The type to set.
+     * @return This builder for chaining.
+     */
+    public Builder setType(com.google.apps.card.v1.Button.Type value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      bitField0_ |= 0x00000040;
+      type_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. The type of a button. If unset, button type defaults to
+     * `OUTLINED`. If the `color` field is set, the button type is forced to
+     * `FILLED` and any value set for this field is ignored.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Button.Type type = 7;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearType() {
+      bitField0_ = (bitField0_ & ~0x00000040);
+      type_ = 0;
       onChanged();
       return this;
     }

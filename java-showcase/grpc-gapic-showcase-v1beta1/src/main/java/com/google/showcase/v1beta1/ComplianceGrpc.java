@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,9 +26,6 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * correctly.
  * </pre>
  */
-@javax.annotation.Generated(
-    value = "by gRPC proto compiler",
-    comments = "Source: schema/google/showcase/v1beta1/compliance.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class ComplianceGrpc {
 
@@ -919,8 +916,8 @@ public final class ComplianceGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.RepeatResponse repeatDataBody(
-        com.google.showcase.v1beta1.RepeatRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.RepeatRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getRepeatDataBodyMethod(), getCallOptions(), request);
     }
 
@@ -934,8 +931,8 @@ public final class ComplianceGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.RepeatResponse repeatDataBodyInfo(
-        com.google.showcase.v1beta1.RepeatRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.RepeatRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getRepeatDataBodyInfoMethod(), getCallOptions(), request);
     }
 
@@ -948,8 +945,8 @@ public final class ComplianceGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.RepeatResponse repeatDataQuery(
-        com.google.showcase.v1beta1.RepeatRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.RepeatRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getRepeatDataQueryMethod(), getCallOptions(), request);
     }
 
@@ -963,8 +960,8 @@ public final class ComplianceGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.RepeatResponse repeatDataSimplePath(
-        com.google.showcase.v1beta1.RepeatRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.RepeatRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getRepeatDataSimplePathMethod(), getCallOptions(), request);
     }
 
@@ -976,8 +973,8 @@ public final class ComplianceGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.RepeatResponse repeatDataPathResource(
-        com.google.showcase.v1beta1.RepeatRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.RepeatRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getRepeatDataPathResourceMethod(), getCallOptions(), request);
     }
 
@@ -989,8 +986,8 @@ public final class ComplianceGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.RepeatResponse repeatDataPathTrailingResource(
-        com.google.showcase.v1beta1.RepeatRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.RepeatRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getRepeatDataPathTrailingResourceMethod(), getCallOptions(), request);
     }
 
@@ -1002,8 +999,8 @@ public final class ComplianceGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.RepeatResponse repeatDataBodyPut(
-        com.google.showcase.v1beta1.RepeatRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.RepeatRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getRepeatDataBodyPutMethod(), getCallOptions(), request);
     }
 
@@ -1015,8 +1012,8 @@ public final class ComplianceGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.RepeatResponse repeatDataBodyPatch(
-        com.google.showcase.v1beta1.RepeatRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.RepeatRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getRepeatDataBodyPatchMethod(), getCallOptions(), request);
     }
 
@@ -1032,8 +1029,8 @@ public final class ComplianceGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.EnumResponse getEnum(
-        com.google.showcase.v1beta1.EnumRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.EnumRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getGetEnumMethod(), getCallOptions(), request);
     }
 
@@ -1049,8 +1046,8 @@ public final class ComplianceGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.EnumResponse verifyEnum(
-        com.google.showcase.v1beta1.EnumResponse request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.EnumResponse request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getVerifyEnumMethod(), getCallOptions(), request);
     }
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ package com.google.apps.card.v1;
  *
  * <pre>
  * A card interface displayed in a Google Chat message or Google Workspace
- * Add-on.
+ * add-on.
  *
  * Cards support a defined layout, interactive UI elements like buttons, and
  * rich media like images. Use cards to present detailed information,
@@ -37,8 +37,12 @@ package com.google.apps.card.v1;
  *
  * * For Google Chat apps, see [Design the components of a card or
  *   dialog](https://developers.google.com/workspace/chat/design-components-card-dialog).
- * * For Google Workspace Add-ons, see [Card-based
+ * * For Google Workspace add-ons, see [Card-based
  * interfaces](https://developers.google.com/apps-script/add-ons/concepts/cards).
+ *
+ * Note: You can add up to 100 widgets per card. Any widgets beyond this
+ * limit are ignored. This limit applies to both card messages and dialogs
+ * in Google Chat apps, and to cards in Google Workspace add-ons.
  *
  * **Example: Card message for a Google Chat app**
  *
@@ -176,7 +180,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * The divider style of a card. Currently only used for dividers betweens card
    * sections.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -197,7 +201,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Default option. Render a solid divider between sections.
+     * Default option. Render a solid divider.
      * </pre>
      *
      * <code>SOLID_DIVIDER = 1;</code>
@@ -207,7 +211,8 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * If set, no divider is rendered between sections.
+     * If set, no divider is rendered. This style completely removes the divider
+     * from the layout. The result is equivalent to not adding a divider at all.
      * </pre>
      *
      * <code>NO_DIVIDER = 2;</code>
@@ -231,7 +236,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Default option. Render a solid divider between sections.
+     * Default option. Render a solid divider.
      * </pre>
      *
      * <code>SOLID_DIVIDER = 1;</code>
@@ -242,7 +247,8 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * If set, no divider is rendered between sections.
+     * If set, no divider is rendered. This style completely removes the divider
+     * from the layout. The result is equivalent to not adding a divider at all.
      * </pre>
      *
      * <code>NO_DIVIDER = 2;</code>
@@ -336,11 +342,11 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * In Google Workspace Add-ons,
+   * In Google Workspace add-ons,
    * determines how a card is displayed.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * Protobuf enum {@code google.apps.card.v1.Card.DisplayStyle}
@@ -574,7 +580,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The shape used to crop the image.
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -590,7 +596,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The shape used to crop the image.
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -660,7 +666,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * Represents a card header. For an example in Google Chat apps, see [Add a
    * header](https://developers.google.com/workspace/chat/design-components-card-dialog#add_a_header).
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -829,7 +835,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The shape used to crop the image.
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -848,7 +854,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The shape used to crop the image.
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -1172,7 +1178,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * Represents a card header. For an example in Google Chat apps, see [Add a
      * header](https://developers.google.com/workspace/chat/design-components-card-dialog#add_a_header).
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -1662,7 +1668,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
        * <pre>
        * The shape used to crop the image.
        *
-       * [Google Workspace Add-ons and Chat
+       * [Google Workspace add-ons and Chat
        * apps](https://developers.google.com/workspace/extend):
        * </pre>
        *
@@ -1681,7 +1687,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
        * <pre>
        * The shape used to crop the image.
        *
-       * [Google Workspace Add-ons and Chat
+       * [Google Workspace add-ons and Chat
        * apps](https://developers.google.com/workspace/extend):
        * </pre>
        *
@@ -1703,7 +1709,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
        * <pre>
        * The shape used to crop the image.
        *
-       * [Google Workspace Add-ons and Chat
+       * [Google Workspace add-ons and Chat
        * apps](https://developers.google.com/workspace/extend):
        * </pre>
        *
@@ -1724,7 +1730,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
        * <pre>
        * The shape used to crop the image.
        *
-       * [Google Workspace Add-ons and Chat
+       * [Google Workspace add-ons and Chat
        * apps](https://developers.google.com/workspace/extend):
        * </pre>
        *
@@ -1749,7 +1755,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
        * <pre>
        * The shape used to crop the image.
        *
-       * [Google Workspace Add-ons and Chat
+       * [Google Workspace add-ons and Chat
        * apps](https://developers.google.com/workspace/extend):
        * </pre>
        *
@@ -2067,7 +2073,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      * </pre>
      *
      * <code>string header = 1;</code>
@@ -2088,7 +2094,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      * </pre>
      *
      * <code>string header = 1;</code>
@@ -2196,6 +2202,49 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * @return The uncollapsibleWidgetsCount.
      */
     int getUncollapsibleWidgetsCount();
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Define the expand and collapse button of the section.
+     * This button will be shown only if the section is collapsible.
+     * If this field isn't set, the default button is used.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.CollapseControl collapse_control = 8;</code>
+     *
+     * @return Whether the collapseControl field is set.
+     */
+    boolean hasCollapseControl();
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Define the expand and collapse button of the section.
+     * This button will be shown only if the section is collapsible.
+     * If this field isn't set, the default button is used.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.CollapseControl collapse_control = 8;</code>
+     *
+     * @return The collapseControl.
+     */
+    com.google.apps.card.v1.CollapseControl getCollapseControl();
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Define the expand and collapse button of the section.
+     * This button will be shown only if the section is collapsible.
+     * If this field isn't set, the default button is used.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.CollapseControl collapse_control = 8;</code>
+     */
+    com.google.apps.card.v1.CollapseControlOrBuilder getCollapseControlOrBuilder();
   }
 
   /**
@@ -2205,7 +2254,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * A section contains a collection of widgets that are rendered
    * vertically in the order that they're specified.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -2248,6 +2297,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
               com.google.apps.card.v1.Card.Section.Builder.class);
     }
 
+    private int bitField0_;
     public static final int HEADER_FIELD_NUMBER = 1;
 
     @SuppressWarnings("serial")
@@ -2265,7 +2315,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      * </pre>
      *
      * <code>string header = 1;</code>
@@ -2297,7 +2347,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      * </pre>
      *
      * <code>string header = 1;</code>
@@ -2450,6 +2500,65 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       return uncollapsibleWidgetsCount_;
     }
 
+    public static final int COLLAPSE_CONTROL_FIELD_NUMBER = 8;
+    private com.google.apps.card.v1.CollapseControl collapseControl_;
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Define the expand and collapse button of the section.
+     * This button will be shown only if the section is collapsible.
+     * If this field isn't set, the default button is used.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.CollapseControl collapse_control = 8;</code>
+     *
+     * @return Whether the collapseControl field is set.
+     */
+    @java.lang.Override
+    public boolean hasCollapseControl() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Define the expand and collapse button of the section.
+     * This button will be shown only if the section is collapsible.
+     * If this field isn't set, the default button is used.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.CollapseControl collapse_control = 8;</code>
+     *
+     * @return The collapseControl.
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.CollapseControl getCollapseControl() {
+      return collapseControl_ == null
+          ? com.google.apps.card.v1.CollapseControl.getDefaultInstance()
+          : collapseControl_;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Define the expand and collapse button of the section.
+     * This button will be shown only if the section is collapsible.
+     * If this field isn't set, the default button is used.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.CollapseControl collapse_control = 8;</code>
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.CollapseControlOrBuilder getCollapseControlOrBuilder() {
+      return collapseControl_ == null
+          ? com.google.apps.card.v1.CollapseControl.getDefaultInstance()
+          : collapseControl_;
+    }
+
     private byte memoizedIsInitialized = -1;
 
     @java.lang.Override
@@ -2476,6 +2585,9 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       if (uncollapsibleWidgetsCount_ != 0) {
         output.writeInt32(6, uncollapsibleWidgetsCount_);
       }
+      if (((bitField0_ & 0x00000001) != 0)) {
+        output.writeMessage(8, getCollapseControl());
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -2498,6 +2610,9 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         size +=
             com.google.protobuf.CodedOutputStream.computeInt32Size(6, uncollapsibleWidgetsCount_);
       }
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.CodedOutputStream.computeMessageSize(8, getCollapseControl());
+      }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
@@ -2517,6 +2632,10 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       if (!getWidgetsList().equals(other.getWidgetsList())) return false;
       if (getCollapsible() != other.getCollapsible()) return false;
       if (getUncollapsibleWidgetsCount() != other.getUncollapsibleWidgetsCount()) return false;
+      if (hasCollapseControl() != other.hasCollapseControl()) return false;
+      if (hasCollapseControl()) {
+        if (!getCollapseControl().equals(other.getCollapseControl())) return false;
+      }
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -2538,6 +2657,10 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getCollapsible());
       hash = (37 * hash) + UNCOLLAPSIBLE_WIDGETS_COUNT_FIELD_NUMBER;
       hash = (53 * hash) + getUncollapsibleWidgetsCount();
+      if (hasCollapseControl()) {
+        hash = (37 * hash) + COLLAPSE_CONTROL_FIELD_NUMBER;
+        hash = (53 * hash) + getCollapseControl().hashCode();
+      }
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -2647,7 +2770,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * A section contains a collection of widgets that are rendered
      * vertically in the order that they're specified.
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -2674,10 +2797,20 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
 
       // Construct using com.google.apps.card.v1.Card.Section.newBuilder()
-      private Builder() {}
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
 
       private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
+        maybeForceBuilderInitialization();
+      }
+
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+          getWidgetsFieldBuilder();
+          getCollapseControlFieldBuilder();
+        }
       }
 
       @java.lang.Override
@@ -2694,6 +2827,11 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         bitField0_ = (bitField0_ & ~0x00000002);
         collapsible_ = false;
         uncollapsibleWidgetsCount_ = 0;
+        collapseControl_ = null;
+        if (collapseControlBuilder_ != null) {
+          collapseControlBuilder_.dispose();
+          collapseControlBuilder_ = null;
+        }
         return this;
       }
 
@@ -2752,6 +2890,13 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         if (((from_bitField0_ & 0x00000008) != 0)) {
           result.uncollapsibleWidgetsCount_ = uncollapsibleWidgetsCount_;
         }
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000010) != 0)) {
+          result.collapseControl_ =
+              collapseControlBuilder_ == null ? collapseControl_ : collapseControlBuilder_.build();
+          to_bitField0_ |= 0x00000001;
+        }
+        result.bitField0_ |= to_bitField0_;
       }
 
       @java.lang.Override
@@ -2839,6 +2984,9 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         if (other.getUncollapsibleWidgetsCount() != 0) {
           setUncollapsibleWidgetsCount(other.getUncollapsibleWidgetsCount());
         }
+        if (other.hasCollapseControl()) {
+          mergeCollapseControl(other.getCollapseControl());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
@@ -2895,6 +3043,13 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
                   bitField0_ |= 0x00000008;
                   break;
                 } // case 48
+              case 66:
+                {
+                  input.readMessage(
+                      getCollapseControlFieldBuilder().getBuilder(), extensionRegistry);
+                  bitField0_ |= 0x00000010;
+                  break;
+                } // case 66
               default:
                 {
                   if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -2928,7 +3083,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
        * and
        * [Formatting
        * text in Google Workspace
-       * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+       * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
        * </pre>
        *
        * <code>string header = 1;</code>
@@ -2959,7 +3114,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
        * and
        * [Formatting
        * text in Google Workspace
-       * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+       * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
        * </pre>
        *
        * <code>string header = 1;</code>
@@ -2990,7 +3145,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
        * and
        * [Formatting
        * text in Google Workspace
-       * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+       * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
        * </pre>
        *
        * <code>string header = 1;</code>
@@ -3020,7 +3175,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
        * and
        * [Formatting
        * text in Google Workspace
-       * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+       * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
        * </pre>
        *
        * <code>string header = 1;</code>
@@ -3046,7 +3201,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
        * and
        * [Formatting
        * text in Google Workspace
-       * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+       * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
        * </pre>
        *
        * <code>string header = 1;</code>
@@ -3600,6 +3755,219 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return this;
       }
 
+      private com.google.apps.card.v1.CollapseControl collapseControl_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+              com.google.apps.card.v1.CollapseControl,
+              com.google.apps.card.v1.CollapseControl.Builder,
+              com.google.apps.card.v1.CollapseControlOrBuilder>
+          collapseControlBuilder_;
+
+      /**
+       *
+       *
+       * <pre>
+       * Optional. Define the expand and collapse button of the section.
+       * This button will be shown only if the section is collapsible.
+       * If this field isn't set, the default button is used.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.CollapseControl collapse_control = 8;</code>
+       *
+       * @return Whether the collapseControl field is set.
+       */
+      public boolean hasCollapseControl() {
+        return ((bitField0_ & 0x00000010) != 0);
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * Optional. Define the expand and collapse button of the section.
+       * This button will be shown only if the section is collapsible.
+       * If this field isn't set, the default button is used.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.CollapseControl collapse_control = 8;</code>
+       *
+       * @return The collapseControl.
+       */
+      public com.google.apps.card.v1.CollapseControl getCollapseControl() {
+        if (collapseControlBuilder_ == null) {
+          return collapseControl_ == null
+              ? com.google.apps.card.v1.CollapseControl.getDefaultInstance()
+              : collapseControl_;
+        } else {
+          return collapseControlBuilder_.getMessage();
+        }
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * Optional. Define the expand and collapse button of the section.
+       * This button will be shown only if the section is collapsible.
+       * If this field isn't set, the default button is used.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.CollapseControl collapse_control = 8;</code>
+       */
+      public Builder setCollapseControl(com.google.apps.card.v1.CollapseControl value) {
+        if (collapseControlBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          collapseControl_ = value;
+        } else {
+          collapseControlBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000010;
+        onChanged();
+        return this;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * Optional. Define the expand and collapse button of the section.
+       * This button will be shown only if the section is collapsible.
+       * If this field isn't set, the default button is used.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.CollapseControl collapse_control = 8;</code>
+       */
+      public Builder setCollapseControl(
+          com.google.apps.card.v1.CollapseControl.Builder builderForValue) {
+        if (collapseControlBuilder_ == null) {
+          collapseControl_ = builderForValue.build();
+        } else {
+          collapseControlBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000010;
+        onChanged();
+        return this;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * Optional. Define the expand and collapse button of the section.
+       * This button will be shown only if the section is collapsible.
+       * If this field isn't set, the default button is used.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.CollapseControl collapse_control = 8;</code>
+       */
+      public Builder mergeCollapseControl(com.google.apps.card.v1.CollapseControl value) {
+        if (collapseControlBuilder_ == null) {
+          if (((bitField0_ & 0x00000010) != 0)
+              && collapseControl_ != null
+              && collapseControl_ != com.google.apps.card.v1.CollapseControl.getDefaultInstance()) {
+            getCollapseControlBuilder().mergeFrom(value);
+          } else {
+            collapseControl_ = value;
+          }
+        } else {
+          collapseControlBuilder_.mergeFrom(value);
+        }
+        if (collapseControl_ != null) {
+          bitField0_ |= 0x00000010;
+          onChanged();
+        }
+        return this;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * Optional. Define the expand and collapse button of the section.
+       * This button will be shown only if the section is collapsible.
+       * If this field isn't set, the default button is used.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.CollapseControl collapse_control = 8;</code>
+       */
+      public Builder clearCollapseControl() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        collapseControl_ = null;
+        if (collapseControlBuilder_ != null) {
+          collapseControlBuilder_.dispose();
+          collapseControlBuilder_ = null;
+        }
+        onChanged();
+        return this;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * Optional. Define the expand and collapse button of the section.
+       * This button will be shown only if the section is collapsible.
+       * If this field isn't set, the default button is used.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.CollapseControl collapse_control = 8;</code>
+       */
+      public com.google.apps.card.v1.CollapseControl.Builder getCollapseControlBuilder() {
+        bitField0_ |= 0x00000010;
+        onChanged();
+        return getCollapseControlFieldBuilder().getBuilder();
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * Optional. Define the expand and collapse button of the section.
+       * This button will be shown only if the section is collapsible.
+       * If this field isn't set, the default button is used.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.CollapseControl collapse_control = 8;</code>
+       */
+      public com.google.apps.card.v1.CollapseControlOrBuilder getCollapseControlOrBuilder() {
+        if (collapseControlBuilder_ != null) {
+          return collapseControlBuilder_.getMessageOrBuilder();
+        } else {
+          return collapseControl_ == null
+              ? com.google.apps.card.v1.CollapseControl.getDefaultInstance()
+              : collapseControl_;
+        }
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * Optional. Define the expand and collapse button of the section.
+       * This button will be shown only if the section is collapsible.
+       * If this field isn't set, the default button is used.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.CollapseControl collapse_control = 8;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+              com.google.apps.card.v1.CollapseControl,
+              com.google.apps.card.v1.CollapseControl.Builder,
+              com.google.apps.card.v1.CollapseControlOrBuilder>
+          getCollapseControlFieldBuilder() {
+        if (collapseControlBuilder_ == null) {
+          collapseControlBuilder_ =
+              new com.google.protobuf.SingleFieldBuilderV3<
+                  com.google.apps.card.v1.CollapseControl,
+                  com.google.apps.card.v1.CollapseControl.Builder,
+                  com.google.apps.card.v1.CollapseControlOrBuilder>(
+                  getCollapseControl(), getParentForChildren(), isClean());
+          collapseControl_ = null;
+        }
+        return collapseControlBuilder_;
+      }
+
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -3742,7 +4110,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * invoice, or open the invoice in a browser.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * Protobuf type {@code google.apps.card.v1.Card.CardAction}
@@ -4069,7 +4437,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * invoice, or open the invoice in a browser.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * Protobuf type {@code google.apps.card.v1.Card.CardAction}
@@ -4644,6 +5012,1549 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     }
   }
 
+  public interface NestedWidgetOrBuilder
+      extends
+      // @@protoc_insertion_point(interface_extends:google.apps.card.v1.Card.NestedWidget)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     *
+     *
+     * <pre>
+     * A text paragraph widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+     *
+     * @return Whether the textParagraph field is set.
+     */
+    boolean hasTextParagraph();
+
+    /**
+     *
+     *
+     * <pre>
+     * A text paragraph widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+     *
+     * @return The textParagraph.
+     */
+    com.google.apps.card.v1.TextParagraph getTextParagraph();
+
+    /**
+     *
+     *
+     * <pre>
+     * A text paragraph widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+     */
+    com.google.apps.card.v1.TextParagraphOrBuilder getTextParagraphOrBuilder();
+
+    /**
+     *
+     *
+     * <pre>
+     * A button list widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ButtonList button_list = 3;</code>
+     *
+     * @return Whether the buttonList field is set.
+     */
+    boolean hasButtonList();
+
+    /**
+     *
+     *
+     * <pre>
+     * A button list widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ButtonList button_list = 3;</code>
+     *
+     * @return The buttonList.
+     */
+    com.google.apps.card.v1.ButtonList getButtonList();
+
+    /**
+     *
+     *
+     * <pre>
+     * A button list widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ButtonList button_list = 3;</code>
+     */
+    com.google.apps.card.v1.ButtonListOrBuilder getButtonListOrBuilder();
+
+    /**
+     *
+     *
+     * <pre>
+     * An image widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Image image = 10;</code>
+     *
+     * @return Whether the image field is set.
+     */
+    boolean hasImage();
+
+    /**
+     *
+     *
+     * <pre>
+     * An image widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Image image = 10;</code>
+     *
+     * @return The image.
+     */
+    com.google.apps.card.v1.Image getImage();
+
+    /**
+     *
+     *
+     * <pre>
+     * An image widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Image image = 10;</code>
+     */
+    com.google.apps.card.v1.ImageOrBuilder getImageOrBuilder();
+
+    com.google.apps.card.v1.Card.NestedWidget.DataCase getDataCase();
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * A list of widgets that can be displayed in a containing layout, such
+   * as a `CarouselCard`.
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * Protobuf type {@code google.apps.card.v1.Card.NestedWidget}
+   */
+  public static final class NestedWidget extends com.google.protobuf.GeneratedMessageV3
+      implements
+      // @@protoc_insertion_point(message_implements:google.apps.card.v1.Card.NestedWidget)
+      NestedWidgetOrBuilder {
+    private static final long serialVersionUID = 0L;
+
+    // Use NestedWidget.newBuilder() to construct.
+    private NestedWidget(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+
+    private NestedWidget() {}
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
+      return new NestedWidget();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+      return com.google.apps.card.v1.CardProto
+          .internal_static_google_apps_card_v1_Card_NestedWidget_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.google.apps.card.v1.CardProto
+          .internal_static_google_apps_card_v1_Card_NestedWidget_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.google.apps.card.v1.Card.NestedWidget.class,
+              com.google.apps.card.v1.Card.NestedWidget.Builder.class);
+    }
+
+    private int dataCase_ = 0;
+
+    @SuppressWarnings("serial")
+    private java.lang.Object data_;
+
+    public enum DataCase
+        implements
+            com.google.protobuf.Internal.EnumLite,
+            com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+      TEXT_PARAGRAPH(1),
+      BUTTON_LIST(3),
+      IMAGE(10),
+      DATA_NOT_SET(0);
+      private final int value;
+
+      private DataCase(int value) {
+        this.value = value;
+      }
+
+      /**
+       * @param value The number of the enum to look for.
+       * @return The enum associated with the given number.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static DataCase valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static DataCase forNumber(int value) {
+        switch (value) {
+          case 1:
+            return TEXT_PARAGRAPH;
+          case 3:
+            return BUTTON_LIST;
+          case 10:
+            return IMAGE;
+          case 0:
+            return DATA_NOT_SET;
+          default:
+            return null;
+        }
+      }
+
+      public int getNumber() {
+        return this.value;
+      }
+    };
+
+    public DataCase getDataCase() {
+      return DataCase.forNumber(dataCase_);
+    }
+
+    public static final int TEXT_PARAGRAPH_FIELD_NUMBER = 1;
+
+    /**
+     *
+     *
+     * <pre>
+     * A text paragraph widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+     *
+     * @return Whether the textParagraph field is set.
+     */
+    @java.lang.Override
+    public boolean hasTextParagraph() {
+      return dataCase_ == 1;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A text paragraph widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+     *
+     * @return The textParagraph.
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.TextParagraph getTextParagraph() {
+      if (dataCase_ == 1) {
+        return (com.google.apps.card.v1.TextParagraph) data_;
+      }
+      return com.google.apps.card.v1.TextParagraph.getDefaultInstance();
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A text paragraph widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.TextParagraphOrBuilder getTextParagraphOrBuilder() {
+      if (dataCase_ == 1) {
+        return (com.google.apps.card.v1.TextParagraph) data_;
+      }
+      return com.google.apps.card.v1.TextParagraph.getDefaultInstance();
+    }
+
+    public static final int BUTTON_LIST_FIELD_NUMBER = 3;
+
+    /**
+     *
+     *
+     * <pre>
+     * A button list widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ButtonList button_list = 3;</code>
+     *
+     * @return Whether the buttonList field is set.
+     */
+    @java.lang.Override
+    public boolean hasButtonList() {
+      return dataCase_ == 3;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A button list widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ButtonList button_list = 3;</code>
+     *
+     * @return The buttonList.
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.ButtonList getButtonList() {
+      if (dataCase_ == 3) {
+        return (com.google.apps.card.v1.ButtonList) data_;
+      }
+      return com.google.apps.card.v1.ButtonList.getDefaultInstance();
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A button list widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ButtonList button_list = 3;</code>
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.ButtonListOrBuilder getButtonListOrBuilder() {
+      if (dataCase_ == 3) {
+        return (com.google.apps.card.v1.ButtonList) data_;
+      }
+      return com.google.apps.card.v1.ButtonList.getDefaultInstance();
+    }
+
+    public static final int IMAGE_FIELD_NUMBER = 10;
+
+    /**
+     *
+     *
+     * <pre>
+     * An image widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Image image = 10;</code>
+     *
+     * @return Whether the image field is set.
+     */
+    @java.lang.Override
+    public boolean hasImage() {
+      return dataCase_ == 10;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * An image widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Image image = 10;</code>
+     *
+     * @return The image.
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.Image getImage() {
+      if (dataCase_ == 10) {
+        return (com.google.apps.card.v1.Image) data_;
+      }
+      return com.google.apps.card.v1.Image.getDefaultInstance();
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * An image widget.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Image image = 10;</code>
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.ImageOrBuilder getImageOrBuilder() {
+      if (dataCase_ == 10) {
+        return (com.google.apps.card.v1.Image) data_;
+      }
+      return com.google.apps.card.v1.Image.getDefaultInstance();
+    }
+
+    private byte memoizedIsInitialized = -1;
+
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+      if (dataCase_ == 1) {
+        output.writeMessage(1, (com.google.apps.card.v1.TextParagraph) data_);
+      }
+      if (dataCase_ == 3) {
+        output.writeMessage(3, (com.google.apps.card.v1.ButtonList) data_);
+      }
+      if (dataCase_ == 10) {
+        output.writeMessage(10, (com.google.apps.card.v1.Image) data_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (dataCase_ == 1) {
+        size +=
+            com.google.protobuf.CodedOutputStream.computeMessageSize(
+                1, (com.google.apps.card.v1.TextParagraph) data_);
+      }
+      if (dataCase_ == 3) {
+        size +=
+            com.google.protobuf.CodedOutputStream.computeMessageSize(
+                3, (com.google.apps.card.v1.ButtonList) data_);
+      }
+      if (dataCase_ == 10) {
+        size +=
+            com.google.protobuf.CodedOutputStream.computeMessageSize(
+                10, (com.google.apps.card.v1.Image) data_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+        return true;
+      }
+      if (!(obj instanceof com.google.apps.card.v1.Card.NestedWidget)) {
+        return super.equals(obj);
+      }
+      com.google.apps.card.v1.Card.NestedWidget other =
+          (com.google.apps.card.v1.Card.NestedWidget) obj;
+
+      if (!getDataCase().equals(other.getDataCase())) return false;
+      switch (dataCase_) {
+        case 1:
+          if (!getTextParagraph().equals(other.getTextParagraph())) return false;
+          break;
+        case 3:
+          if (!getButtonList().equals(other.getButtonList())) return false;
+          break;
+        case 10:
+          if (!getImage().equals(other.getImage())) return false;
+          break;
+        case 0:
+        default:
+      }
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      switch (dataCase_) {
+        case 1:
+          hash = (37 * hash) + TEXT_PARAGRAPH_FIELD_NUMBER;
+          hash = (53 * hash) + getTextParagraph().hashCode();
+          break;
+        case 3:
+          hash = (37 * hash) + BUTTON_LIST_FIELD_NUMBER;
+          hash = (53 * hash) + getButtonList().hashCode();
+          break;
+        case 10:
+          hash = (37 * hash) + IMAGE_FIELD_NUMBER;
+          hash = (53 * hash) + getImage().hashCode();
+          break;
+        case 0:
+        default:
+      }
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.google.apps.card.v1.Card.NestedWidget parseFrom(java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+
+    public static com.google.apps.card.v1.Card.NestedWidget parseFrom(
+        java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static com.google.apps.card.v1.Card.NestedWidget parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+
+    public static com.google.apps.card.v1.Card.NestedWidget parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static com.google.apps.card.v1.Card.NestedWidget parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+
+    public static com.google.apps.card.v1.Card.NestedWidget parseFrom(
+        byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static com.google.apps.card.v1.Card.NestedWidget parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    }
+
+    public static com.google.apps.card.v1.Card.NestedWidget parseFrom(
+        java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
+          PARSER, input, extensionRegistry);
+    }
+
+    public static com.google.apps.card.v1.Card.NestedWidget parseDelimitedFrom(
+        java.io.InputStream input) throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.google.apps.card.v1.Card.NestedWidget parseDelimitedFrom(
+        java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
+          PARSER, input, extensionRegistry);
+    }
+
+    public static com.google.apps.card.v1.Card.NestedWidget parseFrom(
+        com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    }
+
+    public static com.google.apps.card.v1.Card.NestedWidget parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
+          PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() {
+      return newBuilder();
+    }
+
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+
+    public static Builder newBuilder(com.google.apps.card.v1.Card.NestedWidget prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A list of widgets that can be displayed in a containing layout, such
+     * as a `CarouselCard`.
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * Protobuf type {@code google.apps.card.v1.Card.NestedWidget}
+     */
+    public static final class Builder
+        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        implements
+        // @@protoc_insertion_point(builder_implements:google.apps.card.v1.Card.NestedWidget)
+        com.google.apps.card.v1.Card.NestedWidgetOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+        return com.google.apps.card.v1.CardProto
+            .internal_static_google_apps_card_v1_Card_NestedWidget_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.google.apps.card.v1.CardProto
+            .internal_static_google_apps_card_v1_Card_NestedWidget_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.google.apps.card.v1.Card.NestedWidget.class,
+                com.google.apps.card.v1.Card.NestedWidget.Builder.class);
+      }
+
+      // Construct using com.google.apps.card.v1.Card.NestedWidget.newBuilder()
+      private Builder() {}
+
+      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+      }
+
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        if (textParagraphBuilder_ != null) {
+          textParagraphBuilder_.clear();
+        }
+        if (buttonListBuilder_ != null) {
+          buttonListBuilder_.clear();
+        }
+        if (imageBuilder_ != null) {
+          imageBuilder_.clear();
+        }
+        dataCase_ = 0;
+        data_ = null;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
+        return com.google.apps.card.v1.CardProto
+            .internal_static_google_apps_card_v1_Card_NestedWidget_descriptor;
+      }
+
+      @java.lang.Override
+      public com.google.apps.card.v1.Card.NestedWidget getDefaultInstanceForType() {
+        return com.google.apps.card.v1.Card.NestedWidget.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.google.apps.card.v1.Card.NestedWidget build() {
+        com.google.apps.card.v1.Card.NestedWidget result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.google.apps.card.v1.Card.NestedWidget buildPartial() {
+        com.google.apps.card.v1.Card.NestedWidget result =
+            new com.google.apps.card.v1.Card.NestedWidget(this);
+        if (bitField0_ != 0) {
+          buildPartial0(result);
+        }
+        buildPartialOneofs(result);
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(com.google.apps.card.v1.Card.NestedWidget result) {
+        int from_bitField0_ = bitField0_;
+      }
+
+      private void buildPartialOneofs(com.google.apps.card.v1.Card.NestedWidget result) {
+        result.dataCase_ = dataCase_;
+        result.data_ = this.data_;
+        if (dataCase_ == 1 && textParagraphBuilder_ != null) {
+          result.data_ = textParagraphBuilder_.build();
+        }
+        if (dataCase_ == 3 && buttonListBuilder_ != null) {
+          result.data_ = buttonListBuilder_.build();
+        }
+        if (dataCase_ == 10 && imageBuilder_ != null) {
+          result.data_ = imageBuilder_.build();
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+        return super.setField(field, value);
+      }
+
+      @java.lang.Override
+      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+
+      @java.lang.Override
+      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index,
+          java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.google.apps.card.v1.Card.NestedWidget) {
+          return mergeFrom((com.google.apps.card.v1.Card.NestedWidget) other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.google.apps.card.v1.Card.NestedWidget other) {
+        if (other == com.google.apps.card.v1.Card.NestedWidget.getDefaultInstance()) return this;
+        switch (other.getDataCase()) {
+          case TEXT_PARAGRAPH:
+            {
+              mergeTextParagraph(other.getTextParagraph());
+              break;
+            }
+          case BUTTON_LIST:
+            {
+              mergeButtonList(other.getButtonList());
+              break;
+            }
+          case IMAGE:
+            {
+              mergeImage(other.getImage());
+              break;
+            }
+          case DATA_NOT_SET:
+            {
+              break;
+            }
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10:
+                {
+                  input.readMessage(getTextParagraphFieldBuilder().getBuilder(), extensionRegistry);
+                  dataCase_ = 1;
+                  break;
+                } // case 10
+              case 26:
+                {
+                  input.readMessage(getButtonListFieldBuilder().getBuilder(), extensionRegistry);
+                  dataCase_ = 3;
+                  break;
+                } // case 26
+              case 82:
+                {
+                  input.readMessage(getImageFieldBuilder().getBuilder(), extensionRegistry);
+                  dataCase_ = 10;
+                  break;
+                } // case 82
+              default:
+                {
+                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                    done = true; // was an endgroup tag
+                  }
+                  break;
+                } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+
+      private int dataCase_ = 0;
+      private java.lang.Object data_;
+
+      public DataCase getDataCase() {
+        return DataCase.forNumber(dataCase_);
+      }
+
+      public Builder clearData() {
+        dataCase_ = 0;
+        data_ = null;
+        onChanged();
+        return this;
+      }
+
+      private int bitField0_;
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+              com.google.apps.card.v1.TextParagraph,
+              com.google.apps.card.v1.TextParagraph.Builder,
+              com.google.apps.card.v1.TextParagraphOrBuilder>
+          textParagraphBuilder_;
+
+      /**
+       *
+       *
+       * <pre>
+       * A text paragraph widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+       *
+       * @return Whether the textParagraph field is set.
+       */
+      @java.lang.Override
+      public boolean hasTextParagraph() {
+        return dataCase_ == 1;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * A text paragraph widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+       *
+       * @return The textParagraph.
+       */
+      @java.lang.Override
+      public com.google.apps.card.v1.TextParagraph getTextParagraph() {
+        if (textParagraphBuilder_ == null) {
+          if (dataCase_ == 1) {
+            return (com.google.apps.card.v1.TextParagraph) data_;
+          }
+          return com.google.apps.card.v1.TextParagraph.getDefaultInstance();
+        } else {
+          if (dataCase_ == 1) {
+            return textParagraphBuilder_.getMessage();
+          }
+          return com.google.apps.card.v1.TextParagraph.getDefaultInstance();
+        }
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * A text paragraph widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+       */
+      public Builder setTextParagraph(com.google.apps.card.v1.TextParagraph value) {
+        if (textParagraphBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          data_ = value;
+          onChanged();
+        } else {
+          textParagraphBuilder_.setMessage(value);
+        }
+        dataCase_ = 1;
+        return this;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * A text paragraph widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+       */
+      public Builder setTextParagraph(
+          com.google.apps.card.v1.TextParagraph.Builder builderForValue) {
+        if (textParagraphBuilder_ == null) {
+          data_ = builderForValue.build();
+          onChanged();
+        } else {
+          textParagraphBuilder_.setMessage(builderForValue.build());
+        }
+        dataCase_ = 1;
+        return this;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * A text paragraph widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+       */
+      public Builder mergeTextParagraph(com.google.apps.card.v1.TextParagraph value) {
+        if (textParagraphBuilder_ == null) {
+          if (dataCase_ == 1
+              && data_ != com.google.apps.card.v1.TextParagraph.getDefaultInstance()) {
+            data_ =
+                com.google.apps.card.v1.TextParagraph.newBuilder(
+                        (com.google.apps.card.v1.TextParagraph) data_)
+                    .mergeFrom(value)
+                    .buildPartial();
+          } else {
+            data_ = value;
+          }
+          onChanged();
+        } else {
+          if (dataCase_ == 1) {
+            textParagraphBuilder_.mergeFrom(value);
+          } else {
+            textParagraphBuilder_.setMessage(value);
+          }
+        }
+        dataCase_ = 1;
+        return this;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * A text paragraph widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+       */
+      public Builder clearTextParagraph() {
+        if (textParagraphBuilder_ == null) {
+          if (dataCase_ == 1) {
+            dataCase_ = 0;
+            data_ = null;
+            onChanged();
+          }
+        } else {
+          if (dataCase_ == 1) {
+            dataCase_ = 0;
+            data_ = null;
+          }
+          textParagraphBuilder_.clear();
+        }
+        return this;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * A text paragraph widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+       */
+      public com.google.apps.card.v1.TextParagraph.Builder getTextParagraphBuilder() {
+        return getTextParagraphFieldBuilder().getBuilder();
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * A text paragraph widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+       */
+      @java.lang.Override
+      public com.google.apps.card.v1.TextParagraphOrBuilder getTextParagraphOrBuilder() {
+        if ((dataCase_ == 1) && (textParagraphBuilder_ != null)) {
+          return textParagraphBuilder_.getMessageOrBuilder();
+        } else {
+          if (dataCase_ == 1) {
+            return (com.google.apps.card.v1.TextParagraph) data_;
+          }
+          return com.google.apps.card.v1.TextParagraph.getDefaultInstance();
+        }
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * A text paragraph widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+              com.google.apps.card.v1.TextParagraph,
+              com.google.apps.card.v1.TextParagraph.Builder,
+              com.google.apps.card.v1.TextParagraphOrBuilder>
+          getTextParagraphFieldBuilder() {
+        if (textParagraphBuilder_ == null) {
+          if (!(dataCase_ == 1)) {
+            data_ = com.google.apps.card.v1.TextParagraph.getDefaultInstance();
+          }
+          textParagraphBuilder_ =
+              new com.google.protobuf.SingleFieldBuilderV3<
+                  com.google.apps.card.v1.TextParagraph,
+                  com.google.apps.card.v1.TextParagraph.Builder,
+                  com.google.apps.card.v1.TextParagraphOrBuilder>(
+                  (com.google.apps.card.v1.TextParagraph) data_, getParentForChildren(), isClean());
+          data_ = null;
+        }
+        dataCase_ = 1;
+        onChanged();
+        return textParagraphBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+              com.google.apps.card.v1.ButtonList,
+              com.google.apps.card.v1.ButtonList.Builder,
+              com.google.apps.card.v1.ButtonListOrBuilder>
+          buttonListBuilder_;
+
+      /**
+       *
+       *
+       * <pre>
+       * A button list widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ButtonList button_list = 3;</code>
+       *
+       * @return Whether the buttonList field is set.
+       */
+      @java.lang.Override
+      public boolean hasButtonList() {
+        return dataCase_ == 3;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * A button list widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ButtonList button_list = 3;</code>
+       *
+       * @return The buttonList.
+       */
+      @java.lang.Override
+      public com.google.apps.card.v1.ButtonList getButtonList() {
+        if (buttonListBuilder_ == null) {
+          if (dataCase_ == 3) {
+            return (com.google.apps.card.v1.ButtonList) data_;
+          }
+          return com.google.apps.card.v1.ButtonList.getDefaultInstance();
+        } else {
+          if (dataCase_ == 3) {
+            return buttonListBuilder_.getMessage();
+          }
+          return com.google.apps.card.v1.ButtonList.getDefaultInstance();
+        }
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * A button list widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ButtonList button_list = 3;</code>
+       */
+      public Builder setButtonList(com.google.apps.card.v1.ButtonList value) {
+        if (buttonListBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          data_ = value;
+          onChanged();
+        } else {
+          buttonListBuilder_.setMessage(value);
+        }
+        dataCase_ = 3;
+        return this;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * A button list widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ButtonList button_list = 3;</code>
+       */
+      public Builder setButtonList(com.google.apps.card.v1.ButtonList.Builder builderForValue) {
+        if (buttonListBuilder_ == null) {
+          data_ = builderForValue.build();
+          onChanged();
+        } else {
+          buttonListBuilder_.setMessage(builderForValue.build());
+        }
+        dataCase_ = 3;
+        return this;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * A button list widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ButtonList button_list = 3;</code>
+       */
+      public Builder mergeButtonList(com.google.apps.card.v1.ButtonList value) {
+        if (buttonListBuilder_ == null) {
+          if (dataCase_ == 3 && data_ != com.google.apps.card.v1.ButtonList.getDefaultInstance()) {
+            data_ =
+                com.google.apps.card.v1.ButtonList.newBuilder(
+                        (com.google.apps.card.v1.ButtonList) data_)
+                    .mergeFrom(value)
+                    .buildPartial();
+          } else {
+            data_ = value;
+          }
+          onChanged();
+        } else {
+          if (dataCase_ == 3) {
+            buttonListBuilder_.mergeFrom(value);
+          } else {
+            buttonListBuilder_.setMessage(value);
+          }
+        }
+        dataCase_ = 3;
+        return this;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * A button list widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ButtonList button_list = 3;</code>
+       */
+      public Builder clearButtonList() {
+        if (buttonListBuilder_ == null) {
+          if (dataCase_ == 3) {
+            dataCase_ = 0;
+            data_ = null;
+            onChanged();
+          }
+        } else {
+          if (dataCase_ == 3) {
+            dataCase_ = 0;
+            data_ = null;
+          }
+          buttonListBuilder_.clear();
+        }
+        return this;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * A button list widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ButtonList button_list = 3;</code>
+       */
+      public com.google.apps.card.v1.ButtonList.Builder getButtonListBuilder() {
+        return getButtonListFieldBuilder().getBuilder();
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * A button list widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ButtonList button_list = 3;</code>
+       */
+      @java.lang.Override
+      public com.google.apps.card.v1.ButtonListOrBuilder getButtonListOrBuilder() {
+        if ((dataCase_ == 3) && (buttonListBuilder_ != null)) {
+          return buttonListBuilder_.getMessageOrBuilder();
+        } else {
+          if (dataCase_ == 3) {
+            return (com.google.apps.card.v1.ButtonList) data_;
+          }
+          return com.google.apps.card.v1.ButtonList.getDefaultInstance();
+        }
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * A button list widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ButtonList button_list = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+              com.google.apps.card.v1.ButtonList,
+              com.google.apps.card.v1.ButtonList.Builder,
+              com.google.apps.card.v1.ButtonListOrBuilder>
+          getButtonListFieldBuilder() {
+        if (buttonListBuilder_ == null) {
+          if (!(dataCase_ == 3)) {
+            data_ = com.google.apps.card.v1.ButtonList.getDefaultInstance();
+          }
+          buttonListBuilder_ =
+              new com.google.protobuf.SingleFieldBuilderV3<
+                  com.google.apps.card.v1.ButtonList,
+                  com.google.apps.card.v1.ButtonList.Builder,
+                  com.google.apps.card.v1.ButtonListOrBuilder>(
+                  (com.google.apps.card.v1.ButtonList) data_, getParentForChildren(), isClean());
+          data_ = null;
+        }
+        dataCase_ = 3;
+        onChanged();
+        return buttonListBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+              com.google.apps.card.v1.Image,
+              com.google.apps.card.v1.Image.Builder,
+              com.google.apps.card.v1.ImageOrBuilder>
+          imageBuilder_;
+
+      /**
+       *
+       *
+       * <pre>
+       * An image widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.Image image = 10;</code>
+       *
+       * @return Whether the image field is set.
+       */
+      @java.lang.Override
+      public boolean hasImage() {
+        return dataCase_ == 10;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * An image widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.Image image = 10;</code>
+       *
+       * @return The image.
+       */
+      @java.lang.Override
+      public com.google.apps.card.v1.Image getImage() {
+        if (imageBuilder_ == null) {
+          if (dataCase_ == 10) {
+            return (com.google.apps.card.v1.Image) data_;
+          }
+          return com.google.apps.card.v1.Image.getDefaultInstance();
+        } else {
+          if (dataCase_ == 10) {
+            return imageBuilder_.getMessage();
+          }
+          return com.google.apps.card.v1.Image.getDefaultInstance();
+        }
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * An image widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.Image image = 10;</code>
+       */
+      public Builder setImage(com.google.apps.card.v1.Image value) {
+        if (imageBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          data_ = value;
+          onChanged();
+        } else {
+          imageBuilder_.setMessage(value);
+        }
+        dataCase_ = 10;
+        return this;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * An image widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.Image image = 10;</code>
+       */
+      public Builder setImage(com.google.apps.card.v1.Image.Builder builderForValue) {
+        if (imageBuilder_ == null) {
+          data_ = builderForValue.build();
+          onChanged();
+        } else {
+          imageBuilder_.setMessage(builderForValue.build());
+        }
+        dataCase_ = 10;
+        return this;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * An image widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.Image image = 10;</code>
+       */
+      public Builder mergeImage(com.google.apps.card.v1.Image value) {
+        if (imageBuilder_ == null) {
+          if (dataCase_ == 10 && data_ != com.google.apps.card.v1.Image.getDefaultInstance()) {
+            data_ =
+                com.google.apps.card.v1.Image.newBuilder((com.google.apps.card.v1.Image) data_)
+                    .mergeFrom(value)
+                    .buildPartial();
+          } else {
+            data_ = value;
+          }
+          onChanged();
+        } else {
+          if (dataCase_ == 10) {
+            imageBuilder_.mergeFrom(value);
+          } else {
+            imageBuilder_.setMessage(value);
+          }
+        }
+        dataCase_ = 10;
+        return this;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * An image widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.Image image = 10;</code>
+       */
+      public Builder clearImage() {
+        if (imageBuilder_ == null) {
+          if (dataCase_ == 10) {
+            dataCase_ = 0;
+            data_ = null;
+            onChanged();
+          }
+        } else {
+          if (dataCase_ == 10) {
+            dataCase_ = 0;
+            data_ = null;
+          }
+          imageBuilder_.clear();
+        }
+        return this;
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * An image widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.Image image = 10;</code>
+       */
+      public com.google.apps.card.v1.Image.Builder getImageBuilder() {
+        return getImageFieldBuilder().getBuilder();
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * An image widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.Image image = 10;</code>
+       */
+      @java.lang.Override
+      public com.google.apps.card.v1.ImageOrBuilder getImageOrBuilder() {
+        if ((dataCase_ == 10) && (imageBuilder_ != null)) {
+          return imageBuilder_.getMessageOrBuilder();
+        } else {
+          if (dataCase_ == 10) {
+            return (com.google.apps.card.v1.Image) data_;
+          }
+          return com.google.apps.card.v1.Image.getDefaultInstance();
+        }
+      }
+
+      /**
+       *
+       *
+       * <pre>
+       * An image widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.Image image = 10;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+              com.google.apps.card.v1.Image,
+              com.google.apps.card.v1.Image.Builder,
+              com.google.apps.card.v1.ImageOrBuilder>
+          getImageFieldBuilder() {
+        if (imageBuilder_ == null) {
+          if (!(dataCase_ == 10)) {
+            data_ = com.google.apps.card.v1.Image.getDefaultInstance();
+          }
+          imageBuilder_ =
+              new com.google.protobuf.SingleFieldBuilderV3<
+                  com.google.apps.card.v1.Image,
+                  com.google.apps.card.v1.Image.Builder,
+                  com.google.apps.card.v1.ImageOrBuilder>(
+                  (com.google.apps.card.v1.Image) data_, getParentForChildren(), isClean());
+          data_ = null;
+        }
+        dataCase_ = 10;
+        onChanged();
+        return imageBuilder_;
+      }
+
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+      // @@protoc_insertion_point(builder_scope:google.apps.card.v1.Card.NestedWidget)
+    }
+
+    // @@protoc_insertion_point(class_scope:google.apps.card.v1.Card.NestedWidget)
+    private static final com.google.apps.card.v1.Card.NestedWidget DEFAULT_INSTANCE;
+
+    static {
+      DEFAULT_INSTANCE = new com.google.apps.card.v1.Card.NestedWidget();
+    }
+
+    public static com.google.apps.card.v1.Card.NestedWidget getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<NestedWidget> PARSER =
+        new com.google.protobuf.AbstractParser<NestedWidget>() {
+          @java.lang.Override
+          public NestedWidget parsePartialFrom(
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
+            Builder builder = newBuilder();
+            try {
+              builder.mergeFrom(input, extensionRegistry);
+            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+              throw e.setUnfinishedMessage(builder.buildPartial());
+            } catch (com.google.protobuf.UninitializedMessageException e) {
+              throw e.asInvalidProtocolBufferException()
+                  .setUnfinishedMessage(builder.buildPartial());
+            } catch (java.io.IOException e) {
+              throw new com.google.protobuf.InvalidProtocolBufferException(e)
+                  .setUnfinishedMessage(builder.buildPartial());
+            }
+            return builder.buildPartial();
+          }
+        };
+
+    public static com.google.protobuf.Parser<NestedWidget> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<NestedWidget> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.apps.card.v1.Card.NestedWidget getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+  }
+
   public interface CardFixedFooterOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.apps.card.v1.Card.CardFixedFooter)
@@ -4749,7 +6660,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * For an example in Google Chat apps, see [Add a persistent
    * footer](https://developers.google.com/workspace/chat/design-components-card-dialog#add_a_persistent_footer).
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -5101,7 +7012,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * For an example in Google Chat apps, see [Add a persistent
      * footer](https://developers.google.com/workspace/chat/design-components-card-dialog#add_a_persistent_footer).
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -5949,7 +7860,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * The divider style between sections.
+   * The divider style between the header, sections and footer.
    * </pre>
    *
    * <code>.google.apps.card.v1.Card.DividerStyle section_divider_style = 9;</code>
@@ -5965,7 +7876,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * The divider style between sections.
+   * The divider style between the header, sections and footer.
    * </pre>
    *
    * <code>.google.apps.card.v1.Card.DividerStyle section_divider_style = 9;</code>
@@ -5991,7 +7902,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * The card's actions. Actions are added to the card's toolbar menu.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    *
    * For example, the following JSON constructs a card action menu with
    * `Settings` and `Send Feedback` options:
@@ -6039,7 +7950,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * The card's actions. Actions are added to the card's toolbar menu.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    *
    * For example, the following JSON constructs a card action menu with
    * `Settings` and `Send Feedback` options:
@@ -6088,7 +7999,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * The card's actions. Actions are added to the card's toolbar menu.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    *
    * For example, the following JSON constructs a card action menu with
    * `Settings` and `Send Feedback` options:
@@ -6136,7 +8047,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * The card's actions. Actions are added to the card's toolbar menu.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    *
    * For example, the following JSON constructs a card action menu with
    * `Settings` and `Send Feedback` options:
@@ -6184,7 +8095,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * The card's actions. Actions are added to the card's toolbar menu.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    *
    * For example, the following JSON constructs a card action menu with
    * `Settings` and `Send Feedback` options:
@@ -6237,7 +8148,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * Name of the card. Used as a card identifier in card navigation.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>string name = 4;</code>
@@ -6264,7 +8175,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * Name of the card. Used as a card identifier in card navigation.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>string name = 4;</code>
@@ -6300,7 +8211,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * [card
    * messages](https://developers.google.com/workspace/chat/create-messages#create).
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -6326,7 +8237,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * [card
    * messages](https://developers.google.com/workspace/chat/create-messages#create).
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -6354,7 +8265,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * [card
    * messages](https://developers.google.com/workspace/chat/create-messages#create).
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -6374,11 +8285,11 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * In Google Workspace Add-ons, sets the display properties of the
+   * In Google Workspace add-ons, sets the display properties of the
    * `peekCardHeader`.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Card.DisplayStyle display_style = 6;</code>
@@ -6394,11 +8305,11 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * In Google Workspace Add-ons, sets the display properties of the
+   * In Google Workspace add-ons, sets the display properties of the
    * `peekCardHeader`.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Card.DisplayStyle display_style = 6;</code>
@@ -6424,7 +8335,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * cards and the contextual cards.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Card.CardHeader peek_card_header = 7;</code>
@@ -6445,7 +8356,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * cards and the contextual cards.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Card.CardHeader peek_card_header = 7;</code>
@@ -6468,7 +8379,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    * cards and the contextual cards.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Card.CardHeader peek_card_header = 7;</code>
@@ -6729,7 +8640,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A card interface displayed in a Google Chat message or Google Workspace
-   * Add-on.
+   * add-on.
    *
    * Cards support a defined layout, interactive UI elements like buttons, and
    * rich media like images. Use cards to present detailed information,
@@ -6742,8 +8653,12 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
    *
    * * For Google Chat apps, see [Design the components of a card or
    *   dialog](https://developers.google.com/workspace/chat/design-components-card-dialog).
-   * * For Google Workspace Add-ons, see [Card-based
+   * * For Google Workspace add-ons, see [Card-based
    * interfaces](https://developers.google.com/apps-script/add-ons/concepts/cards).
+   *
+   * Note: You can add up to 100 widgets per card. Any widgets beyond this
+   * limit are ignored. This limit applies to both card messages and dialogs
+   * in Google Chat apps, and to cards in Google Workspace add-ons.
    *
    * **Example: Card message for a Google Chat app**
    *
@@ -7846,7 +9761,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The divider style between sections.
+     * The divider style between the header, sections and footer.
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.DividerStyle section_divider_style = 9;</code>
@@ -7862,7 +9777,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The divider style between sections.
+     * The divider style between the header, sections and footer.
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.DividerStyle section_divider_style = 9;</code>
@@ -7881,7 +9796,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The divider style between sections.
+     * The divider style between the header, sections and footer.
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.DividerStyle section_divider_style = 9;</code>
@@ -7899,7 +9814,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The divider style between sections.
+     * The divider style between the header, sections and footer.
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.DividerStyle section_divider_style = 9;</code>
@@ -7921,7 +9836,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The divider style between sections.
+     * The divider style between the header, sections and footer.
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.DividerStyle section_divider_style = 9;</code>
@@ -7959,7 +9874,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8010,7 +9925,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8061,7 +9976,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8112,7 +10027,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8169,7 +10084,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8224,7 +10139,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8281,7 +10196,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8338,7 +10253,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8392,7 +10307,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8447,7 +10362,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8502,7 +10417,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8556,7 +10471,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8610,7 +10525,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8657,7 +10572,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8708,7 +10623,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8760,7 +10675,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8808,7 +10723,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8856,7 +10771,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * The card's actions. Actions are added to the card's toolbar menu.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      *
      * For example, the following JSON constructs a card action menu with
      * `Settings` and `Send Feedback` options:
@@ -8923,7 +10838,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * Name of the card. Used as a card identifier in card navigation.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>string name = 4;</code>
@@ -8949,7 +10864,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * Name of the card. Used as a card identifier in card navigation.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>string name = 4;</code>
@@ -8975,7 +10890,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * Name of the card. Used as a card identifier in card navigation.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>string name = 4;</code>
@@ -9000,7 +10915,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * Name of the card. Used as a card identifier in card navigation.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>string name = 4;</code>
@@ -9021,7 +10936,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * Name of the card. Used as a card identifier in card navigation.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>string name = 4;</code>
@@ -9060,7 +10975,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * [card
      * messages](https://developers.google.com/workspace/chat/create-messages#create).
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -9085,7 +11000,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * [card
      * messages](https://developers.google.com/workspace/chat/create-messages#create).
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -9116,7 +11031,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * [card
      * messages](https://developers.google.com/workspace/chat/create-messages#create).
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -9149,7 +11064,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * [card
      * messages](https://developers.google.com/workspace/chat/create-messages#create).
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -9180,7 +11095,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * [card
      * messages](https://developers.google.com/workspace/chat/create-messages#create).
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -9218,7 +11133,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * [card
      * messages](https://developers.google.com/workspace/chat/create-messages#create).
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -9248,7 +11163,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * [card
      * messages](https://developers.google.com/workspace/chat/create-messages#create).
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -9273,7 +11188,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * [card
      * messages](https://developers.google.com/workspace/chat/create-messages#create).
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -9302,7 +11217,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * [card
      * messages](https://developers.google.com/workspace/chat/create-messages#create).
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -9331,11 +11246,11 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * In Google Workspace Add-ons, sets the display properties of the
+     * In Google Workspace add-ons, sets the display properties of the
      * `peekCardHeader`.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.DisplayStyle display_style = 6;</code>
@@ -9351,11 +11266,11 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * In Google Workspace Add-ons, sets the display properties of the
+     * In Google Workspace add-ons, sets the display properties of the
      * `peekCardHeader`.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.DisplayStyle display_style = 6;</code>
@@ -9374,11 +11289,11 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * In Google Workspace Add-ons, sets the display properties of the
+     * In Google Workspace add-ons, sets the display properties of the
      * `peekCardHeader`.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.DisplayStyle display_style = 6;</code>
@@ -9396,11 +11311,11 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * In Google Workspace Add-ons, sets the display properties of the
+     * In Google Workspace add-ons, sets the display properties of the
      * `peekCardHeader`.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.DisplayStyle display_style = 6;</code>
@@ -9422,11 +11337,11 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * In Google Workspace Add-ons, sets the display properties of the
+     * In Google Workspace add-ons, sets the display properties of the
      * `peekCardHeader`.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.DisplayStyle display_style = 6;</code>
@@ -9456,7 +11371,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * cards and the contextual cards.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.CardHeader peek_card_header = 7;</code>
@@ -9476,7 +11391,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * cards and the contextual cards.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.CardHeader peek_card_header = 7;</code>
@@ -9502,7 +11417,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * cards and the contextual cards.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.CardHeader peek_card_header = 7;</code>
@@ -9530,7 +11445,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * cards and the contextual cards.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.CardHeader peek_card_header = 7;</code>
@@ -9556,7 +11471,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * cards and the contextual cards.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.CardHeader peek_card_header = 7;</code>
@@ -9589,7 +11504,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * cards and the contextual cards.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.CardHeader peek_card_header = 7;</code>
@@ -9614,7 +11529,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * cards and the contextual cards.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.CardHeader peek_card_header = 7;</code>
@@ -9634,7 +11549,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * cards and the contextual cards.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.CardHeader peek_card_header = 7;</code>
@@ -9658,7 +11573,7 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * cards and the contextual cards.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card.CardHeader peek_card_header = 7;</code>

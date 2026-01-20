@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,9 +24,6 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * An interface for managing Identity and Access Management (IAM) policies.
  * </pre>
  */
-@javax.annotation.Generated(
-    value = "by gRPC proto compiler",
-    comments = "Source: google/iam/v2/policy.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class PoliciesGrpc {
 
@@ -525,8 +522,8 @@ public final class PoliciesGrpc {
      * </pre>
      */
     public com.google.iam.v2.ListPoliciesResponse listPolicies(
-        com.google.iam.v2.ListPoliciesRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.iam.v2.ListPoliciesRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getListPoliciesMethod(), getCallOptions(), request);
     }
 
@@ -537,8 +534,9 @@ public final class PoliciesGrpc {
      * Gets a policy.
      * </pre>
      */
-    public com.google.iam.v2.Policy getPolicy(com.google.iam.v2.GetPolicyRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+    public com.google.iam.v2.Policy getPolicy(com.google.iam.v2.GetPolicyRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getGetPolicyMethod(), getCallOptions(), request);
     }
 
@@ -550,8 +548,8 @@ public final class PoliciesGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation createPolicy(
-        com.google.iam.v2.CreatePolicyRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.iam.v2.CreatePolicyRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getCreatePolicyMethod(), getCallOptions(), request);
     }
 
@@ -569,8 +567,8 @@ public final class PoliciesGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation updatePolicy(
-        com.google.iam.v2.UpdatePolicyRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.iam.v2.UpdatePolicyRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getUpdatePolicyMethod(), getCallOptions(), request);
     }
 
@@ -582,8 +580,8 @@ public final class PoliciesGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation deletePolicy(
-        com.google.iam.v2.DeletePolicyRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.iam.v2.DeletePolicyRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getDeletePolicyMethod(), getCallOptions(), request);
     }
   }

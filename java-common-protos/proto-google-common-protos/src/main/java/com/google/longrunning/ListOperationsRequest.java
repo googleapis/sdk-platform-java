@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -245,6 +245,34 @@ public final class ListOperationsRequest extends com.google.protobuf.GeneratedMe
     }
   }
 
+  public static final int RETURN_PARTIAL_SUCCESS_FIELD_NUMBER = 5;
+  private boolean returnPartialSuccess_ = false;
+
+  /**
+   *
+   *
+   * <pre>
+   * When set to `true`, operations that are reachable are returned as normal,
+   * and those that are unreachable are returned in the
+   * [ListOperationsResponse.unreachable] field.
+   *
+   * This can only be `true` when reading across collections e.g. when `parent`
+   * is set to `"projects/example/locations/-"`.
+   *
+   * This field is not by default supported and will result in an
+   * `UNIMPLEMENTED` error if set unless explicitly documented otherwise in
+   * service or product specific documentation.
+   * </pre>
+   *
+   * <code>bool return_partial_success = 5;</code>
+   *
+   * @return The returnPartialSuccess.
+   */
+  @java.lang.Override
+  public boolean getReturnPartialSuccess() {
+    return returnPartialSuccess_;
+  }
+
   private byte memoizedIsInitialized = -1;
 
   @java.lang.Override
@@ -271,6 +299,9 @@ public final class ListOperationsRequest extends com.google.protobuf.GeneratedMe
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 4, name_);
     }
+    if (returnPartialSuccess_ != false) {
+      output.writeBool(5, returnPartialSuccess_);
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -292,6 +323,9 @@ public final class ListOperationsRequest extends com.google.protobuf.GeneratedMe
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, name_);
     }
+    if (returnPartialSuccess_ != false) {
+      size += com.google.protobuf.CodedOutputStream.computeBoolSize(5, returnPartialSuccess_);
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -312,6 +346,7 @@ public final class ListOperationsRequest extends com.google.protobuf.GeneratedMe
     if (!getFilter().equals(other.getFilter())) return false;
     if (getPageSize() != other.getPageSize()) return false;
     if (!getPageToken().equals(other.getPageToken())) return false;
+    if (getReturnPartialSuccess() != other.getReturnPartialSuccess()) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -331,6 +366,8 @@ public final class ListOperationsRequest extends com.google.protobuf.GeneratedMe
     hash = (53 * hash) + getPageSize();
     hash = (37 * hash) + PAGE_TOKEN_FIELD_NUMBER;
     hash = (53 * hash) + getPageToken().hashCode();
+    hash = (37 * hash) + RETURN_PARTIAL_SUCCESS_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getReturnPartialSuccess());
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -476,6 +513,7 @@ public final class ListOperationsRequest extends com.google.protobuf.GeneratedMe
       filter_ = "";
       pageSize_ = 0;
       pageToken_ = "";
+      returnPartialSuccess_ = false;
       return this;
     }
 
@@ -523,6 +561,9 @@ public final class ListOperationsRequest extends com.google.protobuf.GeneratedMe
       }
       if (((from_bitField0_ & 0x00000008) != 0)) {
         result.pageToken_ = pageToken_;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.returnPartialSuccess_ = returnPartialSuccess_;
       }
     }
 
@@ -589,6 +630,9 @@ public final class ListOperationsRequest extends com.google.protobuf.GeneratedMe
         bitField0_ |= 0x00000008;
         onChanged();
       }
+      if (other.getReturnPartialSuccess() != false) {
+        setReturnPartialSuccess(other.getReturnPartialSuccess());
+      }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
@@ -639,6 +683,12 @@ public final class ListOperationsRequest extends com.google.protobuf.GeneratedMe
                 bitField0_ |= 0x00000001;
                 break;
               } // case 34
+            case 40:
+              {
+                returnPartialSuccess_ = input.readBool();
+                bitField0_ |= 0x00000010;
+                break;
+              } // case 40
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -1043,6 +1093,89 @@ public final class ListOperationsRequest extends com.google.protobuf.GeneratedMe
       checkByteStringIsUtf8(value);
       pageToken_ = value;
       bitField0_ |= 0x00000008;
+      onChanged();
+      return this;
+    }
+
+    private boolean returnPartialSuccess_;
+
+    /**
+     *
+     *
+     * <pre>
+     * When set to `true`, operations that are reachable are returned as normal,
+     * and those that are unreachable are returned in the
+     * [ListOperationsResponse.unreachable] field.
+     *
+     * This can only be `true` when reading across collections e.g. when `parent`
+     * is set to `"projects/example/locations/-"`.
+     *
+     * This field is not by default supported and will result in an
+     * `UNIMPLEMENTED` error if set unless explicitly documented otherwise in
+     * service or product specific documentation.
+     * </pre>
+     *
+     * <code>bool return_partial_success = 5;</code>
+     *
+     * @return The returnPartialSuccess.
+     */
+    @java.lang.Override
+    public boolean getReturnPartialSuccess() {
+      return returnPartialSuccess_;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * When set to `true`, operations that are reachable are returned as normal,
+     * and those that are unreachable are returned in the
+     * [ListOperationsResponse.unreachable] field.
+     *
+     * This can only be `true` when reading across collections e.g. when `parent`
+     * is set to `"projects/example/locations/-"`.
+     *
+     * This field is not by default supported and will result in an
+     * `UNIMPLEMENTED` error if set unless explicitly documented otherwise in
+     * service or product specific documentation.
+     * </pre>
+     *
+     * <code>bool return_partial_success = 5;</code>
+     *
+     * @param value The returnPartialSuccess to set.
+     * @return This builder for chaining.
+     */
+    public Builder setReturnPartialSuccess(boolean value) {
+
+      returnPartialSuccess_ = value;
+      bitField0_ |= 0x00000010;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * When set to `true`, operations that are reachable are returned as normal,
+     * and those that are unreachable are returned in the
+     * [ListOperationsResponse.unreachable] field.
+     *
+     * This can only be `true` when reading across collections e.g. when `parent`
+     * is set to `"projects/example/locations/-"`.
+     *
+     * This field is not by default supported and will result in an
+     * `UNIMPLEMENTED` error if set unless explicitly documented otherwise in
+     * service or product specific documentation.
+     * </pre>
+     *
+     * <code>bool return_partial_success = 5;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearReturnPartialSuccess() {
+      bitField0_ = (bitField0_ & ~0x00000010);
+      returnPartialSuccess_ = false;
       onChanged();
       return this;
     }

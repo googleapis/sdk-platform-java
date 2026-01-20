@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,9 +30,6 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * echoed in the response headers.
  * </pre>
  */
-@javax.annotation.Generated(
-    value = "by gRPC proto compiler",
-    comments = "Source: schema/google/showcase/v1beta1/echo.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class EchoGrpc {
 
@@ -1033,8 +1030,8 @@ public final class EchoGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.EchoResponse echo(
-        com.google.showcase.v1beta1.EchoRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.EchoRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getEchoMethod(), getCallOptions(), request);
     }
 
@@ -1051,8 +1048,9 @@ public final class EchoGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.EchoErrorDetailsResponse echoErrorDetails(
-        com.google.showcase.v1beta1.EchoErrorDetailsRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.EchoErrorDetailsRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getEchoErrorDetailsMethod(), getCallOptions(), request);
     }
 
@@ -1070,8 +1068,9 @@ public final class EchoGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.FailEchoWithDetailsResponse failEchoWithDetails(
-        com.google.showcase.v1beta1.FailEchoWithDetailsRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.FailEchoWithDetailsRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getFailEchoWithDetailsMethod(), getCallOptions(), request);
     }
 
@@ -1133,8 +1132,8 @@ public final class EchoGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.PagedExpandResponse pagedExpand(
-        com.google.showcase.v1beta1.PagedExpandRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.PagedExpandRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getPagedExpandMethod(), getCallOptions(), request);
     }
 
@@ -1148,8 +1147,9 @@ public final class EchoGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.PagedExpandResponse pagedExpandLegacy(
-        com.google.showcase.v1beta1.PagedExpandLegacyRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.PagedExpandLegacyRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getPagedExpandLegacyMethod(), getCallOptions(), request);
     }
 
@@ -1165,8 +1165,8 @@ public final class EchoGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse pagedExpandLegacyMapped(
-        com.google.showcase.v1beta1.PagedExpandRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.PagedExpandRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getPagedExpandLegacyMappedMethod(), getCallOptions(), request);
     }
 
@@ -1178,8 +1178,9 @@ public final class EchoGrpc {
      * This method showcases how a client handles a request timeout.
      * </pre>
      */
-    public com.google.longrunning.Operation wait(com.google.showcase.v1beta1.WaitRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+    public com.google.longrunning.Operation wait(com.google.showcase.v1beta1.WaitRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getWaitMethod(), getCallOptions(), request);
     }
 
@@ -1193,8 +1194,8 @@ public final class EchoGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.BlockResponse block(
-        com.google.showcase.v1beta1.BlockRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.BlockRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getBlockMethod(), getCallOptions(), request);
     }
   }

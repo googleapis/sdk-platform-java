@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,8 @@ public interface SelectionInputOrBuilder
    *
    *
    * <pre>
-   * The name that identifies the selection input in a form input event.
+   * Required. The name that identifies the selection input in a form input
+   * event.
    *
    * For details about working with form inputs, see [Receive form
    * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -44,7 +45,8 @@ public interface SelectionInputOrBuilder
    *
    *
    * <pre>
-   * The name that identifies the selection input in a form input event.
+   * Required. The name that identifies the selection input in a form input
+   * event.
    *
    * For details about working with form inputs, see [Receive form
    * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -242,7 +244,21 @@ public interface SelectionInputOrBuilder
    * Minimum value is 1 item. If unspecified, defaults to 3 items.
    * </pre>
    *
-   * <code>int32 multi_select_max_selected_items = 6;</code>
+   * <code>optional int32 multi_select_max_selected_items = 6;</code>
+   *
+   * @return Whether the multiSelectMaxSelectedItems field is set.
+   */
+  boolean hasMultiSelectMaxSelectedItems();
+
+  /**
+   *
+   *
+   * <pre>
+   * For multiselect menus, the maximum number of items that a user can select.
+   * Minimum value is 1 item. If unspecified, defaults to 3 items.
+   * </pre>
+   *
+   * <code>optional int32 multi_select_max_selected_items = 6;</code>
    *
    * @return The multiSelectMaxSelectedItems.
    */
@@ -253,11 +269,15 @@ public interface SelectionInputOrBuilder
    *
    * <pre>
    * For multiselect menus, the number of text characters that a user inputs
-   * before the app queries autocomplete and displays suggested items
-   * in the menu.
+   * before the menu returns suggested selection items.
    *
-   * If unspecified, defaults to 0 characters for static data sources and 3
-   * characters for external data sources.
+   * If unset, the multiselect menu uses the following default values:
+   *
+   * * If the menu uses a static array of `SelectionInput` items, defaults to
+   *   0 characters and immediately populates items from the array.
+   * * If the menu uses a dynamic data source (`multi_select_data_source`),
+   *  defaults to 3 characters before querying the data source to return
+   *  suggested items.
    * </pre>
    *
    * <code>int32 multi_select_min_query_length = 7;</code>
@@ -270,7 +290,7 @@ public interface SelectionInputOrBuilder
    *
    *
    * <pre>
-   * An external data source, such as a relational data base.
+   * An external data source, such as a relational database.
    * </pre>
    *
    * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
@@ -283,7 +303,7 @@ public interface SelectionInputOrBuilder
    *
    *
    * <pre>
-   * An external data source, such as a relational data base.
+   * An external data source, such as a relational database.
    * </pre>
    *
    * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
@@ -296,7 +316,7 @@ public interface SelectionInputOrBuilder
    *
    *
    * <pre>
-   * An external data source, such as a relational data base.
+   * An external data source, such as a relational database.
    * </pre>
    *
    * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
