@@ -20,6 +20,7 @@ steps:
   args: [
       "build",
       "--no-cache",
+      "--build-arg", "PROTOC_VERSION=33.2",
       "-t", "${_TEST_IMAGE}",
       "-f", ".cloudbuild/library_generation/library_generation_airlock.Dockerfile",
       "."
