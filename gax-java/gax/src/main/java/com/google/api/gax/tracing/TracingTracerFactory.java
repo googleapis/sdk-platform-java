@@ -67,9 +67,6 @@ public class TracingTracerFactory implements ApiTracerFactory {
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    if (!TracingUtils.isTracingEnabled()) {
-      return BaseApiTracer.getInstance();
-    }
     TracingTracer tracingTracer = new TracingTracer(tracingRecorder);
     attributes.forEach(tracingTracer::addAttributes);
     return tracingTracer;
