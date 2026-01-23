@@ -50,7 +50,7 @@
  import org.junit.jupiter.api.Test;
  import org.junit.jupiter.api.io.TempDir;
 
-/ **
+/**
  * Test suite to confirm a client can be instantiated with GDCH credentials. No calls are made
  since
  * it is not feasible to test against real GDCH servers (or replicate an environment)
