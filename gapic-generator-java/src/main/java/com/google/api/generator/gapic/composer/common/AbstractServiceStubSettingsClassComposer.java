@@ -209,6 +209,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                     service, serviceConfig, methodSettingsMemberVarExprs, messageTypes, typeStore))
             .setMethods(
                 createClassMethods(
+                    context,
                     service,
                     methodSettingsMemberVarExprs,
                     deprecatedSettingVarNames,
@@ -1033,6 +1034,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   }
 
   private List<MethodDefinition> createClassMethods(
+      GapicContext context,
       Service service,
       Map<String, VariableExpr> methodSettingsMemberVarExprs,
       Set<String> deprecatedSettingVarNames,
@@ -1043,7 +1045,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         createMethodSettingsGetterMethods(
             methodSettingsMemberVarExprs, deprecatedSettingVarNames, internalSettingVarNames));
     javaMethods.add(createCreateStubMethod(service, typeStore));
-    javaMethods.addAll(createDefaultHelperAndGetterMethods(service, typeStore));
+    javaMethods.addAll(createDefaultHelperAndGetterMethods(context, service, typeStore));
     javaMethods.addAll(
         createNewBuilderMethods(
             service,
@@ -1185,7 +1187,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   }
 
   private List<MethodDefinition> createDefaultHelperAndGetterMethods(
-      Service service, TypeStore typeStore) {
+      GapicContext context, Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     TypeNode returnType;
 
@@ -1203,6 +1205,21 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
               .setName("getServiceName")
               .setReturnExpr(
                   ValueExpr.withValue(StringObjectValue.withValue(service.hostServiceName())))
+              .build());
+    }
+
+    // Create the getArtifactName method.
+    if (context.artifactName().isPresent()) {
+      returnType = TypeNode.STRING;
+      javaMethods.add(
+          MethodDefinition.builder()
+              .setIsOverride(true)
+              .setScope(ScopeNode.PROTECTED)
+              .setIsStatic(false)
+              .setReturnType(returnType)
+              .setName("getArtifactName")
+              .setReturnExpr(
+                  ValueExpr.withValue(StringObjectValue.withValue(context.artifactName().get())))
               .build());
     }
 
