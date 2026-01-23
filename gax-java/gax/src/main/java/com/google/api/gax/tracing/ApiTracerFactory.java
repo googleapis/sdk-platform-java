@@ -31,6 +31,7 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
 import com.google.api.core.InternalExtensionOnly;
+import java.util.Map;
 
 /**
  * A factory to create new instances of {@link ApiTracer}s.
@@ -61,4 +62,14 @@ public interface ApiTracerFactory {
    * @param operationType the type of operation that the tracer will trace
    */
   ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType);
+
+  /**
+   * Returns a new {@link ApiTracerFactory} that will add the given attributes to all tracers
+   * created by the factory.
+   *
+   * @param attributes the attributes to add to all tracers
+   */
+  default ApiTracerFactory withAttributes(Map<String, String> attributes) {
+    return this;
+  }
 }

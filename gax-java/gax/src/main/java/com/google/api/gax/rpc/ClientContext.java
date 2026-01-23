@@ -274,6 +274,13 @@ public abstract class ClientContext {
       backgroundResources.add(watchdog);
     }
 
+    ApiTracerFactory tracerFactory = settings.getTracerFactory();
+    if (!Strings.isNullOrEmpty(settings.getArtifactName())) {
+      tracerFactory =
+          tracerFactory.withAttributes(
+              ImmutableMap.of("gcp.client.artifact", settings.getArtifactName()));
+    }
+
     return newBuilder()
         .setBackgroundResources(backgroundResources.build())
         .setExecutor(backgroundExecutor)
@@ -288,7 +295,7 @@ public abstract class ClientContext {
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
         .setStreamWatchdogCheckIntervalDuration(settings.getStreamWatchdogCheckIntervalDuration())
-        .setTracerFactory(settings.getTracerFactory())
+        .setTracerFactory(tracerFactory)
         .setEndpointContext(endpointContext)
         .setArtifactName(settings.getArtifactName())
         .build();

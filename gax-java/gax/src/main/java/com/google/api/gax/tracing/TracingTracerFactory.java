@@ -33,6 +33,7 @@ package com.google.api.gax.tracing;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.common.collect.ImmutableMap;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -70,5 +71,12 @@ public class TracingTracerFactory implements ApiTracerFactory {
     TracingTracer tracingTracer = new TracingTracer(tracingRecorder);
     attributes.forEach(tracingTracer::addAttributes);
     return tracingTracer;
+  }
+
+  @Override
+  public ApiTracerFactory withAttributes(Map<String, String> attributes) {
+    Map<String, String> newAttributes = new HashMap<>(this.attributes);
+    newAttributes.putAll(attributes);
+    return new TracingTracerFactory(tracingRecorder, newAttributes);
   }
 }
