@@ -379,6 +379,12 @@ jobs:
           mvn clean verify -P '!showcase,enable-integration-tests,loggingTestBase,disabledLogging'  \
             --batch-mode \
             --no-transfer-progress
+      - name: Showcase integration tests - Protobuf 3 compatibility with third party library Tensorflow
+        working-directory: java-showcase
+        run: |
+          mvn clean verify -P 'enable-integration-tests,protobuf3,showcase'  \
+            --batch-mode \
+            --no-transfer-progress
 
   showcase-clirr:
     if: ${{ github.base_ref != '' }} # Only execute on pull_request trigger event
