@@ -14,48 +14,47 @@
  * limitations under the License.
  */
 
- package com.google.showcase.v1beta1.it;
+package com.google.showcase.v1beta1.it;
 
- import static com.google.common.truth.Truth.assertThat;
- import static com.google.common.truth.Truth.assertWithMessage;
- import static org.junit.jupiter.api.Assertions.assertEquals;
- import static org.junit.jupiter.api.Assertions.assertNotSame;
- import static org.junit.jupiter.api.Assertions.assertThrows;
- import static org.junit.jupiter.api.Assertions.assertTrue;
+import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth.assertWithMessage;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
- import com.google.api.client.json.GenericJson;
- import com.google.api.client.json.JsonFactory;
- import com.google.api.client.json.gson.GsonFactory;
- import com.google.api.gax.core.FixedCredentialsProvider;
- import com.google.api.gax.rpc.ClientContext;
- import com.google.auth.Credentials;
- import com.google.auth.oauth2.GdchCredentials;
- import com.google.auth.oauth2.GdchCredentialsTestUtil;
- import com.google.showcase.v1beta1.EchoClient;
- import com.google.showcase.v1beta1.EchoSettings;
- import com.google.showcase.v1beta1.it.util.InterceptingMockTokenServerTransportFactory;
- import com.google.showcase.v1beta1.it.util.TestClientInitializer;
- import com.google.showcase.v1beta1.stub.EchoStubSettings;
- import java.io.File;
- import java.io.FileWriter;
- import java.io.IOException;
- import java.io.InputStream;
- import java.net.URI;
- import java.nio.file.Files;
- import java.nio.file.Path;
- import java.nio.file.StandardCopyOption;
- import java.util.concurrent.TimeUnit;
- import org.junit.jupiter.api.AfterEach;
- import org.junit.jupiter.api.BeforeEach;
- import org.junit.jupiter.api.Test;
- import org.junit.jupiter.api.io.TempDir;
+import com.google.api.client.json.GenericJson;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.api.gax.rpc.ClientContext;
+import com.google.auth.Credentials;
+import com.google.auth.oauth2.GdchCredentials;
+import com.google.auth.oauth2.GdchCredentialsTestUtil;
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoSettings;
+import com.google.showcase.v1beta1.it.util.InterceptingMockTokenServerTransportFactory;
+import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import com.google.showcase.v1beta1.stub.EchoStubSettings;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.concurrent.TimeUnit;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Test suite to confirm a client can be instantiated with GDCH credentials. No calls are made
- since
+ * Test suite to confirm a client can be instantiated with GDCH credentials. No calls are made since
  * it is not feasible to test against real GDCH servers (or replicate an environment)
  */
- class ITGdch {
+class ITGdch {
 
   private static final String CA_CERT_FILENAME = "fake_cert.pem";
   private static final String CA_CERT_RESOURCE_PATH = "/" + CA_CERT_FILENAME;
@@ -124,8 +123,7 @@
   }
 
   /**
-   * {@link com.google.api.gax.rpc.ClientContext} will create a new {@link GdchCredentials} with
- an
+   * {@link com.google.api.gax.rpc.ClientContext} will create a new {@link GdchCredentials} with an
    * audience defaulted to the endpoint if the audience is not manually passed. This test confirms
    * that a new credential is created from the context and can be refreshed
    *
@@ -185,8 +183,7 @@
     // be created without issues
     String testAudience = "valid-audience";
     settings =
-
- settings.toBuilder().setGdchApiAudience(testAudience).setEndpoint("localhost:7469").build();
+        settings.toBuilder().setGdchApiAudience(testAudience).setEndpoint("localhost:7469").build();
     context = ClientContext.create(settings);
     stubSettings = EchoStubSettings.newBuilder(context).build();
     client = EchoClient.create(stubSettings.createStub());
@@ -197,8 +194,7 @@
     Credentials fromContext = context.getCredentials();
     assertNotSame(fromContext, initialCredentials);
 
-    // Again, since the initial credentials don't have an audience, we should not be able to
- refresh
+    // Again, since the initial credentials don't have an audience, we should not be able to refresh
     // them
     NullPointerException thrownByClientCreds =
         assertThrows(NullPointerException.class, () -> initialCredentials.refresh());
@@ -225,4 +221,4 @@
         GDCH_TOKEN_STRING,
         tokenUri);
   }
- }
+}
