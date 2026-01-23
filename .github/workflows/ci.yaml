@@ -303,6 +303,13 @@ jobs:
           mvn clean verify -P '!showcase,enable-integration-tests,loggingTestBase,disabledLogging'  \
             --batch-mode \
             --no-transfer-progress
+      - name: Showcase integration tests - Protobuf gen code 3.25.8
+        working-directory: java-showcase-3.25.8
+        run: |
+          mvn verify \
+            -P enable-integration-tests \
+            --batch-mode \
+            --no-transfer-progress
       - name: Showcase integration tests - Protobuf gen code 3.21.0
         working-directory: java-showcase-3.21.0
         run: |
