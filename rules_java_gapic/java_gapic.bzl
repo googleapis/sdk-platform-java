@@ -190,11 +190,15 @@ def _java_gapic_srcjar(
         # possible values are: "grpc", "rest", "grpc+rest"
         transport,
         rest_numeric_enums,
+        artifact_name,
         # Can be used to provide a java_library with a customized generator,
         # like the one which dumps descriptor to a file for future debugging.
         java_generator_name = "java_gapic",
         **kwargs):
     file_args_dict = {}
+
+    if artifact_name:
+        opt_args.append("artifact-name=%s" % artifact_name)
 
     if grpc_service_config:
         file_args_dict[grpc_service_config] = "grpc-service-config"
@@ -245,6 +249,7 @@ def java_gapic_library(
         # possible values are: "grpc", "rest", "grpc+rest"
         transport = None,
         rest_numeric_enums = False,
+        artifact_name = None,
         **kwargs):
     srcjar_name = name + "_srcjar"
     raw_srcjar_name = srcjar_name + "_raw"
@@ -258,6 +263,7 @@ def java_gapic_library(
         transport = transport,
         rest_numeric_enums = rest_numeric_enums,
         java_generator_name = "java_gapic",
+        artifact_name = artifact_name,
         **kwargs
     )
 

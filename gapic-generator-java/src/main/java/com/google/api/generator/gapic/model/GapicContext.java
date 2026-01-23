@@ -60,6 +60,8 @@ public abstract class GapicContext {
 
   public abstract boolean restNumericEnumsEnabled();
 
+  public abstract Optional<String> artifactName();
+
   public GapicMetadata gapicMetadata() {
     return gapicMetadata;
   }
@@ -129,6 +131,8 @@ public abstract class GapicContext {
     public abstract Builder setRestNumericEnumsEnabled(boolean restNumericEnumsEnabled);
 
     public abstract Builder setTransport(Transport transport);
+
+    public abstract Builder setArtifactName(Optional<String> artifactName);
 
     abstract ImmutableMap<String, ResourceName> resourceNames();
 
