@@ -72,7 +72,6 @@ import io.opentelemetry.sdk.metrics.data.LongPointData;
 import io.opentelemetry.sdk.metrics.data.MetricData;
 import io.opentelemetry.sdk.metrics.data.PointData;
 import io.opentelemetry.sdk.testing.exporter.InMemoryMetricReader;
-import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
