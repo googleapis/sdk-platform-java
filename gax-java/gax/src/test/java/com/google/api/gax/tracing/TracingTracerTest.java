@@ -31,6 +31,8 @@
 package com.google.api.gax.tracing;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -42,5 +44,15 @@ class TracingTracerTest {
     TracingRecorder recorder = Mockito.mock(TracingRecorder.class);
     TracingTracer tracer = new TracingTracer(recorder);
     assertThat(tracer).isNotNull();
+  }
+
+  @Test
+  void testAttemptStarted_recordsLowLevelNetworkSpan() {
+    TracingRecorder recorder = Mockito.mock(TracingRecorder.class);
+    TracingTracer tracer = new TracingTracer(recorder);
+
+    tracer.attemptStarted(new Object(), 0);
+
+    verify(recorder).recordLowLevelNetworkSpan(anyMap());
   }
 }

@@ -34,7 +34,6 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.mock;
 
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -52,28 +51,9 @@ class TracingTracerFactoryTest {
     spanName = mock(SpanName.class);
   }
 
-  @AfterEach
-  void tearDown() {
-    System.clearProperty("GOOGLE_CLOUD_ENABLE_TRACING");
-  }
-
   @Test
-  void testNewTracer_enabled() {
-    System.setProperty("GOOGLE_CLOUD_ENABLE_TRACING", "true");
+  void testNewTracer() {
     ApiTracer tracer = factory.newTracer(parent, spanName, OperationType.Unary);
     assertThat(tracer).isInstanceOf(TracingTracer.class);
-  }
-
-  @Test
-  void testNewTracer_disabled() {
-    System.setProperty("GOOGLE_CLOUD_ENABLE_TRACING", "false");
-    ApiTracer tracer = factory.newTracer(parent, spanName, OperationType.Unary);
-    assertThat(tracer).isSameInstanceAs(BaseApiTracer.getInstance());
-  }
-
-  @Test
-  void testNewTracer_defaultDisabled() {
-    ApiTracer tracer = factory.newTracer(parent, spanName, OperationType.Unary);
-    assertThat(tracer).isSameInstanceAs(BaseApiTracer.getInstance());
   }
 }
