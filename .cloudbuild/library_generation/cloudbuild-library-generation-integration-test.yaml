@@ -70,10 +70,10 @@ steps:
   - |
     mvn dependency:copy \
       -B -ntp \
-      -Dartifact=com.google.api:gapic-generator-java:2.63.0 \
+      -Dartifact=com.google.api:gapic-generator-java:2.65.1 \
       -DoutputDirectory=/workspace
     cd /workspace
-    mv gapic-generator-java-2.63.0.jar gapic-generator-java.jar
+    mv gapic-generator-java-2.65.1.jar gapic-generator-java.jar
   id: prepare-generator-jar
   waitFor: [ "-" ]
 
@@ -93,6 +93,8 @@ steps:
   ]
   env:
   - "DOCKER_BUILDKIT=1"
+  # This does not work until gapic-generator-java is updated to the next released version.
+  - "TEST_CURRENT_YEAR=2025"
   id: generate-libraries
   waitFor: [
     "build-image",
