@@ -272,8 +272,11 @@ public abstract class ClientContext {
     }
 
     ApiTracerFactory tracerFactory = settings.getTracerFactory();
-    if (!Strings.isNullOrEmpty(settings.getArtifactName()) && tracerFactory instanceof TracingTracerFactory) {
-      tracerFactory = tracerFactory.withAttributes(ImmutableMap.of("gcp.client.artifact", settings.getArtifactName()));
+    if (!Strings.isNullOrEmpty(settings.getArtifactName())
+        && tracerFactory instanceof TracingTracerFactory) {
+      tracerFactory =
+          tracerFactory.withAttributes(
+              ImmutableMap.of("gcp.client.artifact", settings.getArtifactName()));
     }
 
     return newBuilder()
