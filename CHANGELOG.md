@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.66.0](https://github.com/googleapis/sdk-platform-java/compare/v2.65.1...v2.66.0) (2026-01-23)
+
+
+### Features
+
+* Upgrade protobuf runtime and gen code to 4.33.x ([#4000](https://github.com/googleapis/sdk-platform-java/issues/4000)) ([#4074](https://github.com/googleapis/sdk-platform-java/issues/4074)) ([3e37376](https://github.com/googleapis/sdk-platform-java/commit/3e37376ccaddf42617436471dc9b014974b8e3df))
+
+
+### Dependencies
+
+* Downgrade opentelemetry to 1.51.0 ([#4075](https://github.com/googleapis/sdk-platform-java/issues/4075)) ([cf65482](https://github.com/googleapis/sdk-platform-java/commit/cf6548232830e0461500d92954050186e255b572))
+* update auth library to 1.42.0 ([#4087](https://github.com/googleapis/sdk-platform-java/issues/4087)) ([ad9ee07](https://github.com/googleapis/sdk-platform-java/commit/ad9ee0731a64585ad8ee0f0ac71bece9f6eaf068))
+* update googleapis/java-cloud-bom digest to ef3656d ([#3630](https://github.com/googleapis/sdk-platform-java/issues/3630)) ([790bcf0](https://github.com/googleapis/sdk-platform-java/commit/790bcf0542dc8aba5afe2f65e80a74d643b40cfe))
+* update http-client to 2.1.0 ([#4086](https://github.com/googleapis/sdk-platform-java/issues/4086)) ([d8bc8f5](https://github.com/googleapis/sdk-platform-java/commit/d8bc8f5d335ffde52a603b47718574858f04f5ee))
+
 ## [2.65.1](https://github.com/googleapis/sdk-platform-java/compare/v2.65.0...v2.65.1) (2026-01-13)
 
 
