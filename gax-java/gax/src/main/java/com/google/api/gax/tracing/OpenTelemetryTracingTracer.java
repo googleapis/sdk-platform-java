@@ -30,30 +30,50 @@
 
 package com.google.api.gax.tracing;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.Mockito.mock;
+import com.google.api.core.BetaApi;
+import com.google.api.core.InternalApi;
 
-import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+;import java.util.HashMap;
+import java.util.Map;
 
-class TracingTracerFactoryTest {
-  private TracingRecorder tracingRecorder;
-  private TracingTracerFactory factory;
-  private ApiTracer parent;
-  private SpanName spanName;
+@BetaApi
+@InternalApi
+public class OpenTelemetryTracingTracer implements ApiTracer {
+  private final TracingRecorder recorder;
+  private final Map<String, String> attributes;
+  private TracingRecorder.SpanHandle operationHandle;
+  private TracingRecorder.SpanHandle attemptHandle;
 
-  @BeforeEach
-  void setUp() {
-    tracingRecorder = mock(TracingRecorder.class);
-    factory = new TracingTracerFactory(tracingRecorder);
-    parent = mock(ApiTracer.class);
-    spanName = mock(SpanName.class);
+  public OpenTelemetryTracingTracer(TracingRecorder recorder, String methodName) {
+    this.recorder = recorder;
+    this.attributes = new HashMap<>();
+    this.attributes.put("method", methodName);
+
+    // Start the long-lived operation span
+    this.operationHandle = recorder.startSpan(methodName + "/operation", attributes);
   }
 
-  @Test
-  void testNewTracer() {
-    ApiTracer tracer = factory.newTracer(parent, spanName, OperationType.Unary);
-    assertThat(tracer).isInstanceOf(TracingTracer.class);
+  @Override
+  public void attemptStarted(Object request, int attemptNumber) {
+    // Start the specific attempt span
+    this.attemptHandle = recorder.startSpan(this.attributes.get("method") + "/attempt", attributes);
+  }
+
+  @Override
+  public void attemptSucceeded() {
+    if (attemptHandle != null) {
+      attemptHandle.end();
+    }
+  }
+
+  @Override
+  public void operationSucceeded() {
+    operationHandle.end();
+  }
+
+  @Override
+  public void operationFailed(Throwable error) {
+    operationHandle.recordError(error);
+    operationHandle.end();
   }
 }

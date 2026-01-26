@@ -37,23 +37,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A {@link ApiTracerFactory} to build instances of {@link TracingTracer}.
+ * A {@link ApiTracerFactory} to build instances of {@link OpenTelemetryTracingTracer}.
  *
- * <p>This class wraps the {@link TracingRecorder} and pass it to {@link TracingTracer}. It will be
- * used to record traces in {@link TracingTracer}.
+ * <p>This class wraps the {@link TracingRecorder} and pass it to {@link OpenTelemetryTracingTracer}. It will be
+ * used to record traces in {@link OpenTelemetryTracingTracer}.
  *
  * <p>This class is expected to be initialized once during client initialization.
  */
 @BetaApi
 @InternalApi
-public class TracingTracerFactory implements ApiTracerFactory {
+public class OpenTelemetryTracingTracerFactory implements ApiTracerFactory {
   private final TracingRecorder tracingRecorder;
 
   /** Mapping of client attributes that are set for every TracingTracer */
   private final Map<String, String> attributes;
 
   /** Creates a TracingTracerFactory with no additional client level attributes. */
-  public TracingTracerFactory(TracingRecorder tracingRecorder) {
+  public OpenTelemetryTracingTracerFactory(TracingRecorder tracingRecorder) {
     this(tracingRecorder, ImmutableMap.of());
   }
 
@@ -61,14 +61,14 @@ public class TracingTracerFactory implements ApiTracerFactory {
    * Pass in a Map of client level attributes which will be added to every single TracingTracer
    * created from the ApiTracerFactory.
    */
-  public TracingTracerFactory(TracingRecorder tracingRecorder, Map<String, String> attributes) {
+  public OpenTelemetryTracingTracerFactory(TracingRecorder tracingRecorder, Map<String, String> attributes) {
     this.tracingRecorder = tracingRecorder;
     this.attributes = ImmutableMap.copyOf(attributes);
   }
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    TracingTracer tracingTracer = new TracingTracer(tracingRecorder);
+    OpenTelemetryTracingTracer tracingTracer = new OpenTelemetryTracingTracer(tracingRecorder);
     attributes.forEach(tracingTracer::addAttributes);
     return tracingTracer;
   }
@@ -77,6 +77,6 @@ public class TracingTracerFactory implements ApiTracerFactory {
   public ApiTracerFactory withAttributes(Map<String, String> attributes) {
     Map<String, String> newAttributes = new HashMap<>(this.attributes);
     newAttributes.putAll(attributes);
-    return new TracingTracerFactory(tracingRecorder, newAttributes);
+    return new OpenTelemetryTracingTracerFactory(tracingRecorder, newAttributes);
   }
 }

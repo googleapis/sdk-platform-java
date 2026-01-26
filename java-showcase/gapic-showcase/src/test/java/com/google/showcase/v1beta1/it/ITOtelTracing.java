@@ -33,7 +33,7 @@ package com.google.showcase.v1beta1.it;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.gax.tracing.OpenTelemetryTracingRecorder;
-import com.google.api.gax.tracing.TracingTracerFactory;
+import com.google.api.gax.tracing.OpenTelemetryTracingTracerFactory;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
@@ -76,8 +76,8 @@ class ITOtelTracing {
 
   @Test
   void testTracing_recorded() throws Exception {
-    TracingTracerFactory tracingFactory =
-        new TracingTracerFactory(new OpenTelemetryTracingRecorder(openTelemetrySdk, SERVICE_NAME));
+    OpenTelemetryTracingTracerFactory tracingFactory =
+        new OpenTelemetryTracingTracerFactory(new OpenTelemetryTracingRecorder(openTelemetrySdk, SERVICE_NAME));
 
     try (EchoClient client =
         TestClientInitializer.createGrpcEchoClientOpentelemetry(tracingFactory)) {

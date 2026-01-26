@@ -43,12 +43,11 @@ import java.util.Map;
 @BetaApi
 @InternalApi
 public interface TracingRecorder {
+  /** Starts a span and returns a handle to manage its lifecycle. */
+  SpanHandle startSpan(String name, Map<String, String> attributes);
 
-  /**
-   * Represents a low-level network span (T4) and serves as a placeholder for further development.
-   * This represents a single network request/attempt.
-   *
-   * @param attributes Map of the attributes to store on the span.
-   */
-  default void recordLowLevelNetworkSpan(Map<String, String> attributes) {}
+  interface SpanHandle {
+    void end();
+    void recordError(Throwable error);
+  }
 }

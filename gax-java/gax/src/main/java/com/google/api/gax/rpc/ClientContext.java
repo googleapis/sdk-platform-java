@@ -43,7 +43,6 @@ import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
-import com.google.api.gax.tracing.TracingTracerFactory;
 import com.google.auth.ApiKeyCredentials;
 import com.google.auth.CredentialTypeForMetrics;
 import com.google.auth.Credentials;
@@ -272,8 +271,7 @@ public abstract class ClientContext {
     }
 
     ApiTracerFactory tracerFactory = settings.getTracerFactory();
-    if (!Strings.isNullOrEmpty(settings.getArtifactName())
-        && tracerFactory instanceof TracingTracerFactory) {
+    if (!Strings.isNullOrEmpty(settings.getArtifactName())) {
       tracerFactory =
           tracerFactory.withAttributes(
               ImmutableMap.of("gcp.client.artifact", settings.getArtifactName()));

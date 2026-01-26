@@ -34,8 +34,15 @@ import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.GaxProperties;
 import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.SpanBuilder;
+import io.opentelemetry.api.trace.SpanKind;
+import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
+import io.opentelemetry.context.Scope;
+
 import java.util.Map;
 
 /**
@@ -45,31 +52,47 @@ import java.util.Map;
 @BetaApi
 @InternalApi
 public class OpenTelemetryTracingRecorder implements TracingRecorder {
-  public static final String GAX_TRACER_NAME = "gax-java";
   private final Tracer tracer;
-  private final String serviceName;
 
-  /**
-   * Creates a new instance of OpenTelemetryTracingRecorder.
-   *
-   * @param openTelemetry OpenTelemetry instance
-   * @param serviceName Service Name
-   */
-  public OpenTelemetryTracingRecorder(OpenTelemetry openTelemetry, String serviceName) {
-    this.tracer =
-        openTelemetry
-            .tracerBuilder(GAX_TRACER_NAME)
-            .setInstrumentationVersion(GaxProperties.getGaxVersion())
-            .build();
-    this.serviceName = serviceName;
+  public OpenTelemetryTracingRecorder(OpenTelemetry openTelemetry) {
+    this.tracer = openTelemetry.getTracer("gax-java");
   }
 
   @Override
-  public void recordLowLevelNetworkSpan(Map<String, String> attributes) {
-    Span span = tracer.spanBuilder(serviceName + "/low-level-network-span").startSpan();
+  public SpanHandle startSpan(String name, Map<String, String> attributes) {
+    SpanBuilder spanBuilder = tracer.spanBuilder(name)
+            .setSpanKind(SpanKind.CLIENT); // Mark as a network-facing call
+
     if (attributes != null) {
-      attributes.forEach(span::setAttribute);
+      attributes.forEach((k, v) -> spanBuilder.setAttribute(k, v));
     }
-    span.end();
+
+    Span span = spanBuilder.startSpan();
+    // makeCurrent() puts this span into the thread-local storage
+    Scope scope = span.makeCurrent();
+
+    return new OtelSpanHandle(span, scope);
+  }
+
+  private static class OtelSpanHandle implements SpanHandle {
+    private final Span span;
+    private final Scope scope;
+
+    private OtelSpanHandle(Span span, Scope scope) {
+      this.span = span;
+      this.scope = scope;
+    }
+
+    @Override
+    public void end() {
+      scope.close(); // Remove from thread-local storage
+      span.end();
+    }
+
+    @Override
+    public void recordError(Throwable error) {
+      span.recordException(error);
+      span.setStatus(StatusCode.ERROR);
+    }
   }
 }

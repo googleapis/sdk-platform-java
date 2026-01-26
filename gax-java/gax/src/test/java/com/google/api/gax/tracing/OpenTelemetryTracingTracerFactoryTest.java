@@ -30,38 +30,30 @@
 
 package com.google.api.gax.tracing;
 
-import com.google.api.core.BetaApi;
-import com.google.api.core.InternalApi;
-import java.util.HashMap;
-import java.util.Map;
+import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Mockito.mock;
 
-/**
- * This class computes generic traces that can be observed in the lifecycle of an RPC operation. The
- * responsibility of recording traces should delegate to {@link TracingRecorder}, hence this class
- * should not have any knowledge about the observability framework used for tracing recording.
- */
-@BetaApi
-@InternalApi
-public class TracingTracer extends BaseApiTracer {
-  private final TracingRecorder tracingRecorder;
-  private final Map<String, String> attributes = new HashMap<>();
+import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-  public TracingTracer(TracingRecorder tracingRecorder) {
-    this.tracingRecorder = tracingRecorder;
+class OpenTelemetryTracingTracerFactoryTest {
+  private TracingRecorder tracingRecorder;
+  private OpenTelemetryTracingTracerFactory factory;
+  private ApiTracer parent;
+  private SpanName spanName;
+
+  @BeforeEach
+  void setUp() {
+    tracingRecorder = mock(TracingRecorder.class);
+    factory = new OpenTelemetryTracingTracerFactory(tracingRecorder);
+    parent = mock(ApiTracer.class);
+    spanName = mock(SpanName.class);
   }
 
-  @Override
-  public void attemptStarted(Object request, int attemptNumber) {
-    tracingRecorder.recordLowLevelNetworkSpan(attributes);
-  }
-
-  /** Add attributes that will be attached to all spans. */
-  public void addAttributes(String key, String value) {
-    attributes.put(key, value);
-  }
-
-  /** Add attributes that will be attached to all spans. */
-  public void addAttributes(Map<String, String> attributes) {
-    this.attributes.putAll(attributes);
+  @Test
+  void testNewTracer() {
+    ApiTracer tracer = factory.newTracer(parent, spanName, OperationType.Unary);
+    assertThat(tracer).isInstanceOf(TracingTracer.class);
   }
 }
