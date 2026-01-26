@@ -43,6 +43,7 @@ import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
+import com.google.api.gax.tracing.TracingTracerFactory;
 import com.google.auth.ApiKeyCredentials;
 import com.google.auth.CredentialTypeForMetrics;
 import com.google.auth.Credentials;
@@ -137,9 +138,6 @@ public abstract class ClientContext {
   @Nullable
   public abstract String getGdchApiAudience();
 
-  @Nullable
-  public abstract String getArtifactName();
-
   /** Create a new ClientContext with default values */
   public static Builder newBuilder() {
     return new AutoValue_ClientContext.Builder()
@@ -153,7 +151,6 @@ public abstract class ClientContext {
         .setTracerFactory(BaseApiTracerFactory.getInstance())
         .setQuotaProjectId(null)
         .setGdchApiAudience(null)
-        .setArtifactName(null)
         // Attempt to create an empty, non-functioning EndpointContext by default. This is
         // not exposed to the user via getters/setters.
         .setEndpointContext(EndpointContext.getDefaultInstance());
@@ -274,6 +271,11 @@ public abstract class ClientContext {
       backgroundResources.add(watchdog);
     }
 
+    ApiTracerFactory tracerFactory = settings.getTracerFactory();
+    if (!Strings.isNullOrEmpty(settings.getArtifactName()) && tracerFactory instanceof TracingTracerFactory) {
+      tracerFactory = tracerFactory.withAttributes(ImmutableMap.of("gcp.client.artifact", settings.getArtifactName()));
+    }
+
     return newBuilder()
         .setBackgroundResources(backgroundResources.build())
         .setExecutor(backgroundExecutor)
@@ -288,9 +290,8 @@ public abstract class ClientContext {
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
         .setStreamWatchdogCheckIntervalDuration(settings.getStreamWatchdogCheckIntervalDuration())
-        .setTracerFactory(settings.getTracerFactory())
+        .setTracerFactory(tracerFactory)
         .setEndpointContext(endpointContext)
-        .setArtifactName(settings.getArtifactName())
         .build();
   }
 
@@ -442,8 +443,6 @@ public abstract class ClientContext {
      * @param gdchApiAudience the audience to be used - must be a valid URI string
      */
     public abstract Builder setGdchApiAudience(String gdchApiAudience);
-
-    public abstract Builder setArtifactName(String artifactName);
 
     /** Package-Private as this is to be shared to StubSettings */
     abstract Builder setEndpointContext(EndpointContext endpointContext);
