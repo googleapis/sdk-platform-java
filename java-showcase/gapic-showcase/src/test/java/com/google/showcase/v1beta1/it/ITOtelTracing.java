@@ -77,7 +77,7 @@ class ITOtelTracing {
   @Test
   void testTracing_recorded() throws Exception {
     OpenTelemetryTracingTracerFactory tracingFactory =
-        new OpenTelemetryTracingTracerFactory(new OpenTelemetryTracingRecorder(openTelemetrySdk, SERVICE_NAME));
+        new OpenTelemetryTracingTracerFactory(new OpenTelemetryTracingRecorder(openTelemetrySdk));
 
     try (EchoClient client =
         TestClientInitializer.createGrpcEchoClientOpentelemetry(tracingFactory)) {

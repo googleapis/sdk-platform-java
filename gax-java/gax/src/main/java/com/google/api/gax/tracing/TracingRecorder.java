@@ -48,6 +48,7 @@ public interface TracingRecorder {
 
   interface SpanHandle {
     void end();
+
     void recordError(Throwable error);
   }
 }

@@ -32,17 +32,12 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import com.google.api.gax.core.GaxProperties;
 import io.opentelemetry.api.OpenTelemetry;
-import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanBuilder;
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Context;
-import io.opentelemetry.context.Scope;
-
 import java.util.Map;
 
 /**
@@ -60,8 +55,8 @@ public class OpenTelemetryTracingRecorder implements TracingRecorder {
 
   @Override
   public SpanHandle startSpan(String name, Map<String, String> attributes) {
-    SpanBuilder spanBuilder = tracer.spanBuilder(name)
-            .setSpanKind(SpanKind.CLIENT); // Mark as a network-facing call
+    SpanBuilder spanBuilder =
+        tracer.spanBuilder(name).setSpanKind(SpanKind.CLIENT); // Mark as a network-facing call
 
     if (attributes != null) {
       attributes.forEach((k, v) -> spanBuilder.setAttribute(k, v));
@@ -69,23 +64,19 @@ public class OpenTelemetryTracingRecorder implements TracingRecorder {
 
     Span span = spanBuilder.startSpan();
     // makeCurrent() puts this span into the thread-local storage
-    Scope scope = span.makeCurrent();
 
-    return new OtelSpanHandle(span, scope);
+    return new OtelSpanHandle(span);
   }
 
   private static class OtelSpanHandle implements SpanHandle {
     private final Span span;
-    private final Scope scope;
 
-    private OtelSpanHandle(Span span, Scope scope) {
+    private OtelSpanHandle(Span span) {
       this.span = span;
-      this.scope = scope;
     }
 
     @Override
     public void end() {
-      scope.close(); // Remove from thread-local storage
       span.end();
     }
 

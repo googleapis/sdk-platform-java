@@ -39,8 +39,9 @@ import java.util.Map;
 /**
  * A {@link ApiTracerFactory} to build instances of {@link OpenTelemetryTracingTracer}.
  *
- * <p>This class wraps the {@link TracingRecorder} and pass it to {@link OpenTelemetryTracingTracer}. It will be
- * used to record traces in {@link OpenTelemetryTracingTracer}.
+ * <p>This class wraps the {@link TracingRecorder} and pass it to {@link
+ * OpenTelemetryTracingTracer}. It will be used to record traces in {@link
+ * OpenTelemetryTracingTracer}.
  *
  * <p>This class is expected to be initialized once during client initialization.
  */
@@ -61,15 +62,17 @@ public class OpenTelemetryTracingTracerFactory implements ApiTracerFactory {
    * Pass in a Map of client level attributes which will be added to every single TracingTracer
    * created from the ApiTracerFactory.
    */
-  public OpenTelemetryTracingTracerFactory(TracingRecorder tracingRecorder, Map<String, String> attributes) {
+  public OpenTelemetryTracingTracerFactory(
+      TracingRecorder tracingRecorder, Map<String, String> attributes) {
     this.tracingRecorder = tracingRecorder;
     this.attributes = ImmutableMap.copyOf(attributes);
   }
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    OpenTelemetryTracingTracer tracingTracer = new OpenTelemetryTracingTracer(tracingRecorder);
-    attributes.forEach(tracingTracer::addAttributes);
+    OpenTelemetryTracingTracer tracingTracer =
+        new OpenTelemetryTracingTracer(tracingRecorder, spanName.getMethodName());
+    tracingTracer.addAttributes(attributes);
     return tracingTracer;
   }
 

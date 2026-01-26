@@ -32,8 +32,7 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-
-;import java.util.HashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 @BetaApi
@@ -75,5 +74,9 @@ public class OpenTelemetryTracingTracer implements ApiTracer {
   public void operationFailed(Throwable error) {
     operationHandle.recordError(error);
     operationHandle.end();
+  }
+
+  public void addAttributes(Map<String, String> attributes) {
+    this.attributes.putAll(attributes);
   }
 }
