@@ -7,19 +7,6 @@
 
 # Hardcoded list of downstream Protobuf testing PRs to check the status of
 PULL_REQUESTS=(
-    "https://github.com/googleapis/java-bigtable/pull/2614"
-    "https://github.com/googleapis/java-bigquery/pull/3867"
-    "https://github.com/googleapis/java-bigquerystorage/pull/3030"
-    "https://github.com/googleapis/java-datastore/pull/1900"
-    "https://github.com/googleapis/java-firestore/pull/2165"
-    "https://github.com/googleapis/java-logging/pull/1825"
-    "https://github.com/googleapis/java-logging-logback/pull/1492"
-    "https://github.com/googleapis/java-pubsub/pull/2470"
-    "https://github.com/googleapis/java-pubsublite/pull/1889"
-    "https://github.com/googleapis/java-spanner/pull/3928"
-    "https://github.com/googleapis/java-spanner-jdbc/pull/2113"
-    "https://github.com/googleapis/java-storage/pull/3178"
-    "https://github.com/googleapis/java-storage-nio/pull/1612"
     "https://github.com/googleapis/java-bigtable/pull/2663"
     "https://github.com/googleapis/java-bigquery/pull/3942"
     "https://github.com/googleapis/java-bigquerystorage/pull/3083"
