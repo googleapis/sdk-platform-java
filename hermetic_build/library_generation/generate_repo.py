@@ -62,7 +62,7 @@ def generate_from_yaml(
         generate_composed_library(
             config=config,
             library_path=library_path,
-            library=library,
+            library_config=library,
             repo_config=repo_config,
         )
 

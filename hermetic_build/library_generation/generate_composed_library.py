@@ -44,7 +44,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 def generate_composed_library(
     config: GenerationConfig,
     library_path: str,
-    library: LibraryConfig,
+    library_config: LibraryConfig,
     repo_config: RepoConfig,
 ) -> None:
     """
@@ -53,7 +53,7 @@ def generate_composed_library(
     :param config: a GenerationConfig object representing a parsed configuration
     yaml
     :param library_path: the path to which the generated file goes
-    :param library: a LibraryConfig object contained inside config, passed here
+    :param library_config: a LibraryConfig object contained inside config, passed here
     for convenience and to prevent all libraries to be processed
     :param repo_config:
     :return None
@@ -61,7 +61,7 @@ def generate_composed_library(
     output_folder = repo_config.output_folder
     owlbot_cli_source_folder = util.sh_util("mktemp -d")
     os.makedirs(f"{library_path}", exist_ok=True)
-    for gapic in library.get_sorted_gapic_configs():
+    for gapic in library_config.get_sorted_gapic_configs():
         build_file_folder = Path(f"{output_folder}/{gapic.proto_path}").resolve()
         print(f"build_file_folder: {build_file_folder}")
         gapic_inputs = parse_build_file(build_file_folder, gapic.proto_path)
@@ -73,16 +73,17 @@ def generate_composed_library(
         # generating postprocessing files such as README.
         util.generate_postprocessing_prerequisite_files(
             config=config,
-            library=library,
+            library=library_config,
             proto_path=util.remove_version_from(gapic.proto_path),
             library_path=library_path,
-            transport=library.get_transport(gapic_inputs),
+            transport=library_config.get_transport(gapic_inputs),
         )
         temp_destination_path = f"java-{gapic.proto_path.replace('/','-')}"
-        effective_arguments = __construct_effective_arg(
+        effective_arguments = __construct_effective_args(
             base_arguments=[],
             gapic=gapic,
             gapic_inputs=gapic_inputs,
+            library_config=library_config,
             temp_destination_path=temp_destination_path,
         )
         print("arguments: ")
@@ -101,7 +102,7 @@ def generate_composed_library(
         )
 
     library_version = repo_config.get_library_version(
-        artifact_id=library.get_artifact_id()
+        artifact_id=library_config.get_artifact_id()
     )
     # call postprocess library
     util.run_process_and_print_output(
@@ -119,10 +120,11 @@ def generate_composed_library(
     )
 
 
-def __construct_effective_arg(
+def __construct_effective_args(
     base_arguments: List[str],
     gapic: GapicConfig,
     gapic_inputs: GapicInputs,
+    library_config: LibraryConfig,
     temp_destination_path: str,
 ) -> List[str]:
     """
@@ -153,6 +155,8 @@ def __construct_effective_arg(
         gapic_inputs.service_yaml,
         "--include_samples",
         gapic_inputs.include_samples,
+        "--artifact_name",
+        library_config.get_maven_coordinate(),
     ]
     arguments += ["--destination_path", temp_destination_path]
 
