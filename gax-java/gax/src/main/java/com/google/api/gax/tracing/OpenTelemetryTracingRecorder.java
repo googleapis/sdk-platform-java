@@ -38,6 +38,8 @@ import io.opentelemetry.api.trace.SpanBuilder;
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Scope;
+
 import java.util.Map;
 
 /**
@@ -64,19 +66,23 @@ public class OpenTelemetryTracingRecorder implements TracingRecorder {
 
     Span span = spanBuilder.startSpan();
     // makeCurrent() puts this span into the thread-local storage
+    Scope scope = span.makeCurrent();
 
-    return new OtelSpanHandle(span);
+    return new OtelSpanHandle(span, scope);
   }
 
   private static class OtelSpanHandle implements SpanHandle {
     private final Span span;
+    private final Scope scope;
 
-    private OtelSpanHandle(Span span) {
+    private OtelSpanHandle(Span span, Scope scope) {
       this.span = span;
+      this.scope = scope;
     }
 
     @Override
     public void end() {
+      scope.close(); // Remove from thread-local storage
       span.end();
     }
 
