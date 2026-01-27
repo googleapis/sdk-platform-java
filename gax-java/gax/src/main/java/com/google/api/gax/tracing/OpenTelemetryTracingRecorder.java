@@ -56,6 +56,7 @@ public class OpenTelemetryTracingRecorder implements TracingRecorder {
   }
 
   @Override
+  @SuppressWarnings("MustBeClosedChecker") // Scope is closed later in the lifecycle
   public SpanHandle startSpan(String name, Map<String, String> attributes) {
     SpanBuilder spanBuilder =
         tracer.spanBuilder(name).setSpanKind(SpanKind.CLIENT); // Mark as a network-facing call
