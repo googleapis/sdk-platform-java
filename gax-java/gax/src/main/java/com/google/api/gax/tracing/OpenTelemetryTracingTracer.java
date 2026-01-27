@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -27,49 +27,56 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package com.google.api.gax.tracing;
 
+import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import com.google.api.core.InternalExtensionOnly;
+import java.util.HashMap;
 import java.util.Map;
 
-/**
- * A factory to create new instances of {@link ApiTracer}s.
- *
- * <p>In general a single instance of an {@link ApiTracer} will correspond to a single logical
- * operation.
- *
- * <p>For internal use only. google-cloud-java libraries should extend {@link BaseApiTracerFactory}.
- */
+@BetaApi
 @InternalApi
-@InternalExtensionOnly
-public interface ApiTracerFactory {
-  /** The type of operation the {@link ApiTracer} is tracing. */
-  enum OperationType {
-    Unary,
-    Batching,
-    LongRunning,
-    ServerStreaming,
-    ClientStreaming,
-    BidiStreaming
+public class OpenTelemetryTracingTracer implements ApiTracer {
+  private final TracingRecorder recorder;
+  private final Map<String, String> attributes;
+  private TracingRecorder.SpanHandle operationHandle;
+  private TracingRecorder.SpanHandle attemptHandle;
+
+  public OpenTelemetryTracingTracer(TracingRecorder recorder, String methodName) {
+    this.recorder = recorder;
+    this.attributes = new HashMap<>();
+    this.attributes.put("method", methodName);
+
+    // Start the long-lived operation span
+    this.operationHandle = recorder.startSpan(methodName + "/operation", attributes);
   }
 
-  /**
-   * Create a new {@link ApiTracer} that will be a child of the current context.
-   *
-   * @param parent the parent of this tracer
-   * @param spanName the name of the new span
-   * @param operationType the type of operation that the tracer will trace
-   */
-  ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType);
+  @Override
+  public void attemptStarted(Object request, int attemptNumber) {
+    // Start the specific attempt span
+    this.attemptHandle = recorder.startSpan(this.attributes.get("method") + "/attempt", attributes);
+  }
 
-  /**
-   * Returns a new {@link ApiTracerFactory} that will add the given attributes to all tracers
-   * created by the factory.
-   *
-   * @param attributes the attributes to add to all tracers
-   */
-  default ApiTracerFactory withAttributes(Map<String, String> attributes) {
-    return this;
+  @Override
+  public void attemptSucceeded() {
+    if (attemptHandle != null) {
+      attemptHandle.end();
+    }
+  }
+
+  @Override
+  public void operationSucceeded() {
+    operationHandle.end();
+  }
+
+  @Override
+  public void operationFailed(Throwable error) {
+    operationHandle.recordError(error);
+    operationHandle.end();
+  }
+
+  public void addAttributes(Map<String, String> attributes) {
+    this.attributes.putAll(attributes);
   }
 }

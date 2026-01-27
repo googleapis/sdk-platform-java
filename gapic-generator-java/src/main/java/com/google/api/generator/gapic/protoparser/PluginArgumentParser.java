@@ -26,6 +26,7 @@ public class PluginArgumentParser {
   private static final String EQUALS = "=";
 
   // Synced to rules_java_gapic/java_gapic.bzl.
+  @VisibleForTesting static final String KEY_ARTIFACT_NAME = "artifact-name";
   @VisibleForTesting static final String KEY_GRPC_SERVICE_CONFIG = "grpc-service-config";
   @VisibleForTesting static final String KEY_GAPIC_CONFIG = "gapic-config";
   @VisibleForTesting static final String KEY_METADATA = "metadata";
@@ -51,6 +52,10 @@ public class PluginArgumentParser {
 
   static Optional<String> parseTransport(CodeGeneratorRequest request) {
     return parseConfigArgument(request.getParameter(), KEY_TRANSPORT);
+  }
+
+  static Optional<String> parseArtifactName(CodeGeneratorRequest request) {
+    return parseConfigArgument(request.getParameter(), KEY_ARTIFACT_NAME);
   }
 
   static boolean hasMetadataFlag(CodeGeneratorRequest request) {
