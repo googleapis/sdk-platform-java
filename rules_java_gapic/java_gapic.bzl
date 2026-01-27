@@ -197,9 +197,6 @@ def _java_gapic_srcjar(
         **kwargs):
     file_args_dict = {}
 
-    if artifact_name:
-        opt_args.append("artifact-name=%s" % artifact_name)
-
     if grpc_service_config:
         file_args_dict[grpc_service_config] = "grpc-service-config"
     elif not transport or transport == "grpc":
@@ -214,6 +211,9 @@ def _java_gapic_srcjar(
         file_args_dict[service_yaml] = "api-service-config"
 
     opt_args = []
+
+    if artifact_name:
+        opt_args.append("artifact-name=%s" % artifact_name)
 
     if transport:
         opt_args.append("transport=%s" % transport)
