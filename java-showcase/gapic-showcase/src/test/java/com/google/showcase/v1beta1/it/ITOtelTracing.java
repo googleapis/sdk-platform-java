@@ -49,7 +49,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ITOtelTracing {
-  private static final String SERVICE_NAME = "ShowcaseTracingTest";
   private InMemorySpanExporter spanExporter;
   private OpenTelemetrySdk openTelemetrySdk;
 
@@ -86,10 +85,15 @@ class ITOtelTracing {
 
       List<SpanData> spans = spanExporter.getFinishedSpanItems();
       assertThat(spans).isNotEmpty();
-      boolean foundLowLevelSpan =
-          spans.stream()
-              .anyMatch(span -> span.getName().equals(SERVICE_NAME + "/low-level-network-span"));
-      assertThat(foundLowLevelSpan).isTrue();
+
+      // Verify that we have at least the operation and attempt spans
+      boolean foundOperationSpan =
+          spans.stream().anyMatch(span -> span.getName().equals("Echo/operation"));
+      boolean foundAttemptSpan =
+          spans.stream().anyMatch(span -> span.getName().equals("Echo/attempt"));
+
+      assertThat(foundOperationSpan).isTrue();
+      assertThat(foundAttemptSpan).isTrue();
     }
   }
 }

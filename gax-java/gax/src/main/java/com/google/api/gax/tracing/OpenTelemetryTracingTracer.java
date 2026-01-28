@@ -39,23 +39,28 @@ import java.util.Map;
 @InternalApi
 public class OpenTelemetryTracingTracer implements ApiTracer {
   private final TracingRecorder recorder;
-  private final Map<String, String> attributes;
+  private final Map<String, String> operationAttributes;
+  private final String methodName;
   private TracingRecorder.SpanHandle operationHandle;
   private TracingRecorder.SpanHandle attemptHandle;
 
   public OpenTelemetryTracingTracer(TracingRecorder recorder, String methodName) {
     this.recorder = recorder;
-    this.attributes = new HashMap<>();
-    this.attributes.put("method", methodName);
+    this.methodName = methodName;
+    this.operationAttributes = new HashMap<>();
+    this.operationAttributes.put("method", methodName);
 
     // Start the long-lived operation span
-    this.operationHandle = recorder.startSpan(methodName + "/operation", attributes);
+    this.operationHandle = recorder.startSpan(methodName + "/operation", operationAttributes);
   }
 
   @Override
   public void attemptStarted(Object request, int attemptNumber) {
+    Map<String, String> attemptAttributes = new HashMap<>(operationAttributes);
+    attemptAttributes.put("attemptNumber", String.valueOf(attemptNumber));
+
     // Start the specific attempt span
-    this.attemptHandle = recorder.startSpan(this.attributes.get("method") + "/attempt", attributes);
+    this.attemptHandle = recorder.startSpan(methodName + "/attempt", attemptAttributes);
   }
 
   @Override
@@ -77,6 +82,6 @@ public class OpenTelemetryTracingTracer implements ApiTracer {
   }
 
   public void addAttributes(Map<String, String> attributes) {
-    this.attributes.putAll(attributes);
+    this.operationAttributes.putAll(attributes);
   }
 }
