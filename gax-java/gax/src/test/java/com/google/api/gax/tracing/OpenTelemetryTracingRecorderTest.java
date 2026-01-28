@@ -74,12 +74,27 @@ class OpenTelemetryTracingRecorderTest {
     when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
     when(spanBuilder.setAttribute("key1", "value1")).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
-    when(span.makeCurrent()).thenReturn(scope);
 
     TracingRecorder.SpanHandle handle = recorder.startSpan(spanName, attributes);
     handle.end();
 
     verify(span).end();
+  }
+
+  @Test
+  void testInScope_managesContext() {
+    String spanName = "test-span";
+    when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
+    when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
+    when(spanBuilder.startSpan()).thenReturn(span);
+    when(span.makeCurrent()).thenReturn(scope);
+
+    TracingRecorder.SpanHandle handle = recorder.startSpan(spanName, null);
+    try (ApiTracer.Scope ignored = recorder.inScope(handle)) {
+      // do nothing
+    }
+
+    verify(span).makeCurrent();
     verify(scope).close();
   }
 
@@ -91,7 +106,6 @@ class OpenTelemetryTracingRecorderTest {
     when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
     when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
-    when(span.makeCurrent()).thenReturn(scope);
 
     TracingRecorder.SpanHandle handle = recorder.startSpan(spanName, null);
     handle.recordError(error);

@@ -72,7 +72,8 @@ class OpenTelemetryTracingTracerTest {
 
   @Test
   void testAttemptLifecycle_startsAndEndsAttemptSpan() {
-    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
+        .thenReturn(attemptHandle);
     tracer.attemptStarted(new Object(), 1);
     tracer.attemptSucceeded();
 
@@ -83,12 +84,14 @@ class OpenTelemetryTracingTracerTest {
   void testAddAttemptAttributes_passedToAttemptSpan() {
     tracer.addAttemptAttributes(ImmutableMap.of("attempt-key", "attempt-value"));
 
-    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
+        .thenReturn(attemptHandle);
     tracer.attemptStarted(new Object(), 1);
 
     verify(recorder)
         .startSpan(
             eq(ATTEMPT_SPAN_NAME),
-            eq(ImmutableMap.of("attempt-key", "attempt-value", "attemptNumber", "1")));
+            eq(ImmutableMap.of("attempt-key", "attempt-value", "attemptNumber", "1")),
+            eq(operationHandle));
   }
 }
