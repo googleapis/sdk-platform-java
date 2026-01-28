@@ -58,9 +58,11 @@ class OpenTelemetryTracingTracerFactoryTest {
   void testWithAttributes_returnsNewFactoryWithMergedAttributes() {
     TracingRecorder recorder = mock(TracingRecorder.class);
     OpenTelemetryTracingTracerFactory factory =
-        new OpenTelemetryTracingTracerFactory(recorder, ImmutableMap.of("k1", "v1"));
+        new OpenTelemetryTracingTracerFactory(
+            recorder, ImmutableMap.of("ok1", "ov1"), ImmutableMap.of("ak1", "av1"));
 
-    ApiTracerFactory factoryWithAttrs = factory.withAttributes(ImmutableMap.of("k2", "v2"));
+    ApiTracerFactory factoryWithAttrs =
+        factory.withAttributes(ImmutableMap.of("ok2", "ov2"), ImmutableMap.of("ak1", "av1"));
 
     assertThat(factoryWithAttrs).isInstanceOf(OpenTelemetryTracingTracerFactory.class);
   }

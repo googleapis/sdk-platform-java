@@ -32,19 +32,26 @@ package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.tracing.OpenTelemetryTracingRecorder;
 import com.google.api.gax.tracing.OpenTelemetryTracingTracerFactory;
+import com.google.common.collect.ImmutableMap;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import io.opentelemetry.api.GlobalOpenTelemetry;
+import io.opentelemetry.api.common.AttributeKey;
+import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.testing.exporter.InMemorySpanExporter;
 import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import io.opentelemetry.sdk.trace.data.SpanData;
 import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -74,7 +81,7 @@ class ITOtelTracing {
   }
 
   @Test
-  void testTracing_recorded() throws Exception {
+  void testTracing_successfulEcho() throws Exception {
     OpenTelemetryTracingTracerFactory tracingFactory =
         new OpenTelemetryTracingTracerFactory(new OpenTelemetryTracingRecorder(openTelemetrySdk));
 
@@ -86,14 +93,63 @@ class ITOtelTracing {
       List<SpanData> spans = spanExporter.getFinishedSpanItems();
       assertThat(spans).isNotEmpty();
 
-      // Verify that we have at least the operation and attempt spans
-      boolean foundOperationSpan =
-          spans.stream().anyMatch(span -> span.getName().equals("Echo/operation"));
-      boolean foundAttemptSpan =
-          spans.stream().anyMatch(span -> span.getName().equals("Echo/attempt"));
+      // Verify operation span (low-cardinality)
+      Optional<SpanData> operationSpan =
+          spans.stream().filter(span -> span.getName().equals("Echo.Echo")).findFirst();
+      assertThat(operationSpan.isPresent()).isTrue();
+      assertThat(operationSpan.get().getStatus().getStatusCode()).isEqualTo(StatusCode.OK);
 
-      assertThat(foundOperationSpan).isTrue();
-      assertThat(foundAttemptSpan).isTrue();
+      // Verify attempt span (RPC convention)
+      Optional<SpanData> attemptSpan =
+          spans.stream().filter(span -> span.getName().equals("Echo/Echo")).findFirst();
+      assertThat(attemptSpan.isPresent()).isTrue();
+      assertThat(attemptSpan.get().getAttributes().get(AttributeKey.stringKey("attemptNumber")))
+          .isEqualTo("0");
+    }
+  }
+
+  @Test
+  void testTracing_failedEcho() throws Exception {
+    OpenTelemetryTracingTracerFactory tracingFactory =
+        new OpenTelemetryTracingTracerFactory(new OpenTelemetryTracingRecorder(openTelemetrySdk));
+
+    try (EchoClient client =
+        TestClientInitializer.createGrpcEchoClientOpentelemetry(tracingFactory)) {
+
+      // Content is empty, which should trigger an error in Showcase Echo
+      Assertions.assertThrows(
+          InvalidArgumentException.class,
+          () -> client.echo(EchoRequest.newBuilder().setContent("").build()));
+
+      List<SpanData> spans = spanExporter.getFinishedSpanItems();
+      assertThat(spans).isNotEmpty();
+
+      // Verify operation span recorded the error
+      Optional<SpanData> operationSpan =
+          spans.stream().filter(span -> span.getName().equals("Echo.Echo")).findFirst();
+      assertThat(operationSpan.isPresent()).isTrue();
+      assertThat(operationSpan.get().getStatus().getStatusCode()).isEqualTo(StatusCode.ERROR);
+    }
+  }
+
+  @Test
+  void testTracing_withCustomAttributes() throws Exception {
+    Map<String, String> customAttributes = ImmutableMap.of("custom-key", "custom-value");
+    OpenTelemetryTracingTracerFactory tracingFactory =
+        new OpenTelemetryTracingTracerFactory(
+            new OpenTelemetryTracingRecorder(openTelemetrySdk), customAttributes);
+
+    try (EchoClient client =
+        TestClientInitializer.createGrpcEchoClientOpentelemetry(tracingFactory)) {
+
+      client.echo(EchoRequest.newBuilder().setContent("attr-test").build());
+
+      List<SpanData> spans = spanExporter.getFinishedSpanItems();
+
+      for (SpanData span : spans) {
+        assertThat(span.getAttributes().get(AttributeKey.stringKey("custom-key")))
+            .isEqualTo("custom-value");
+      }
     }
   }
 }

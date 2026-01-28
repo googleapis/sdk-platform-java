@@ -40,27 +40,30 @@ import java.util.Map;
 public class OpenTelemetryTracingTracer implements ApiTracer {
   private final TracingRecorder recorder;
   private final Map<String, String> operationAttributes;
-  private final String methodName;
+  private final Map<String, String> attemptAttributes;
+  private final String attemptSpanName;
   private TracingRecorder.SpanHandle operationHandle;
   private TracingRecorder.SpanHandle attemptHandle;
 
-  public OpenTelemetryTracingTracer(TracingRecorder recorder, String methodName) {
+  public OpenTelemetryTracingTracer(
+      TracingRecorder recorder, String operationSpanName, String attemptSpanName) {
     this.recorder = recorder;
-    this.methodName = methodName;
+    this.attemptSpanName = attemptSpanName;
     this.operationAttributes = new HashMap<>();
-    this.operationAttributes.put("method", methodName);
+    this.attemptAttributes = new HashMap<>();
+    this.operationAttributes.put("method", attemptSpanName);
 
     // Start the long-lived operation span
-    this.operationHandle = recorder.startSpan(methodName + "/operation", operationAttributes);
+    this.operationHandle = recorder.startSpan(operationSpanName, operationAttributes);
   }
 
   @Override
   public void attemptStarted(Object request, int attemptNumber) {
-    Map<String, String> attemptAttributes = new HashMap<>(operationAttributes);
+    Map<String, String> attemptAttributes = new HashMap<>(this.attemptAttributes);
     attemptAttributes.put("attemptNumber", String.valueOf(attemptNumber));
 
     // Start the specific attempt span
-    this.attemptHandle = recorder.startSpan(methodName + "/attempt", attemptAttributes);
+    this.attemptHandle = recorder.startSpan(attemptSpanName, attemptAttributes);
   }
 
   @Override
@@ -81,7 +84,11 @@ public class OpenTelemetryTracingTracer implements ApiTracer {
     operationHandle.end();
   }
 
-  public void addAttributes(Map<String, String> attributes) {
+  public void addOperationAttributes(Map<String, String> attributes) {
     this.operationAttributes.putAll(attributes);
+  }
+
+  public void addAttemptAttributes(Map<String, String> attributes) {
+    this.attemptAttributes.putAll(attributes);
   }
 }

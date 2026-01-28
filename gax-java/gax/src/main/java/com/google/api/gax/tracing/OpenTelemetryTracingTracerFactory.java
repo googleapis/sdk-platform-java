@@ -50,12 +50,15 @@ import java.util.Map;
 public class OpenTelemetryTracingTracerFactory implements ApiTracerFactory {
   private final TracingRecorder tracingRecorder;
 
-  /** Mapping of client attributes that are set for every TracingTracer */
-  private final Map<String, String> attributes;
+  /** Mapping of client attributes that are set for every TracingTracer at operation level */
+  private final Map<String, String> operationAttributes;
+
+  /** Mapping of client attributes that are set for every TracingTracer at attempt level */
+  private final Map<String, String> attemptAttributes;
 
   /** Creates a TracingTracerFactory with no additional client level attributes. */
   public OpenTelemetryTracingTracerFactory(TracingRecorder tracingRecorder) {
-    this(tracingRecorder, ImmutableMap.of());
+    this(tracingRecorder, ImmutableMap.of(), ImmutableMap.of());
   }
 
   /**
@@ -63,23 +66,34 @@ public class OpenTelemetryTracingTracerFactory implements ApiTracerFactory {
    * created from the ApiTracerFactory.
    */
   public OpenTelemetryTracingTracerFactory(
-      TracingRecorder tracingRecorder, Map<String, String> attributes) {
+      TracingRecorder tracingRecorder,
+      Map<String, String> operationAttributes,
+      Map<String, String> attemptAttributes) {
     this.tracingRecorder = tracingRecorder;
-    this.attributes = ImmutableMap.copyOf(attributes);
+    this.operationAttributes = ImmutableMap.copyOf(operationAttributes);
+    this.attemptAttributes = ImmutableMap.copyOf(attemptAttributes);
   }
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
+    String operationSpanName = spanName.getClientName() + "." + spanName.getMethodName();
+    String attemptSpanName = spanName.getClientName() + "/" + spanName.getMethodName();
+
     OpenTelemetryTracingTracer tracingTracer =
-        new OpenTelemetryTracingTracer(tracingRecorder, spanName.getMethodName());
-    tracingTracer.addAttributes(attributes);
+        new OpenTelemetryTracingTracer(tracingRecorder, operationSpanName, attemptSpanName);
+    tracingTracer.addOperationAttributes(operationAttributes);
+    tracingTracer.addAttemptAttributes(attemptAttributes);
     return tracingTracer;
   }
 
   @Override
-  public ApiTracerFactory withAttributes(Map<String, String> attributes) {
-    Map<String, String> newAttributes = new HashMap<>(this.attributes);
-    newAttributes.putAll(attributes);
-    return new OpenTelemetryTracingTracerFactory(tracingRecorder, newAttributes);
+  public ApiTracerFactory withAttributes(
+      Map<String, String> operationAttributes, Map<String, String> attemptAttributes) {
+    Map<String, String> newOperationAttributes = new HashMap<>(this.operationAttributes);
+    newOperationAttributes.putAll(operationAttributes);
+    Map<String, String> newAttemptAttributes = new HashMap<>(this.attemptAttributes);
+    newAttemptAttributes.putAll(attemptAttributes);
+    return new OpenTelemetryTracingTracerFactory(
+        tracingRecorder, newOperationAttributes, newAttemptAttributes);
   }
 }

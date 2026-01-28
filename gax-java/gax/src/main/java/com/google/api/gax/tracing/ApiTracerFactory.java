@@ -67,9 +67,11 @@ public interface ApiTracerFactory {
    * Returns a new {@link ApiTracerFactory} that will add the given attributes to all tracers
    * created by the factory.
    *
-   * @param attributes the attributes to add to all tracers
+   * @param operationAttributes the operation attributes to add to all tracers
+   * @param attemptAttributes the attempt attributes to add to all tracers
    */
-  default ApiTracerFactory withAttributes(Map<String, String> attributes) {
+  default ApiTracerFactory withAttributes(
+      Map<String, String> operationAttributes, Map<String, String> attemptAttributes) {
     return this;
   }
 }
