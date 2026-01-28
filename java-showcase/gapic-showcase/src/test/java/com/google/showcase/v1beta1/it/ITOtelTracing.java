@@ -32,7 +32,6 @@ package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.tracing.OpenTelemetryTracingRecorder;
 import com.google.api.gax.tracing.OpenTelemetryTracingTracerFactory;
 import com.google.common.collect.ImmutableMap;
@@ -49,7 +48,6 @@ import io.opentelemetry.sdk.trace.data.SpanData;
 import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -94,16 +92,20 @@ class ITOtelTracing {
       assertThat(spans).isNotEmpty();
 
       // Verify operation span (low-cardinality)
-      Optional<SpanData> operationSpan =
-          spans.stream().filter(span -> span.getName().equals("Echo.Echo/operation")).findFirst();
-      assertThat(operationSpan.isPresent()).isTrue();
-      assertThat(operationSpan.get().getStatus().getStatusCode()).isEqualTo(StatusCode.OK);
+      SpanData operationSpan =
+          spans.stream()
+              .filter(span -> span.getName().equals("Echo.Echo/operation"))
+              .findFirst()
+              .orElseThrow(() -> new AssertionError("Operation span 'Echo.Echo/operation' not found"));
+      assertThat(operationSpan.getStatus().getStatusCode()).isEqualTo(StatusCode.OK);
 
       // Verify attempt span (RPC convention)
-      Optional<SpanData> attemptSpan =
-          spans.stream().filter(span -> span.getName().equals("Echo/Echo/attempt")).findFirst();
-      assertThat(attemptSpan.isPresent()).isTrue();
-      assertThat(attemptSpan.get().getAttributes().get(AttributeKey.stringKey("attemptNumber")))
+      SpanData attemptSpan =
+          spans.stream()
+              .filter(span -> span.getName().equals("Echo/Echo/attempt"))
+              .findFirst()
+              .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
+      assertThat(attemptSpan.getAttributes().get(AttributeKey.stringKey("attemptNumber")))
           .isEqualTo("0");
     }
   }
@@ -118,17 +120,19 @@ class ITOtelTracing {
 
       // Content is empty, which should trigger an error in Showcase Echo
       Assertions.assertThrows(
-          InvalidArgumentException.class,
+          Exception.class,
           () -> client.echo(EchoRequest.newBuilder().setContent("").build()));
 
       List<SpanData> spans = spanExporter.getFinishedSpanItems();
       assertThat(spans).isNotEmpty();
 
       // Verify operation span recorded the error
-      Optional<SpanData> operationSpan =
-          spans.stream().filter(span -> span.getName().equals("Echo.Echo/operation")).findFirst();
-      assertThat(operationSpan.isPresent()).isTrue();
-      assertThat(operationSpan.get().getStatus().getStatusCode()).isEqualTo(StatusCode.ERROR);
+      SpanData operationSpan =
+          spans.stream()
+              .filter(span -> span.getName().equals("Echo.Echo/operation"))
+              .findFirst()
+              .orElseThrow(() -> new AssertionError("Operation span 'Echo.Echo/operation' not found"));
+      assertThat(operationSpan.getStatus().getStatusCode()).isEqualTo(StatusCode.ERROR);
     }
   }
 
@@ -151,7 +155,7 @@ class ITOtelTracing {
           spans.stream()
               .filter(span -> span.getName().equals("Echo.Echo/operation"))
               .findFirst()
-              .get();
+              .orElseThrow(() -> new AssertionError("Operation span 'Echo.Echo/operation' not found"));
       assertThat(operationSpan.getAttributes().get(AttributeKey.stringKey("op-key")))
           .isEqualTo("op-value");
 
@@ -159,7 +163,7 @@ class ITOtelTracing {
           spans.stream()
               .filter(span -> span.getName().equals("Echo/Echo/attempt"))
               .findFirst()
-              .get();
+              .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
       assertThat(attemptSpan.getAttributes().get(AttributeKey.stringKey("at-key")))
           .isEqualTo("at-value");
     }

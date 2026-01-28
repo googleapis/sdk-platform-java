@@ -46,9 +46,25 @@ public interface TracingRecorder {
   /** Starts a span and returns a handle to manage its lifecycle. */
   SpanHandle startSpan(String name, Map<String, String> attributes);
 
+  /** Starts a span with a parent and returns a handle to manage its lifecycle. */
+  default SpanHandle startSpan(String name, Map<String, String> attributes, SpanHandle parent) {
+    return startSpan(name, attributes);
+  }
+
+  /**
+   * Installs the span into the current thread-local context.
+   *
+   * @return a scope that must be closed to remove the span from the context.
+   */
+  default ApiTracer.Scope inScope(SpanHandle handle) {
+    return () -> {};
+  }
+
   interface SpanHandle {
     void end();
 
     void recordError(Throwable error);
+
+    void setAttribute(String key, String value);
   }
 }

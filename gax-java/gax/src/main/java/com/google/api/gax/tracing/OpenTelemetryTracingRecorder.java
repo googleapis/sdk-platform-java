@@ -38,6 +38,7 @@ import io.opentelemetry.api.trace.SpanBuilder;
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
 import io.opentelemetry.context.Scope;
 import java.util.Map;
 
@@ -55,8 +56,12 @@ public class OpenTelemetryTracingRecorder implements TracingRecorder {
   }
 
   @Override
-  @SuppressWarnings("MustBeClosedChecker") // Scope is closed later in the lifecycle
   public SpanHandle startSpan(String name, Map<String, String> attributes) {
+    return startSpan(name, attributes, null);
+  }
+
+  @Override
+  public SpanHandle startSpan(String name, Map<String, String> attributes, SpanHandle parent) {
     SpanBuilder spanBuilder =
         tracer.spanBuilder(name).setSpanKind(SpanKind.CLIENT); // Mark as a network-facing call
 
@@ -64,25 +69,34 @@ public class OpenTelemetryTracingRecorder implements TracingRecorder {
       attributes.forEach((k, v) -> spanBuilder.setAttribute(k, v));
     }
 
-    Span span = spanBuilder.startSpan();
-    // makeCurrent() puts this span into the thread-local storage
-    Scope scope = span.makeCurrent();
+    if (parent instanceof OtelSpanHandle) {
+      spanBuilder.setParent(Context.current().with(((OtelSpanHandle) parent).span));
+    }
 
-    return new OtelSpanHandle(span, scope);
+    Span span = spanBuilder.startSpan();
+
+    return new OtelSpanHandle(span);
+  }
+
+  @Override
+  @SuppressWarnings("MustBeClosedChecker")
+  public ApiTracer.Scope inScope(SpanHandle handle) {
+    if (handle instanceof OtelSpanHandle) {
+      Scope scope = ((OtelSpanHandle) handle).span.makeCurrent();
+      return scope::close;
+    }
+    return () -> {};
   }
 
   private static class OtelSpanHandle implements SpanHandle {
     private final Span span;
-    private final Scope scope;
 
-    private OtelSpanHandle(Span span, Scope scope) {
+    private OtelSpanHandle(Span span) {
       this.span = span;
-      this.scope = scope;
     }
 
     @Override
     public void end() {
-      scope.close(); // Remove from thread-local storage
       span.end();
     }
 
@@ -90,6 +104,11 @@ public class OpenTelemetryTracingRecorder implements TracingRecorder {
     public void recordError(Throwable error) {
       span.recordException(error);
       span.setStatus(StatusCode.ERROR);
+    }
+
+    @Override
+    public void setAttribute(String key, String value) {
+      span.setAttribute(key, value);
     }
   }
 }
