@@ -76,8 +76,9 @@ public class OpenTelemetryTracingTracerFactory implements ApiTracerFactory {
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    String operationSpanName = spanName.getClientName() + "." + spanName.getMethodName();
-    String attemptSpanName = spanName.getClientName() + "/" + spanName.getMethodName();
+    // TODO(diegomarquezp): use span names from design
+    String operationSpanName = spanName.getClientName() + "." + spanName.getMethodName() + "/operation";
+    String attemptSpanName = spanName.getClientName() + "/" + spanName.getMethodName() + "/attempt";
 
     OpenTelemetryTracingTracer tracingTracer =
         new OpenTelemetryTracingTracer(tracingRecorder, operationSpanName, attemptSpanName);

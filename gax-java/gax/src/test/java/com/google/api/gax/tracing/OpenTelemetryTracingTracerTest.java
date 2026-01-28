@@ -47,8 +47,8 @@ class OpenTelemetryTracingTracerTest {
   @Mock private TracingRecorder.SpanHandle operationHandle;
   @Mock private TracingRecorder.SpanHandle attemptHandle;
   private OpenTelemetryTracingTracer tracer;
-  private static final String OPERATION_SPAN_NAME = "Service.Method";
-  private static final String ATTEMPT_SPAN_NAME = "Service/Method";
+  private static final String OPERATION_SPAN_NAME = "Service.Method/operation";
+  private static final String ATTEMPT_SPAN_NAME = "Service/Method/attempt";
 
   @BeforeEach
   void setUp() {
@@ -77,16 +77,6 @@ class OpenTelemetryTracingTracerTest {
     tracer.attemptSucceeded();
 
     verify(attemptHandle).end();
-  }
-
-  @Test
-  void testAddOperationAttributes_passedToOperationSpan() {
-    // Note: operation span is started in constructor. addOperationAttributes updates the map
-    // but doesn't retroactively update the span. This test confirms the internal state update
-    // if we were to start another span with these attributes, but since operation span is already
-    // started, we focus on attempt attributes which are used when attempt starts.
-    tracer.addOperationAttributes(ImmutableMap.of("op-key", "op-value"));
-    // No easy way to verify operationHandle attributes after start without more complex mocking
   }
 
   @Test

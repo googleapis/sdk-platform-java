@@ -95,13 +95,13 @@ class ITOtelTracing {
 
       // Verify operation span (low-cardinality)
       Optional<SpanData> operationSpan =
-          spans.stream().filter(span -> span.getName().equals("Echo.Echo")).findFirst();
+          spans.stream().filter(span -> span.getName().equals("Echo.Echo/operation")).findFirst();
       assertThat(operationSpan.isPresent()).isTrue();
       assertThat(operationSpan.get().getStatus().getStatusCode()).isEqualTo(StatusCode.OK);
 
       // Verify attempt span (RPC convention)
       Optional<SpanData> attemptSpan =
-          spans.stream().filter(span -> span.getName().equals("Echo/Echo")).findFirst();
+          spans.stream().filter(span -> span.getName().equals("Echo/Echo/attempt")).findFirst();
       assertThat(attemptSpan.isPresent()).isTrue();
       assertThat(attemptSpan.get().getAttributes().get(AttributeKey.stringKey("attemptNumber")))
           .isEqualTo("0");
@@ -126,7 +126,7 @@ class ITOtelTracing {
 
       // Verify operation span recorded the error
       Optional<SpanData> operationSpan =
-          spans.stream().filter(span -> span.getName().equals("Echo.Echo")).findFirst();
+          spans.stream().filter(span -> span.getName().equals("Echo.Echo/operation")).findFirst();
       assertThat(operationSpan.isPresent()).isTrue();
       assertThat(operationSpan.get().getStatus().getStatusCode()).isEqualTo(StatusCode.ERROR);
     }
@@ -134,10 +134,11 @@ class ITOtelTracing {
 
   @Test
   void testTracing_withCustomAttributes() throws Exception {
-    Map<String, String> customAttributes = ImmutableMap.of("custom-key", "custom-value");
+    Map<String, String> opAttributes = ImmutableMap.of("op-key", "op-value");
+    Map<String, String> atAttributes = ImmutableMap.of("at-key", "at-value");
     OpenTelemetryTracingTracerFactory tracingFactory =
         new OpenTelemetryTracingTracerFactory(
-            new OpenTelemetryTracingRecorder(openTelemetrySdk), customAttributes);
+            new OpenTelemetryTracingRecorder(openTelemetrySdk), opAttributes, atAttributes);
 
     try (EchoClient client =
         TestClientInitializer.createGrpcEchoClientOpentelemetry(tracingFactory)) {
@@ -146,10 +147,21 @@ class ITOtelTracing {
 
       List<SpanData> spans = spanExporter.getFinishedSpanItems();
 
-      for (SpanData span : spans) {
-        assertThat(span.getAttributes().get(AttributeKey.stringKey("custom-key")))
-            .isEqualTo("custom-value");
-      }
+      SpanData operationSpan =
+          spans.stream()
+              .filter(span -> span.getName().equals("Echo.Echo/operation"))
+              .findFirst()
+              .get();
+      assertThat(operationSpan.getAttributes().get(AttributeKey.stringKey("op-key")))
+          .isEqualTo("op-value");
+
+      SpanData attemptSpan =
+          spans.stream()
+              .filter(span -> span.getName().equals("Echo/Echo/attempt"))
+              .findFirst()
+              .get();
+      assertThat(attemptSpan.getAttributes().get(AttributeKey.stringKey("at-key")))
+          .isEqualTo("at-value");
     }
   }
 }
