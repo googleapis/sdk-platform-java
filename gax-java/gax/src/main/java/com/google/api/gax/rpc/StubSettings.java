@@ -177,16 +177,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   }
 
   /**
-   * Marked with Internal Api and meant to be overridden by the generated subclasses. This getter is
-   * used to set the artifactName to the ClientContext. The value in generated StubSettings
-   * subclasses comes from the build configuration.
-   */
-  @InternalApi
-  protected String getArtifactName() {
-    return "";
-  }
-
-  /**
    * @return the fully resolved universe domain used by the client
    */
   public final String getUniverseDomain() {
