@@ -39,7 +39,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
-import com.google.showcase.v1beta1.RestError;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import io.opentelemetry.api.GlobalOpenTelemetry;
 import io.opentelemetry.api.common.AttributeKey;
@@ -94,12 +93,13 @@ class ITOtelTracing {
       assertThat(spans).isNotEmpty();
 
       // Verify operation span (low-cardinality)
-//      SpanData operationSpan =
-//          spans.stream()
-//              .filter(span -> span.getName().equals("Echo.Echo/operation"))
-//              .findFirst()
-//              .orElseThrow(() -> new AssertionError("Operation span 'Echo.Echo/operation' not found"));
-//      assertThat(operationSpan.getStatus().getStatusCode()).isEqualTo(StatusCode.OK);
+      //      SpanData operationSpan =
+      //          spans.stream()
+      //              .filter(span -> span.getName().equals("Echo.Echo/operation"))
+      //              .findFirst()
+      //              .orElseThrow(() -> new AssertionError("Operation span 'Echo.Echo/operation'
+      // not found"));
+      //      assertThat(operationSpan.getStatus().getStatusCode()).isEqualTo(StatusCode.OK);
 
       // Verify attempt span (RPC convention)
       SpanData attemptSpan =
@@ -123,14 +123,26 @@ class ITOtelTracing {
       // Content is empty, which should trigger an error in Showcase Echo
       Assertions.assertThrows(
           Exception.class,
-          () -> client.echo(EchoRequest.newBuilder().setContent("").setError(Status.newBuilder().setCode(StatusCode.Code.UNKNOWN.ordinal()).build()).build()));
+          () ->
+              client.echo(
+                  EchoRequest.newBuilder()
+                      .setContent("")
+                      .setError(
+                          Status.newBuilder().setCode(StatusCode.Code.UNKNOWN.ordinal()).build())
+                      .build()));
 
       List<SpanData> spans = spanExporter.getFinishedSpanItems();
       assertThat(spans).isNotEmpty();
       assertThat(spans.size() == 10); // 10 retires
 
       // Verify operation span recorded the error
-      assertThat(spans.stream().allMatch(s -> s.getStatus().getStatusCode().equals(io.opentelemetry.api.trace.StatusCode.ERROR)));
+      assertThat(
+          spans.stream()
+              .allMatch(
+                  s ->
+                      s.getStatus()
+                          .getStatusCode()
+                          .equals(io.opentelemetry.api.trace.StatusCode.ERROR)));
     }
   }
 
@@ -149,13 +161,14 @@ class ITOtelTracing {
 
       List<SpanData> spans = spanExporter.getFinishedSpanItems();
 
-//      SpanData operationSpan =
-//          spans.stream()
-//              .filter(span -> span.getName().equals("Echo.Echo/operation"))
-//              .findFirst()
-//              .orElseThrow(() -> new AssertionError("Operation span 'Echo.Echo/operation' not found"));
-//      assertThat(operationSpan.getAttributes().get(AttributeKey.stringKey("op-key")))
-//          .isEqualTo("op-value");
+      //      SpanData operationSpan =
+      //          spans.stream()
+      //              .filter(span -> span.getName().equals("Echo.Echo/operation"))
+      //              .findFirst()
+      //              .orElseThrow(() -> new AssertionError("Operation span 'Echo.Echo/operation'
+      // not found"));
+      //      assertThat(operationSpan.getAttributes().get(AttributeKey.stringKey("op-key")))
+      //          .isEqualTo("op-value");
 
       SpanData attemptSpan =
           spans.stream()
