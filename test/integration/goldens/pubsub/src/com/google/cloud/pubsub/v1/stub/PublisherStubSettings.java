@@ -485,11 +485,6 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
     return "pubsub";
   }
 
-  @Override
-  protected String getArtifactName() {
-    return "com.google.cloud:google-cloud-pubsub";
-  }
-
   /** Returns a builder for the default ExecutorProvider for this service. */
   public static InstantiatingExecutorProvider.Builder defaultExecutorProviderBuilder() {
     return InstantiatingExecutorProvider.newBuilder();

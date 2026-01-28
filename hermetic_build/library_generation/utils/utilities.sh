@@ -70,7 +70,6 @@ get_gapic_opts() {
   local gapic_yaml=$3
   local service_config=$4
   local service_yaml=$5
-  local artifact_name=$6
   if [ "${rest_numeric_enums}" == "true" ]; then
     rest_numeric_enums="rest-numeric-enums"
   else
@@ -89,10 +88,7 @@ get_gapic_opts() {
   if [[ "${service_yaml}" == "" ]]; then
     service_yaml=$(find "${proto_path}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic*.yaml" \))
   fi
-  if [[ -n "${artifact_name}" ]]; then
-    artifact_name_opt=",artifact-name=${artifact_name}"
-  fi
-  echo "transport=${transport},${rest_numeric_enums},grpc-service-config=${service_config},gapic-config=${gapic_yaml},api-service-config=${service_yaml}${artifact_name_opt}"
+  echo "transport=${transport},${rest_numeric_enums},grpc-service-config=${service_config},gapic-config=${gapic_yaml},api-service-config=${service_yaml}"
 }
 
 remove_grpc_version() {

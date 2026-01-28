@@ -56,18 +56,6 @@ get_gapic_opts_with_non_default_test() {
   "$gapic_opts"
 }
 
-get_gapic_opts_with_artifact_name_test() {
-  local proto_path="${script_dir}/resources/gapic_options"
-  local transport="grpc"
-  local rest_numeric_enums="false"
-  local artifact_name="com.google.cloud:google-cloud-library"
-  local gapic_opts
-  gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "" "" "" "${artifact_name}")"
-  assertEquals \
-  "transport=grpc,,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml,artifact-name=${artifact_name}" \
-  "$gapic_opts"
-}
-
 remove_grpc_version_test() {
   local destination_path="${script_dir}/resources/gapic_options"
   cp "${destination_path}/QueryServiceGrpc_copy.java" "${destination_path}/QueryServiceGrpc.java"
@@ -226,7 +214,6 @@ test_list=(
   get_gapic_opts_with_rest_test
   get_gapic_opts_without_rest_test
   get_gapic_opts_with_non_default_test
-  get_gapic_opts_with_artifact_name_test
   remove_grpc_version_test
   download_protoc_succeed_with_valid_version_linux_test
   download_protoc_succeed_with_valid_version_macos_test
