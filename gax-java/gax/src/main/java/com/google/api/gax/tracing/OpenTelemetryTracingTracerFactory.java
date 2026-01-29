@@ -50,6 +50,7 @@ import java.util.Map;
 public class OpenTelemetryTracingTracerFactory implements ApiTracerFactory {
   public static final String SERVICE_NAME_ATTRIBUTE = "gcp.client.service";
   public static final String PORT_ATTRIBUTE = "server.port";
+  public static final String RPC_SYSTEM_ATTRIBUTE = "rpc.system";
 
   private final TracingRecorder tracingRecorder;
 

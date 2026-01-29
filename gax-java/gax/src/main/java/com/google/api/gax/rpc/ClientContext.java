@@ -273,6 +273,14 @@ public abstract class ClientContext {
 
     ApiTracerFactory tracerFactory = settings.getTracerFactory();
     if (tracerFactory != null) {
+      ;
+      String rpcSystem = "";
+      if ("grpc".equals(transportChannel.getTransportName())) {
+        rpcSystem = "grpc";
+      } else if ("httpjson".equals(transportChannel.getTransportName())) {
+        rpcSystem = "http";
+      }
+
       tracerFactory =
           tracerFactory.withAttributes(
               ImmutableMap.of(),
@@ -280,7 +288,8 @@ public abstract class ClientContext {
                   OpenTelemetryTracingTracerFactory.SERVICE_NAME_ATTRIBUTE,
                       settings.getServiceName(),
                   OpenTelemetryTracingTracerFactory.PORT_ATTRIBUTE,
-                      String.valueOf(settings.getPort())));
+                      String.valueOf(settings.getPort()),
+                  OpenTelemetryTracingTracerFactory.RPC_SYSTEM_ATTRIBUTE, rpcSystem));
     }
 
     return newBuilder()
