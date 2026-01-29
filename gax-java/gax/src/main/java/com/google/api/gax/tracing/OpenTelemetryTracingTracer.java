@@ -41,6 +41,11 @@ public class OpenTelemetryTracingTracer extends BaseApiTracer {
   public static final String LANGUAGE_ATTRIBUTE = "gcp.client.language";
   public static final String DEFAULT_LANGUAGE = "Java";
   public static final String ERROR_TYPE_ATTRIBUTE = "error.type";
+  public static final String SERVICE_NAME_ATTRIBUTE = "gcp.client.service";
+  public static final String PORT_ATTRIBUTE = "server.port";
+  public static final String RPC_SYSTEM_ATTRIBUTE = "rpc.system";
+  public static final String GRPC_RESEND_COUNT_ATTRIBUTE = "gcp.grpc.resend_count";
+  public static final String HTTP_RESEND_COUNT_ATTRIBUTE = "http.request.resend_count";
 
   private final TracingRecorder recorder;
   private final Map<String, String> operationAttributes;
@@ -58,7 +63,8 @@ public class OpenTelemetryTracingTracer extends BaseApiTracer {
     this.attemptAttributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
     this.operationAttributes.put("method", operationSpanName);
 
-    // Start the long-lived operation span
+    // Start the long-lived operation span.
+    // TODO(diegomarquezp): This conforms with T3 and is not fully implemented
     this.operationHandle = recorder.startSpan(operationSpanName, operationAttributes);
   }
 
@@ -75,7 +81,12 @@ public class OpenTelemetryTracingTracer extends BaseApiTracer {
   @Override
   public void attemptStarted(Object request, int attemptNumber) {
     Map<String, String> attemptAttributes = new HashMap<>(this.attemptAttributes);
-    attemptAttributes.put("attemptNumber", String.valueOf(attemptNumber));
+    String rpcSystem = attemptAttributes.get(RPC_SYSTEM_ATTRIBUTE);
+    if (attemptNumber > 0 && rpcSystem != null) {
+      attemptAttributes.put(
+          rpcSystem.equals("grpc") ? GRPC_RESEND_COUNT_ATTRIBUTE : HTTP_RESEND_COUNT_ATTRIBUTE,
+          String.valueOf(attemptNumber));
+    }
 
     // Start the specific attempt span with the operation span as parent
     this.attemptHandle = recorder.startSpan(attemptSpanName, attemptAttributes, operationHandle);

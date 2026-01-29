@@ -51,6 +51,7 @@ import io.opentelemetry.sdk.trace.data.SpanData;
 import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -101,8 +102,6 @@ class ITOtelTracing {
               .filter(span -> span.getName().equals("Echo/Echo/attempt"))
               .findFirst()
               .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
-      assertThat(attemptSpan.getAttributes().get(AttributeKey.stringKey("attemptNumber")))
-          .isEqualTo("0");
       assertThat(
               attemptSpan
                   .getAttributes()
@@ -111,14 +110,12 @@ class ITOtelTracing {
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(AttributeKey.stringKey(OpenTelemetryTracingTracerFactory.PORT_ATTRIBUTE)))
+                  .get(AttributeKey.stringKey(OpenTelemetryTracingTracer.PORT_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_SERVER_PORT);
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(
-                      AttributeKey.stringKey(
-                          OpenTelemetryTracingTracerFactory.RPC_SYSTEM_ATTRIBUTE)))
+                  .get(AttributeKey.stringKey(OpenTelemetryTracingTracer.RPC_SYSTEM_ATTRIBUTE)))
           .isEqualTo("grpc");
     }
   }
@@ -144,9 +141,7 @@ class ITOtelTracing {
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(
-                      AttributeKey.stringKey(
-                          OpenTelemetryTracingTracerFactory.RPC_SYSTEM_ATTRIBUTE)))
+                  .get(AttributeKey.stringKey(OpenTelemetryTracingTracer.RPC_SYSTEM_ATTRIBUTE)))
           .isEqualTo("http");
     }
   }
@@ -198,6 +193,97 @@ class ITOtelTracing {
         assertThat(attemptSpan.getStatus().getStatusCode())
             .isEqualTo(io.opentelemetry.api.trace.StatusCode.ERROR);
       }
+    }
+  }
+
+  @Test
+  void testTracing_resendCount_grpc() throws Exception {
+    OpenTelemetryTracingTracerFactory tracingFactory =
+        new OpenTelemetryTracingTracerFactory(new OpenTelemetryTracingRecorder(openTelemetrySdk));
+
+    try (EchoClient client =
+        TestClientInitializer.createGrpcEchoClientOpentelemetry(tracingFactory)) {
+
+      // Simulate UNAVAILABLE to trigger retries
+      Assertions.assertThrows(
+          Exception.class,
+          () ->
+              client.echo(
+                  EchoRequest.newBuilder()
+                      .setContent("resend-test-grpc")
+                      .setError(
+                          Status.newBuilder()
+                              .setCode(StatusCode.Code.UNAVAILABLE.ordinal())
+                              .build())
+                      .build()));
+
+      List<SpanData> spans = spanExporter.getFinishedSpanItems();
+      assertThat(spans).isNotEmpty();
+
+      // Verify that subsequent attempts have gcp.grpc.resend_count
+      SpanData secondAttempt =
+          spans.stream()
+              .filter(
+                  span ->
+                      span.getName().equals("Echo/Echo/attempt")
+                          && Objects.equals(
+                              span.getAttributes()
+                                  .get(
+                                      AttributeKey.stringKey(
+                                          OpenTelemetryTracingTracer.GRPC_RESEND_COUNT_ATTRIBUTE)),
+                              "1"))
+              .findFirst()
+              .orElseThrow(() -> new AssertionError("Second attempt span not found"));
+
+      assertThat(secondAttempt.getAttributes().get(AttributeKey.stringKey("gcp.grpc.resend_count")))
+          .isEqualTo("1");
+    }
+  }
+
+  @Test
+  void testTracing_resendCount_httpjson() throws Exception {
+    OpenTelemetryTracingTracerFactory tracingFactory =
+        new OpenTelemetryTracingTracerFactory(new OpenTelemetryTracingRecorder(openTelemetrySdk));
+
+    try (EchoClient client =
+        TestClientInitializer.createHttpJsonEchoClientOpentelemetry(tracingFactory)) {
+
+      // Simulate UNAVAILABLE to trigger retries
+      Assertions.assertThrows(
+          Exception.class,
+          () ->
+              client.echo(
+                  EchoRequest.newBuilder()
+                      .setContent("resend-test-http")
+                      .setError(
+                          Status.newBuilder()
+                              .setCode(StatusCode.Code.UNAVAILABLE.ordinal())
+                              .build())
+                      .build()));
+
+      List<SpanData> spans = spanExporter.getFinishedSpanItems();
+      assertThat(spans).isNotEmpty();
+
+      // Verify that subsequent attempts have http.request.resend_count
+      SpanData secondAttempt =
+          spans.stream()
+              .filter(
+                  span ->
+                      span.getName().equals("google.showcase.v1beta1/Echo/Echo/attempt")
+                          && Objects.equals(
+                              span.getAttributes()
+                                  .get(
+                                      AttributeKey.stringKey(
+                                          OpenTelemetryTracingTracer.HTTP_RESEND_COUNT_ATTRIBUTE)),
+                              "1"))
+              .findFirst()
+              .orElseThrow(() -> new AssertionError("Second attempt span not found"));
+
+      assertThat(
+              secondAttempt
+                  .getAttributes()
+                  .get(AttributeKey.stringKey("http.request.resend_count")))
+          .isEqualTo("1");
     }
   }
 

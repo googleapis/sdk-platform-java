@@ -86,6 +86,8 @@ class OpenTelemetryTracingTracerTest {
   @Test
   void testAddAttemptAttributes_passedToAttemptSpan() {
     tracer.addAttemptAttributes(ImmutableMap.of("attempt-key", "attempt-value"));
+    tracer.addAttemptAttributes(
+        ImmutableMap.of(OpenTelemetryTracingTracer.RPC_SYSTEM_ATTRIBUTE, "grpc"));
 
     when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
         .thenReturn(attemptHandle);
@@ -97,7 +99,6 @@ class OpenTelemetryTracingTracerTest {
 
     Map<String, String> capturedAttributes = attributesCaptor.getValue();
     assertThat(capturedAttributes).containsEntry("attempt-key", "attempt-value");
-    assertThat(capturedAttributes).containsEntry("attemptNumber", "1");
     assertThat(capturedAttributes)
         .containsEntry(
             OpenTelemetryTracingTracer.LANGUAGE_ATTRIBUTE,

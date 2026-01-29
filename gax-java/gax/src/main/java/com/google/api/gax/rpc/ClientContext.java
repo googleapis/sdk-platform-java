@@ -43,7 +43,7 @@ import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
-import com.google.api.gax.tracing.OpenTelemetryTracingTracerFactory;
+import com.google.api.gax.tracing.OpenTelemetryTracingTracer;
 import com.google.auth.ApiKeyCredentials;
 import com.google.auth.CredentialTypeForMetrics;
 import com.google.auth.Credentials;
@@ -273,7 +273,6 @@ public abstract class ClientContext {
 
     ApiTracerFactory tracerFactory = settings.getTracerFactory();
     if (tracerFactory != null) {
-      ;
       String rpcSystem = "";
       if ("grpc".equals(transportChannel.getTransportName())) {
         rpcSystem = "grpc";
@@ -285,11 +284,9 @@ public abstract class ClientContext {
           tracerFactory.withAttributes(
               ImmutableMap.of(),
               ImmutableMap.of(
-                  OpenTelemetryTracingTracerFactory.SERVICE_NAME_ATTRIBUTE,
-                      settings.getServiceName(),
-                  OpenTelemetryTracingTracerFactory.PORT_ATTRIBUTE,
-                      String.valueOf(settings.getPort()),
-                  OpenTelemetryTracingTracerFactory.RPC_SYSTEM_ATTRIBUTE, rpcSystem));
+                  OpenTelemetryTracingTracer.SERVICE_NAME_ATTRIBUTE, settings.getServiceName(),
+                  OpenTelemetryTracingTracer.PORT_ATTRIBUTE, String.valueOf(settings.getPort()),
+                  OpenTelemetryTracingTracer.RPC_SYSTEM_ATTRIBUTE, rpcSystem));
     }
 
     return newBuilder()
