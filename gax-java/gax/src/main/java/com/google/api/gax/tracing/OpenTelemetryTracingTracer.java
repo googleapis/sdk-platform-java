@@ -38,14 +38,16 @@ import java.util.Map;
 @BetaApi
 @InternalApi
 public class OpenTelemetryTracingTracer extends BaseApiTracer {
+  public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
   public static final String LANGUAGE_ATTRIBUTE = "gcp.client.language";
-  public static final String DEFAULT_LANGUAGE = "Java";
   public static final String ERROR_TYPE_ATTRIBUTE = "error.type";
   public static final String SERVICE_NAME_ATTRIBUTE = "gcp.client.service";
   public static final String PORT_ATTRIBUTE = "server.port";
   public static final String RPC_SYSTEM_ATTRIBUTE = "rpc.system";
   public static final String GRPC_RESEND_COUNT_ATTRIBUTE = "gcp.grpc.resend_count";
   public static final String HTTP_RESEND_COUNT_ATTRIBUTE = "http.request.resend_count";
+
+  public static final String DEFAULT_LANGUAGE = "Java";
 
   private final TracingRecorder recorder;
   private final Map<String, String> operationAttributes;

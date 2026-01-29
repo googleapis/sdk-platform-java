@@ -59,6 +59,7 @@ import org.junit.jupiter.api.Test;
 
 class ITOtelTracing {
   private static final String SHOWCASE_SERVER_PORT = "7469";
+  private static final String SHOWCASE_SERVER_ADDRESS = "localhost";
 
   private InMemorySpanExporter spanExporter;
   private OpenTelemetrySdk openTelemetrySdk;
@@ -117,6 +118,11 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(OpenTelemetryTracingTracer.RPC_SYSTEM_ATTRIBUTE)))
           .isEqualTo("grpc");
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(OpenTelemetryTracingTracer.SERVER_ADDRESS_ATTRIBUTE)))
+          .isEqualTo(SHOWCASE_SERVER_ADDRESS);
     }
   }
 
@@ -143,6 +149,11 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(OpenTelemetryTracingTracer.RPC_SYSTEM_ATTRIBUTE)))
           .isEqualTo("http");
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(OpenTelemetryTracingTracer.SERVER_ADDRESS_ATTRIBUTE)))
+          .isEqualTo(SHOWCASE_SERVER_ADDRESS);
     }
   }
 

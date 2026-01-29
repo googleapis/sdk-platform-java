@@ -284,6 +284,7 @@ public abstract class ClientContext {
           tracerFactory.withAttributes(
               ImmutableMap.of(),
               ImmutableMap.of(
+                  OpenTelemetryTracingTracer.SERVER_ADDRESS_ATTRIBUTE, settings.getServerAddress(),
                   OpenTelemetryTracingTracer.SERVICE_NAME_ATTRIBUTE, settings.getServiceName(),
                   OpenTelemetryTracingTracer.PORT_ATTRIBUTE, String.valueOf(settings.getPort()),
                   OpenTelemetryTracingTracer.RPC_SYSTEM_ATTRIBUTE, rpcSystem));

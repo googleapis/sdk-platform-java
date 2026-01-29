@@ -593,4 +593,34 @@ class EndpointContextTest {
             .setUsingGDCH(false);
     Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isTrue();
   }
+
+  @Test
+  void endpointContextBuild_resolvesPortAndServerAddress() throws IOException {
+    String endpoint = "http://localhost:7469";
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder
+            .setClientSettingsEndpoint(endpoint)
+            .setTransportChannelProviderEndpoint(null)
+            .build();
+    Truth.assertThat(endpointContext.resolvedPort()).isEqualTo(7469);
+    Truth.assertThat(endpointContext.resolvedServerAddress()).isEqualTo("localhost");
+
+    endpoint = "localhost:7469";
+    endpointContext =
+        defaultEndpointContextBuilder
+            .setClientSettingsEndpoint(endpoint)
+            .setTransportChannelProviderEndpoint(null)
+            .build();
+    Truth.assertThat(endpointContext.resolvedPort()).isEqualTo(7469);
+    Truth.assertThat(endpointContext.resolvedServerAddress()).isEqualTo("localhost");
+
+    endpoint = "test.googleapis.com:443";
+    endpointContext =
+        defaultEndpointContextBuilder
+            .setClientSettingsEndpoint(endpoint)
+            .setTransportChannelProviderEndpoint(null)
+            .build();
+    Truth.assertThat(endpointContext.resolvedPort()).isEqualTo(443);
+    Truth.assertThat(endpointContext.resolvedServerAddress()).isEqualTo("test.googleapis.com");
+  }
 }

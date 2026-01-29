@@ -135,6 +135,8 @@ public abstract class EndpointContext {
 
   public abstract int resolvedPort();
 
+  public abstract String resolvedServerAddress();
+
   public abstract Builder toBuilder();
 
   public static Builder newBuilder() {
@@ -231,6 +233,8 @@ public abstract class EndpointContext {
     public abstract Builder setResolvedEndpoint(String resolvedEndpoint);
 
     public abstract Builder setResolvedPort(int resolvedPort);
+
+    public abstract Builder setResolvedServerAddress(String resolvedServerAddress);
 
     public abstract Builder setResolvedUniverseDomain(String resolvedUniverseDomain);
 
@@ -417,6 +421,18 @@ public abstract class EndpointContext {
       return endpoint;
     }
 
+    private String parseServerAddress(String endpoint) {
+      int colonPortIndex = endpoint.lastIndexOf(':');
+      int doubleSlashIndex = endpoint.lastIndexOf("//");
+      if (colonPortIndex == -1) {
+        return endpoint;
+      }
+      if (doubleSlashIndex != -1 && doubleSlashIndex < colonPortIndex) {
+        return endpoint.substring(doubleSlashIndex + 2, colonPortIndex);
+      }
+      return endpoint.substring(0, colonPortIndex);
+    }
+
     private int parsePort(String endpoint) {
       int colonIndex = endpoint.lastIndexOf(':');
       if (colonIndex != -1) {
@@ -434,6 +450,7 @@ public abstract class EndpointContext {
       setResolvedUniverseDomain(determineUniverseDomain());
       String endpoint = determineEndpoint();
       setResolvedEndpoint(endpoint);
+      setResolvedServerAddress(parseServerAddress(endpoint));
       setResolvedPort(parsePort(endpoint));
       setUseS2A(shouldUseS2A());
       return autoBuild();
