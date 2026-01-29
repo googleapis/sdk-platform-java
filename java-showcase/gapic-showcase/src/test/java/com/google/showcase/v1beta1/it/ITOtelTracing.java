@@ -110,8 +110,11 @@ class ITOtelTracing {
               .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
       assertThat(attemptSpan.getAttributes().get(AttributeKey.stringKey("attemptNumber")))
           .isEqualTo("0");
-      assertThat(attemptSpan.getAttributes().get(AttributeKey.stringKey(OpenTelemetryTracingTracer.LANGUAGE_ATTRIBUTE)))
-              .isEqualTo(OpenTelemetryTracingTracer.DEFAULT_LANGUAGE);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(OpenTelemetryTracingTracer.LANGUAGE_ATTRIBUTE)))
+          .isEqualTo(OpenTelemetryTracingTracer.DEFAULT_LANGUAGE);
     }
   }
 
