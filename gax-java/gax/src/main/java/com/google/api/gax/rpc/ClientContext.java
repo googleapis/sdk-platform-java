@@ -43,6 +43,7 @@ import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
+import com.google.api.gax.tracing.OpenTelemetryTracingTracerFactory;
 import com.google.auth.ApiKeyCredentials;
 import com.google.auth.CredentialTypeForMetrics;
 import com.google.auth.Credentials;
@@ -270,6 +271,18 @@ public abstract class ClientContext {
       backgroundResources.add(watchdog);
     }
 
+    ApiTracerFactory tracerFactory = settings.getTracerFactory();
+    if (tracerFactory != null) {
+      tracerFactory =
+          tracerFactory.withAttributes(
+              ImmutableMap.of(),
+              ImmutableMap.of(
+                  OpenTelemetryTracingTracerFactory.SERVICE_NAME_ATTRIBUTE,
+                      settings.getServiceName(),
+                  OpenTelemetryTracingTracerFactory.PORT_ATTRIBUTE,
+                      String.valueOf(settings.getPort())));
+    }
+
     return newBuilder()
         .setBackgroundResources(backgroundResources.build())
         .setExecutor(backgroundExecutor)
@@ -284,7 +297,7 @@ public abstract class ClientContext {
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
         .setStreamWatchdogCheckIntervalDuration(settings.getStreamWatchdogCheckIntervalDuration())
-        .setTracerFactory(settings.getTracerFactory())
+        .setTracerFactory(tracerFactory)
         .setEndpointContext(endpointContext)
         .build();
   }

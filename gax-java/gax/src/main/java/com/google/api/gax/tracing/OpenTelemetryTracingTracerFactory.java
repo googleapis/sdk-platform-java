@@ -32,7 +32,6 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +48,9 @@ import java.util.Map;
 @BetaApi
 @InternalApi
 public class OpenTelemetryTracingTracerFactory implements ApiTracerFactory {
+  public static final String SERVICE_NAME_ATTRIBUTE = "gcp.client.service";
+  public static final String PORT_ATTRIBUTE = "server.port";
+
   private final TracingRecorder tracingRecorder;
 
   /** Mapping of client attributes that are set for every TracingTracer at operation level */
@@ -57,11 +59,9 @@ public class OpenTelemetryTracingTracerFactory implements ApiTracerFactory {
   /** Mapping of client attributes that are set for every TracingTracer at attempt level */
   private final Map<String, String> attemptAttributes;
 
-  private final String serviceName;
-
   /** Creates a TracingTracerFactory with no additional client level attributes. */
   public OpenTelemetryTracingTracerFactory(TracingRecorder tracingRecorder) {
-    this(tracingRecorder, ImmutableMap.of(), ImmutableMap.of(), "");
+    this(tracingRecorder, ImmutableMap.of(), ImmutableMap.of());
   }
 
   /**
@@ -72,22 +72,9 @@ public class OpenTelemetryTracingTracerFactory implements ApiTracerFactory {
       TracingRecorder tracingRecorder,
       Map<String, String> operationAttributes,
       Map<String, String> attemptAttributes) {
-    this(tracingRecorder, operationAttributes, attemptAttributes, "");
-  }
-
-  /**
-   * Pass in a Map of client level attributes which will be added to every single TracingTracer
-   * created from the ApiTracerFactory.
-   */
-  public OpenTelemetryTracingTracerFactory(
-      TracingRecorder tracingRecorder,
-      Map<String, String> operationAttributes,
-      Map<String, String> attemptAttributes,
-      String serviceName) {
     this.tracingRecorder = tracingRecorder;
     this.operationAttributes = ImmutableMap.copyOf(operationAttributes);
     this.attemptAttributes = ImmutableMap.copyOf(attemptAttributes);
-    this.serviceName = serviceName;
   }
 
   @Override
@@ -100,12 +87,7 @@ public class OpenTelemetryTracingTracerFactory implements ApiTracerFactory {
     OpenTelemetryTracingTracer tracingTracer =
         new OpenTelemetryTracingTracer(tracingRecorder, operationSpanName, attemptSpanName);
     tracingTracer.addOperationAttributes(operationAttributes);
-
-    Map<String, String> combinedAttemptAttributes = new HashMap<>(attemptAttributes);
-    if (!Strings.isNullOrEmpty(serviceName)) {
-      combinedAttemptAttributes.put("gcp.client.service", serviceName);
-    }
-    tracingTracer.addAttemptAttributes(combinedAttemptAttributes);
+    tracingTracer.addAttemptAttributes(attemptAttributes);
     return tracingTracer;
   }
 
@@ -117,6 +99,6 @@ public class OpenTelemetryTracingTracerFactory implements ApiTracerFactory {
     Map<String, String> newAttemptAttributes = new HashMap<>(this.attemptAttributes);
     newAttemptAttributes.putAll(attemptAttributes);
     return new OpenTelemetryTracingTracerFactory(
-        tracingRecorder, newOperationAttributes, newAttemptAttributes, serviceName);
+        tracingRecorder, newOperationAttributes, newAttemptAttributes);
   }
 }

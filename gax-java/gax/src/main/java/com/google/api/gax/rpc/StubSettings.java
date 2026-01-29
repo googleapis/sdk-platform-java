@@ -191,6 +191,13 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   }
 
   /**
+   * @return the fully resolved port used by the client
+   */
+  public final int getPort() {
+    return endpointContext.resolvedPort();
+  }
+
+  /**
    * @return the newly created EndpointContext
    */
   @InternalApi

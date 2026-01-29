@@ -133,6 +133,8 @@ public abstract class EndpointContext {
 
   public abstract String resolvedEndpoint();
 
+  public abstract int resolvedPort();
+
   public abstract Builder toBuilder();
 
   public static Builder newBuilder() {
@@ -227,6 +229,8 @@ public abstract class EndpointContext {
     public abstract Builder setUsingGDCH(boolean usingGDCH);
 
     public abstract Builder setResolvedEndpoint(String resolvedEndpoint);
+
+    public abstract Builder setResolvedPort(int resolvedPort);
 
     public abstract Builder setResolvedUniverseDomain(String resolvedUniverseDomain);
 
@@ -413,10 +417,24 @@ public abstract class EndpointContext {
       return endpoint;
     }
 
+    private int parsePort(String endpoint) {
+      int colonIndex = endpoint.lastIndexOf(':');
+      if (colonIndex != -1) {
+        try {
+          return Integer.parseInt(endpoint.substring(colonIndex + 1));
+        } catch (NumberFormatException e) {
+          // Fallback to default if parsing fails
+        }
+      }
+      return 443;
+    }
+
     public EndpointContext build() throws IOException {
       // The Universe Domain is used to resolve the Endpoint. It should be resolved first
       setResolvedUniverseDomain(determineUniverseDomain());
-      setResolvedEndpoint(determineEndpoint());
+      String endpoint = determineEndpoint();
+      setResolvedEndpoint(endpoint);
+      setResolvedPort(parsePort(endpoint));
       setUseS2A(shouldUseS2A());
       return autoBuild();
     }

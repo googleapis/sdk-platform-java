@@ -105,6 +105,13 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getEndpoint();
   }
 
+  /**
+   * @return the fully resolved port used by the client
+   */
+  public final int getPort() {
+    return stubSettings.getPort();
+  }
+
   public final String getQuotaProjectId() {
     return stubSettings.getQuotaProjectId();
   }

@@ -33,11 +33,16 @@ package com.google.api.gax.tracing;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.google.common.collect.ImmutableMap;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 
 class OpenTelemetryTracingTracerFactoryTest {
 
@@ -55,8 +60,34 @@ class OpenTelemetryTracingTracerFactoryTest {
   }
 
   @Test
+  void testNewTracer_addsAttributes() {
+    TracingRecorder recorder = mock(TracingRecorder.class);
+    TracingRecorder.SpanHandle operationHandle = mock(TracingRecorder.SpanHandle.class);
+    when(recorder.startSpan(anyString(), anyMap())).thenReturn(operationHandle);
+
+    OpenTelemetryTracingTracerFactory factory =
+        new OpenTelemetryTracingTracerFactory(
+            recorder, ImmutableMap.of(), ImmutableMap.of("server.port", "443"));
+    ApiTracer tracer =
+        factory.newTracer(
+            null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
+
+    tracer.attemptStarted(null, 1);
+
+    ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
+    verify(recorder, atLeastOnce())
+        .startSpan(anyString(), attributesCaptor.capture(), eq(operationHandle));
+
+    Map<String, String> attemptAttributes = attributesCaptor.getValue();
+    assertThat(attemptAttributes).containsEntry("server.port", "443");
+  }
+
+  @Test
   void testWithAttributes_returnsNewFactoryWithMergedAttributes() {
     TracingRecorder recorder = mock(TracingRecorder.class);
+    TracingRecorder.SpanHandle operationHandle = mock(TracingRecorder.SpanHandle.class);
+    when(recorder.startSpan(anyString(), anyMap())).thenReturn(operationHandle);
+
     OpenTelemetryTracingTracerFactory factory =
         new OpenTelemetryTracingTracerFactory(
             recorder, ImmutableMap.of("op1", "v1"), ImmutableMap.of("at1", "v1"));
@@ -65,5 +96,17 @@ class OpenTelemetryTracingTracerFactoryTest {
         factory.withAttributes(ImmutableMap.of("op2", "v2"), ImmutableMap.of("at2", "v2"));
 
     assertThat(factoryWithAttrs).isInstanceOf(OpenTelemetryTracingTracerFactory.class);
+
+    ApiTracer tracer =
+        factoryWithAttrs.newTracer(
+            null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
+
+    tracer.attemptStarted(null, 1);
+
+    ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
+    verify(recorder, atLeastOnce())
+        .startSpan(anyString(), attributesCaptor.capture(), eq(operationHandle));
+    assertThat(attributesCaptor.getValue()).containsEntry("at1", "v1");
+    assertThat(attributesCaptor.getValue()).containsEntry("at2", "v2");
   }
 }

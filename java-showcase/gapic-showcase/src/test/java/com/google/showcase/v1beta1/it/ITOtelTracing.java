@@ -56,6 +56,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ITOtelTracing {
+  private static final String SHOWCASE_SERVER_PORT = "7469";
+
   private InMemorySpanExporter spanExporter;
   private OpenTelemetrySdk openTelemetrySdk;
 
@@ -115,6 +117,11 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(OpenTelemetryTracingTracer.LANGUAGE_ATTRIBUTE)))
           .isEqualTo(OpenTelemetryTracingTracer.DEFAULT_LANGUAGE);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(OpenTelemetryTracingTracerFactory.PORT_ATTRIBUTE)))
+          .isEqualTo(SHOWCASE_SERVER_PORT);
     }
   }
 
@@ -188,13 +195,9 @@ class ITOtelTracing {
 
   @Test
   void testTracing_customStubSettings_overridesServiceName() throws Exception {
-    String customServiceName = "showcase";
+    final String customServiceName = "showcase";
     OpenTelemetryTracingTracerFactory tracingFactory =
-        new OpenTelemetryTracingTracerFactory(
-            new OpenTelemetryTracingRecorder(openTelemetrySdk),
-            ImmutableMap.of(),
-            ImmutableMap.of(),
-            customServiceName);
+        new OpenTelemetryTracingTracerFactory(new OpenTelemetryTracingRecorder(openTelemetrySdk));
 
     try (EchoClient client =
         TestClientInitializer.createGrpcEchoClientWithCustomServiceName(

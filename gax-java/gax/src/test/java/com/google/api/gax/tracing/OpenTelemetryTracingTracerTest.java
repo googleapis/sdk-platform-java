@@ -25,19 +25,22 @@
  * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package com.google.api.gax.tracing;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.google.common.collect.ImmutableMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -88,10 +91,16 @@ class OpenTelemetryTracingTracerTest {
         .thenReturn(attemptHandle);
     tracer.attemptStarted(new Object(), 1);
 
+    ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
     verify(recorder)
-        .startSpan(
-            eq(ATTEMPT_SPAN_NAME),
-            eq(ImmutableMap.of("attempt-key", "attempt-value", "attemptNumber", "1")),
-            eq(operationHandle));
+        .startSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture(), eq(operationHandle));
+
+    Map<String, String> capturedAttributes = attributesCaptor.getValue();
+    assertThat(capturedAttributes).containsEntry("attempt-key", "attempt-value");
+    assertThat(capturedAttributes).containsEntry("attemptNumber", "1");
+    assertThat(capturedAttributes)
+        .containsEntry(
+            OpenTelemetryTracingTracer.LANGUAGE_ATTRIBUTE,
+            OpenTelemetryTracingTracer.DEFAULT_LANGUAGE);
   }
 }
