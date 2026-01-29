@@ -38,6 +38,9 @@ import java.util.Map;
 @BetaApi
 @InternalApi
 public class OpenTelemetryTracingTracer extends BaseApiTracer {
+  public static final String LANGUAGE_ATTRIBUTE = "gcp.client.language";
+  public static final String DEFAULT_LANGUAGE = "Java";
+
   private final TracingRecorder recorder;
   private final Map<String, String> operationAttributes;
   private final Map<String, String> attemptAttributes;
@@ -51,6 +54,7 @@ public class OpenTelemetryTracingTracer extends BaseApiTracer {
     this.attemptSpanName = attemptSpanName;
     this.operationAttributes = new HashMap<>();
     this.attemptAttributes = new HashMap<>();
+    this.attemptAttributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
     this.operationAttributes.put("method", operationSpanName);
 
     // Start the long-lived operation span

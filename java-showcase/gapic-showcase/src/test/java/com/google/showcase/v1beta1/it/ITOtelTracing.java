@@ -34,6 +34,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.tracing.OpenTelemetryTracingRecorder;
+import com.google.api.gax.tracing.OpenTelemetryTracingTracer;
 import com.google.api.gax.tracing.OpenTelemetryTracingTracerFactory;
 import com.google.common.collect.ImmutableMap;
 import com.google.rpc.Status;
@@ -109,6 +110,8 @@ class ITOtelTracing {
               .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
       assertThat(attemptSpan.getAttributes().get(AttributeKey.stringKey("attemptNumber")))
           .isEqualTo("0");
+      assertThat(attemptSpan.getAttributes().get(AttributeKey.stringKey(OpenTelemetryTracingTracer.LANGUAGE_ATTRIBUTE)))
+              .isEqualTo(OpenTelemetryTracingTracer.DEFAULT_LANGUAGE);
     }
   }
 
