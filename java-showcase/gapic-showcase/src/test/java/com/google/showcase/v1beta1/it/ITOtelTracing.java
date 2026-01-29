@@ -179,4 +179,33 @@ class ITOtelTracing {
           .isEqualTo("at-value");
     }
   }
+
+  @Test
+  void testTracing_customStubSettings_overridesServiceName() throws Exception {
+    String customServiceName = "showcase";
+    OpenTelemetryTracingTracerFactory tracingFactory =
+        new OpenTelemetryTracingTracerFactory(
+            new OpenTelemetryTracingRecorder(openTelemetrySdk),
+            ImmutableMap.of(),
+            ImmutableMap.of(),
+            customServiceName);
+
+    try (EchoClient client =
+        TestClientInitializer.createGrpcEchoClientWithCustomServiceName(
+            tracingFactory, customServiceName)) {
+
+      client.echo(EchoRequest.newBuilder().setContent("content").build());
+
+      List<SpanData> spans = spanExporter.getFinishedSpanItems();
+      assertThat(spans).isNotEmpty();
+
+      SpanData attemptSpan =
+          spans.stream()
+              .filter(span -> span.getName().equals("Echo/Echo/attempt"))
+              .findFirst()
+              .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
+      assertThat(attemptSpan.getAttributes().get(AttributeKey.stringKey("gcp.client.service")))
+          .isEqualTo(customServiceName);
+    }
+  }
 }

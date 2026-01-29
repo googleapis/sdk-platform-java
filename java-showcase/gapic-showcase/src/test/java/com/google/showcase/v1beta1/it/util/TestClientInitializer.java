@@ -38,6 +38,7 @@ import com.google.showcase.v1beta1.stub.EchoStub;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import io.grpc.ClientInterceptor;
 import io.grpc.ManagedChannelBuilder;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -290,11 +291,7 @@ public class TestClientInitializer {
 
   public static EchoClient createGrpcEchoClientOpentelemetry(ApiTracerFactory metricsTracerFactory)
       throws Exception {
-    return createGrpcEchoClientOpentelemetry(
-        metricsTracerFactory,
-        EchoSettings.defaultGrpcTransportProviderBuilder()
-            .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-            .build());
+    return createGrpcEchoClientWithCustomServiceName(metricsTracerFactory, "");
   }
 
   public static EchoClient createGrpcEchoClientOpentelemetry(
@@ -336,6 +333,41 @@ public class TestClientInitializer {
             httpJsonEchoSettings.getStubSettings().toBuilder()
                 .setTracerFactory(metricsTracerFactory)
                 .build();
+    EchoStub stub = echoStubSettings.createStub();
+
+    return EchoClient.create(stub);
+  }
+
+  public static EchoClient createGrpcEchoClientWithCustomServiceName(
+      ApiTracerFactory metricsTracerFactory, String customServiceName) throws Exception {
+    EchoStubSettings.Builder grpcEchoSettingsBuilder =
+        new EchoStubSettings.Builder() {
+          @Override
+          public EchoStubSettings build() throws IOException {
+            return new EchoStubSettings(this) {
+              /**
+               * The service name is normally inferred from the default host if it follows the
+               * format of `xxx.googleapis.com`. Since Showcase uses `localhost`, the service name
+               * is not automatically inferred. We override it here to ensure it's available for
+               * tracing and metrics.
+               */
+              @Override
+              public String getServiceName() {
+                return customServiceName;
+              }
+            };
+          }
+        };
+
+    grpcEchoSettingsBuilder.setCredentialsProvider(NoCredentialsProvider.create());
+    grpcEchoSettingsBuilder.setTransportChannelProvider(
+        EchoSettings.defaultGrpcTransportProviderBuilder()
+            .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+            .build());
+    grpcEchoSettingsBuilder.setEndpoint(DEFAULT_GRPC_ENDPOINT);
+    grpcEchoSettingsBuilder.setTracerFactory(metricsTracerFactory);
+
+    EchoStubSettings echoStubSettings = grpcEchoSettingsBuilder.build();
     EchoStub stub = echoStubSettings.createStub();
 
     return EchoClient.create(stub);
