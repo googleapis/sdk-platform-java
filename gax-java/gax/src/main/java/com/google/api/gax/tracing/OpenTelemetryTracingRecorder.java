@@ -103,6 +103,8 @@ public class OpenTelemetryTracingRecorder implements TracingRecorder {
     @Override
     public void recordError(Throwable error) {
       span.recordException(error);
+      span.setAttribute(
+          OpenTelemetryTracingTracer.ERROR_TYPE_ATTRIBUTE, TracerUtils.extractStatus(error));
       span.setStatus(StatusCode.ERROR);
     }
 

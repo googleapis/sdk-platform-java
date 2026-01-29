@@ -35,13 +35,11 @@ import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.core.ObsoleteApi;
-import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Stopwatch;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nullable;
@@ -218,24 +216,6 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordAttemptCount(1, attributes);
   }
 
-  /** Function to extract the status of the error as a string */
-  @VisibleForTesting
-  static String extractStatus(@Nullable Throwable error) {
-    final String statusString;
-
-    if (error == null) {
-      return StatusCode.Code.OK.toString();
-    } else if (error instanceof CancellationException) {
-      statusString = StatusCode.Code.CANCELLED.toString();
-    } else if (error instanceof ApiException) {
-      statusString = ((ApiException) error).getStatusCode().getCode().toString();
-    } else {
-      statusString = StatusCode.Code.UNKNOWN.toString();
-    }
-
-    return statusString;
-  }
-
   /**
    * Add attributes that will be attached to all metrics. This is expected to be called by
    * handwritten client teams to add additional attributes that are not supposed be collected by
@@ -259,5 +239,11 @@ public class MetricsTracer implements ApiTracer {
   @VisibleForTesting
   Map<String, String> getAttributes() {
     return attributes;
+  }
+
+  /** Function to extract the status of the error as a string */
+  @VisibleForTesting
+  String extractStatus(@Nullable Throwable error) {
+    return TracerUtils.extractStatus(error);
   }
 }

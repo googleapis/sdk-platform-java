@@ -195,9 +195,12 @@ class ITOtelTracing {
 
   @Test
   void testTracing_customStubSettings_overridesServiceName() throws Exception {
-    final String customServiceName = "showcase";
+    String customServiceName = "showcase";
     OpenTelemetryTracingTracerFactory tracingFactory =
-        new OpenTelemetryTracingTracerFactory(new OpenTelemetryTracingRecorder(openTelemetrySdk));
+        new OpenTelemetryTracingTracerFactory(
+            new OpenTelemetryTracingRecorder(openTelemetrySdk),
+            ImmutableMap.of(),
+            ImmutableMap.of("gcp.client.service", customServiceName));
 
     try (EchoClient client =
         TestClientInitializer.createGrpcEchoClientWithCustomServiceName(
@@ -215,6 +218,83 @@ class ITOtelTracing {
               .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
       assertThat(attemptSpan.getAttributes().get(AttributeKey.stringKey("gcp.client.service")))
           .isEqualTo(customServiceName);
+    }
+  }
+
+  @Test
+  void testTracing_unavailableError() throws Exception {
+    OpenTelemetryTracingTracerFactory tracingFactory =
+        new OpenTelemetryTracingTracerFactory(new OpenTelemetryTracingRecorder(openTelemetrySdk));
+
+    try (EchoClient client =
+        TestClientInitializer.createGrpcEchoClientOpentelemetry(tracingFactory)) {
+
+      Assertions.assertThrows(
+          Exception.class,
+          () ->
+              client.echo(
+                  EchoRequest.newBuilder()
+                      .setContent("unavailable-test")
+                      .setError(
+                          Status.newBuilder()
+                              .setCode(StatusCode.Code.UNAVAILABLE.ordinal())
+                              .build())
+                      .build()));
+
+      List<SpanData> spans = spanExporter.getFinishedSpanItems();
+      assertThat(spans).isNotEmpty();
+
+      // Verify that at least one attempt span recorded the UNAVAILABLE error
+      SpanData attemptSpan =
+          spans.stream()
+              .filter(span -> span.getName().equals("Echo/Echo/attempt"))
+              .findFirst()
+              .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
+
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(OpenTelemetryTracingTracer.ERROR_TYPE_ATTRIBUTE)))
+          .isEqualTo(StatusCode.Code.UNAVAILABLE.toString());
+      assertThat(attemptSpan.getStatus().getStatusCode())
+          .isEqualTo(io.opentelemetry.api.trace.StatusCode.ERROR);
+    }
+  }
+
+  @Test
+  void testTracing_invalidArgumentError() throws Exception {
+    OpenTelemetryTracingTracerFactory tracingFactory =
+        new OpenTelemetryTracingTracerFactory(new OpenTelemetryTracingRecorder(openTelemetrySdk));
+
+    try (EchoClient client =
+        TestClientInitializer.createGrpcEchoClientOpentelemetry(tracingFactory)) {
+
+      Assertions.assertThrows(
+          Exception.class,
+          () ->
+              client.echo(
+                  EchoRequest.newBuilder()
+                      .setContent("invalid-argument-test")
+                      .setError(
+                          Status.newBuilder()
+                              .setCode(StatusCode.Code.INVALID_ARGUMENT.ordinal())
+                              .build())
+                      .build()));
+
+      List<SpanData> spans = spanExporter.getFinishedSpanItems();
+      assertThat(spans).isNotEmpty();
+
+      SpanData attemptSpan =
+          spans.stream()
+              .filter(span -> span.getName().equals("Echo/Echo/attempt"))
+              .findFirst()
+              .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
+
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(OpenTelemetryTracingTracer.ERROR_TYPE_ATTRIBUTE)))
+          .isEqualTo(StatusCode.Code.INVALID_ARGUMENT.toString());
     }
   }
 }

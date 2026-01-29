@@ -40,6 +40,7 @@ import java.util.Map;
 public class OpenTelemetryTracingTracer extends BaseApiTracer {
   public static final String LANGUAGE_ATTRIBUTE = "gcp.client.language";
   public static final String DEFAULT_LANGUAGE = "Java";
+  public static final String ERROR_TYPE_ATTRIBUTE = "error.type";
 
   private final TracingRecorder recorder;
   private final Map<String, String> operationAttributes;
