@@ -84,6 +84,8 @@ def generate_composed_library(
             gapic=gapic,
             gapic_inputs=gapic_inputs,
             temp_destination_path=temp_destination_path,
+            generation_config=config,
+            library=library,
         )
         print("arguments: ")
         print(effective_arguments)
@@ -124,6 +126,8 @@ def __construct_effective_arg(
     gapic: GapicConfig,
     gapic_inputs: GapicInputs,
     temp_destination_path: str,
+    generation_config: LibraryConfig,
+    library: LibraryConfig,
 ) -> List[str]:
     """
     Construct arguments consist attributes of a GAPIC library which used in
@@ -153,6 +157,8 @@ def __construct_effective_arg(
         gapic_inputs.service_yaml,
         "--include_samples",
         gapic_inputs.include_samples,
+        "--repo",
+        util.get_library_repository(generation_config, library),
     ]
     arguments += ["--destination_path", temp_destination_path]
 
