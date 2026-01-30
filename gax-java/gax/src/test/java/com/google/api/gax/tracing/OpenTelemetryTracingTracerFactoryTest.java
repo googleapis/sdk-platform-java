@@ -81,7 +81,8 @@ class OpenTelemetryTracingTracerFactoryTest {
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes).containsEntry("server.port", "443");
     // Verify repo attribute from gapic.properties
-    assertThat(attemptAttributes).containsEntry(OpenTelemetryTracingTracer.REPO_ATTRIBUTE, "googleapis/sdk-platform-java");
+    assertThat(attemptAttributes)
+        .containsEntry(OpenTelemetryTracingTracer.REPO_ATTRIBUTE, "googleapis/sdk-platform-java");
   }
 
   @Test
@@ -111,6 +112,7 @@ class OpenTelemetryTracingTracerFactoryTest {
     assertThat(attributesCaptor.getValue()).containsEntry("at1", "v1");
     assertThat(attributesCaptor.getValue()).containsEntry("at2", "v2");
     // Verify repo attribute from gapic.properties
-    assertThat(attributesCaptor.getValue()).containsEntry(OpenTelemetryTracingTracer.REPO_ATTRIBUTE, "googleapis/sdk-platform-java");
+    assertThat(attributesCaptor.getValue())
+        .containsEntry(OpenTelemetryTracingTracer.REPO_ATTRIBUTE, "googleapis/sdk-platform-java");
   }
 }
