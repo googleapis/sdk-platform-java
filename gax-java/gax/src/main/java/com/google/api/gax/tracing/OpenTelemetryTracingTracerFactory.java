@@ -33,8 +33,13 @@ package com.google.api.gax.tracing;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.common.collect.ImmutableMap;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A {@link ApiTracerFactory} to build instances of {@link OpenTelemetryTracingTracer}.
@@ -48,6 +53,11 @@ import java.util.Map;
 @BetaApi
 @InternalApi
 public class OpenTelemetryTracingTracerFactory implements ApiTracerFactory {
+  private static final Logger LOGGER =
+      Logger.getLogger(OpenTelemetryTracingTracerFactory.class.getName());
+  private static final String GAPIC_PROPERTIES_FILE = "/gapic.properties";
+  private static final String REPO_KEY = "repo";
+
   private final TracingRecorder tracingRecorder;
 
   /** Mapping of client attributes that are set for every TracingTracer at operation level */
@@ -70,8 +80,15 @@ public class OpenTelemetryTracingTracerFactory implements ApiTracerFactory {
       Map<String, String> operationAttributes,
       Map<String, String> attemptAttributes) {
     this.tracingRecorder = tracingRecorder;
+
+    Map<String, String> newAttemptAttributes = new HashMap<>(attemptAttributes);
+    String repo = loadRepoFromProperties();
+    if (repo != null) {
+      newAttemptAttributes.put(OpenTelemetryTracingTracer.REPO_ATTRIBUTE, repo);
+    }
+
     this.operationAttributes = ImmutableMap.copyOf(operationAttributes);
-    this.attemptAttributes = ImmutableMap.copyOf(attemptAttributes);
+    this.attemptAttributes = ImmutableMap.copyOf(newAttemptAttributes);
   }
 
   @Override
@@ -97,5 +114,19 @@ public class OpenTelemetryTracingTracerFactory implements ApiTracerFactory {
     newAttemptAttributes.putAll(attemptAttributes);
     return new OpenTelemetryTracingTracerFactory(
         tracingRecorder, newOperationAttributes, newAttemptAttributes);
+  }
+
+  private static String loadRepoFromProperties() {
+    try (InputStream is =
+        OpenTelemetryTracingTracerFactory.class.getResourceAsStream(GAPIC_PROPERTIES_FILE)) {
+      if (is != null) {
+        Properties properties = new Properties();
+        properties.load(is);
+        return properties.getProperty(REPO_KEY);
+      }
+    } catch (IOException e) {
+      LOGGER.log(Level.WARNING, "Could not load gapic.properties", e);
+    }
+    return null;
   }
 }

@@ -40,6 +40,7 @@ import java.util.Map;
 public class OpenTelemetryTracingTracer extends BaseApiTracer {
   public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
   public static final String LANGUAGE_ATTRIBUTE = "gcp.client.language";
+  public static final String REPO_ATTRIBUTE = "gcp.client.repo";
   public static final String ERROR_TYPE_ATTRIBUTE = "error.type";
   public static final String SERVICE_NAME_ATTRIBUTE = "gcp.client.service";
   public static final String PORT_ATTRIBUTE = "server.port";
