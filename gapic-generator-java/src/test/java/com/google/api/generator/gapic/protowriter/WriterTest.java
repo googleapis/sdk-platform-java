@@ -26,6 +26,7 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Optional;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
@@ -149,7 +150,7 @@ class WriterTest {
   @Test
   void writeRepoFile_isWritten() throws IOException {
     String repo = "googleapis/sdk-platform-java";
-    GapicContext context = GapicContext.EMPTY.toBuilder().setRepo(repo).build();
+    GapicContext context = GapicContext.EMPTY.toBuilder().setRepo(Optional.of(repo)).build();
     Writer.writeGapicPropertiesFile(context, jarOutputStream);
 
     closeJarOutputStream();

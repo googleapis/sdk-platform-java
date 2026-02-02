@@ -254,7 +254,7 @@ public class Parser {
         .setServiceYamlProto(serviceYamlProtoOpt.orElse(null))
         .setTransport(transport)
         .setRestNumericEnumsEnabled(willGenerateNumericEnum)
-        .setRepo(repo.orElse(null))
+        .setRepo(repo)
         .build();
   }
 
