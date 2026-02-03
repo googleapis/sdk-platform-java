@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.api</groupId>
   <artifactId>gapic-generator-java</artifactId>
-  <version>2.64.2-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+  <version>2.65.1</version><!-- {x-version-update:gapic-generator-java:current} -->
   <name>GAPIC Generator Java</name>
   <description>GAPIC generator Java</description>
 
@@ -17,12 +17,13 @@
     <googleapis.commit>9fcfbea0aa5b50fa22e190faceb073d74504172b</googleapis.commit>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <currentYearOverride>2025</currentYearOverride>
   </properties>
 
   <parent>
     <groupId>com.google.api</groupId>
     <artifactId>gapic-generator-java-pom-parent</artifactId>
-    <version>2.64.2-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+    <version>2.65.1</version><!-- {x-version-update:gapic-generator-java:current} -->
     <relativePath>../gapic-generator-java-pom-parent</relativePath>
   </parent>
 
@@ -31,7 +32,7 @@
       <dependency>
         <groupId>com.google.api</groupId>
         <artifactId>gapic-generator-java-bom</artifactId>
-        <version>2.64.2-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+        <version>2.65.1</version><!-- {x-version-update:gapic-generator-java:current} -->
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -323,6 +324,10 @@
               target/generated-test-resources/protobuf/descriptor-sets
             </additionalClasspathElement>
           </additionalClasspathElements>
+          <!-- Set CURRENT_YEAR_OVERRIDE to a fixed year so the unit test result is consistent -->
+          <environmentVariables>
+            <CURRENT_YEAR_OVERRIDE>${currentYearOverride}</CURRENT_YEAR_OVERRIDE>
+          </environmentVariables>
         </configuration>
       </plugin>
 

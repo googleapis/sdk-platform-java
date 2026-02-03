@@ -1147,6 +1147,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   void createS2ASecuredChannelCredentials_bothS2AAddressesNull_returnsNull() {
+    InstantiatingGrpcChannelProvider.resetS2AChannelCredentials();
     SecureSessionAgent s2aConfigProvider = Mockito.mock(SecureSessionAgent.class);
     SecureSessionAgentConfig config = SecureSessionAgentConfig.createBuilder().build();
     Mockito.when(s2aConfigProvider.getConfig()).thenReturn(config);
@@ -1160,6 +1161,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   @Test
   void
       createS2ASecuredChannelCredentials_mtlsS2AAddressNull_returnsPlaintextToS2AS2AChannelCredentials() {
+    InstantiatingGrpcChannelProvider.resetS2AChannelCredentials();
     SecureSessionAgent s2aConfigProvider = Mockito.mock(SecureSessionAgent.class);
     SecureSessionAgentConfig config =
         SecureSessionAgentConfig.createBuilder().setPlaintextAddress("localhost:8080").build();
@@ -1178,7 +1180,29 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
+  void
+      createTwoS2ASecuredChannelCredentials_mtlsS2AAddressNull_returnsSamePlaintextToS2AS2AChannelCredentials() {
+    InstantiatingGrpcChannelProvider.resetS2AChannelCredentials();
+    SecureSessionAgent s2aConfigProvider = Mockito.mock(SecureSessionAgent.class);
+    SecureSessionAgentConfig config =
+        SecureSessionAgentConfig.createBuilder().setPlaintextAddress("localhost:8080").build();
+    Mockito.when(s2aConfigProvider.getConfig()).thenReturn(config);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setS2AConfigProvider(s2aConfigProvider)
+            .build();
+    assertThat(provider.createS2ASecuredChannelCredentials()).isNotNull();
+    InstantiatingGrpcChannelProvider provider2 =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setS2AConfigProvider(s2aConfigProvider)
+            .build();
+    assertThat(provider2.createS2ASecuredChannelCredentials()).isNotNull();
+    assertEquals(provider.getS2AChannelCredentials(), provider2.getS2AChannelCredentials());
+  }
+
+  @Test
   void createS2ASecuredChannelCredentials_returnsPlaintextToS2AS2AChannelCredentials() {
+    InstantiatingGrpcChannelProvider.resetS2AChannelCredentials();
     SecureSessionAgent s2aConfigProvider = Mockito.mock(SecureSessionAgent.class);
     SecureSessionAgentConfig config =
         SecureSessionAgentConfig.createBuilder()
@@ -1270,6 +1294,23 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setAllowHardBoundTokenTypes(allowHardBoundTokenTypes)
             .setCredentials(computeEngineCredentials);
     Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isTrue();
+  }
+
+  @Test
+  void testDefaultBuilderNeedsBackgroundExecutor() {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+
+    assertThat(provider.needsBackgroundExecutor()).isTrue();
+  }
+
+  @Test
+  void testSettingBackgroundExecutor() {
+    ScheduledExecutorService mockExecutor = Mockito.mock(ScheduledExecutorService.class);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().setBackgroundExecutor(mockExecutor).build();
+
+    assertThat(provider.getBackgroundExecutor()).isEqualTo(mockExecutor);
   }
 
   private static class FakeLogHandler extends Handler {
