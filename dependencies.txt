@@ -33,7 +33,7 @@ org.threeten:threeten-extra,threeten-extra=1.8.0
 io.opencensus:opencensus-api,opencensus=0.31.1
 com.google.code.findbugs:jsr305,findbugs=3.0.2
 com.fasterxml.jackson:jackson-bom,jackson=2.21.0
-commons-codec:commons-codec,codec=1.20.0
+commons-codec:commons-codec,codec=1.21.0
 org.apache.httpcomponents:httpclient,httpcomponents.httpclient=4.5.14
 org.apache.httpcomponents:httpcore,httpcomponents.httpcore=4.4.16
 org.apache.httpcomponents.client5:httpclient5,apache-httpclient-5=5.6
@@ -47,5 +47,5 @@ org.apache.arrow:arrow-memory-core,arrow=18.3.0
 dev.cel:cel,dev.cel=0.11.1
 com.google.crypto.tink:tink,com.google.crypto.tink=1.20.0
 # The follow opentelemetry dependencies have a different version from the opentelemetry-bom
-io.opentelemetry.semconv:opentelemetry-semconv,opentelemetry-semconv=1.37.0
+io.opentelemetry.semconv:opentelemetry-semconv,opentelemetry-semconv=1.39.0
 io.opentelemetry.contrib:opentelemetry-gcp-resources,io.opentelemetry.contrib.opentelemetry-gcp-resources=1.52.0-alpha
