@@ -191,6 +191,13 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   }
 
   /**
+   * @return the fully resolved server address used by the client
+   */
+  public final String getServerAddress() {
+    return endpointContext.resolvedServerAddress();
+  }
+
+  /**
    * @return the newly created EndpointContext
    */
   @InternalApi

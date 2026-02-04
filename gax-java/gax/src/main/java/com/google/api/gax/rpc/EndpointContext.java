@@ -133,6 +133,8 @@ public abstract class EndpointContext {
 
   public abstract String resolvedEndpoint();
 
+  public abstract String resolvedServerAddress();
+
   public abstract Builder toBuilder();
 
   public static Builder newBuilder() {
@@ -227,6 +229,8 @@ public abstract class EndpointContext {
     public abstract Builder setUsingGDCH(boolean usingGDCH);
 
     public abstract Builder setResolvedEndpoint(String resolvedEndpoint);
+
+    public abstract Builder setResolvedServerAddress(String serverAddress);
 
     public abstract Builder setResolvedUniverseDomain(String resolvedUniverseDomain);
 
@@ -382,6 +386,18 @@ public abstract class EndpointContext {
       return mtlsEndpoint().contains(Credentials.GOOGLE_DEFAULT_UNIVERSE);
     }
 
+    private String parseServerAddress(String endpoint) {
+      int colonPortIndex = endpoint.lastIndexOf(':');
+      int doubleSlashIndex = endpoint.lastIndexOf("//");
+      if (colonPortIndex == -1) {
+        return endpoint;
+      }
+      if (doubleSlashIndex != -1 && doubleSlashIndex < colonPortIndex) {
+        return endpoint.substring(doubleSlashIndex + 2, colonPortIndex);
+      }
+      return endpoint.substring(0, colonPortIndex);
+    }
+
     // Default to port 443 for HTTPS. Using HTTP requires explicitly setting the endpoint
     private String buildEndpointTemplate(String serviceName, String resolvedUniverseDomain) {
       return serviceName + "." + resolvedUniverseDomain + ":443";
@@ -416,7 +432,9 @@ public abstract class EndpointContext {
     public EndpointContext build() throws IOException {
       // The Universe Domain is used to resolve the Endpoint. It should be resolved first
       setResolvedUniverseDomain(determineUniverseDomain());
-      setResolvedEndpoint(determineEndpoint());
+      String endpoint = determineEndpoint();
+      setResolvedEndpoint(endpoint);
+      setResolvedServerAddress(parseServerAddress(endpoint));
       setUseS2A(shouldUseS2A());
       return autoBuild();
     }

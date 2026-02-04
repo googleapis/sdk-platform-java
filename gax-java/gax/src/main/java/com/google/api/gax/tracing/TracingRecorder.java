@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -27,49 +27,44 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package com.google.api.gax.tracing;
 
+import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import com.google.api.core.InternalExtensionOnly;
-import com.google.api.gax.rpc.StubSettings;
+import java.util.Map;
 
 /**
- * A factory to create new instances of {@link ApiTracer}s.
- *
- * <p>In general a single instance of an {@link ApiTracer} will correspond to a single logical
- * operation.
- *
- * <p>For internal use only. google-cloud-java libraries should extend {@link BaseApiTracerFactory}.
+ * Provides an interface for tracing recording. The implementer is expected to use an observability
+ * framework, e.g. OpenTelemetry. There should be only one instance of TracingRecorder per client,
+ * all the methods in this class are expected to be called from multiple threads, hence the
+ * implementation must be thread safe.
  */
+@BetaApi
 @InternalApi
-@InternalExtensionOnly
-public interface ApiTracerFactory {
-  /** The type of operation the {@link ApiTracer} is tracing. */
-  enum OperationType {
-    Unary,
-    Batching,
-    LongRunning,
-    ServerStreaming,
-    ClientStreaming,
-    BidiStreaming
+public interface TracingRecorder {
+  /** Starts a span and returns a handle to manage its lifecycle. */
+  SpanHandle startSpan(String name, Map<String, String> attributes);
+
+  /** Starts a span with a parent and returns a handle to manage its lifecycle. */
+  default SpanHandle startSpan(String name, Map<String, String> attributes, SpanHandle parent) {
+    return startSpan(name, attributes);
   }
 
   /**
-   * Create a new {@link ApiTracer} that will be a child of the current context.
+   * Installs the span into the current thread-local context.
    *
-   * @param parent the parent of this tracer
-   * @param spanName the name of the new span
-   * @param operationType the type of operation that the tracer will trace
+   * @return a scope that must be closed to remove the span from the context.
    */
-  ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType);
+  default ApiTracer.Scope inScope(SpanHandle handle) {
+    return () -> {};
+  }
 
-  /**
-   * Returns a new {@link ApiTracerFactory} that will add the given attributes to all tracers
-   * created by the factory.
-   *
-   * @param settings a {@link StubSettings} object containing information to construct attributes
-   */
-  default ApiTracerFactory withAttributesFromSettings(StubSettings settings) {
-    return this;
+  interface SpanHandle {
+    void end();
+
+    void recordError(Throwable error);
+
+    void setAttribute(String key, String value);
   }
 }
