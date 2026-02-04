@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.66.1](https://github.com/googleapis/sdk-platform-java/compare/v2.66.0...v2.66.1) (2026-02-04)
+
+
+### Documentation
+
+* [common-protos] update reference documentation for `SelectionInput.DROPDOWN` to include dynamic data sources and autosuggestion ([9960262](https://github.com/googleapis/sdk-platform-java/commit/9960262cf248400836c04063e6a701bec2aca1ba))
+
 ## [2.66.0](https://github.com/googleapis/sdk-platform-java/compare/v2.65.1...v2.66.0) (2026-01-23)
 
 
