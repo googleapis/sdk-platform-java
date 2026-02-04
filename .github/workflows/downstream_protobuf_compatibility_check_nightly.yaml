@@ -41,7 +41,7 @@ jobs:
           - java-storage-nio
         # Default Protobuf-Java versions to use are specified here. Without this, the nightly workflow won't know
         # which values to use and would resolve to ''.
-        protobuf-version: ${{ fromJSON(format('[{0}]', inputs.protobuf_runtime_versions || '"3.25.8","4.33.4"')) }}
+        protobuf-version: ${{ fromJSON(format('[{0}]', inputs.protobuf_runtime_versions || '"4.33.5"')) }}
     steps:
       - name: Checkout sdk-platform-java repo
         uses: actions/checkout@v4
