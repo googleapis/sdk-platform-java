@@ -34,6 +34,7 @@ import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @BetaApi
 @InternalApi
@@ -53,8 +54,8 @@ public class TracingTracer extends BaseApiTracer {
   public TracingTracer(TracingRecorder recorder, String operationSpanName, String attemptSpanName) {
     this.recorder = recorder;
     this.attemptSpanName = attemptSpanName;
-    this.operationAttributes = new HashMap<>();
-    this.attemptAttributes = new HashMap<>();
+    this.operationAttributes = new ConcurrentHashMap<>();
+    this.attemptAttributes = new ConcurrentHashMap<>();
     this.attemptAttributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
 
     // Start the long-lived operation span.
