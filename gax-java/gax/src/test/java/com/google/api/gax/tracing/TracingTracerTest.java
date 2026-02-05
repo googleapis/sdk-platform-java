@@ -32,10 +32,13 @@ package com.google.api.gax.tracing;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.google.api.gax.tracing.ApiTracer.Scope;
 import com.google.common.collect.ImmutableMap;
+import java.time.Duration;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,6 +69,12 @@ class TracingTracerTest {
   }
 
   @Test
+  void testOperationCancelled_endsSpan() {
+    tracer.operationCancelled();
+    verify(operationHandle).end();
+  }
+
+  @Test
   void testOperationFailed_recordsErrorAndEndsSpan() {
     Throwable error = new RuntimeException("fail");
     tracer.operationFailed(error);
@@ -84,6 +93,81 @@ class TracingTracerTest {
   }
 
   @Test
+  void testAttemptCancelled_endsSpan() {
+    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
+        .thenReturn(attemptHandle);
+    tracer.attemptStarted(new Object(), 1);
+    tracer.attemptCancelled();
+
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptFailedDuration_recordsErrorAndEndsSpan() {
+    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
+        .thenReturn(attemptHandle);
+    tracer.attemptStarted(new Object(), 1);
+
+    Throwable error = new RuntimeException("fail");
+    tracer.attemptFailedDuration(error, Duration.ofMillis(100));
+
+    verify(attemptHandle).recordError(error);
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptFailedRetriesExhausted_recordsErrorAndEndsSpan() {
+    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
+        .thenReturn(attemptHandle);
+    tracer.attemptStarted(new Object(), 1);
+
+    Throwable error = new RuntimeException("fail");
+    tracer.attemptFailedRetriesExhausted(error);
+
+    verify(attemptHandle).recordError(error);
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptPermanentFailure_recordsErrorAndEndsSpan() {
+    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
+        .thenReturn(attemptHandle);
+    tracer.attemptStarted(new Object(), 1);
+
+    Throwable error = new RuntimeException("fail");
+    tracer.attemptPermanentFailure(error);
+
+    verify(attemptHandle).recordError(error);
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testInScope_returnsOperationScopeWhenNoAttempt() {
+    Scope scope = mock(Scope.class);
+    when(recorder.inScope(operationHandle)).thenReturn(scope);
+
+    assertThat(tracer.inScope()).isEqualTo(scope);
+  }
+
+  @Test
+  void testInScope_returnsAttemptScopeWhenAttemptInProgress() {
+    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
+        .thenReturn(attemptHandle);
+    tracer.attemptStarted(new Object(), 1);
+
+    Scope scope = mock(Scope.class);
+    when(recorder.inScope(attemptHandle)).thenReturn(scope);
+
+    assertThat(tracer.inScope()).isEqualTo(scope);
+  }
+
+  @Test
+  void testAddOperationAttributes_passedToOperationSpan() {
+    tracer.addOperationAttributes(ImmutableMap.of("op-key", "op-value"));
+    verify(operationHandle).setAttribute("op-key", "op-value");
+  }
+
+  @Test
   void testAddAttemptAttributes_passedToAttemptSpan() {
     tracer.addAttemptAttributes(ImmutableMap.of("attempt-key", "attempt-value"));
 
@@ -99,5 +183,15 @@ class TracingTracerTest {
     assertThat(capturedAttributes).containsEntry("attempt-key", "attempt-value");
     assertThat(capturedAttributes)
         .containsEntry(TracingTracer.LANGUAGE_ATTRIBUTE, TracingTracer.DEFAULT_LANGUAGE);
+  }
+
+  @Test
+  void testAddAttemptAttributes_updatesActiveAttemptSpan() {
+    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
+        .thenReturn(attemptHandle);
+    tracer.attemptStarted(new Object(), 1);
+
+    tracer.addAttemptAttributes(ImmutableMap.of("late-key", "late-value"));
+    verify(attemptHandle).setAttribute("late-key", "late-value");
   }
 }
