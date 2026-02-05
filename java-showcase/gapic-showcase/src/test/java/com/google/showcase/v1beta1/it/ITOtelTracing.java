@@ -41,6 +41,7 @@ import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import io.opentelemetry.api.GlobalOpenTelemetry;
 import io.opentelemetry.api.common.AttributeKey;
+import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.testing.exporter.InMemorySpanExporter;
 import io.opentelemetry.sdk.trace.SdkTracerProvider;
@@ -49,6 +50,7 @@ import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -79,6 +81,28 @@ class ITOtelTracing {
     GlobalOpenTelemetry.resetForTest();
   }
 
+  /**
+   * The {@link com.google.api.gax.tracing.TracedUnaryCallable} implementation uses a callback
+   * approach to report the operation has been completed. That may cause a slight delay between
+   * client.echo(...) and the availability of the operation span (as opposed to attemptSuceeeded()
+   * which is reported immediately). This method waits for up to 50ms for the callback to take
+   * effect.
+   *
+   * @param expectedSpans number of flattened spans to be expected
+   * @return list of spans
+   */
+  private List<SpanData> waitForSpans(int expectedSpans) throws InterruptedException {
+    for (int i = 0; i < 10; i++) {
+      List<SpanData> spans = spanExporter.getFinishedSpanItems();
+      if (spans.size() == expectedSpans) {
+        return spans;
+      }
+      Thread.sleep(5);
+    }
+    Assertions.fail("Timed out waiting for spans");
+    return null;
+  }
+
   @Test
   void testTracing_successfulEcho_grpc() throws Exception {
     TracingTracerFactory tracingFactory =
@@ -89,14 +113,22 @@ class ITOtelTracing {
 
       client.echo(EchoRequest.newBuilder().setContent("tracing-test").build());
 
-      List<SpanData> spans = spanExporter.getFinishedSpanItems();
+      List<SpanData> spans = waitForSpans(2);
       assertThat(spans).isNotEmpty();
+
+      SpanData operationSpan =
+          spans.stream()
+              .filter(span -> span.getName().equals("Echo.Echo/operation"))
+              .findFirst()
+              .orElseThrow(() -> new AssertionError("Operation span not found"));
+      assertThat(operationSpan.getKind()).isEqualTo(SpanKind.INTERNAL);
 
       SpanData attemptSpan =
           spans.stream()
               .filter(span -> span.getName().equals("Echo/Echo/attempt"))
               .findFirst()
               .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
+      assertThat(attemptSpan.getKind()).isEqualTo(SpanKind.CLIENT);
       assertThat(
               attemptSpan
                   .getAttributes()
@@ -120,14 +152,22 @@ class ITOtelTracing {
 
       client.echo(EchoRequest.newBuilder().setContent("tracing-test").build());
 
-      List<SpanData> spans = spanExporter.getFinishedSpanItems();
+      List<SpanData> spans = waitForSpans(2);
       assertThat(spans).isNotEmpty();
+
+      SpanData operationSpan =
+          spans.stream()
+              .filter(span -> span.getName().equals("google.showcase.v1beta1.Echo/Echo/operation"))
+              .findFirst()
+              .orElseThrow(() -> new AssertionError("Operation span not found"));
+      assertThat(operationSpan.getKind()).isEqualTo(SpanKind.INTERNAL);
 
       SpanData attemptSpan =
           spans.stream()
               .filter(span -> span.getName().equals("google.showcase.v1beta1/Echo/Echo/attempt"))
               .findFirst()
               .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
+      assertThat(attemptSpan.getKind()).isEqualTo(SpanKind.CLIENT);
       assertThat(
               attemptSpan
                   .getAttributes()
@@ -149,8 +189,7 @@ class ITOtelTracing {
 
       client.echo(EchoRequest.newBuilder().setContent("attr-test").build());
 
-      openTelemetrySdk.getSdkTracerProvider().forceFlush();
-      List<SpanData> spans = spanExporter.getFinishedSpanItems();
+      List<SpanData> spans = waitForSpans(2);
 
       SpanData operationSpan =
           spans.stream()
@@ -158,13 +197,16 @@ class ITOtelTracing {
               .findFirst()
               .orElseThrow(
                   () -> new AssertionError("Operation span 'Echo/Echo/operation' not found"));
+      assertThat(operationSpan.getKind()).isEqualTo(SpanKind.INTERNAL);
       assertThat(operationSpan.getAttributes().get(AttributeKey.stringKey("op-key")))
           .isEqualTo("op-value");
+
       SpanData attemptSpan =
           spans.stream()
               .filter(span -> span.getName().equals("Echo/Echo/attempt"))
               .findFirst()
               .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
+      assertThat(attemptSpan.getKind()).isEqualTo(SpanKind.CLIENT);
       assertThat(attemptSpan.getAttributes().get(AttributeKey.stringKey("at-key")))
           .isEqualTo("at-value");
     }

@@ -62,8 +62,14 @@ public class OpenTelemetryTracingRecorder implements TracingRecorder {
 
   @Override
   public SpanHandle startSpan(String name, Map<String, String> attributes, SpanHandle parent) {
-    SpanBuilder spanBuilder =
-        tracer.spanBuilder(name).setSpanKind(SpanKind.CLIENT); // Mark as a network-facing call
+    SpanBuilder spanBuilder = tracer.spanBuilder(name);
+
+    // Operation and Attempt spans are INTERNAL and CLIENT respectively.
+    if (parent == null) {
+      spanBuilder.setSpanKind(SpanKind.INTERNAL);
+    } else {
+      spanBuilder.setSpanKind(SpanKind.CLIENT);
+    }
 
     if (attributes != null) {
       attributes.forEach((k, v) -> spanBuilder.setAttribute(k, v));

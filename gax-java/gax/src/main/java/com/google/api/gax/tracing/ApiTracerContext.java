@@ -36,7 +36,8 @@ import com.google.auto.value.AutoValue;
 import javax.annotation.Nullable;
 
 /**
- * A context object that contains information used to infer attributes that are common for all {@link ApiTracer}s.
+ * A context object that contains information used to infer attributes that are common for all
+ * {@link ApiTracer}s.
  *
  * <p>For internal use only.
  */

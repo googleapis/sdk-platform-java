@@ -31,6 +31,7 @@
 package com.google.api.gax.tracing;
 
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -66,12 +67,38 @@ class OpenTelemetryTracingRecorderTest {
   }
 
   @Test
+  void testStartSpan_operation_isInternal() {
+    String spanName = "operation-span";
+    when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
+    when(spanBuilder.setSpanKind(SpanKind.INTERNAL)).thenReturn(spanBuilder);
+    when(spanBuilder.startSpan()).thenReturn(span);
+
+    recorder.startSpan(spanName, null);
+
+    verify(spanBuilder).setSpanKind(SpanKind.INTERNAL);
+  }
+
+  @Test
+  void testStartSpan_attempt_isClient() {
+    String spanName = "attempt-span";
+    TracingRecorder.SpanHandle parent = mock(TracingRecorder.SpanHandle.class);
+
+    when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
+    when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
+    when(spanBuilder.startSpan()).thenReturn(span);
+
+    recorder.startSpan(spanName, null, parent);
+
+    verify(spanBuilder).setSpanKind(SpanKind.CLIENT);
+  }
+
+  @Test
   void testStartSpan_recordsSpan() {
     String spanName = "test-span";
     Map<String, String> attributes = ImmutableMap.of("key1", "value1");
 
     when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
-    when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
+    when(spanBuilder.setSpanKind(SpanKind.INTERNAL)).thenReturn(spanBuilder);
     when(spanBuilder.setAttribute("key1", "value1")).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 
@@ -85,7 +112,7 @@ class OpenTelemetryTracingRecorderTest {
   void testInScope_managesContext() {
     String spanName = "test-span";
     when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
-    when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
+    when(spanBuilder.setSpanKind(SpanKind.INTERNAL)).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
     when(span.makeCurrent()).thenReturn(scope);
 
@@ -104,7 +131,7 @@ class OpenTelemetryTracingRecorderTest {
     Throwable error = new RuntimeException("test error");
 
     when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
-    when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
+    when(spanBuilder.setSpanKind(SpanKind.INTERNAL)).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 
     TracingRecorder.SpanHandle handle = recorder.startSpan(spanName, null);

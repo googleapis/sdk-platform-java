@@ -76,7 +76,8 @@ public class TracingTracerFactory implements ApiTracerFactory {
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    // TODO(diegomarquezp): these are placeholders for span names and will be adjusted as the feature is developed.
+    // TODO(diegomarquezp): these are placeholders for span names and will be adjusted as the
+    // feature is developed.
     String operationSpanName =
         spanName.getClientName() + "." + spanName.getMethodName() + "/operation";
     String attemptSpanName = spanName.getClientName() + "/" + spanName.getMethodName() + "/attempt";
