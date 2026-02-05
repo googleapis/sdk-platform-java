@@ -47,9 +47,7 @@ public interface TracingRecorder {
   SpanHandle startSpan(String name, Map<String, String> attributes);
 
   /** Starts a span with a parent and returns a handle to manage its lifecycle. */
-  default SpanHandle startSpan(String name, Map<String, String> attributes, SpanHandle parent) {
-    return startSpan(name, attributes);
-  }
+  SpanHandle startSpan(String name, Map<String, String> attributes, SpanHandle parent);
 
   /**
    * Installs the span into the current thread-local context.
