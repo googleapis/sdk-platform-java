@@ -62,16 +62,6 @@ public class TracingTracer extends BaseApiTracer {
   }
 
   @Override
-  public Scope inScope() {
-    // If an attempt is in progress, make it current so downstream spans are its children.
-    // Otherwise, make the operation span current.
-    if (attemptHandle != null) {
-      return recorder.inScope(attemptHandle);
-    }
-    return recorder.inScope(operationHandle);
-  }
-
-  @Override
   public void attemptStarted(Object request, int attemptNumber) {
     Map<String, String> attemptAttributes = new HashMap<>(this.attemptAttributes);
     // Start the specific attempt span with the operation span as parent

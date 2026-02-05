@@ -39,7 +39,6 @@ import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Context;
-import io.opentelemetry.context.Scope;
 import java.util.Map;
 
 /**
@@ -82,16 +81,6 @@ public class OpenTelemetryTracingRecorder implements TracingRecorder {
     Span span = spanBuilder.startSpan();
 
     return new OtelSpanHandle(span);
-  }
-
-  @Override
-  @SuppressWarnings("MustBeClosedChecker")
-  public ApiTracer.Scope inScope(SpanHandle handle) {
-    if (handle instanceof OtelSpanHandle) {
-      Scope scope = ((OtelSpanHandle) handle).span.makeCurrent();
-      return scope::close;
-    }
-    return () -> {};
   }
 
   private static class OtelSpanHandle implements SpanHandle {
