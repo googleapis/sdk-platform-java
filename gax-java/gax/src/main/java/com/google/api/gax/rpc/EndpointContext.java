@@ -41,6 +41,8 @@ import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
@@ -387,15 +389,24 @@ public abstract class EndpointContext {
     }
 
     private String parseServerAddress(String endpoint) {
-      int colonPortIndex = endpoint.lastIndexOf(':');
-      int doubleSlashIndex = endpoint.lastIndexOf("//");
-      if (colonPortIndex == -1) {
-        return endpoint;
+      try {
+        String urlString = endpoint;
+        if (!urlString.contains("://")) {
+          urlString = "http://" + urlString;
+        }
+        return new URL(urlString).getHost();
+      } catch (MalformedURLException e) {
+        // Fallback for cases URL can't handle.
+        int colonPortIndex = endpoint.lastIndexOf(':');
+        int doubleSlashIndex = endpoint.lastIndexOf("//");
+        if (colonPortIndex == -1) {
+          return endpoint;
+        }
+        if (doubleSlashIndex != -1 && doubleSlashIndex < colonPortIndex) {
+          return endpoint.substring(doubleSlashIndex + 2, colonPortIndex);
+        }
+        return endpoint.substring(0, colonPortIndex);
       }
-      if (doubleSlashIndex != -1 && doubleSlashIndex < colonPortIndex) {
-        return endpoint.substring(doubleSlashIndex + 2, colonPortIndex);
-      }
-      return endpoint.substring(0, colonPortIndex);
     }
 
     // Default to port 443 for HTTPS. Using HTTP requires explicitly setting the endpoint
