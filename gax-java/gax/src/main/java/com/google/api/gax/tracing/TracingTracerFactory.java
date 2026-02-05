@@ -32,6 +32,7 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.common.collect.ImmutableMap;
 import java.util.HashMap;
@@ -90,9 +91,9 @@ public class TracingTracerFactory implements ApiTracerFactory {
   }
 
   @Override
-  public ApiTracerFactory withAttributesFromSettings(StubSettings settings) {
+  public ApiTracerFactory withInferredAttributes(EndpointContext endpointContext) {
     Map<String, String> newAttemptAttributes = new HashMap<>(this.attemptAttributes);
-    newAttemptAttributes.put(TracingTracer.SERVER_ADDRESS_ATTRIBUTE, settings.getServerAddress());
+    newAttemptAttributes.put(TracingTracer.SERVER_ADDRESS_ATTRIBUTE, endpointContext.resolvedServerAddress());
     newAttemptAttributes.putAll(attemptAttributes);
     return new TracingTracerFactory(tracingRecorder, operationAttributes, newAttemptAttributes);
   }

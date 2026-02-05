@@ -284,7 +284,7 @@ public abstract class ClientContext {
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
         .setStreamWatchdogCheckIntervalDuration(settings.getStreamWatchdogCheckIntervalDuration())
-        .setTracerFactory(settings.getTracerFactory().withAttributesFromSettings(settings))
+        .setTracerFactory(settings.getTracerFactory().withInferredAttributes(endpointContext))
         .setEndpointContext(endpointContext)
         .build();
   }

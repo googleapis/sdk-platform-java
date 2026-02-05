@@ -31,6 +31,7 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
 import com.google.api.core.InternalExtensionOnly;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StubSettings;
 
 /**
@@ -64,12 +65,12 @@ public interface ApiTracerFactory {
   ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType);
 
   /**
-   * Returns a new {@link ApiTracerFactory} that will add the given attributes to all tracers
+   * Returns a new {@link ApiTracerFactory} that will infer the attributes for all tracers
    * created by the factory.
    *
-   * @param settings a {@link StubSettings} object containing information to construct attributes
+   * @param endpointContext an {@link EndpointContext} object containing information to construct attributes
    */
-  default ApiTracerFactory withAttributesFromSettings(StubSettings settings) {
+  default ApiTracerFactory withInferredAttributes(EndpointContext endpointContext) {
     return this;
   }
 }
