@@ -149,7 +149,7 @@ class ITOtelTracing {
 
       client.echo(EchoRequest.newBuilder().setContent("attr-test").build());
 
-      Thread.sleep(50);
+      openTelemetrySdk.getSdkTracerProvider().forceFlush();
       List<SpanData> spans = spanExporter.getFinishedSpanItems();
 
       SpanData operationSpan =

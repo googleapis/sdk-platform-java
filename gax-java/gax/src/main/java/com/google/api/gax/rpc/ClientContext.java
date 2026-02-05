@@ -41,6 +41,7 @@ import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.ExecutorAsBackgroundResource;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
 import com.google.auth.ApiKeyCredentials;
@@ -269,6 +270,9 @@ public abstract class ClientContext {
     if (watchdogProvider != null && watchdogProvider.shouldAutoClose()) {
       backgroundResources.add(watchdog);
     }
+    ApiTracerContext apiTracerContext =
+        ApiTracerContext.newBuilder().setEndpointContext(endpointContext).build();
+    ApiTracerFactory apiTracerFactory = settings.getTracerFactory().withContext(apiTracerContext);
 
     return newBuilder()
         .setBackgroundResources(backgroundResources.build())
@@ -284,7 +288,7 @@ public abstract class ClientContext {
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
         .setStreamWatchdogCheckIntervalDuration(settings.getStreamWatchdogCheckIntervalDuration())
-        .setTracerFactory(settings.getTracerFactory().withInferredAttributes(endpointContext))
+        .setTracerFactory(apiTracerFactory)
         .setEndpointContext(endpointContext)
         .build();
   }

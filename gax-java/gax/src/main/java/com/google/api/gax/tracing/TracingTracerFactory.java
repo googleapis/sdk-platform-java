@@ -32,8 +32,6 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import com.google.api.gax.rpc.EndpointContext;
-import com.google.api.gax.rpc.StubSettings;
 import com.google.common.collect.ImmutableMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -78,7 +76,7 @@ public class TracingTracerFactory implements ApiTracerFactory {
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    // TODO(diegomarquezp): use span names from design
+    // TODO(diegomarquezp): these are placeholders for span names and will be adjusted as the feature is developed.
     String operationSpanName =
         spanName.getClientName() + "." + spanName.getMethodName() + "/operation";
     String attemptSpanName = spanName.getClientName() + "/" + spanName.getMethodName() + "/attempt";
@@ -91,10 +89,13 @@ public class TracingTracerFactory implements ApiTracerFactory {
   }
 
   @Override
-  public ApiTracerFactory withInferredAttributes(EndpointContext endpointContext) {
+  public ApiTracerFactory withContext(ApiTracerContext context) {
     Map<String, String> newAttemptAttributes = new HashMap<>(this.attemptAttributes);
-    newAttemptAttributes.put(TracingTracer.SERVER_ADDRESS_ATTRIBUTE, endpointContext.resolvedServerAddress());
-    newAttemptAttributes.putAll(attemptAttributes);
+    if (context.getEndpointContext() != null) {
+      newAttemptAttributes.put(
+          TracingTracer.SERVER_ADDRESS_ATTRIBUTE,
+          context.getEndpointContext().resolvedServerAddress());
+    }
     return new TracingTracerFactory(tracingRecorder, operationAttributes, newAttemptAttributes);
   }
 }

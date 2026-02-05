@@ -39,6 +39,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -80,5 +81,60 @@ class TracingTracerFactoryTest {
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes).containsEntry("server.port", "443");
+  }
+
+  @Test
+  void testWithContext_addsInferredAttributes() {
+    TracingRecorder recorder = mock(TracingRecorder.class);
+    TracingRecorder.SpanHandle operationHandle = mock(TracingRecorder.SpanHandle.class);
+    when(recorder.startSpan(anyString(), anyMap())).thenReturn(operationHandle);
+
+    EndpointContext endpointContext = mock(EndpointContext.class);
+    when(endpointContext.resolvedServerAddress()).thenReturn("example.com");
+
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder().setEndpointContext(endpointContext).build();
+
+    TracingTracerFactory factory = new TracingTracerFactory(recorder);
+    ApiTracerFactory factoryWithContext = factory.withContext(context);
+
+    ApiTracer tracer =
+        factoryWithContext.newTracer(
+            null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
+
+    tracer.attemptStarted(null, 1);
+
+    ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
+    verify(recorder, atLeastOnce())
+        .startSpan(anyString(), attributesCaptor.capture(), eq(operationHandle));
+
+    Map<String, String> attemptAttributes = attributesCaptor.getValue();
+    assertThat(attemptAttributes)
+        .containsEntry(TracingTracer.SERVER_ADDRESS_ATTRIBUTE, "example.com");
+  }
+
+  @Test
+  void testWithContext_noEndpointContext_doesNotAddAttributes() {
+    TracingRecorder recorder = mock(TracingRecorder.class);
+    TracingRecorder.SpanHandle operationHandle = mock(TracingRecorder.SpanHandle.class);
+    when(recorder.startSpan(anyString(), anyMap())).thenReturn(operationHandle);
+
+    ApiTracerContext context = ApiTracerContext.newBuilder().build();
+
+    TracingTracerFactory factory = new TracingTracerFactory(recorder);
+    ApiTracerFactory factoryWithContext = factory.withContext(context);
+
+    ApiTracer tracer =
+        factoryWithContext.newTracer(
+            null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
+
+    tracer.attemptStarted(null, 1);
+
+    ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
+    verify(recorder, atLeastOnce())
+        .startSpan(anyString(), attributesCaptor.capture(), eq(operationHandle));
+
+    Map<String, String> attemptAttributes = attributesCaptor.getValue();
+    assertThat(attemptAttributes).doesNotContainKey(TracingTracer.SERVER_ADDRESS_ATTRIBUTE);
   }
 }
