@@ -55,9 +55,9 @@ import javax.annotation.Nullable;
 @BetaApi
 @InternalApi
 public class MetricsTracer implements ApiTracer {
-  public static final String METHOD_ATTRIBUTE = "method";
+  public static final String METHOD_ATTRIBUTE = "rpc.method";
   public static final String LANGUAGE_ATTRIBUTE = "language";
-  public static final String STATUS_ATTRIBUTE = "status";
+  public static final String STATUS_ATTRIBUTE = "grpc.status";
   public static final String DEFAULT_LANGUAGE = "Java";
   private static final String OPERATION_FINISHED_STATUS_MESSAGE =
       "Operation has already been completed";
