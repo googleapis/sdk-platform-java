@@ -1,19 +1,20 @@
 name: Dependency Compatibility Test
-
-on:
+'on':
   pull_request:
     branches:
-      - 'main'
+      - 2.66.x
   workflow_dispatch:
     inputs:
       dependencies-list:
-        description: 'Comma-separated list of dependencies to test (Example format: protobuf=4.31.0,guava=33.4.8-jre).
-                      Note: The name should be the maven property. Find this value in the <properties> section in the pom.
-                      Do not include the `-D` prefix or `.version` suffix. Those values will be appended when generating
-                      the command. No input (default) will run the the upper-bound dependencies file.'
+        description: >-
+          Comma-separated list of dependencies to test (Example format:
+          protobuf=4.31.0,guava=33.4.8-jre). Note: The name should be the maven
+          property. Find this value in the <properties> section in the pom. Do
+          not include the `-D` prefix or `.version` suffix. Those values will be
+          appended when generating the command. No input (default) will run the
+          the upper-bound dependencies file.
         required: false
         default: ''
-
 jobs:
   dependency-compatibility-test:
     runs-on: ubuntu-latest
@@ -26,15 +27,15 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '21'
-          distribution: 'temurin'
+          distribution: temurin
           cache: maven
-      # The workflow_dispatch event is for team members who want to manually test certain dependencies + version combos
-      # The normal workflow is not from `workflow_dispatch` and will use the default upper-bounds dependencies file
       - name: Determine Inputted Dependencies List
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dependencies-list != '' }}
-        run: echo "DEPENDENCIES_LIST=${{ github.event.inputs.dependencies-list }}" >> $GITHUB_ENV
-
-      # Run in the root module which should test for everything except for showcase
+        if: >-
+          ${{ github.event_name == 'workflow_dispatch' &&
+          github.event.inputs.dependencies-list != '' }}
+        run: >-
+          echo "DEPENDENCIES_LIST=${{ github.event.inputs.dependencies-list }}"
+          >> $GITHUB_ENV
       - name: Perform Dependency Compatibility Unit Testing
         shell: bash
         run: |
@@ -43,30 +44,36 @@ jobs:
           else
             ./.github/scripts/test_dependency_compatibility.sh
           fi
-
-      # Install the modules for showcase (Shared-Deps is required to run showcase)
       - name: Install sdk-platform-java's modules
-        # gapic-generator-java requires Java 8 and is irrelevant for this CI
-        run: mvn -q -B -ntp install --projects '!gapic-generator-java' -Dcheckstyle.skip -Dfmt.skip -DskipTests -Dclirr.skip -T 1C
-
-      # Set up local showcase server to run the showcase ITs
+        run: >-
+          mvn -q -B -ntp install --projects '!gapic-generator-java'
+          -Dcheckstyle.skip -Dfmt.skip -DskipTests -Dclirr.skip -T 1C
       - name: Parse showcase version
         working-directory: java-showcase/gapic-showcase
-        run: echo "SHOWCASE_VERSION=$(mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)" >> "$GITHUB_ENV"
+        run: >-
+          echo "SHOWCASE_VERSION=$(mvn help:evaluate
+          -Dexpression=gapic-showcase.version -q -DforceStdout)" >>
+          "$GITHUB_ENV"
       - name: Install showcase server
-        run: |
+        run: >
           sudo mkdir -p /usr/src/showcase
-          sudo chown -R ${USER} /usr/src/
-          curl --location https://github.com/googleapis/gapic-showcase/releases/download/v${{env.SHOWCASE_VERSION}}/gapic-showcase-${{env.SHOWCASE_VERSION}}-linux-amd64.tar.gz --output /usr/src/showcase/showcase-${{env.SHOWCASE_VERSION}}-linux-amd64.tar.gz
-          cd /usr/src/showcase/
-          tar -xf showcase-*
-          ./gapic-showcase run &
-          cd -
 
-      # Run Showcase's Integration Tests
+          sudo chown -R ${USER} /usr/src/
+
+          curl --location
+          https://github.com/googleapis/gapic-showcase/releases/download/v${{env.SHOWCASE_VERSION}}/gapic-showcase-${{env.SHOWCASE_VERSION}}-linux-amd64.tar.gz
+          --output
+          /usr/src/showcase/showcase-${{env.SHOWCASE_VERSION}}-linux-amd64.tar.gz
+
+          cd /usr/src/showcase/
+
+          tar -xf showcase-*
+
+          ./gapic-showcase run &
+
+          cd -
       - name: Perform Dependency Compatibility Integration Testing (Showcase Tests)
         shell: bash
-        # Need to cd out of the directory to get the scripts as this step is run inside the java-showcase directory
         run: |
           if [[ -n "${{ env.DEPENDENCIES_LIST }}" ]]; then
             ../.github/scripts/test_dependency_compatibility.sh -l ${{ env.DEPENDENCIES_LIST }}
