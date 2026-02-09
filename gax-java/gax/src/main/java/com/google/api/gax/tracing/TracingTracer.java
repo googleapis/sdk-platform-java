@@ -84,38 +84,6 @@ public class TracingTracer extends BaseApiTracer {
     endAttempt();
   }
 
-  @Override
-  public void attemptCancelled() {
-    endAttempt();
-  }
-
-  /**
-   * Common implementation while no specific behavior is required.
-   *
-   * @param error the error to be recorded
-   */
-  private void attemptError(Throwable error) {
-    if (attemptHandle != null) {
-      attemptHandle.recordError(error);
-    }
-    endAttempt();
-  }
-
-  @Override
-  public void attemptFailedDuration(Throwable error, java.time.Duration delay) {
-    attemptError(error);
-  }
-
-  @Override
-  public void attemptFailedRetriesExhausted(Throwable error) {
-    attemptError(error);
-  }
-
-  @Override
-  public void attemptPermanentFailure(Throwable error) {
-    attemptError(error);
-  }
-
   private void endAttempt() {
     if (attemptHandle != null) {
       attemptHandle.end();
@@ -125,17 +93,6 @@ public class TracingTracer extends BaseApiTracer {
 
   @Override
   public void operationSucceeded() {
-    operationHandle.end();
-  }
-
-  @Override
-  public void operationCancelled() {
-    operationHandle.end();
-  }
-
-  @Override
-  public void operationFailed(Throwable error) {
-    operationHandle.recordError(error);
     operationHandle.end();
   }
 

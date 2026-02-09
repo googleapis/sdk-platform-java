@@ -69,75 +69,12 @@ class TracingTracerTest {
   }
 
   @Test
-  void testOperationCancelled_endsSpan() {
-    tracer.operationCancelled();
-    verify(operationHandle).end();
-  }
-
-  @Test
-  void testOperationFailed_recordsErrorAndEndsSpan() {
-    Throwable error = new RuntimeException("fail");
-    tracer.operationFailed(error);
-    verify(operationHandle).recordError(error);
-    verify(operationHandle).end();
-  }
-
-  @Test
   void testAttemptLifecycle_startsAndEndsAttemptSpan() {
     when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
         .thenReturn(attemptHandle);
     tracer.attemptStarted(new Object(), 1);
     tracer.attemptSucceeded();
 
-    verify(attemptHandle).end();
-  }
-
-  @Test
-  void testAttemptCancelled_endsSpan() {
-    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
-        .thenReturn(attemptHandle);
-    tracer.attemptStarted(new Object(), 1);
-    tracer.attemptCancelled();
-
-    verify(attemptHandle).end();
-  }
-
-  @Test
-  void testAttemptFailedDuration_recordsErrorAndEndsSpan() {
-    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
-        .thenReturn(attemptHandle);
-    tracer.attemptStarted(new Object(), 1);
-
-    Throwable error = new RuntimeException("fail");
-    tracer.attemptFailedDuration(error, Duration.ofMillis(100));
-
-    verify(attemptHandle).recordError(error);
-    verify(attemptHandle).end();
-  }
-
-  @Test
-  void testAttemptFailedRetriesExhausted_recordsErrorAndEndsSpan() {
-    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
-        .thenReturn(attemptHandle);
-    tracer.attemptStarted(new Object(), 1);
-
-    Throwable error = new RuntimeException("fail");
-    tracer.attemptFailedRetriesExhausted(error);
-
-    verify(attemptHandle).recordError(error);
-    verify(attemptHandle).end();
-  }
-
-  @Test
-  void testAttemptPermanentFailure_recordsErrorAndEndsSpan() {
-    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
-        .thenReturn(attemptHandle);
-    tracer.attemptStarted(new Object(), 1);
-
-    Throwable error = new RuntimeException("fail");
-    tracer.attemptPermanentFailure(error);
-
-    verify(attemptHandle).recordError(error);
     verify(attemptHandle).end();
   }
 
