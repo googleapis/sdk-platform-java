@@ -44,8 +44,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class AppCentricTracerTest {
   @Mock private TraceRecorder recorder;
-  @Mock private TraceRecorder.GaxSpan operationHandle;
-  @Mock private TraceRecorder.GaxSpan attemptHandle;
+  @Mock private TraceRecorder.TraceSpan operationHandle;
+  @Mock private TraceRecorder.TraceSpan attemptHandle;
   private AppCentricTracer tracer;
   private static final String OPERATION_SPAN_NAME = "Service.Method/operation";
   private static final String ATTEMPT_SPAN_NAME = "Service/Method/attempt";

@@ -42,12 +42,12 @@ import java.util.Map;
 @InternalApi
 public interface TraceRecorder {
   /** Starts a span and returns a handle to manage its lifecycle. */
-  GaxSpan createSpan(String name, Map<String, String> attributes);
+  TraceSpan createSpan(String name, Map<String, String> attributes);
 
   /** Starts a span with a parent and returns a handle to manage its lifecycle. */
-  GaxSpan createSpan(String name, Map<String, String> attributes, GaxSpan parent);
+  TraceSpan createSpan(String name, Map<String, String> attributes, TraceSpan parent);
 
-  interface GaxSpan {
+  interface TraceSpan {
     void end();
   }
 }

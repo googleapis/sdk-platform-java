@@ -80,7 +80,7 @@ class OpenTelemetryTraceRecorderTest {
   @Test
   void testCreateSpan_attempt_isClient() {
     String spanName = "attempt-span";
-    TraceRecorder.GaxSpan parent = mock(TraceRecorder.GaxSpan.class);
+    TraceRecorder.TraceSpan parent = mock(TraceRecorder.TraceSpan.class);
 
     when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
     when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
@@ -101,7 +101,7 @@ class OpenTelemetryTraceRecorderTest {
     when(spanBuilder.setAttribute("key1", "value1")).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 
-    TraceRecorder.GaxSpan handle = recorder.createSpan(spanName, attributes);
+    TraceRecorder.TraceSpan handle = recorder.createSpan(spanName, attributes);
     handle.end();
 
     verify(span).end();

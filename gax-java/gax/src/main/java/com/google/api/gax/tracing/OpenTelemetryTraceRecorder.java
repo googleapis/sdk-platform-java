@@ -54,12 +54,12 @@ public class OpenTelemetryTraceRecorder implements TraceRecorder {
   }
 
   @Override
-  public GaxSpan createSpan(String name, Map<String, String> attributes) {
+  public TraceSpan createSpan(String name, Map<String, String> attributes) {
     return createSpan(name, attributes, null);
   }
 
   @Override
-  public GaxSpan createSpan(String name, Map<String, String> attributes, GaxSpan parent) {
+  public TraceSpan createSpan(String name, Map<String, String> attributes, TraceSpan parent) {
     SpanBuilder spanBuilder = tracer.spanBuilder(name);
 
     // Operation and Attempt spans are INTERNAL and CLIENT respectively.
@@ -73,19 +73,19 @@ public class OpenTelemetryTraceRecorder implements TraceRecorder {
       attributes.forEach((k, v) -> spanBuilder.setAttribute(k, v));
     }
 
-    if (parent instanceof OtelGaxSpan) {
-      spanBuilder.setParent(Context.current().with(((OtelGaxSpan) parent).span));
+    if (parent instanceof OtelTraceSpan) {
+      spanBuilder.setParent(Context.current().with(((OtelTraceSpan) parent).span));
     }
 
     Span span = spanBuilder.startSpan();
 
-    return new OtelGaxSpan(span);
+    return new OtelTraceSpan(span);
   }
 
-  private static class OtelGaxSpan implements GaxSpan {
+  private static class OtelTraceSpan implements TraceSpan {
     private final Span span;
 
-    private OtelGaxSpan(Span span) {
+    private OtelTraceSpan(Span span) {
       this.span = span;
     }
 

@@ -37,6 +37,8 @@ import java.util.Map;
 
 /**
  * An implementation of {@link ApiTracer} that uses a {@link TraceRecorder} to record traces.
+ * This implementation is agnostic to the specific {@link TraceRecorder} in order to allow extensions that interact
+ * with other backends.
  */
 @BetaApi
 @InternalApi
@@ -49,8 +51,8 @@ public class AppCentricTracer extends BaseApiTracer {
   private final TraceRecorder recorder;
   private final Map<String, String> attemptAttributes;
   private final String attemptSpanName;
-  private final TraceRecorder.GaxSpan operationHandle;
-  private TraceRecorder.GaxSpan attemptHandle;
+  private final TraceRecorder.TraceSpan operationHandle;
+  private TraceRecorder.TraceSpan attemptHandle;
 
   /**
    * Creates a new instance of {@code AppCentricTracer}.
