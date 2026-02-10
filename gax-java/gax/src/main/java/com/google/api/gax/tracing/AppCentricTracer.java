@@ -71,7 +71,7 @@ public class AppCentricTracer extends BaseApiTracer {
       Map<String, String> attemptAttributes) {
     this.recorder = recorder;
     this.attemptSpanName = attemptSpanName;
-    this.attemptAttributes = attemptAttributes;
+    this.attemptAttributes = new HashMap<>(attemptAttributes);
     this.attemptAttributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
 
     // Start the long-lived operation span.
