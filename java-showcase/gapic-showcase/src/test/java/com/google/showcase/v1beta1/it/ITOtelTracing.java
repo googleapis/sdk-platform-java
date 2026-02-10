@@ -36,7 +36,6 @@ import com.google.api.gax.tracing.ApiTracer;
 import com.google.api.gax.tracing.OpenTelemetryTracingRecorder;
 import com.google.api.gax.tracing.TracingTracer;
 import com.google.api.gax.tracing.TracingTracerFactory;
-import com.google.common.collect.ImmutableMap;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
@@ -51,7 +50,6 @@ import io.opentelemetry.sdk.trace.data.SpanData;
 import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -176,42 +174,6 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(TracingTracer.SERVER_ADDRESS_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_SERVER_ADDRESS);
-    }
-  }
-
-  @Test
-  void testTracing_withCustomAttributes() throws Exception {
-    Map<String, String> opAttributes = ImmutableMap.of("op-key", "op-value");
-    Map<String, String> atAttributes = ImmutableMap.of("at-key", "at-value");
-    TracingTracerFactory tracingFactory =
-        new TracingTracerFactory(
-            new OpenTelemetryTracingRecorder(openTelemetrySdk), opAttributes, atAttributes);
-
-    try (EchoClient client =
-        TestClientInitializer.createGrpcEchoClientOpentelemetry(tracingFactory)) {
-
-      client.echo(EchoRequest.newBuilder().setContent("attr-test").build());
-
-      List<SpanData> spans = waitForSpans(2);
-
-      SpanData operationSpan =
-          spans.stream()
-              .filter(span -> span.getName().equals("Echo.Echo/operation"))
-              .findFirst()
-              .orElseThrow(
-                  () -> new AssertionError("Operation span 'Echo/Echo/operation' not found"));
-      assertThat(operationSpan.getKind()).isEqualTo(SpanKind.INTERNAL);
-      assertThat(operationSpan.getAttributes().get(AttributeKey.stringKey("op-key")))
-          .isEqualTo("op-value");
-
-      SpanData attemptSpan =
-          spans.stream()
-              .filter(span -> span.getName().equals("Echo/Echo/attempt"))
-              .findFirst()
-              .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
-      assertThat(attemptSpan.getKind()).isEqualTo(SpanKind.CLIENT);
-      assertThat(attemptSpan.getAttributes().get(AttributeKey.stringKey("at-key")))
-          .isEqualTo("at-value");
     }
   }
 

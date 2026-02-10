@@ -32,7 +32,7 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.annotations.VisibleForTesting;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,16 +55,18 @@ public class TracingTracerFactory implements ApiTracerFactory {
   /** Mapping of client attributes that are set for every TracingTracer at attempt level */
   private final Map<String, String> attemptAttributes;
 
-  /** Creates a TracingTracerFactory with no additional client level attributes. */
+  /** Creates a TracingTracerFactory */
   public TracingTracerFactory(TracingRecorder tracingRecorder) {
-    this(tracingRecorder, ImmutableMap.of(), ImmutableMap.of());
+    this(tracingRecorder, new HashMap<>(), new HashMap<>());
   }
 
   /**
    * Pass in a Map of client level attributes which will be added to every single TracingTracer
-   * created from the ApiTracerFactory.
+   * created from the ApiTracerFactory. This is package private since span attributes are determined
+   * internally.
    */
-  public TracingTracerFactory(
+  @VisibleForTesting
+  TracingTracerFactory(
       TracingRecorder tracingRecorder,
       Map<String, String> operationAttributes,
       Map<String, String> attemptAttributes) {
