@@ -169,6 +169,11 @@ class ITOtelTracing {
       assertThat(
               attemptSpan
                   .getAttributes()
+                  .get(AttributeKey.stringKey(AppCentricTracer.LANGUAGE_ATTRIBUTE)))
+          .isEqualTo(AppCentricTracer.DEFAULT_LANGUAGE);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
                   .get(AttributeKey.stringKey(AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_SERVER_ADDRESS);
     }
