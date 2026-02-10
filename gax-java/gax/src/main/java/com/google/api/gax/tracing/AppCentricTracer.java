@@ -35,6 +35,9 @@ import com.google.api.core.InternalApi;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * An implementation of {@link ApiTracer} that uses a {@link TraceRecorder} to record traces.
+ */
 @BetaApi
 @InternalApi
 public class AppCentricTracer extends BaseApiTracer {
@@ -49,6 +52,15 @@ public class AppCentricTracer extends BaseApiTracer {
   private final TraceRecorder.GaxSpan operationHandle;
   private TraceRecorder.GaxSpan attemptHandle;
 
+  /**
+   * Creates a new instance of {@code AppCentricTracer}.
+   *
+   * @param recorder the {@link TraceRecorder} to use for recording spans
+   * @param operationSpanName the name of the long-lived operation span
+   * @param attemptSpanName the name of the individual attempt spans
+   * @param operationAttributes attributes to be added to the operation span
+   * @param attemptAttributes attributes to be added to each attempt span
+   */
   public AppCentricTracer(
       TraceRecorder recorder,
       String operationSpanName,
