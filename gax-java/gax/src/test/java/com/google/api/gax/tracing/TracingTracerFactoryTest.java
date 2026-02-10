@@ -50,7 +50,8 @@ class TracingTracerFactoryTest {
   @Test
   void testNewTracer_createsOpenTelemetryTracingTracer() {
     TracingRecorder recorder = mock(TracingRecorder.class);
-    when(recorder.startSpan(anyString(), anyMap())).thenReturn(mock(TracingRecorder.GaxSpan.class));
+    when(recorder.createSpan(anyString(), anyMap()))
+        .thenReturn(mock(TracingRecorder.GaxSpan.class));
 
     TracingTracerFactory factory = new TracingTracerFactory(recorder);
     ApiTracer tracer =
@@ -63,7 +64,7 @@ class TracingTracerFactoryTest {
   void testNewTracer_addsAttributes() {
     TracingRecorder recorder = mock(TracingRecorder.class);
     TracingRecorder.GaxSpan operationHandle = mock(TracingRecorder.GaxSpan.class);
-    when(recorder.startSpan(anyString(), anyMap())).thenReturn(operationHandle);
+    when(recorder.createSpan(anyString(), anyMap())).thenReturn(operationHandle);
 
     TracingTracerFactory factory =
         new TracingTracerFactory(
@@ -76,7 +77,7 @@ class TracingTracerFactoryTest {
 
     ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
     verify(recorder, atLeastOnce())
-        .startSpan(anyString(), attributesCaptor.capture(), eq(operationHandle));
+        .createSpan(anyString(), attributesCaptor.capture(), eq(operationHandle));
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes).containsEntry("server.port", "443");
@@ -86,7 +87,7 @@ class TracingTracerFactoryTest {
   void testWithContext_addsInferredAttributes() {
     TracingRecorder recorder = mock(TracingRecorder.class);
     TracingRecorder.GaxSpan operationHandle = mock(TracingRecorder.GaxSpan.class);
-    when(recorder.startSpan(anyString(), anyMap())).thenReturn(operationHandle);
+    when(recorder.createSpan(anyString(), anyMap())).thenReturn(operationHandle);
 
     EndpointContext endpointContext = mock(EndpointContext.class);
     when(endpointContext.resolvedServerAddress()).thenReturn("example.com");
@@ -105,7 +106,7 @@ class TracingTracerFactoryTest {
 
     ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
     verify(recorder, atLeastOnce())
-        .startSpan(anyString(), attributesCaptor.capture(), eq(operationHandle));
+        .createSpan(anyString(), attributesCaptor.capture(), eq(operationHandle));
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes)
@@ -116,7 +117,7 @@ class TracingTracerFactoryTest {
   void testWithContext_noEndpointContext_doesNotAddAttributes() {
     TracingRecorder recorder = mock(TracingRecorder.class);
     TracingRecorder.GaxSpan operationHandle = mock(TracingRecorder.GaxSpan.class);
-    when(recorder.startSpan(anyString(), anyMap())).thenReturn(operationHandle);
+    when(recorder.createSpan(anyString(), anyMap())).thenReturn(operationHandle);
 
     ApiTracerContext context = ApiTracerContext.newBuilder().build();
 
@@ -131,7 +132,7 @@ class TracingTracerFactoryTest {
 
     ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
     verify(recorder, atLeastOnce())
-        .startSpan(anyString(), attributesCaptor.capture(), eq(operationHandle));
+        .createSpan(anyString(), attributesCaptor.capture(), eq(operationHandle));
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes).doesNotContainKey(TracingTracer.SERVER_ADDRESS_ATTRIBUTE);

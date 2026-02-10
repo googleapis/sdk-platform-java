@@ -61,14 +61,14 @@ public class TracingTracer extends BaseApiTracer {
     this.attemptAttributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
 
     // Start the long-lived operation span.
-    this.operationHandle = recorder.startSpan(operationSpanName, operationAttributes);
+    this.operationHandle = recorder.createSpan(operationSpanName, operationAttributes);
   }
 
   @Override
   public void attemptStarted(Object request, int attemptNumber) {
     Map<String, String> attemptAttributes = new HashMap<>(this.attemptAttributes);
     // Start the specific attempt span with the operation span as parent
-    this.attemptHandle = recorder.startSpan(attemptSpanName, attemptAttributes, operationHandle);
+    this.attemptHandle = recorder.createSpan(attemptSpanName, attemptAttributes, operationHandle);
   }
 
   @Override

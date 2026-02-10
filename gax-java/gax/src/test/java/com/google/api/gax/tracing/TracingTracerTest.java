@@ -52,7 +52,7 @@ class TracingTracerTest {
 
   @BeforeEach
   void setUp() {
-    when(recorder.startSpan(eq(OPERATION_SPAN_NAME), anyMap())).thenReturn(operationHandle);
+    when(recorder.createSpan(eq(OPERATION_SPAN_NAME), anyMap())).thenReturn(operationHandle);
     tracer =
         new TracingTracer(
             recorder, OPERATION_SPAN_NAME, ATTEMPT_SPAN_NAME, new HashMap<>(), new HashMap<>());
@@ -66,7 +66,7 @@ class TracingTracerTest {
 
   @Test
   void testAttemptLifecycle_startsAndEndsAttemptSpan() {
-    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
         .thenReturn(attemptHandle);
     tracer.attemptStarted(new Object(), 1);
     tracer.attemptSucceeded();

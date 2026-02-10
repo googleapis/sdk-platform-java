@@ -54,12 +54,12 @@ public class OpenTelemetryTracingRecorder implements TracingRecorder {
   }
 
   @Override
-  public GaxSpan startSpan(String name, Map<String, String> attributes) {
-    return startSpan(name, attributes, null);
+  public GaxSpan createSpan(String name, Map<String, String> attributes) {
+    return createSpan(name, attributes, null);
   }
 
   @Override
-  public GaxSpan startSpan(String name, Map<String, String> attributes, GaxSpan parent) {
+  public GaxSpan createSpan(String name, Map<String, String> attributes, GaxSpan parent) {
     SpanBuilder spanBuilder = tracer.spanBuilder(name);
 
     // Operation and Attempt spans are INTERNAL and CLIENT respectively.

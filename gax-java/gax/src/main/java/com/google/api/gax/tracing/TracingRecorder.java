@@ -44,10 +44,10 @@ import java.util.Map;
 @InternalApi
 public interface TracingRecorder {
   /** Starts a span and returns a handle to manage its lifecycle. */
-  GaxSpan startSpan(String name, Map<String, String> attributes);
+  GaxSpan createSpan(String name, Map<String, String> attributes);
 
   /** Starts a span with a parent and returns a handle to manage its lifecycle. */
-  GaxSpan startSpan(String name, Map<String, String> attributes, GaxSpan parent);
+  GaxSpan createSpan(String name, Map<String, String> attributes, GaxSpan parent);
 
   interface GaxSpan {
     void end();

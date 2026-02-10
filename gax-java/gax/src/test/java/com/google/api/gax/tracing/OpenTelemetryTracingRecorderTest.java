@@ -66,19 +66,19 @@ class OpenTelemetryTracingRecorderTest {
   }
 
   @Test
-  void testStartSpan_operation_isInternal() {
+  void testCreateSpan_operation_isInternal() {
     String spanName = "operation-span";
     when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
     when(spanBuilder.setSpanKind(SpanKind.INTERNAL)).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 
-    recorder.startSpan(spanName, null);
+    recorder.createSpan(spanName, null);
 
     verify(spanBuilder).setSpanKind(SpanKind.INTERNAL);
   }
 
   @Test
-  void testStartSpan_attempt_isClient() {
+  void testCreateSpan_attempt_isClient() {
     String spanName = "attempt-span";
     TracingRecorder.GaxSpan parent = mock(TracingRecorder.GaxSpan.class);
 
@@ -86,13 +86,13 @@ class OpenTelemetryTracingRecorderTest {
     when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 
-    recorder.startSpan(spanName, null, parent);
+    recorder.createSpan(spanName, null, parent);
 
     verify(spanBuilder).setSpanKind(SpanKind.CLIENT);
   }
 
   @Test
-  void testStartSpan_recordsSpan() {
+  void testCreateSpan_recordsSpan() {
     String spanName = "test-span";
     Map<String, String> attributes = ImmutableMap.of("key1", "value1");
 
@@ -101,7 +101,7 @@ class OpenTelemetryTracingRecorderTest {
     when(spanBuilder.setAttribute("key1", "value1")).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 
-    TracingRecorder.GaxSpan handle = recorder.startSpan(spanName, attributes);
+    TracingRecorder.GaxSpan handle = recorder.createSpan(spanName, attributes);
     handle.end();
 
     verify(span).end();
