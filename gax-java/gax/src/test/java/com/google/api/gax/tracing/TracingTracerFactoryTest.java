@@ -39,7 +39,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.google.api.gax.rpc.EndpointContext;
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -89,11 +88,8 @@ class TracingTracerFactoryTest {
     TracingRecorder.GaxSpan operationHandle = mock(TracingRecorder.GaxSpan.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(operationHandle);
 
-    EndpointContext endpointContext = mock(EndpointContext.class);
-    when(endpointContext.resolvedServerAddress()).thenReturn("example.com");
-
     ApiTracerContext context =
-        ApiTracerContext.newBuilder().setEndpointContext(endpointContext).build();
+        ApiTracerContext.newBuilder().setServerAddress("example.com").build();
 
     TracingTracerFactory factory = new TracingTracerFactory(recorder);
     ApiTracerFactory factoryWithContext = factory.withContext(context);

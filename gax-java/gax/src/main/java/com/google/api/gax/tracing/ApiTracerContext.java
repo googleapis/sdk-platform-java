@@ -31,7 +31,6 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
-import com.google.api.gax.rpc.EndpointContext;
 import com.google.auto.value.AutoValue;
 import javax.annotation.Nullable;
 
@@ -46,7 +45,7 @@ import javax.annotation.Nullable;
 public abstract class ApiTracerContext {
 
   @Nullable
-  public abstract EndpointContext getEndpointContext();
+  public abstract String getServerAddress();
 
   public static Builder newBuilder() {
     return new AutoValue_ApiTracerContext.Builder();
@@ -54,7 +53,7 @@ public abstract class ApiTracerContext {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setEndpointContext(EndpointContext endpointContext);
+    public abstract Builder setServerAddress(String serverAddress);
 
     public abstract ApiTracerContext build();
   }

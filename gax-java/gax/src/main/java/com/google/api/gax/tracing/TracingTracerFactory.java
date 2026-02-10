@@ -97,10 +97,8 @@ public class TracingTracerFactory implements ApiTracerFactory {
   @Override
   public ApiTracerFactory withContext(ApiTracerContext context) {
     Map<String, String> newAttemptAttributes = new HashMap<>(this.attemptAttributes);
-    if (context.getEndpointContext() != null) {
-      newAttemptAttributes.put(
-          TracingTracer.SERVER_ADDRESS_ATTRIBUTE,
-          context.getEndpointContext().resolvedServerAddress());
+    if (context.getServerAddress() != null) {
+      newAttemptAttributes.put(TracingTracer.SERVER_ADDRESS_ATTRIBUTE, context.getServerAddress());
     }
     return new TracingTracerFactory(tracingRecorder, operationAttributes, newAttemptAttributes);
   }
