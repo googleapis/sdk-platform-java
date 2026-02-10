@@ -37,40 +37,40 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A {@link ApiTracerFactory} to build instances of {@link TracingTracer}.
+ * A {@link ApiTracerFactory} to build instances of {@link AppCentricTracer}.
  *
- * <p>This class wraps the {@link TracingRecorder} and pass it to {@link TracingTracer}. It will be
- * used to record traces in {@link TracingTracer}.
+ * <p>This class wraps the {@link TraceRecorder} and pass it to {@link AppCentricTracer}. It will be
+ * used to record traces in {@link AppCentricTracer}.
  *
  * <p>This class is expected to be initialized once during client initialization.
  */
 @BetaApi
 @InternalApi
-public class TracingTracerFactory implements ApiTracerFactory {
-  private final TracingRecorder tracingRecorder;
+public class AppCentricTracerFactory implements ApiTracerFactory {
+  private final TraceRecorder traceRecorder;
 
-  /** Mapping of client attributes that are set for every TracingTracer at operation level */
+  /** Mapping of client attributes that are set for every AppCentricTracer at operation level */
   private final Map<String, String> operationAttributes;
 
-  /** Mapping of client attributes that are set for every TracingTracer at attempt level */
+  /** Mapping of client attributes that are set for every AppCentricTracer at attempt level */
   private final Map<String, String> attemptAttributes;
 
-  /** Creates a TracingTracerFactory */
-  public TracingTracerFactory(TracingRecorder tracingRecorder) {
-    this(tracingRecorder, new HashMap<>(), new HashMap<>());
+  /** Creates a AppCentricTracerFactory */
+  public AppCentricTracerFactory(TraceRecorder traceRecorder) {
+    this(traceRecorder, new HashMap<>(), new HashMap<>());
   }
 
   /**
-   * Pass in a Map of client level attributes which will be added to every single TracingTracer
+   * Pass in a Map of client level attributes which will be added to every single AppCentricTracer
    * created from the ApiTracerFactory. This is package private since span attributes are determined
    * internally.
    */
   @VisibleForTesting
-  TracingTracerFactory(
-      TracingRecorder tracingRecorder,
+  AppCentricTracerFactory(
+      TraceRecorder traceRecorder,
       Map<String, String> operationAttributes,
       Map<String, String> attemptAttributes) {
-    this.tracingRecorder = tracingRecorder;
+    this.traceRecorder = traceRecorder;
 
     this.operationAttributes = new HashMap<>(operationAttributes);
     this.attemptAttributes = new HashMap<>(attemptAttributes);
@@ -84,22 +84,23 @@ public class TracingTracerFactory implements ApiTracerFactory {
         spanName.getClientName() + "." + spanName.getMethodName() + "/operation";
     String attemptSpanName = spanName.getClientName() + "/" + spanName.getMethodName() + "/attempt";
 
-    TracingTracer tracingTracer =
-        new TracingTracer(
-            tracingRecorder,
+    AppCentricTracer appCentricTracer =
+        new AppCentricTracer(
+            traceRecorder,
             operationSpanName,
             attemptSpanName,
             this.operationAttributes,
             this.attemptAttributes);
-    return tracingTracer;
+    return appCentricTracer;
   }
 
   @Override
   public ApiTracerFactory withContext(ApiTracerContext context) {
     Map<String, String> newAttemptAttributes = new HashMap<>(this.attemptAttributes);
     if (context.getServerAddress() != null) {
-      newAttemptAttributes.put(TracingTracer.SERVER_ADDRESS_ATTRIBUTE, context.getServerAddress());
+      newAttemptAttributes.put(
+          AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE, context.getServerAddress());
     }
-    return new TracingTracerFactory(tracingRecorder, operationAttributes, newAttemptAttributes);
+    return new AppCentricTracerFactory(traceRecorder, operationAttributes, newAttemptAttributes);
   }
 }

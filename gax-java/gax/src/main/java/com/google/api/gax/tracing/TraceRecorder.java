@@ -36,13 +36,11 @@ import java.util.Map;
 
 /**
  * Provides an interface for tracing recording. The implementer is expected to use an observability
- * framework, e.g. OpenTelemetry. There should be only one instance of TracingRecorder per client,
- * all the methods in this class are expected to be called from multiple threads, hence the
- * implementation must be thread safe.
+ * framework, e.g. OpenTelemetry. There should be only one instance of TraceRecorder per client.
  */
 @BetaApi
 @InternalApi
-public interface TracingRecorder {
+public interface TraceRecorder {
   /** Starts a span and returns a handle to manage its lifecycle. */
   GaxSpan createSpan(String name, Map<String, String> attributes);
 

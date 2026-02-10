@@ -42,11 +42,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class TracingTracerTest {
-  @Mock private TracingRecorder recorder;
-  @Mock private TracingRecorder.GaxSpan operationHandle;
-  @Mock private TracingRecorder.GaxSpan attemptHandle;
-  private TracingTracer tracer;
+class AppCentricTracerTest {
+  @Mock private TraceRecorder recorder;
+  @Mock private TraceRecorder.GaxSpan operationHandle;
+  @Mock private TraceRecorder.GaxSpan attemptHandle;
+  private AppCentricTracer tracer;
   private static final String OPERATION_SPAN_NAME = "Service.Method/operation";
   private static final String ATTEMPT_SPAN_NAME = "Service/Method/attempt";
 
@@ -54,7 +54,7 @@ class TracingTracerTest {
   void setUp() {
     when(recorder.createSpan(eq(OPERATION_SPAN_NAME), anyMap())).thenReturn(operationHandle);
     tracer =
-        new TracingTracer(
+        new AppCentricTracer(
             recorder, OPERATION_SPAN_NAME, ATTEMPT_SPAN_NAME, new HashMap<>(), new HashMap<>());
   }
 

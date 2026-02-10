@@ -32,9 +32,9 @@ package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import com.google.api.gax.tracing.OpenTelemetryTracingRecorder;
-import com.google.api.gax.tracing.TracingTracer;
-import com.google.api.gax.tracing.TracingTracerFactory;
+import com.google.api.gax.tracing.AppCentricTracer;
+import com.google.api.gax.tracing.AppCentricTracerFactory;
+import com.google.api.gax.tracing.OpenTelemetryTraceRecorder;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
@@ -103,8 +103,8 @@ class ITOtelTracing {
 
   @Test
   void testTracing_successfulEcho_grpc() throws Exception {
-    TracingTracerFactory tracingFactory =
-        new TracingTracerFactory(new OpenTelemetryTracingRecorder(openTelemetrySdk));
+    AppCentricTracerFactory tracingFactory =
+        new AppCentricTracerFactory(new OpenTelemetryTraceRecorder(openTelemetrySdk));
 
     try (EchoClient client =
         TestClientInitializer.createGrpcEchoClientOpentelemetry(tracingFactory)) {
@@ -130,20 +130,20 @@ class ITOtelTracing {
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(AttributeKey.stringKey(TracingTracer.LANGUAGE_ATTRIBUTE)))
-          .isEqualTo(TracingTracer.DEFAULT_LANGUAGE);
+                  .get(AttributeKey.stringKey(AppCentricTracer.LANGUAGE_ATTRIBUTE)))
+          .isEqualTo(AppCentricTracer.DEFAULT_LANGUAGE);
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(AttributeKey.stringKey(TracingTracer.SERVER_ADDRESS_ATTRIBUTE)))
+                  .get(AttributeKey.stringKey(AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_SERVER_ADDRESS);
     }
   }
 
   @Test
   void testTracing_successfulEcho_httpjson() throws Exception {
-    TracingTracerFactory tracingFactory =
-        new TracingTracerFactory(new OpenTelemetryTracingRecorder(openTelemetrySdk));
+    AppCentricTracerFactory tracingFactory =
+        new AppCentricTracerFactory(new OpenTelemetryTraceRecorder(openTelemetrySdk));
 
     try (EchoClient client =
         TestClientInitializer.createHttpJsonEchoClientOpentelemetry(tracingFactory)) {
@@ -169,7 +169,7 @@ class ITOtelTracing {
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(AttributeKey.stringKey(TracingTracer.SERVER_ADDRESS_ATTRIBUTE)))
+                  .get(AttributeKey.stringKey(AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_SERVER_ADDRESS);
     }
   }

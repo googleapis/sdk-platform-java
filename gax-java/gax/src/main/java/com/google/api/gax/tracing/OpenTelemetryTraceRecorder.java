@@ -32,59 +32,66 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import java.util.HashMap;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.SpanBuilder;
+import io.opentelemetry.api.trace.SpanKind;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Context;
 import java.util.Map;
 
+/**
+ * OpenTelemetry implementation of recording traces. This implementation collects the measurements
+ * related to the lifecyle of an RPC.
+ */
 @BetaApi
 @InternalApi
-public class TracingTracer extends BaseApiTracer {
-  public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
-  public static final String LANGUAGE_ATTRIBUTE = "gcp.client.language";
+public class OpenTelemetryTraceRecorder implements TraceRecorder {
+  private final Tracer tracer;
 
-  public static final String DEFAULT_LANGUAGE = "Java";
-
-  private final TracingRecorder recorder;
-  private final Map<String, String> attemptAttributes;
-  private final String attemptSpanName;
-  private final TracingRecorder.GaxSpan operationHandle;
-  private TracingRecorder.GaxSpan attemptHandle;
-
-  public TracingTracer(
-      TracingRecorder recorder,
-      String operationSpanName,
-      String attemptSpanName,
-      Map<String, String> operationAttributes,
-      Map<String, String> attemptAttributes) {
-    this.recorder = recorder;
-    this.attemptSpanName = attemptSpanName;
-    this.attemptAttributes = attemptAttributes;
-    this.attemptAttributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
-
-    // Start the long-lived operation span.
-    this.operationHandle = recorder.createSpan(operationSpanName, operationAttributes);
+  public OpenTelemetryTraceRecorder(OpenTelemetry openTelemetry) {
+    this.tracer = openTelemetry.getTracer("gax-java");
   }
 
   @Override
-  public void attemptStarted(Object request, int attemptNumber) {
-    Map<String, String> attemptAttributes = new HashMap<>(this.attemptAttributes);
-    // Start the specific attempt span with the operation span as parent
-    this.attemptHandle = recorder.createSpan(attemptSpanName, attemptAttributes, operationHandle);
+  public GaxSpan createSpan(String name, Map<String, String> attributes) {
+    return createSpan(name, attributes, null);
   }
 
   @Override
-  public void attemptSucceeded() {
-    endAttempt();
-  }
+  public GaxSpan createSpan(String name, Map<String, String> attributes, GaxSpan parent) {
+    SpanBuilder spanBuilder = tracer.spanBuilder(name);
 
-  private void endAttempt() {
-    if (attemptHandle != null) {
-      attemptHandle.end();
-      attemptHandle = null;
+    // Operation and Attempt spans are INTERNAL and CLIENT respectively.
+    if (parent == null) {
+      spanBuilder.setSpanKind(SpanKind.INTERNAL);
+    } else {
+      spanBuilder.setSpanKind(SpanKind.CLIENT);
     }
+
+    if (attributes != null) {
+      attributes.forEach((k, v) -> spanBuilder.setAttribute(k, v));
+    }
+
+    if (parent instanceof OtelGaxSpan) {
+      spanBuilder.setParent(Context.current().with(((OtelGaxSpan) parent).span));
+    }
+
+    Span span = spanBuilder.startSpan();
+
+    return new OtelGaxSpan(span);
   }
 
-  @Override
-  public void operationSucceeded() {
-    operationHandle.end();
+  private static class OtelGaxSpan implements GaxSpan {
+    private final Span span;
+
+    private OtelGaxSpan(Span span) {
+      this.span = span;
+    }
+
+    @Override
+    public void end() {
+      span.end();
+    }
   }
 }

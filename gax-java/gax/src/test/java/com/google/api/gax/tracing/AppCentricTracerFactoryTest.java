@@ -44,29 +44,28 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-class TracingTracerFactoryTest {
+class AppCentricTracerFactoryTest {
 
   @Test
   void testNewTracer_createsOpenTelemetryTracingTracer() {
-    TracingRecorder recorder = mock(TracingRecorder.class);
-    when(recorder.createSpan(anyString(), anyMap()))
-        .thenReturn(mock(TracingRecorder.GaxSpan.class));
+    TraceRecorder recorder = mock(TraceRecorder.class);
+    when(recorder.createSpan(anyString(), anyMap())).thenReturn(mock(TraceRecorder.GaxSpan.class));
 
-    TracingTracerFactory factory = new TracingTracerFactory(recorder);
+    AppCentricTracerFactory factory = new AppCentricTracerFactory(recorder);
     ApiTracer tracer =
         factory.newTracer(
             null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
-    assertThat(tracer).isInstanceOf(TracingTracer.class);
+    assertThat(tracer).isInstanceOf(AppCentricTracer.class);
   }
 
   @Test
   void testNewTracer_addsAttributes() {
-    TracingRecorder recorder = mock(TracingRecorder.class);
-    TracingRecorder.GaxSpan operationHandle = mock(TracingRecorder.GaxSpan.class);
+    TraceRecorder recorder = mock(TraceRecorder.class);
+    TraceRecorder.GaxSpan operationHandle = mock(TraceRecorder.GaxSpan.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(operationHandle);
 
-    TracingTracerFactory factory =
-        new TracingTracerFactory(
+    AppCentricTracerFactory factory =
+        new AppCentricTracerFactory(
             recorder, ImmutableMap.of(), ImmutableMap.of("server.port", "443"));
     ApiTracer tracer =
         factory.newTracer(
@@ -84,14 +83,14 @@ class TracingTracerFactoryTest {
 
   @Test
   void testWithContext_addsInferredAttributes() {
-    TracingRecorder recorder = mock(TracingRecorder.class);
-    TracingRecorder.GaxSpan operationHandle = mock(TracingRecorder.GaxSpan.class);
+    TraceRecorder recorder = mock(TraceRecorder.class);
+    TraceRecorder.GaxSpan operationHandle = mock(TraceRecorder.GaxSpan.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(operationHandle);
 
     ApiTracerContext context =
         ApiTracerContext.newBuilder().setServerAddress("example.com").build();
 
-    TracingTracerFactory factory = new TracingTracerFactory(recorder);
+    AppCentricTracerFactory factory = new AppCentricTracerFactory(recorder);
     ApiTracerFactory factoryWithContext = factory.withContext(context);
 
     ApiTracer tracer =
@@ -106,18 +105,18 @@ class TracingTracerFactoryTest {
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes)
-        .containsEntry(TracingTracer.SERVER_ADDRESS_ATTRIBUTE, "example.com");
+        .containsEntry(AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE, "example.com");
   }
 
   @Test
   void testWithContext_noEndpointContext_doesNotAddAttributes() {
-    TracingRecorder recorder = mock(TracingRecorder.class);
-    TracingRecorder.GaxSpan operationHandle = mock(TracingRecorder.GaxSpan.class);
+    TraceRecorder recorder = mock(TraceRecorder.class);
+    TraceRecorder.GaxSpan operationHandle = mock(TraceRecorder.GaxSpan.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(operationHandle);
 
     ApiTracerContext context = ApiTracerContext.newBuilder().build();
 
-    TracingTracerFactory factory = new TracingTracerFactory(recorder);
+    AppCentricTracerFactory factory = new AppCentricTracerFactory(recorder);
     ApiTracerFactory factoryWithContext = factory.withContext(context);
 
     ApiTracer tracer =
@@ -131,6 +130,6 @@ class TracingTracerFactoryTest {
         .createSpan(anyString(), attributesCaptor.capture(), eq(operationHandle));
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
-    assertThat(attemptAttributes).doesNotContainKey(TracingTracer.SERVER_ADDRESS_ATTRIBUTE);
+    assertThat(attemptAttributes).doesNotContainKey(AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE);
   }
 }

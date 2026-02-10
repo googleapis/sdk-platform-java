@@ -50,19 +50,19 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class OpenTelemetryTracingRecorderTest {
+class OpenTelemetryTraceRecorderTest {
   @Mock private OpenTelemetry openTelemetry;
   @Mock private Tracer tracer;
   @Mock private SpanBuilder spanBuilder;
   @Mock private Span span;
   @Mock private Scope scope;
 
-  private OpenTelemetryTracingRecorder recorder;
+  private OpenTelemetryTraceRecorder recorder;
 
   @BeforeEach
   void setUp() {
     when(openTelemetry.getTracer(anyString())).thenReturn(tracer);
-    recorder = new OpenTelemetryTracingRecorder(openTelemetry);
+    recorder = new OpenTelemetryTraceRecorder(openTelemetry);
   }
 
   @Test
@@ -80,7 +80,7 @@ class OpenTelemetryTracingRecorderTest {
   @Test
   void testCreateSpan_attempt_isClient() {
     String spanName = "attempt-span";
-    TracingRecorder.GaxSpan parent = mock(TracingRecorder.GaxSpan.class);
+    TraceRecorder.GaxSpan parent = mock(TraceRecorder.GaxSpan.class);
 
     when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
     when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
@@ -101,7 +101,7 @@ class OpenTelemetryTracingRecorderTest {
     when(spanBuilder.setAttribute("key1", "value1")).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 
-    TracingRecorder.GaxSpan handle = recorder.createSpan(spanName, attributes);
+    TraceRecorder.GaxSpan handle = recorder.createSpan(spanName, attributes);
     handle.end();
 
     verify(span).end();
