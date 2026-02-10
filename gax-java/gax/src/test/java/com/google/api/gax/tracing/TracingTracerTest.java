@@ -29,14 +29,11 @@
  */
 package com.google.api.gax.tracing;
 
-import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.google.api.gax.tracing.ApiTracer.Scope;
 import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -75,25 +72,5 @@ class TracingTracerTest {
     tracer.attemptSucceeded();
 
     verify(attemptHandle).end();
-  }
-
-  @Test
-  void testInScope_returnsOperationScopeWhenNoAttempt() {
-    Scope scope = mock(Scope.class);
-    when(recorder.inScope(operationHandle)).thenReturn(scope);
-
-    assertThat(tracer.inScope()).isEqualTo(scope);
-  }
-
-  @Test
-  void testInScope_returnsAttemptScopeWhenAttemptInProgress() {
-    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
-        .thenReturn(attemptHandle);
-    tracer.attemptStarted(new Object(), 1);
-
-    Scope scope = mock(Scope.class);
-    when(recorder.inScope(attemptHandle)).thenReturn(scope);
-
-    assertThat(tracer.inScope()).isEqualTo(scope);
   }
 }

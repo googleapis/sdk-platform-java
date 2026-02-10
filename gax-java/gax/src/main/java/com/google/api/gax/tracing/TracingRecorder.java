@@ -49,15 +49,6 @@ public interface TracingRecorder {
   /** Starts a span with a parent and returns a handle to manage its lifecycle. */
   GaxSpan startSpan(String name, Map<String, String> attributes, GaxSpan parent);
 
-  /**
-   * Installs the span into the current thread-local context.
-   *
-   * @return a scope that must be closed to remove the span from the context.
-   */
-  default ApiTracer.Scope inScope(GaxSpan handle) {
-    return () -> {};
-  }
-
   interface GaxSpan {
     void end();
   }

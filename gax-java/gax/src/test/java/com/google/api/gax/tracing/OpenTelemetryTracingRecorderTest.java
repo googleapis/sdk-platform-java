@@ -106,21 +106,4 @@ class OpenTelemetryTracingRecorderTest {
 
     verify(span).end();
   }
-
-  @Test
-  void testInScope_managesContext() {
-    String spanName = "test-span";
-    when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
-    when(spanBuilder.setSpanKind(SpanKind.INTERNAL)).thenReturn(spanBuilder);
-    when(spanBuilder.startSpan()).thenReturn(span);
-    when(span.makeCurrent()).thenReturn(scope);
-
-    TracingRecorder.GaxSpan handle = recorder.startSpan(spanName, null);
-    try (ApiTracer.Scope ignored = recorder.inScope(handle)) {
-      // do nothing
-    }
-
-    verify(span).makeCurrent();
-    verify(scope).close();
-  }
 }

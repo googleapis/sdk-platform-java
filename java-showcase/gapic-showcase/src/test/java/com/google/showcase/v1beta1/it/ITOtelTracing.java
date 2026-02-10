@@ -32,7 +32,6 @@ package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import com.google.api.gax.tracing.ApiTracer;
 import com.google.api.gax.tracing.OpenTelemetryTracingRecorder;
 import com.google.api.gax.tracing.TracingTracer;
 import com.google.api.gax.tracing.TracingTracerFactory;
@@ -41,14 +40,12 @@ import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import io.opentelemetry.api.GlobalOpenTelemetry;
 import io.opentelemetry.api.common.AttributeKey;
-import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.testing.exporter.InMemorySpanExporter;
 import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import io.opentelemetry.sdk.trace.data.SpanData;
 import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
-import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -175,31 +172,5 @@ class ITOtelTracing {
                   .get(AttributeKey.stringKey(TracingTracer.SERVER_ADDRESS_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_SERVER_ADDRESS);
     }
-  }
-
-  /**
-   * Confirms that the current span as per Otel context is only valid when the inScope method is
-   * called. More detailedly, this is to confirm gax thread management, which uses the inScope()
-   * method, correctly brings the selected span into the context.
-   */
-  @Test
-  void testInScope_managesOtelContext() {
-    OpenTelemetryTracingRecorder recorder = new OpenTelemetryTracingRecorder(openTelemetrySdk);
-    TracingTracer tracer =
-        new TracingTracer(
-            recorder, "operation-span", "attempt-span", new HashMap<>(), new HashMap<>());
-
-    // Initially, there should be no current span
-    assertThat(Span.current().getSpanContext().isValid()).isFalse();
-
-    try (ApiTracer.Scope ignored = tracer.inScope()) {
-      // Inside the scope, the current span should be the operation span
-      assertThat(Span.current().getSpanContext().isValid()).isTrue();
-      // We can't easily check the name of the current span in OTel without more complex setup,
-      // but we can verify it's active.
-    }
-
-    // After the scope is closed, there should be no current span again
-    assertThat(Span.current().getSpanContext().isValid()).isFalse();
   }
 }
