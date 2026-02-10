@@ -30,6 +30,8 @@
 
 package com.google.showcase.v1beta1.it;
 
+import static org.junit.Assert.assertThrows;
+
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
@@ -68,15 +70,9 @@ import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
 import io.opentelemetry.sdk.metrics.data.Data;
 import io.opentelemetry.sdk.metrics.data.HistogramPointData;
-import io.opentelemetry.sdk.metrics.data.LongPointData;
 import io.opentelemetry.sdk.metrics.data.MetricData;
 import io.opentelemetry.sdk.metrics.data.PointData;
 import io.opentelemetry.sdk.testing.exporter.InMemoryMetricReader;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,8 +84,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import static org.junit.Assert.assertThrows;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Showcase Test to confirm that metrics are being collected and that the correct metrics are being
@@ -143,8 +141,7 @@ class ITAppCentricMetrics {
     }
   }
 
-  private MetricsRecorder createOtelMetricsRecorder(
-      InMemoryMetricReader inMemoryMetricReader) {
+  private MetricsRecorder createOtelMetricsRecorder(InMemoryMetricReader inMemoryMetricReader) {
     SdkMeterProvider sdkMeterProvider =
         SdkMeterProvider.builder().registerMetricReader(inMemoryMetricReader).build();
 
@@ -156,8 +153,7 @@ class ITAppCentricMetrics {
   @BeforeEach
   void setup() throws Exception {
     inMemoryMetricReader = InMemoryMetricReader.create();
-    MetricsRecorder otelMetricsRecorder =
-        createOtelMetricsRecorder(inMemoryMetricReader);
+    MetricsRecorder otelMetricsRecorder = createOtelMetricsRecorder(inMemoryMetricReader);
     grpcClient =
         TestClientInitializer.createGrpcEchoClientOpentelemetry(
             new MetricsTracerFactory(otelMetricsRecorder));
@@ -223,7 +219,9 @@ class ITAppCentricMetrics {
   private void verifyDefaultMetricsAttributes(
       List<MetricData> metricDataList, Map<String, String> defaultAttributeMapping) {
     Optional<MetricData> metricDataOptional =
-        metricDataList.stream().filter(x -> x.getName().equals("gcp.client.request.duration")).findAny();
+        metricDataList.stream()
+            .filter(x -> x.getName().equals("gcp.client.request.duration"))
+            .findAny();
     Truth.assertThat(metricDataOptional.isPresent()).isTrue();
     MetricData operationCountMetricData = metricDataOptional.get();
 
@@ -249,7 +247,9 @@ class ITAppCentricMetrics {
   private void verifyStatusAttribute(
       List<MetricData> metricDataList, List<StatusCount> statusCountList) {
     Optional<MetricData> metricDataOptional =
-        metricDataList.stream().filter(x -> x.getName().equals("gcp.client.request.duration")).findAny();
+        metricDataList.stream()
+            .filter(x -> x.getName().equals("gcp.client.request.duration"))
+            .findAny();
     Truth.assertThat(metricDataOptional.isPresent()).isTrue();
     MetricData attemptCountMetricData = metricDataOptional.get();
 
@@ -318,8 +318,8 @@ class ITAppCentricMetrics {
             "Echo.Echo",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE,
-                "gcp.client.service",
-                SERVICE_NAME);
+            "gcp.client.service",
+            SERVICE_NAME);
     verifyDefaultMetricsAttributes(actualMetricDataList, expectedAttributes);
 
     List<StatusCount> statusCountList = ImmutableList.of(new StatusCount(Code.OK));
@@ -798,8 +798,7 @@ class ITAppCentricMetrics {
     customAttributes.put(randomAttributeKey2, randomAttributeValue2);
 
     InMemoryMetricReader inMemoryMetricReader = InMemoryMetricReader.create();
-    MetricsRecorder otelMetricsRecorder =
-        createOtelMetricsRecorder(inMemoryMetricReader);
+    MetricsRecorder otelMetricsRecorder = createOtelMetricsRecorder(inMemoryMetricReader);
     MetricsTracerFactory metricsTracerFactory =
         new MetricsTracerFactory(otelMetricsRecorder, customAttributes);
 
