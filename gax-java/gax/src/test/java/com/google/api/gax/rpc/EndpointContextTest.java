@@ -619,5 +619,23 @@ class EndpointContextTest {
             .setTransportChannelProviderEndpoint(null)
             .build();
     Truth.assertThat(endpointContext.resolvedServerAddress()).isEqualTo("test.googleapis.com");
+
+    // IPv6 literal with port
+    endpoint = "[2001:db8::1]:443";
+    endpointContext =
+        defaultEndpointContextBuilder
+            .setClientSettingsEndpoint(endpoint)
+            .setTransportChannelProviderEndpoint(null)
+            .build();
+    Truth.assertThat(endpointContext.resolvedServerAddress()).isEqualTo("2001:db8::1");
+
+    // Bare IPv6 literal (no port)
+    endpoint = "2001:db8::1";
+    endpointContext =
+        defaultEndpointContextBuilder
+            .setClientSettingsEndpoint(endpoint)
+            .setTransportChannelProviderEndpoint(null)
+            .build();
+    Truth.assertThat(endpointContext.resolvedServerAddress()).isEqualTo("2001:db8::1");
   }
 }

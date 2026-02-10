@@ -40,9 +40,8 @@ import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
+import com.google.common.net.HostAndPort;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
@@ -389,23 +388,19 @@ public abstract class EndpointContext {
     }
 
     private String parseServerAddress(String endpoint) {
+      if (Strings.isNullOrEmpty(endpoint)) {
+        return endpoint;
+      }
+      String hostPort = endpoint;
+      if (hostPort.contains("://")) {
+        // Strip the scheme if present. HostAndPort doesn't support schemes.
+        hostPort = hostPort.substring(hostPort.indexOf("://") + 3);
+      }
       try {
-        String urlString = endpoint;
-        if (!urlString.contains("://")) {
-          urlString = "http://" + urlString;
-        }
-        return new URL(urlString).getHost();
-      } catch (MalformedURLException e) {
-        // Fallback for cases URL can't handle.
-        int colonPortIndex = endpoint.lastIndexOf(':');
-        int doubleSlashIndex = endpoint.lastIndexOf("//");
-        if (colonPortIndex == -1) {
-          return endpoint;
-        }
-        if (doubleSlashIndex != -1 && doubleSlashIndex < colonPortIndex) {
-          return endpoint.substring(doubleSlashIndex + 2, colonPortIndex);
-        }
-        return endpoint.substring(0, colonPortIndex);
+        return HostAndPort.fromString(hostPort).getHost();
+      } catch (IllegalArgumentException e) {
+        // Fallback for cases HostAndPort can't handle.
+        return hostPort;
       }
     }
 
