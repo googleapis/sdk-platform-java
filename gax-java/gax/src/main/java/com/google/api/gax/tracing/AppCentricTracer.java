@@ -36,9 +36,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * An implementation of {@link ApiTracer} that uses a {@link TraceRecorder} to record traces.
- * This implementation is agnostic to the specific {@link TraceRecorder} in order to allow extensions that interact
- * with other backends.
+ * An implementation of {@link ApiTracer} that uses a {@link TraceRecorder} to record traces. This
+ * implementation is agnostic to the specific {@link TraceRecorder} in order to allow extensions
+ * that interact with other backends.
  */
 @BetaApi
 @InternalApi

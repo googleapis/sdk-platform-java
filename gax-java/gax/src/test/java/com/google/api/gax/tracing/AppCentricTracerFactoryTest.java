@@ -49,7 +49,8 @@ class AppCentricTracerFactoryTest {
   @Test
   void testNewTracer_createsOpenTelemetryTracingTracer() {
     TraceRecorder recorder = mock(TraceRecorder.class);
-    when(recorder.createSpan(anyString(), anyMap())).thenReturn(mock(TraceRecorder.TraceSpan.class));
+    when(recorder.createSpan(anyString(), anyMap()))
+        .thenReturn(mock(TraceRecorder.TraceSpan.class));
 
     AppCentricTracerFactory factory = new AppCentricTracerFactory(recorder);
     ApiTracer tracer =
