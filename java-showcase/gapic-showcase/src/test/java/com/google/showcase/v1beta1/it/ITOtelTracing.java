@@ -49,6 +49,7 @@ import io.opentelemetry.sdk.testing.exporter.InMemorySpanExporter;
 import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import io.opentelemetry.sdk.trace.data.SpanData;
 import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
@@ -222,7 +223,9 @@ class ITOtelTracing {
   @Test
   void testInScope_managesOtelContext() {
     OpenTelemetryTracingRecorder recorder = new OpenTelemetryTracingRecorder(openTelemetrySdk);
-    TracingTracer tracer = new TracingTracer(recorder, "operation-span", "attempt-span");
+    TracingTracer tracer =
+        new TracingTracer(
+            recorder, "operation-span", "attempt-span", new HashMap<>(), new HashMap<>());
 
     // Initially, there should be no current span
     assertThat(Span.current().getSpanContext().isValid()).isFalse();

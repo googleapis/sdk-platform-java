@@ -50,8 +50,7 @@ class TracingTracerFactoryTest {
   @Test
   void testNewTracer_createsOpenTelemetryTracingTracer() {
     TracingRecorder recorder = mock(TracingRecorder.class);
-    when(recorder.startSpan(anyString(), anyMap()))
-        .thenReturn(mock(TracingRecorder.SpanHandle.class));
+    when(recorder.startSpan(anyString(), anyMap())).thenReturn(mock(TracingRecorder.GaxSpan.class));
 
     TracingTracerFactory factory = new TracingTracerFactory(recorder);
     ApiTracer tracer =
@@ -63,7 +62,7 @@ class TracingTracerFactoryTest {
   @Test
   void testNewTracer_addsAttributes() {
     TracingRecorder recorder = mock(TracingRecorder.class);
-    TracingRecorder.SpanHandle operationHandle = mock(TracingRecorder.SpanHandle.class);
+    TracingRecorder.GaxSpan operationHandle = mock(TracingRecorder.GaxSpan.class);
     when(recorder.startSpan(anyString(), anyMap())).thenReturn(operationHandle);
 
     TracingTracerFactory factory =
@@ -86,7 +85,7 @@ class TracingTracerFactoryTest {
   @Test
   void testWithContext_addsInferredAttributes() {
     TracingRecorder recorder = mock(TracingRecorder.class);
-    TracingRecorder.SpanHandle operationHandle = mock(TracingRecorder.SpanHandle.class);
+    TracingRecorder.GaxSpan operationHandle = mock(TracingRecorder.GaxSpan.class);
     when(recorder.startSpan(anyString(), anyMap())).thenReturn(operationHandle);
 
     EndpointContext endpointContext = mock(EndpointContext.class);
@@ -116,7 +115,7 @@ class TracingTracerFactoryTest {
   @Test
   void testWithContext_noEndpointContext_doesNotAddAttributes() {
     TracingRecorder recorder = mock(TracingRecorder.class);
-    TracingRecorder.SpanHandle operationHandle = mock(TracingRecorder.SpanHandle.class);
+    TracingRecorder.GaxSpan operationHandle = mock(TracingRecorder.GaxSpan.class);
     when(recorder.startSpan(anyString(), anyMap())).thenReturn(operationHandle);
 
     ApiTracerContext context = ApiTracerContext.newBuilder().build();

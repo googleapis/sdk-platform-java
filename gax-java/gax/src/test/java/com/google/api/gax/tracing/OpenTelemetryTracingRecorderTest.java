@@ -40,7 +40,6 @@ import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanBuilder;
 import io.opentelemetry.api.trace.SpanKind;
-import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Scope;
 import java.util.Map;
@@ -81,7 +80,7 @@ class OpenTelemetryTracingRecorderTest {
   @Test
   void testStartSpan_attempt_isClient() {
     String spanName = "attempt-span";
-    TracingRecorder.SpanHandle parent = mock(TracingRecorder.SpanHandle.class);
+    TracingRecorder.GaxSpan parent = mock(TracingRecorder.GaxSpan.class);
 
     when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
     when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
@@ -102,7 +101,7 @@ class OpenTelemetryTracingRecorderTest {
     when(spanBuilder.setAttribute("key1", "value1")).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 
-    TracingRecorder.SpanHandle handle = recorder.startSpan(spanName, attributes);
+    TracingRecorder.GaxSpan handle = recorder.startSpan(spanName, attributes);
     handle.end();
 
     verify(span).end();
@@ -116,28 +115,12 @@ class OpenTelemetryTracingRecorderTest {
     when(spanBuilder.startSpan()).thenReturn(span);
     when(span.makeCurrent()).thenReturn(scope);
 
-    TracingRecorder.SpanHandle handle = recorder.startSpan(spanName, null);
+    TracingRecorder.GaxSpan handle = recorder.startSpan(spanName, null);
     try (ApiTracer.Scope ignored = recorder.inScope(handle)) {
       // do nothing
     }
 
     verify(span).makeCurrent();
     verify(scope).close();
-  }
-
-  @Test
-  void testRecordError_setsErrorStatus() {
-    String spanName = "error-span";
-    Throwable error = new RuntimeException("test error");
-
-    when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
-    when(spanBuilder.setSpanKind(SpanKind.INTERNAL)).thenReturn(spanBuilder);
-    when(spanBuilder.startSpan()).thenReturn(span);
-
-    TracingRecorder.SpanHandle handle = recorder.startSpan(spanName, null);
-    handle.recordError(error);
-
-    verify(span).recordException(error);
-    verify(span).setStatus(StatusCode.ERROR);
   }
 }

@@ -34,7 +34,6 @@ import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @BetaApi
 @InternalApi
@@ -45,17 +44,20 @@ public class TracingTracer extends BaseApiTracer {
   public static final String DEFAULT_LANGUAGE = "Java";
 
   private final TracingRecorder recorder;
-  private final Map<String, String> operationAttributes;
   private final Map<String, String> attemptAttributes;
   private final String attemptSpanName;
-  private final TracingRecorder.SpanHandle operationHandle;
-  private TracingRecorder.SpanHandle attemptHandle;
+  private final TracingRecorder.GaxSpan operationHandle;
+  private TracingRecorder.GaxSpan attemptHandle;
 
-  public TracingTracer(TracingRecorder recorder, String operationSpanName, String attemptSpanName) {
+  public TracingTracer(
+      TracingRecorder recorder,
+      String operationSpanName,
+      String attemptSpanName,
+      Map<String, String> operationAttributes,
+      Map<String, String> attemptAttributes) {
     this.recorder = recorder;
     this.attemptSpanName = attemptSpanName;
-    this.operationAttributes = new ConcurrentHashMap<>();
-    this.attemptAttributes = new ConcurrentHashMap<>();
+    this.attemptAttributes = attemptAttributes;
     this.attemptAttributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
 
     // Start the long-lived operation span.
@@ -94,19 +96,5 @@ public class TracingTracer extends BaseApiTracer {
   @Override
   public void operationSucceeded() {
     operationHandle.end();
-  }
-
-  public void addOperationAttributes(Map<String, String> attributes) {
-    this.operationAttributes.putAll(attributes);
-    if (operationHandle != null) {
-      attributes.forEach((k, v) -> operationHandle.setAttribute(k, v));
-    }
-  }
-
-  public void addAttemptAttributes(Map<String, String> attributes) {
-    this.attemptAttributes.putAll(attributes);
-    if (attemptHandle != null) {
-      attributes.forEach((k, v) -> attemptHandle.setAttribute(k, v));
-    }
   }
 }

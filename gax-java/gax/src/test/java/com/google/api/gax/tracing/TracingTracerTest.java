@@ -37,21 +37,18 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.google.api.gax.tracing.ApiTracer.Scope;
-import com.google.common.collect.ImmutableMap;
-import java.time.Duration;
-import java.util.Map;
+import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class TracingTracerTest {
   @Mock private TracingRecorder recorder;
-  @Mock private TracingRecorder.SpanHandle operationHandle;
-  @Mock private TracingRecorder.SpanHandle attemptHandle;
+  @Mock private TracingRecorder.GaxSpan operationHandle;
+  @Mock private TracingRecorder.GaxSpan attemptHandle;
   private TracingTracer tracer;
   private static final String OPERATION_SPAN_NAME = "Service.Method/operation";
   private static final String ATTEMPT_SPAN_NAME = "Service/Method/attempt";
@@ -59,7 +56,9 @@ class TracingTracerTest {
   @BeforeEach
   void setUp() {
     when(recorder.startSpan(eq(OPERATION_SPAN_NAME), anyMap())).thenReturn(operationHandle);
-    tracer = new TracingTracer(recorder, OPERATION_SPAN_NAME, ATTEMPT_SPAN_NAME);
+    tracer =
+        new TracingTracer(
+            recorder, OPERATION_SPAN_NAME, ATTEMPT_SPAN_NAME, new HashMap<>(), new HashMap<>());
   }
 
   @Test
@@ -96,39 +95,5 @@ class TracingTracerTest {
     when(recorder.inScope(attemptHandle)).thenReturn(scope);
 
     assertThat(tracer.inScope()).isEqualTo(scope);
-  }
-
-  @Test
-  void testAddOperationAttributes_passedToOperationSpan() {
-    tracer.addOperationAttributes(ImmutableMap.of("op-key", "op-value"));
-    verify(operationHandle).setAttribute("op-key", "op-value");
-  }
-
-  @Test
-  void testAddAttemptAttributes_passedToAttemptSpan() {
-    tracer.addAttemptAttributes(ImmutableMap.of("attempt-key", "attempt-value"));
-
-    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
-        .thenReturn(attemptHandle);
-    tracer.attemptStarted(new Object(), 1);
-
-    ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(recorder)
-        .startSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture(), eq(operationHandle));
-
-    Map<String, String> capturedAttributes = attributesCaptor.getValue();
-    assertThat(capturedAttributes).containsEntry("attempt-key", "attempt-value");
-    assertThat(capturedAttributes)
-        .containsEntry(TracingTracer.LANGUAGE_ATTRIBUTE, TracingTracer.DEFAULT_LANGUAGE);
-  }
-
-  @Test
-  void testAddAttemptAttributes_updatesActiveAttemptSpan() {
-    when(recorder.startSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
-        .thenReturn(attemptHandle);
-    tracer.attemptStarted(new Object(), 1);
-
-    tracer.addAttemptAttributes(ImmutableMap.of("late-key", "late-value"));
-    verify(attemptHandle).setAttribute("late-key", "late-value");
   }
 }

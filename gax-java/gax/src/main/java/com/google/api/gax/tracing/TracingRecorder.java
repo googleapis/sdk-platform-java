@@ -44,25 +44,21 @@ import java.util.Map;
 @InternalApi
 public interface TracingRecorder {
   /** Starts a span and returns a handle to manage its lifecycle. */
-  SpanHandle startSpan(String name, Map<String, String> attributes);
+  GaxSpan startSpan(String name, Map<String, String> attributes);
 
   /** Starts a span with a parent and returns a handle to manage its lifecycle. */
-  SpanHandle startSpan(String name, Map<String, String> attributes, SpanHandle parent);
+  GaxSpan startSpan(String name, Map<String, String> attributes, GaxSpan parent);
 
   /**
    * Installs the span into the current thread-local context.
    *
    * @return a scope that must be closed to remove the span from the context.
    */
-  default ApiTracer.Scope inScope(SpanHandle handle) {
+  default ApiTracer.Scope inScope(GaxSpan handle) {
     return () -> {};
   }
 
-  interface SpanHandle {
+  interface GaxSpan {
     void end();
-
-    void recordError(Throwable error);
-
-    void setAttribute(String key, String value);
   }
 }

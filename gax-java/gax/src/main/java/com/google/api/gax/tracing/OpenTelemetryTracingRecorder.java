@@ -36,7 +36,6 @@ import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanBuilder;
 import io.opentelemetry.api.trace.SpanKind;
-import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Context;
 import io.opentelemetry.context.Scope;
@@ -56,12 +55,12 @@ public class OpenTelemetryTracingRecorder implements TracingRecorder {
   }
 
   @Override
-  public SpanHandle startSpan(String name, Map<String, String> attributes) {
+  public GaxSpan startSpan(String name, Map<String, String> attributes) {
     return startSpan(name, attributes, null);
   }
 
   @Override
-  public SpanHandle startSpan(String name, Map<String, String> attributes, SpanHandle parent) {
+  public GaxSpan startSpan(String name, Map<String, String> attributes, GaxSpan parent) {
     SpanBuilder spanBuilder = tracer.spanBuilder(name);
 
     // Operation and Attempt spans are INTERNAL and CLIENT respectively.
@@ -75,46 +74,35 @@ public class OpenTelemetryTracingRecorder implements TracingRecorder {
       attributes.forEach((k, v) -> spanBuilder.setAttribute(k, v));
     }
 
-    if (parent instanceof OtelSpanHandle) {
-      spanBuilder.setParent(Context.current().with(((OtelSpanHandle) parent).span));
+    if (parent instanceof OtelGaxSpan) {
+      spanBuilder.setParent(Context.current().with(((OtelGaxSpan) parent).span));
     }
 
     Span span = spanBuilder.startSpan();
 
-    return new OtelSpanHandle(span);
+    return new OtelGaxSpan(span);
   }
 
   @Override
   @SuppressWarnings("MustBeClosedChecker")
-  public ApiTracer.Scope inScope(SpanHandle handle) {
-    if (handle instanceof OtelSpanHandle) {
-      Scope scope = ((OtelSpanHandle) handle).span.makeCurrent();
+  public ApiTracer.Scope inScope(GaxSpan handle) {
+    if (handle instanceof OtelGaxSpan) {
+      Scope scope = ((OtelGaxSpan) handle).span.makeCurrent();
       return scope::close;
     }
     return () -> {};
   }
 
-  private static class OtelSpanHandle implements SpanHandle {
+  private static class OtelGaxSpan implements GaxSpan {
     private final Span span;
 
-    private OtelSpanHandle(Span span) {
+    private OtelGaxSpan(Span span) {
       this.span = span;
     }
 
     @Override
     public void end() {
       span.end();
-    }
-
-    @Override
-    public void recordError(Throwable error) {
-      span.recordException(error);
-      span.setStatus(StatusCode.ERROR);
-    }
-
-    @Override
-    public void setAttribute(String key, String value) {
-      span.setAttribute(key, value);
     }
   }
 }

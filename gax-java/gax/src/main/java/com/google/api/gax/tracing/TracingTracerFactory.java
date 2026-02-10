@@ -70,8 +70,8 @@ public class TracingTracerFactory implements ApiTracerFactory {
       Map<String, String> attemptAttributes) {
     this.tracingRecorder = tracingRecorder;
 
-    this.operationAttributes = ImmutableMap.copyOf(operationAttributes);
-    this.attemptAttributes = ImmutableMap.copyOf(attemptAttributes);
+    this.operationAttributes = new HashMap<>(operationAttributes);
+    this.attemptAttributes = new HashMap<>(attemptAttributes);
   }
 
   @Override
@@ -83,9 +83,12 @@ public class TracingTracerFactory implements ApiTracerFactory {
     String attemptSpanName = spanName.getClientName() + "/" + spanName.getMethodName() + "/attempt";
 
     TracingTracer tracingTracer =
-        new TracingTracer(tracingRecorder, operationSpanName, attemptSpanName);
-    tracingTracer.addOperationAttributes(operationAttributes);
-    tracingTracer.addAttemptAttributes(attemptAttributes);
+        new TracingTracer(
+            tracingRecorder,
+            operationSpanName,
+            attemptSpanName,
+            this.operationAttributes,
+            this.attemptAttributes);
     return tracingTracer;
   }
 
