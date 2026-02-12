@@ -43,7 +43,6 @@ import java.util.Map;
 @BetaApi
 @InternalApi
 public class AppCentricTracer implements ApiTracer {
-  public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
   public static final String LANGUAGE_ATTRIBUTE = "gcp.client.language";
 
   public static final String DEFAULT_LANGUAGE = "Java";

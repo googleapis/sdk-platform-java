@@ -68,12 +68,12 @@ class OpenTelemetryTraceRecorderTest {
   void testCreateSpan_operation_isInternal() {
     String spanName = "operation-span";
     when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
-    when(spanBuilder.setSpanKind(SpanKind.INTERNAL)).thenReturn(spanBuilder);
+    when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 
     recorder.createSpan(spanName, null);
 
-    verify(spanBuilder).setSpanKind(SpanKind.INTERNAL);
+    verify(spanBuilder).setSpanKind(SpanKind.CLIENT);
   }
 
   @Test
@@ -81,12 +81,12 @@ class OpenTelemetryTraceRecorderTest {
     String spanName = "attempt-span";
 
     when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
-    when(spanBuilder.setSpanKind(SpanKind.INTERNAL)).thenReturn(spanBuilder);
+    when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 
     recorder.createSpan(spanName, null);
 
-    verify(spanBuilder).setSpanKind(SpanKind.INTERNAL);
+    verify(spanBuilder).setSpanKind(SpanKind.CLIENT);
   }
 
   @Test
@@ -95,7 +95,7 @@ class OpenTelemetryTraceRecorderTest {
     Map<String, String> attributes = ImmutableMap.of("key1", "value1");
 
     when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
-    when(spanBuilder.setSpanKind(SpanKind.INTERNAL)).thenReturn(spanBuilder);
+    when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
     when(spanBuilder.setAttribute("key1", "value1")).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 

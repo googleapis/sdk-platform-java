@@ -103,7 +103,7 @@ class AppCentricTracerFactoryTest {
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes)
-        .containsEntry(AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE, "example.com");
+        .containsEntry(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, "example.com");
   }
 
   @Test
@@ -127,6 +127,6 @@ class AppCentricTracerFactoryTest {
     verify(recorder, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
-    assertThat(attemptAttributes).doesNotContainKey(AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE);
+    assertThat(attemptAttributes).doesNotContainKey(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE);
   }
 }

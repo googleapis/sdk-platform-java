@@ -30,54 +30,31 @@
 
 package com.google.api.gax.tracing;
 
-import com.google.api.core.BetaApi;
-import com.google.api.core.InternalApi;
-import io.opentelemetry.api.OpenTelemetry;
-import io.opentelemetry.api.trace.Span;
-import io.opentelemetry.api.trace.SpanBuilder;
-import io.opentelemetry.api.trace.SpanKind;
-import io.opentelemetry.api.trace.Tracer;
+import static com.google.common.truth.Truth.assertThat;
+
 import java.util.Map;
+import org.junit.jupiter.api.Test;
 
-/**
- * OpenTelemetry implementation of recording traces. This implementation collects the measurements
- * related to the lifecyle of an RPC.
- */
-@BetaApi
-@InternalApi
-public class OpenTelemetryTraceRecorder implements TraceRecorder {
-  private final Tracer tracer;
+class AppCentricAttributesTest {
 
-  public OpenTelemetryTraceRecorder(OpenTelemetry openTelemetry) {
-    this.tracer = openTelemetry.getTracer("gax-java");
+  @Test
+  void testGetAttemptAttributes_serverAddress() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder().setServerAddress("test-address").build();
+
+    Map<String, String> attributes = AppCentricAttributes.getAttemptAttributes(context);
+
+    assertThat(attributes).hasSize(1);
+    assertThat(attributes)
+        .containsEntry(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, "test-address");
   }
 
-  @Override
-  public TraceSpan createSpan(String name, Map<String, String> attributes) {
-    SpanBuilder spanBuilder = tracer.spanBuilder(name);
+  @Test
+  void testGetAttemptAttributes_nonePresent() {
+    ApiTracerContext context = ApiTracerContext.newBuilder().build();
 
-    // Attempt spans are of the CLIENT kind
-    spanBuilder.setSpanKind(SpanKind.CLIENT);
+    Map<String, String> attributes = AppCentricAttributes.getAttemptAttributes(context);
 
-    if (attributes != null) {
-      attributes.forEach((k, v) -> spanBuilder.setAttribute(k, v));
-    }
-
-    Span span = spanBuilder.startSpan();
-
-    return new OtelTraceSpan(span);
-  }
-
-  private static class OtelTraceSpan implements TraceSpan {
-    private final Span span;
-
-    private OtelTraceSpan(Span span) {
-      this.span = span;
-    }
-
-    @Override
-    public void end() {
-      span.end();
-    }
+    assertThat(attributes).isEmpty();
   }
 }

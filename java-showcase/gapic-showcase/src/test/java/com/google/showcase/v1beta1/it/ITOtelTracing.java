@@ -32,6 +32,7 @@ package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import com.google.api.gax.tracing.AppCentricAttributes;
 import com.google.api.gax.tracing.AppCentricTracer;
 import com.google.api.gax.tracing.AppCentricTracerFactory;
 import com.google.api.gax.tracing.OpenTelemetryTraceRecorder;
@@ -105,7 +106,7 @@ class ITOtelTracing {
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(AttributeKey.stringKey(AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE)))
+                  .get(AttributeKey.stringKey(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_SERVER_ADDRESS);
     }
   }
@@ -137,7 +138,7 @@ class ITOtelTracing {
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(AttributeKey.stringKey(AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE)))
+                  .get(AttributeKey.stringKey(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_SERVER_ADDRESS);
     }
   }

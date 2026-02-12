@@ -30,54 +30,35 @@
 
 package com.google.api.gax.tracing;
 
-import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import io.opentelemetry.api.OpenTelemetry;
-import io.opentelemetry.api.trace.Span;
-import io.opentelemetry.api.trace.SpanBuilder;
-import io.opentelemetry.api.trace.SpanKind;
-import io.opentelemetry.api.trace.Tracer;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
- * OpenTelemetry implementation of recording traces. This implementation collects the measurements
- * related to the lifecyle of an RPC.
+ * Utility class for providing common attributes used in app-centric observability.
+ *
+ * <p>This class extracts information from {@link ApiTracerContext} and maps it to standardized
+ * attribute keys that are expected by {@link ApiTracerFactory} implementations that conform to
+ * app-centric observability
+ *
+ * <p>For internal use only.
  */
-@BetaApi
 @InternalApi
-public class OpenTelemetryTraceRecorder implements TraceRecorder {
-  private final Tracer tracer;
+public class AppCentricAttributes {
+  /** The address of the server being called (e.g., "pubsub.googleapis.com"). */
+  public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
 
-  public OpenTelemetryTraceRecorder(OpenTelemetry openTelemetry) {
-    this.tracer = openTelemetry.getTracer("gax-java");
-  }
-
-  @Override
-  public TraceSpan createSpan(String name, Map<String, String> attributes) {
-    SpanBuilder spanBuilder = tracer.spanBuilder(name);
-
-    // Attempt spans are of the CLIENT kind
-    spanBuilder.setSpanKind(SpanKind.CLIENT);
-
-    if (attributes != null) {
-      attributes.forEach((k, v) -> spanBuilder.setAttribute(k, v));
+  /**
+   * Extracts attempt-level attributes from the provided {@link ApiTracerContext}.
+   *
+   * @param context the context containing information about the current API call
+   * @return a map of attributes to be included in attempt-level spans
+   */
+  public static Map<String, String> getAttemptAttributes(ApiTracerContext context) {
+    Map<String, String> attributes = new HashMap<>();
+    if (context.getServerAddress() != null) {
+      attributes.put(SERVER_ADDRESS_ATTRIBUTE, context.getServerAddress());
     }
-
-    Span span = spanBuilder.startSpan();
-
-    return new OtelTraceSpan(span);
-  }
-
-  private static class OtelTraceSpan implements TraceSpan {
-    private final Span span;
-
-    private OtelTraceSpan(Span span) {
-      this.span = span;
-    }
-
-    @Override
-    public void end() {
-      span.end();
-    }
+    return attributes;
   }
 }
