@@ -61,6 +61,8 @@ PR_URLS_4x=(
 )
 
 function processPRs() {
+    LATEST_VERSION="$1"
+    shift
     pushd "/tmp"
     PR_URLS=("$@")
     # Loop through all PR URLs defined in the PR_URLS array.
@@ -110,7 +112,7 @@ function processPRs() {
         git merge -m "Merge branch 'main' into PR #$PR_NUMBER to update" -X ours origin/main
 
         echo "Updating protobuf version if applicable..."
-        "$SCRIPT_DIR/fetch_latest_protobuf.sh"
+        "$SCRIPT_DIR/update_kokoro_protobuf.sh" "$LATEST_VERSION"
 
         if ! git diff --quiet; then
             echo "Committing protobuf version update..."
@@ -138,6 +140,10 @@ function processPRs() {
     popd
 }
 
+echo "Fetching latest 4.x protobuf version..."
+LATEST_VERSION=$("$SCRIPT_DIR/get_latest_protobuf_version.sh")
+echo "Latest version is: $LATEST_VERSION"
+
 echo "Running for all 4.x Protobuf PRs..."
-processPRs "${PR_URLS_4x[@]}"
+processPRs "$LATEST_VERSION" "${PR_URLS_4x[@]}"
 echo "-----------------------------------------"
