@@ -89,7 +89,7 @@ class AppCentricTracerFactoryTest {
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(operationHandle);
 
     ApiTracerContext context =
-        ApiTracerContext.newBuilder().setServerAddress("example.com").build();
+        ApiTracerContext.newBuilder().setServerAddress("example.com").setRepo("my-repo").build();
 
     AppCentricTracerFactory factory = new AppCentricTracerFactory(recorder);
     ApiTracerFactory factoryWithContext = factory.withContext(context);
@@ -107,6 +107,7 @@ class AppCentricTracerFactoryTest {
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes)
         .containsEntry(AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE, "example.com");
+    assertThat(attemptAttributes).containsEntry(AppCentricTracer.REPO_ATTRIBUTE, "my-repo");
   }
 
   @Test
@@ -115,7 +116,7 @@ class AppCentricTracerFactoryTest {
     TraceRecorder.TraceSpan operationHandle = mock(TraceRecorder.TraceSpan.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(operationHandle);
 
-    ApiTracerContext context = ApiTracerContext.newBuilder().build();
+    ApiTracerContext context = ApiTracerContext.newBuilder(null).build();
 
     AppCentricTracerFactory factory = new AppCentricTracerFactory(recorder);
     ApiTracerFactory factoryWithContext = factory.withContext(context);
@@ -132,5 +133,6 @@ class AppCentricTracerFactoryTest {
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes).doesNotContainKey(AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE);
+    assertThat(attemptAttributes).doesNotContainKey(AppCentricTracer.REPO_ATTRIBUTE);
   }
 }

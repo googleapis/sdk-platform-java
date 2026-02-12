@@ -29,15 +29,18 @@
  */
 package com.google.api.gax.tracing;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -72,5 +75,29 @@ class AppCentricTracerTest {
     tracer.attemptSucceeded();
 
     verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptStarted_includesRepoAttribute() {
+    Map<String, String> attemptAttributes = new HashMap<>();
+    attemptAttributes.put(AppCentricTracer.REPO_ATTRIBUTE, "test-repo");
+
+    tracer =
+        new AppCentricTracer(
+            recorder, OPERATION_SPAN_NAME, ATTEMPT_SPAN_NAME, new HashMap<>(), attemptAttributes);
+
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
+        .thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
+    verify(recorder)
+        .createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture(), eq(operationHandle));
+
+    assertThat(attributesCaptor.getValue())
+        .containsEntry(AppCentricTracer.REPO_ATTRIBUTE, "test-repo");
+    assertThat(attributesCaptor.getValue())
+        .containsEntry(AppCentricTracer.LANGUAGE_ATTRIBUTE, AppCentricTracer.DEFAULT_LANGUAGE);
   }
 }
