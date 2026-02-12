@@ -37,7 +37,6 @@ import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanBuilder;
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Context;
 import java.util.Map;
 
 /**
@@ -55,26 +54,13 @@ public class OpenTelemetryTraceRecorder implements TraceRecorder {
 
   @Override
   public TraceSpan createSpan(String name, Map<String, String> attributes) {
-    return createSpan(name, attributes, null);
-  }
-
-  @Override
-  public TraceSpan createSpan(String name, Map<String, String> attributes, TraceSpan parent) {
     SpanBuilder spanBuilder = tracer.spanBuilder(name);
 
-    // Operation and Attempt spans are INTERNAL and CLIENT respectively.
-    if (parent == null) {
-      spanBuilder.setSpanKind(SpanKind.INTERNAL);
-    } else {
-      spanBuilder.setSpanKind(SpanKind.CLIENT);
-    }
+    // Attempt spans are INTERNAL
+    spanBuilder.setSpanKind(SpanKind.INTERNAL);
 
     if (attributes != null) {
       attributes.forEach((k, v) -> spanBuilder.setAttribute(k, v));
-    }
-
-    if (parent instanceof OtelTraceSpan) {
-      spanBuilder.setParent(Context.current().with(((OtelTraceSpan) parent).span));
     }
 
     Span span = spanBuilder.startSpan();

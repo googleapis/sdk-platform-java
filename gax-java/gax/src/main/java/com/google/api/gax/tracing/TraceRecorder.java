@@ -44,9 +44,6 @@ public interface TraceRecorder {
   /** Starts a span and returns a handle to manage its lifecycle. */
   TraceSpan createSpan(String name, Map<String, String> attributes);
 
-  /** Starts a span with a parent and returns a handle to manage its lifecycle. */
-  TraceSpan createSpan(String name, Map<String, String> attributes, TraceSpan parent);
-
   interface TraceSpan {
     void end();
   }

@@ -31,7 +31,6 @@
 package com.google.api.gax.tracing;
 
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -80,15 +79,14 @@ class OpenTelemetryTraceRecorderTest {
   @Test
   void testCreateSpan_attempt_isClient() {
     String spanName = "attempt-span";
-    TraceRecorder.TraceSpan parent = mock(TraceRecorder.TraceSpan.class);
 
     when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
-    when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
+    when(spanBuilder.setSpanKind(SpanKind.INTERNAL)).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 
-    recorder.createSpan(spanName, null, parent);
+    recorder.createSpan(spanName, null);
 
-    verify(spanBuilder).setSpanKind(SpanKind.CLIENT);
+    verify(spanBuilder).setSpanKind(SpanKind.INTERNAL);
   }
 
   @Test

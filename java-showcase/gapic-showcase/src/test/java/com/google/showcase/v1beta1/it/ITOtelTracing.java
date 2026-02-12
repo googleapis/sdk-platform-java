@@ -48,7 +48,6 @@ import io.opentelemetry.sdk.trace.data.SpanData;
 import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -79,28 +78,6 @@ class ITOtelTracing {
     GlobalOpenTelemetry.resetForTest();
   }
 
-  /**
-   * The {@link com.google.api.gax.tracing.TracedUnaryCallable} implementation uses a callback
-   * approach to report the operation has been completed. That may cause a slight delay between
-   * client.echo(...) and the availability of the operation span (as opposed to attemptSuceeeded()
-   * which is reported immediately). This method waits for up to 50ms for the callback to take
-   * effect.
-   *
-   * @param expectedSpans number of flattened spans to be expected
-   * @return list of spans
-   */
-  private List<SpanData> waitForSpans(int expectedSpans) throws InterruptedException {
-    for (int i = 0; i < 10; i++) {
-      List<SpanData> spans = spanExporter.getFinishedSpanItems();
-      if (spans.size() == expectedSpans) {
-        return spans;
-      }
-      Thread.sleep(5);
-    }
-    Assertions.fail("Timed out waiting for spans");
-    return null;
-  }
-
   @Test
   void testTracing_successfulEcho_grpc() throws Exception {
     AppCentricTracerFactory tracingFactory =
@@ -111,15 +88,8 @@ class ITOtelTracing {
 
       client.echo(EchoRequest.newBuilder().setContent("tracing-test").build());
 
-      List<SpanData> spans = waitForSpans(2);
+      List<SpanData> spans = spanExporter.getFinishedSpanItems();
       assertThat(spans).isNotEmpty();
-
-      SpanData operationSpan =
-          spans.stream()
-              .filter(span -> span.getName().equals("Echo.Echo/operation"))
-              .findFirst()
-              .orElseThrow(() -> new AssertionError("Operation span not found"));
-      assertThat(operationSpan.getKind()).isEqualTo(SpanKind.INTERNAL);
 
       SpanData attemptSpan =
           spans.stream()
@@ -150,15 +120,8 @@ class ITOtelTracing {
 
       client.echo(EchoRequest.newBuilder().setContent("tracing-test").build());
 
-      List<SpanData> spans = waitForSpans(2);
+      List<SpanData> spans = spanExporter.getFinishedSpanItems();
       assertThat(spans).isNotEmpty();
-
-      SpanData operationSpan =
-          spans.stream()
-              .filter(span -> span.getName().equals("google.showcase.v1beta1.Echo/Echo/operation"))
-              .findFirst()
-              .orElseThrow(() -> new AssertionError("Operation span not found"));
-      assertThat(operationSpan.getKind()).isEqualTo(SpanKind.INTERNAL);
 
       SpanData attemptSpan =
           spans.stream()

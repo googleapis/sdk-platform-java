@@ -29,48 +29,52 @@
  */
 package com.google.api.gax.tracing;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class AppCentricTracerTest {
   @Mock private TraceRecorder recorder;
-  @Mock private TraceRecorder.TraceSpan operationHandle;
   @Mock private TraceRecorder.TraceSpan attemptHandle;
   private AppCentricTracer tracer;
-  private static final String OPERATION_SPAN_NAME = "Service.Method/operation";
   private static final String ATTEMPT_SPAN_NAME = "Service/Method/attempt";
 
   @BeforeEach
   void setUp() {
-    when(recorder.createSpan(eq(OPERATION_SPAN_NAME), anyMap())).thenReturn(operationHandle);
-    tracer =
-        new AppCentricTracer(
-            recorder, OPERATION_SPAN_NAME, ATTEMPT_SPAN_NAME, new HashMap<>(), new HashMap<>());
-  }
-
-  @Test
-  void testOperationSucceeded_endsSpan() {
-    tracer.operationSucceeded();
-    verify(operationHandle).end();
+    tracer = new AppCentricTracer(recorder, ATTEMPT_SPAN_NAME, new HashMap<>());
   }
 
   @Test
   void testAttemptLifecycle_startsAndEndsAttemptSpan() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
-        .thenReturn(attemptHandle);
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
     tracer.attemptStarted(new Object(), 1);
     tracer.attemptSucceeded();
 
     verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptStarted_includesLanguageAttribute() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
+    verify(recorder).createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
+
+    assertThat(attributesCaptor.getValue())
+        .containsEntry(AppCentricTracer.LANGUAGE_ATTRIBUTE, AppCentricTracer.DEFAULT_LANGUAGE);
   }
 }
