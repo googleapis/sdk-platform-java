@@ -71,6 +71,7 @@ public class Writer {
 
     writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
     writeReflectConfigFile(gapicPackageInfo.packageInfo().pakkage(), reflectConfigInfo, jos);
+    writeGapicPropertiesFile(context, jos);
 
     jos.finish();
     jos.flush();
@@ -210,6 +211,22 @@ public class Writer {
         throw new GapicWriterException("Could not write gapic_metadata.json", e);
       }
     }
+  }
+
+  @VisibleForTesting
+  static void writeGapicPropertiesFile(GapicContext context, JarOutputStream jos) {
+    context
+        .repo()
+        .ifPresent(
+            repo -> {
+              JarEntry jarEntry = new JarEntry("src/main/resources/gapic.properties");
+              try {
+                jos.putNextEntry(jarEntry);
+                jos.write(String.format("repo=%s\n", repo).getBytes(StandardCharsets.UTF_8));
+              } catch (IOException e) {
+                throw new GapicWriterException("Could not write repo file", e);
+              }
+            });
   }
 
   private static String getPath(String pakkage, String className) {

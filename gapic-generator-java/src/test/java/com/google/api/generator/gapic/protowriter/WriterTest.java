@@ -16,6 +16,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,6 +26,7 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Optional;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
@@ -143,5 +145,27 @@ class WriterTest {
             Collections.emptyList(),
             "temp-codegen.srcjar");
     assertNull(result);
+  }
+
+  @Test
+  void writeRepoFile_isWritten() throws IOException {
+    String repo = "googleapis/sdk-platform-java";
+    GapicContext context = GapicContext.EMPTY.toBuilder().setRepo(Optional.of(repo)).build();
+    Writer.writeGapicPropertiesFile(context, jarOutputStream);
+
+    closeJarOutputStream();
+
+    try (JarFile jarFile = new JarFile(file)) {
+      Enumeration<JarEntry> entries = jarFile.entries();
+      assertThat(entries.hasMoreElements()).isTrue();
+      JarEntry entry = entries.nextElement();
+      assertThat(entries.hasMoreElements()).isFalse();
+      assertEquals("src/main/resources/gapic.properties", entry.getName());
+      try (BufferedReader reader =
+          new BufferedReader(new InputStreamReader(jarFile.getInputStream(entry)))) {
+        String line = reader.readLine();
+        assertEquals("repo=" + repo, line);
+      }
+    }
   }
 }
