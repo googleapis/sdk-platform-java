@@ -40,25 +40,11 @@ fi
 # Main Logic
 # -----------------------------------------------------------------------------
 
-# Hardcoded list of downstream PRs testing Protobuf 4.29.x Compatibility
-PR_URLS_429=(
-    "https://github.com/googleapis/java-bigtable/pull/2614"
-    "https://github.com/googleapis/java-bigquery/pull/3867"
-    "https://github.com/googleapis/java-bigquerystorage/pull/3030"
-    "https://github.com/googleapis/java-datastore/pull/1900"
-    "https://github.com/googleapis/java-firestore/pull/2165"
-    "https://github.com/googleapis/java-logging/pull/1825"
-    "https://github.com/googleapis/java-logging-logback/pull/1492"
-    "https://github.com/googleapis/java-pubsub/pull/2470"
-    "https://github.com/googleapis/java-pubsublite/pull/1889"
-    "https://github.com/googleapis/java-spanner/pull/3928"
-    "https://github.com/googleapis/java-spanner-jdbc/pull/2113"
-    "https://github.com/googleapis/java-storage/pull/3178"
-    "https://github.com/googleapis/java-storage-nio/pull/1612"
-)
+# Get the directory of this script so we can reference helper scripts reliably
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 
-# Hardcoded list of downstream PRs testing Protobuf 4.31.x Compatibility
-PR_URLS_431=(
+# Hardcoded list of downstream PRs testing latest Protobuf 4.x Compatibility
+PR_URLS_4x=(
     "https://github.com/googleapis/java-bigtable/pull/2663"
     "https://github.com/googleapis/java-bigquery/pull/3942"
     "https://github.com/googleapis/java-bigquerystorage/pull/3083"
@@ -123,6 +109,17 @@ function processPRs() {
         # current branch (your PR branch).
         git merge -m "Merge branch 'main' into PR #$PR_NUMBER to update" -X ours origin/main
 
+        echo "Updating protobuf version if applicable..."
+        "$SCRIPT_DIR/fetch_latest_protobuf.sh"
+
+        if ! git diff --quiet; then
+            echo "Committing protobuf version update..."
+            git add .kokoro/build.sh
+            git commit -m "chore: update protobuf-java version to latest"
+        else
+            echo "No protobuf version changes required."
+        fi
+
         echo "Pushing updated branch to remote..."
         git push
 
@@ -141,9 +138,6 @@ function processPRs() {
     popd
 }
 
-echo "Running for all 4.29 Protobuf PRs..."
-processPRs "${PR_URLS_429[@]}"
-echo "-----------------------------------------"
-echo "Running for all 4.31 Protobuf PRs..."
-processPRs "${PR_URLS_431[@]}"
+echo "Running for all 4.x Protobuf PRs..."
+processPRs "${PR_URLS_4x[@]}"
 echo "-----------------------------------------"
