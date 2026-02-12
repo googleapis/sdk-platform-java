@@ -78,29 +78,19 @@ public class AppCentricTracerFactory implements ApiTracerFactory {
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    // TODO(diegomarquezp): these are placeholders for span names and will be adjusted as the
+    // TODO(diegomarquezp): this is a placeholder for span names and will be adjusted as the
     // feature is developed.
-    String operationSpanName =
-        spanName.getClientName() + "." + spanName.getMethodName() + "/operation";
     String attemptSpanName = spanName.getClientName() + "/" + spanName.getMethodName() + "/attempt";
 
     AppCentricTracer appCentricTracer =
-        new AppCentricTracer(
-            traceRecorder,
-            operationSpanName,
-            attemptSpanName,
-            this.operationAttributes,
-            this.attemptAttributes);
+        new AppCentricTracer(traceRecorder, attemptSpanName, this.attemptAttributes);
     return appCentricTracer;
   }
 
   @Override
   public ApiTracerFactory withContext(ApiTracerContext context) {
     Map<String, String> newAttemptAttributes = new HashMap<>(this.attemptAttributes);
-    if (context.getServerAddress() != null) {
-      newAttemptAttributes.put(
-          AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE, context.getServerAddress());
-    }
+    newAttemptAttributes.putAll(AppCentricAttributes.getAttemptAttributes(context));
     if (context.getRepo() != null) {
       newAttemptAttributes.put(AppCentricTracer.REPO_ATTRIBUTE, context.getRepo());
     }

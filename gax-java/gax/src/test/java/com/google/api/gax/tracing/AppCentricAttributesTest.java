@@ -30,21 +30,31 @@
 
 package com.google.api.gax.tracing;
 
-import com.google.api.core.BetaApi;
-import com.google.api.core.InternalApi;
+import static com.google.common.truth.Truth.assertThat;
+
 import java.util.Map;
+import org.junit.jupiter.api.Test;
 
-/**
- * Provides an interface for tracing recording. The implementer is expected to use an observability
- * framework, e.g. OpenTelemetry. There should be only one instance of TraceRecorder per client.
- */
-@BetaApi
-@InternalApi
-public interface TraceRecorder {
-  /** Starts a span and returns a handle to manage its lifecycle. */
-  TraceSpan createSpan(String name, Map<String, String> attributes);
+class AppCentricAttributesTest {
 
-  interface TraceSpan {
-    void end();
+  @Test
+  void testGetAttemptAttributes_serverAddress() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder().setServerAddress("test-address").build();
+
+    Map<String, String> attributes = AppCentricAttributes.getAttemptAttributes(context);
+
+    assertThat(attributes).hasSize(1);
+    assertThat(attributes)
+        .containsEntry(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, "test-address");
+  }
+
+  @Test
+  void testGetAttemptAttributes_nonePresent() {
+    ApiTracerContext context = ApiTracerContext.newBuilder().build();
+
+    Map<String, String> attributes = AppCentricAttributes.getAttemptAttributes(context);
+
+    assertThat(attributes).isEmpty();
   }
 }

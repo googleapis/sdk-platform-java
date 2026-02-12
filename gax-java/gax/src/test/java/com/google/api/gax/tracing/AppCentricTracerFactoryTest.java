@@ -33,7 +33,6 @@ package com.google.api.gax.tracing;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -62,8 +61,8 @@ class AppCentricTracerFactoryTest {
   @Test
   void testNewTracer_addsAttributes() {
     TraceRecorder recorder = mock(TraceRecorder.class);
-    TraceRecorder.TraceSpan operationHandle = mock(TraceRecorder.TraceSpan.class);
-    when(recorder.createSpan(anyString(), anyMap())).thenReturn(operationHandle);
+    TraceRecorder.TraceSpan attemptHandle = mock(TraceRecorder.TraceSpan.class);
+    when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
 
     AppCentricTracerFactory factory =
         new AppCentricTracerFactory(
@@ -75,8 +74,7 @@ class AppCentricTracerFactoryTest {
     tracer.attemptStarted(null, 1);
 
     ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(recorder, atLeastOnce())
-        .createSpan(anyString(), attributesCaptor.capture(), eq(operationHandle));
+    verify(recorder, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes).containsEntry("server.port", "443");
@@ -85,8 +83,8 @@ class AppCentricTracerFactoryTest {
   @Test
   void testWithContext_addsInferredAttributes() {
     TraceRecorder recorder = mock(TraceRecorder.class);
-    TraceRecorder.TraceSpan operationHandle = mock(TraceRecorder.TraceSpan.class);
-    when(recorder.createSpan(anyString(), anyMap())).thenReturn(operationHandle);
+    TraceRecorder.TraceSpan attemptHandle = mock(TraceRecorder.TraceSpan.class);
+    when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
 
     ApiTracerContext context =
         ApiTracerContext.newBuilder().setServerAddress("example.com").setRepo("my-repo").build();
@@ -101,20 +99,19 @@ class AppCentricTracerFactoryTest {
     tracer.attemptStarted(null, 1);
 
     ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(recorder, atLeastOnce())
-        .createSpan(anyString(), attributesCaptor.capture(), eq(operationHandle));
+    verify(recorder, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes)
-        .containsEntry(AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE, "example.com");
+        .containsEntry(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, "example.com");
     assertThat(attemptAttributes).containsEntry(AppCentricTracer.REPO_ATTRIBUTE, "my-repo");
   }
 
   @Test
   void testWithContext_noEndpointContext_doesNotAddAttributes() {
     TraceRecorder recorder = mock(TraceRecorder.class);
-    TraceRecorder.TraceSpan operationHandle = mock(TraceRecorder.TraceSpan.class);
-    when(recorder.createSpan(anyString(), anyMap())).thenReturn(operationHandle);
+    TraceRecorder.TraceSpan attemptHandle = mock(TraceRecorder.TraceSpan.class);
+    when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
 
     ApiTracerContext context = ApiTracerContext.newBuilder(null).build();
 
@@ -128,11 +125,10 @@ class AppCentricTracerFactoryTest {
     tracer.attemptStarted(null, 1);
 
     ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(recorder, atLeastOnce())
-        .createSpan(anyString(), attributesCaptor.capture(), eq(operationHandle));
+    verify(recorder, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
-    assertThat(attemptAttributes).doesNotContainKey(AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE);
+    assertThat(attemptAttributes).doesNotContainKey(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE);
     assertThat(attemptAttributes).doesNotContainKey(AppCentricTracer.REPO_ATTRIBUTE);
   }
 }

@@ -47,30 +47,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class AppCentricTracerTest {
   @Mock private TraceRecorder recorder;
-  @Mock private TraceRecorder.TraceSpan operationHandle;
   @Mock private TraceRecorder.TraceSpan attemptHandle;
   private AppCentricTracer tracer;
-  private static final String OPERATION_SPAN_NAME = "Service.Method/operation";
   private static final String ATTEMPT_SPAN_NAME = "Service/Method/attempt";
 
   @BeforeEach
   void setUp() {
-    when(recorder.createSpan(eq(OPERATION_SPAN_NAME), anyMap())).thenReturn(operationHandle);
-    tracer =
-        new AppCentricTracer(
-            recorder, OPERATION_SPAN_NAME, ATTEMPT_SPAN_NAME, new HashMap<>(), new HashMap<>());
-  }
-
-  @Test
-  void testOperationSucceeded_endsSpan() {
-    tracer.operationSucceeded();
-    verify(operationHandle).end();
+    tracer = new AppCentricTracer(recorder, ATTEMPT_SPAN_NAME, new HashMap<>());
   }
 
   @Test
   void testAttemptLifecycle_startsAndEndsAttemptSpan() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
-        .thenReturn(attemptHandle);
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
     tracer.attemptStarted(new Object(), 1);
     tracer.attemptSucceeded();
 
@@ -78,22 +66,31 @@ class AppCentricTracerTest {
   }
 
   @Test
-  void testAttemptStarted_includesRepoAttribute() {
-    Map<String, String> attemptAttributes = new HashMap<>();
-    attemptAttributes.put(AppCentricTracer.REPO_ATTRIBUTE, "test-repo");
-
-    tracer =
-        new AppCentricTracer(
-            recorder, OPERATION_SPAN_NAME, ATTEMPT_SPAN_NAME, new HashMap<>(), attemptAttributes);
-
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap(), eq(operationHandle)))
-        .thenReturn(attemptHandle);
+  void testAttemptStarted_includesLanguageAttribute() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
 
     tracer.attemptStarted(new Object(), 1);
 
     ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(recorder)
-        .createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture(), eq(operationHandle));
+    verify(recorder).createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
+
+    assertThat(attributesCaptor.getValue())
+        .containsEntry(AppCentricTracer.LANGUAGE_ATTRIBUTE, AppCentricTracer.DEFAULT_LANGUAGE);
+  }
+
+  @Test
+  void testAttemptStarted_includesRepoAttribute() {
+    Map<String, String> attemptAttributes = new HashMap<>();
+    attemptAttributes.put(AppCentricTracer.REPO_ATTRIBUTE, "test-repo");
+
+    tracer = new AppCentricTracer(recorder, ATTEMPT_SPAN_NAME, attemptAttributes);
+
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
+    verify(recorder).createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
 
     assertThat(attributesCaptor.getValue())
         .containsEntry(AppCentricTracer.REPO_ATTRIBUTE, "test-repo");

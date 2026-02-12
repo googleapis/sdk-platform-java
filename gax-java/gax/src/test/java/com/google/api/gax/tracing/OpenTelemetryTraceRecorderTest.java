@@ -31,7 +31,6 @@
 package com.google.api.gax.tracing;
 
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -41,7 +40,6 @@ import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanBuilder;
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Scope;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,7 +53,6 @@ class OpenTelemetryTraceRecorderTest {
   @Mock private Tracer tracer;
   @Mock private SpanBuilder spanBuilder;
   @Mock private Span span;
-  @Mock private Scope scope;
 
   private OpenTelemetryTraceRecorder recorder;
 
@@ -69,24 +66,23 @@ class OpenTelemetryTraceRecorderTest {
   void testCreateSpan_operation_isInternal() {
     String spanName = "operation-span";
     when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
-    when(spanBuilder.setSpanKind(SpanKind.INTERNAL)).thenReturn(spanBuilder);
+    when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 
     recorder.createSpan(spanName, null);
 
-    verify(spanBuilder).setSpanKind(SpanKind.INTERNAL);
+    verify(spanBuilder).setSpanKind(SpanKind.CLIENT);
   }
 
   @Test
   void testCreateSpan_attempt_isClient() {
     String spanName = "attempt-span";
-    TraceRecorder.TraceSpan parent = mock(TraceRecorder.TraceSpan.class);
 
     when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
     when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 
-    recorder.createSpan(spanName, null, parent);
+    recorder.createSpan(spanName, null);
 
     verify(spanBuilder).setSpanKind(SpanKind.CLIENT);
   }
@@ -97,7 +93,7 @@ class OpenTelemetryTraceRecorderTest {
     Map<String, String> attributes = ImmutableMap.of("key1", "value1");
 
     when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
-    when(spanBuilder.setSpanKind(SpanKind.INTERNAL)).thenReturn(spanBuilder);
+    when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
     when(spanBuilder.setAttribute("key1", "value1")).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 

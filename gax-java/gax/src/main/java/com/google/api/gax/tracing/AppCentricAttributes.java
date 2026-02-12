@@ -30,21 +30,35 @@
 
 package com.google.api.gax.tracing;
 
-import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Provides an interface for tracing recording. The implementer is expected to use an observability
- * framework, e.g. OpenTelemetry. There should be only one instance of TraceRecorder per client.
+ * Utility class for providing common attributes used in app-centric observability.
+ *
+ * <p>This class extracts information from {@link ApiTracerContext} and maps it to standardized
+ * attribute keys that are expected by {@link ApiTracerFactory} implementations that conform to
+ * app-centric observability
+ *
+ * <p>For internal use only.
  */
-@BetaApi
 @InternalApi
-public interface TraceRecorder {
-  /** Starts a span and returns a handle to manage its lifecycle. */
-  TraceSpan createSpan(String name, Map<String, String> attributes);
+public class AppCentricAttributes {
+  /** The address of the server being called (e.g., "pubsub.googleapis.com"). */
+  public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
 
-  interface TraceSpan {
-    void end();
+  /**
+   * Extracts attempt-level attributes from the provided {@link ApiTracerContext}.
+   *
+   * @param context the context containing information about the current API call
+   * @return a map of attributes to be included in attempt-level spans
+   */
+  public static Map<String, String> getAttemptAttributes(ApiTracerContext context) {
+    Map<String, String> attributes = new HashMap<>();
+    if (context.getServerAddress() != null) {
+      attributes.put(SERVER_ADDRESS_ATTRIBUTE, context.getServerAddress());
+    }
+    return attributes;
   }
 }
