@@ -32,6 +32,12 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
+import com.google.common.annotations.VisibleForTesting;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nullable;
 
 /**
@@ -43,17 +49,51 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class ApiTracerContext {
+  private static final Logger LOGGER = Logger.getLogger(ApiTracerContext.class.getName());
+  private static final String GAPIC_PROPERTIES_FILE = "/gapic.properties";
+  private static final String REPO_KEY = "repo";
 
   @Nullable
   public abstract String getServerAddress();
 
+  @Nullable
+  public abstract String getRepo();
+
   public static Builder newBuilder() {
-    return new AutoValue_ApiTracerContext.Builder();
+    return newBuilder(ApiTracerContext.class.getResourceAsStream(GAPIC_PROPERTIES_FILE));
+  }
+
+  @VisibleForTesting
+  static Builder newBuilder(@Nullable InputStream inputStream) {
+    Builder builder = new AutoValue_ApiTracerContext.Builder();
+    loadRepoFromProperties(builder, inputStream);
+    return builder;
+  }
+
+  private static void loadRepoFromProperties(Builder builder, @Nullable InputStream is) {
+    if (is == null) {
+      return;
+    }
+    try {
+      Properties properties = new Properties();
+      properties.load(is);
+      builder.setRepo(properties.getProperty(REPO_KEY));
+    } catch (IOException e) {
+      LOGGER.log(Level.WARNING, "Could not load gapic.properties", e);
+    } finally {
+      try {
+        is.close();
+      } catch (IOException e) {
+        LOGGER.log(Level.WARNING, "Could not close gapic.properties stream", e);
+      }
+    }
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setServerAddress(String serverAddress);
+
+    public abstract Builder setRepo(String repo);
 
     public abstract ApiTracerContext build();
   }

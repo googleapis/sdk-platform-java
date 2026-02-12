@@ -54,6 +54,7 @@ import org.junit.jupiter.api.Test;
 
 class ITOtelTracing {
   private static final String SHOWCASE_SERVER_ADDRESS = "localhost";
+  private static final String SHOWCASE_REPO = "googleapis/sdk-platform-java";
 
   private InMemorySpanExporter spanExporter;
   private OpenTelemetrySdk openTelemetrySdk;
@@ -137,6 +138,11 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_SERVER_ADDRESS);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(AppCentricTracer.REPO_ATTRIBUTE)))
+          .isEqualTo(SHOWCASE_REPO);
     }
   }
 
@@ -176,6 +182,11 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_SERVER_ADDRESS);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(AppCentricTracer.REPO_ATTRIBUTE)))
+          .isEqualTo(SHOWCASE_REPO);
     }
   }
 }

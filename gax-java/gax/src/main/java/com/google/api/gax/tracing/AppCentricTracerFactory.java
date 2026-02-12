@@ -101,6 +101,9 @@ public class AppCentricTracerFactory implements ApiTracerFactory {
       newAttemptAttributes.put(
           AppCentricTracer.SERVER_ADDRESS_ATTRIBUTE, context.getServerAddress());
     }
+    if (context.getRepo() != null) {
+      newAttemptAttributes.put(AppCentricTracer.REPO_ATTRIBUTE, context.getRepo());
+    }
     return new AppCentricTracerFactory(traceRecorder, operationAttributes, newAttemptAttributes);
   }
 }
