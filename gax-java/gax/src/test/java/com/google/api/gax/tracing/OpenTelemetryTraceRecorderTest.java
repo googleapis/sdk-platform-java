@@ -40,7 +40,6 @@ import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanBuilder;
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Scope;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,7 +53,6 @@ class OpenTelemetryTraceRecorderTest {
   @Mock private Tracer tracer;
   @Mock private SpanBuilder spanBuilder;
   @Mock private Span span;
-  @Mock private Scope scope;
 
   private OpenTelemetryTraceRecorder recorder;
 
