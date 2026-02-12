@@ -50,7 +50,7 @@ PR_URLS_4x=(
     "https://github.com/googleapis/java-bigquerystorage/pull/3083"
     "https://github.com/googleapis/java-datastore/pull/1954"
     "https://github.com/googleapis/java-firestore/pull/2227"
-    "https://github.com/googleapis/java-logging/pull/1851"
+#    "https://github.com/googleapis/java-logging/pull/1851" -- This repo is archived
     "https://github.com/googleapis/java-logging-logback/pull/1512"
     "https://github.com/googleapis/java-pubsub/pull/2537"
     "https://github.com/googleapis/java-pubsublite/pull/1917"
