@@ -50,6 +50,10 @@ case $key in
     os_architecture="$2"
     shift
     ;;
+  --repo)
+    repo="$2"
+    shift
+    ;;
   *)
     echo "Invalid option: [$1]"
     exit 1
@@ -97,6 +101,10 @@ fi
 
 if [ -z "${os_architecture}" ]; then
   os_architecture=$(detect_os_architecture)
+fi
+
+if [ -z "${repo}" ]; then
+  repo=$(repo)
 fi
 
 temp_destination_path="${output_folder}/temp_preprocessed-$RANDOM"
@@ -179,7 +187,7 @@ if [[ "${proto_only}" == "false" ]]; then
   "$protoc_path"/protoc --experimental_allow_proto3_optional \
   "--plugin=protoc-gen-java_gapic=${script_dir}/gapic-generator-java-wrapper" \
   "--java_gapic_out=metadata:${temp_destination_path}/java_gapic_srcjar_raw.srcjar.zip" \
-  "--java_gapic_opt=$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "${gapic_yaml}" "${service_config}" "${service_yaml}")" \
+  "--java_gapic_opt=$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "${gapic_yaml}" "${service_config}" "${service_yaml}" "${repo}")" \
   ${proto_files} ${gapic_additional_protos}
 
   unzip -o -q "${temp_destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${temp_destination_path}"

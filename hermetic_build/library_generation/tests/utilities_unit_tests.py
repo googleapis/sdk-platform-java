@@ -178,6 +178,24 @@ class UtilitiesTest(unittest.TestCase):
         # print() appends a `\n` each time it's called
         self.assertEqual(test_input + "\n", result)
 
+    def test_get_library_repository_with_common_protos_returns_sdk_platform_java(self):
+        config = self.__get_a_gen_config(3)
+        library = common_protos
+        result = util.get_library_repository(config, library)
+        self.assertEqual("googleapis/sdk-platform-java", result)
+
+    def test_get_library_repository_with_monorepo_returns_google_cloud_java(self):
+        config = self.__get_a_gen_config(2)
+        library = library_1
+        result = util.get_library_repository(config, library)
+        self.assertEqual("googleapis/google-cloud-java", result)
+
+    def test_get_library_repository_with_split_repo_returns_library_repo(self):
+        config = self.__get_a_gen_config(1)
+        library = library_1
+        result = util.get_library_repository(config, library)
+        self.assertEqual("googleapis/java-bare-metal-solution", result)
+
     def test_generate_postprocessing_prerequisite_files_non_monorepo_success(self):
         library_path = self.__setup_postprocessing_prerequisite_files(
             combination=1, library_type="GAPIC_COMBO"
