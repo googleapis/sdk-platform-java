@@ -36,7 +36,6 @@ import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanBuilder;
 import io.opentelemetry.api.trace.SpanKind;
-import io.opentelemetry.api.trace.Tracer;
 import java.util.Map;
 
 /**
@@ -46,7 +45,7 @@ import java.util.Map;
 @BetaApi
 @InternalApi
 public class OpenTelemetryTraceRecorder implements TraceRecorder {
-  private final Tracer tracer;
+  private final io.opentelemetry.api.trace.Tracer tracer;
 
   public OpenTelemetryTraceRecorder(OpenTelemetry openTelemetry) {
     this.tracer = openTelemetry.getTracer("gax-java");
