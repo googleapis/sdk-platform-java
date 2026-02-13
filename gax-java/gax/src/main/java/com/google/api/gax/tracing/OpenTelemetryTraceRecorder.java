@@ -53,7 +53,7 @@ public class OpenTelemetryTraceRecorder implements TraceRecorder {
   }
 
   @Override
-  public TraceSpan createSpan(String name, Map<String, String> attributes) {
+  public GaxSpan createSpan(String name, Map<String, String> attributes) {
     SpanBuilder spanBuilder = tracer.spanBuilder(name);
 
     // Attempt spans are of the CLIENT kind
@@ -65,13 +65,13 @@ public class OpenTelemetryTraceRecorder implements TraceRecorder {
 
     Span span = spanBuilder.startSpan();
 
-    return new OtelTraceSpan(span);
+    return new OtelGaxSpan(span);
   }
 
-  private static class OtelTraceSpan implements TraceSpan {
+  private static class OtelGaxSpan implements GaxSpan {
     private final Span span;
 
-    private OtelTraceSpan(Span span) {
+    private OtelGaxSpan(Span span) {
       this.span = span;
     }
 

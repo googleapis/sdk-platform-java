@@ -51,7 +51,7 @@ public class AppCentricTracer implements ApiTracer {
   private final Map<String, String> attemptAttributes;
   private final String attemptSpanName;
   private final ApiTracerContext apiTracerContext;
-  private TraceRecorder.TraceSpan attemptHandle;
+  private TraceRecorder.GaxSpan attemptHandle;
 
   /**
    * Creates a new instance of {@code AppCentricTracer}.

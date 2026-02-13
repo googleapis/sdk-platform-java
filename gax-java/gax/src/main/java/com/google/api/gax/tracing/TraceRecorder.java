@@ -42,9 +42,9 @@ import java.util.Map;
 @InternalApi
 public interface TraceRecorder {
   /** Starts a span and returns a handle to manage its lifecycle. */
-  TraceSpan createSpan(String name, Map<String, String> attributes);
+  GaxSpan createSpan(String name, Map<String, String> attributes);
 
-  interface TraceSpan {
+  interface GaxSpan {
     void end();
   }
 }

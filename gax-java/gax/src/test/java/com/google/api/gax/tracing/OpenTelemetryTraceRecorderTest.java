@@ -97,7 +97,7 @@ class OpenTelemetryTraceRecorderTest {
     when(spanBuilder.setAttribute("key1", "value1")).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 
-    TraceRecorder.TraceSpan handle = recorder.createSpan(spanName, attributes);
+    TraceRecorder.GaxSpan handle = recorder.createSpan(spanName, attributes);
     handle.end();
 
     verify(span).end();
