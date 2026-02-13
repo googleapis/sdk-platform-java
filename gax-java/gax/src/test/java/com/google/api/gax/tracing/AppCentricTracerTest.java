@@ -35,7 +35,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,8 +53,7 @@ class AppCentricTracerTest {
   @BeforeEach
   void setUp() {
     tracer =
-        new AppCentricTracer(
-            recorder, ApiTracerContext.newBuilder().build(), ATTEMPT_SPAN_NAME, new HashMap<>());
+        new AppCentricTracer(recorder, ApiTracerContext.newBuilder().build(), ATTEMPT_SPAN_NAME);
   }
 
   @Test

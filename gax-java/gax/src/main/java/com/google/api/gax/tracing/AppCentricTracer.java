@@ -47,7 +47,7 @@ public class AppCentricTracer implements ApiTracer {
 
   public static final String DEFAULT_LANGUAGE = "Java";
 
-  private final TraceManager recorder;
+  private final TraceManager traceManager;
   private final Map<String, String> attemptAttributes;
   private final String attemptSpanName;
   private final ApiTracerContext apiTracerContext;
@@ -56,20 +56,15 @@ public class AppCentricTracer implements ApiTracer {
   /**
    * Creates a new instance of {@code AppCentricTracer}.
    *
-   * @param recorder the {@link TraceManager} to use for recording spans
+   * @param traceManager the {@link TraceManager} to use for recording spans
    * @param attemptSpanName the name of the individual attempt spans
-   * @param attemptAttributes attributes to be added to each attempt span
    */
   public AppCentricTracer(
-      TraceManager recorder,
-      ApiTracerContext apiTracerContext,
-      String attemptSpanName,
-      Map<String, String> attemptAttributes) {
-    this.recorder = recorder;
+      TraceManager traceManager, ApiTracerContext apiTracerContext, String attemptSpanName) {
+    this.traceManager = traceManager;
     this.attemptSpanName = attemptSpanName;
-
-    this.attemptAttributes = new HashMap<>(attemptAttributes);
     this.apiTracerContext = apiTracerContext;
+    this.attemptAttributes = new HashMap<>();
     buildAttributes();
   }
 
@@ -82,7 +77,7 @@ public class AppCentricTracer implements ApiTracer {
   public void attemptStarted(Object request, int attemptNumber) {
     Map<String, String> attemptAttributes = new HashMap<>(this.attemptAttributes);
     // Start the specific attempt span with the operation span as parent
-    this.attemptHandle = recorder.createSpan(attemptSpanName, attemptAttributes);
+    this.attemptHandle = traceManager.createSpan(attemptSpanName, attemptAttributes);
   }
 
   @Override

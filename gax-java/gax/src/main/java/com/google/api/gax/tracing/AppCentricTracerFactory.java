@@ -33,8 +33,6 @@ package com.google.api.gax.tracing;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.common.annotations.VisibleForTesting;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A {@link ApiTracerFactory} to build instances of {@link AppCentricTracer}.
@@ -49,14 +47,11 @@ import java.util.Map;
 public class AppCentricTracerFactory implements ApiTracerFactory {
   private final TraceManager traceManager;
 
-  /** Mapping of client attributes that are set for every AppCentricTracer at attempt level */
-  private final Map<String, String> attemptAttributes;
-
   private final ApiTracerContext apiTracerContext;
 
   /** Creates a AppCentricTracerFactory */
   public AppCentricTracerFactory(TraceManager traceManager) {
-    this(traceManager, ApiTracerContext.newBuilder().build(), new HashMap<>());
+    this(traceManager, ApiTracerContext.newBuilder().build());
   }
 
   /**
@@ -65,13 +60,9 @@ public class AppCentricTracerFactory implements ApiTracerFactory {
    * internally.
    */
   @VisibleForTesting
-  AppCentricTracerFactory(
-      TraceManager traceManager,
-      ApiTracerContext apiTracerContext,
-      Map<String, String> attemptAttributes) {
+  AppCentricTracerFactory(TraceManager traceManager, ApiTracerContext apiTracerContext) {
     this.traceManager = traceManager;
     this.apiTracerContext = apiTracerContext;
-    this.attemptAttributes = new HashMap<>(attemptAttributes);
   }
 
   @Override
@@ -81,14 +72,12 @@ public class AppCentricTracerFactory implements ApiTracerFactory {
     String attemptSpanName = spanName.getClientName() + "/" + spanName.getMethodName() + "/attempt";
 
     AppCentricTracer appCentricTracer =
-        new AppCentricTracer(
-            traceManager, this.apiTracerContext, attemptSpanName, this.attemptAttributes);
+        new AppCentricTracer(traceManager, this.apiTracerContext, attemptSpanName);
     return appCentricTracer;
   }
 
   @Override
   public ApiTracerFactory withContext(ApiTracerContext context) {
-    Map<String, String> newAttemptAttributes = new HashMap<>(this.attemptAttributes);
-    return new AppCentricTracerFactory(traceManager, context, newAttemptAttributes);
+    return new AppCentricTracerFactory(traceManager, context);
   }
 }

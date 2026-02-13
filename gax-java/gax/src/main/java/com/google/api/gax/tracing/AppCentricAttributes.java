@@ -30,18 +30,16 @@
 
 package com.google.api.gax.tracing;
 
+import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 
 /**
- * Utility class for providing common attributes used in app-centric observability.
- *
- * <p>This class extracts information from {@link ApiTracerContext} and maps it to standardized
- * attribute keys that are expected by {@link ApiTracerFactory} implementations that conform to
- * app-centric observability
+ * Utility class with common attribute names in app-centric observability.
  *
  * <p>For internal use only.
  */
 @InternalApi
+@BetaApi
 public class AppCentricAttributes {
   /** The address of the server being called (e.g., "pubsub.googleapis.com"). */
   public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";

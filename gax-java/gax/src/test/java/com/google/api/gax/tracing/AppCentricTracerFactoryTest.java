@@ -38,7 +38,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.google.common.collect.ImmutableMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -63,9 +62,10 @@ class AppCentricTracerFactoryTest {
     TraceManager.Span attemptHandle = mock(TraceManager.Span.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
 
-    AppCentricTracerFactory factory =
-        new AppCentricTracerFactory(
-            recorder, ApiTracerContext.newBuilder().build(), ImmutableMap.of("server.port", "443"));
+    ApiTracerFactory factory =
+        new AppCentricTracerFactory(recorder, ApiTracerContext.newBuilder().build());
+    factory =
+        factory.withContext(ApiTracerContext.newBuilder().setServerAddress("test-address").build());
     ApiTracer tracer =
         factory.newTracer(
             null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
@@ -76,7 +76,7 @@ class AppCentricTracerFactoryTest {
     verify(recorder, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
-    assertThat(attemptAttributes).containsEntry("server.port", "443");
+    assertThat(attemptAttributes).containsEntry("server.address", "test-address");
   }
 
   @Test

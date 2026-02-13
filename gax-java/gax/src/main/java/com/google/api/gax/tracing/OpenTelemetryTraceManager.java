@@ -38,7 +38,7 @@ import io.opentelemetry.api.trace.SpanKind;
 import java.util.Map;
 
 /**
- * OpenTelemetry implementation of recording traces. This implementation collects the measurements
+ * OpenTelemetry implementation of managing traces. This implementation collects the measurements
  * related to the lifecyle of an RPC.
  */
 @BetaApi
