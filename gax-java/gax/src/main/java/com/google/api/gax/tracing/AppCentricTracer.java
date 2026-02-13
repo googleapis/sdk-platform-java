@@ -50,6 +50,7 @@ public class AppCentricTracer implements ApiTracer {
   private final TraceRecorder recorder;
   private final Map<String, String> attemptAttributes;
   private final String attemptSpanName;
+  private final ApiTracerContext apiTracerContext;
   private TraceRecorder.TraceSpan attemptHandle;
 
   /**
@@ -60,13 +61,21 @@ public class AppCentricTracer implements ApiTracer {
    * @param attemptAttributes attributes to be added to each attempt span
    */
   public AppCentricTracer(
-      TraceRecorder recorder, String attemptSpanName, Map<String, String> attemptAttributes) {
+      TraceRecorder recorder,
+      ApiTracerContext apiTracerContext,
+      String attemptSpanName,
+      Map<String, String> attemptAttributes) {
     this.recorder = recorder;
     this.attemptSpanName = attemptSpanName;
-    this.attemptAttributes = new HashMap<>(attemptAttributes);
-    this.attemptAttributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
 
-    // Start the long-lived operation span.
+    this.attemptAttributes = new HashMap<>(attemptAttributes);
+    this.apiTracerContext = apiTracerContext;
+    buildAttributes();
+  }
+
+  private void buildAttributes() {
+    this.attemptAttributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
+    this.attemptAttributes.putAll(this.apiTracerContext.getAttemptAttributes());
   }
 
   @Override

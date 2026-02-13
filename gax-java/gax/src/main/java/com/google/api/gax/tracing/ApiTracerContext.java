@@ -32,6 +32,8 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
+import java.util.HashMap;
+import java.util.Map;
 import javax.annotation.Nullable;
 
 /**
@@ -43,6 +45,17 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class ApiTracerContext {
+
+  /**
+   * @return a map of attributes to be included in attempt-level spans
+   */
+  public Map<String, String> getAttemptAttributes() {
+    Map<String, String> attributes = new HashMap<>();
+    if (getServerAddress() != null) {
+      attributes.put(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, getServerAddress());
+    }
+    return attributes;
+  }
 
   @Nullable
   public abstract String getServerAddress();

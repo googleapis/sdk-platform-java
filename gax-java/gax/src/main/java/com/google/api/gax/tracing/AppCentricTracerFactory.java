@@ -49,15 +49,14 @@ import java.util.Map;
 public class AppCentricTracerFactory implements ApiTracerFactory {
   private final TraceRecorder traceRecorder;
 
-  /** Mapping of client attributes that are set for every AppCentricTracer at operation level */
-  private final Map<String, String> operationAttributes;
-
   /** Mapping of client attributes that are set for every AppCentricTracer at attempt level */
   private final Map<String, String> attemptAttributes;
 
+  private final ApiTracerContext apiTracerContext;
+
   /** Creates a AppCentricTracerFactory */
   public AppCentricTracerFactory(TraceRecorder traceRecorder) {
-    this(traceRecorder, new HashMap<>(), new HashMap<>());
+    this(traceRecorder, ApiTracerContext.newBuilder().build(), new HashMap<>());
   }
 
   /**
@@ -68,11 +67,10 @@ public class AppCentricTracerFactory implements ApiTracerFactory {
   @VisibleForTesting
   AppCentricTracerFactory(
       TraceRecorder traceRecorder,
-      Map<String, String> operationAttributes,
+      ApiTracerContext apiTracerContext,
       Map<String, String> attemptAttributes) {
     this.traceRecorder = traceRecorder;
-
-    this.operationAttributes = new HashMap<>(operationAttributes);
+    this.apiTracerContext = apiTracerContext;
     this.attemptAttributes = new HashMap<>(attemptAttributes);
   }
 
@@ -83,14 +81,14 @@ public class AppCentricTracerFactory implements ApiTracerFactory {
     String attemptSpanName = spanName.getClientName() + "/" + spanName.getMethodName() + "/attempt";
 
     AppCentricTracer appCentricTracer =
-        new AppCentricTracer(traceRecorder, attemptSpanName, this.attemptAttributes);
+        new AppCentricTracer(
+            traceRecorder, this.apiTracerContext, attemptSpanName, this.attemptAttributes);
     return appCentricTracer;
   }
 
   @Override
   public ApiTracerFactory withContext(ApiTracerContext context) {
     Map<String, String> newAttemptAttributes = new HashMap<>(this.attemptAttributes);
-    newAttemptAttributes.putAll(AppCentricAttributes.getAttemptAttributes(context));
-    return new AppCentricTracerFactory(traceRecorder, operationAttributes, newAttemptAttributes);
+    return new AppCentricTracerFactory(traceRecorder, context, newAttemptAttributes);
   }
 }

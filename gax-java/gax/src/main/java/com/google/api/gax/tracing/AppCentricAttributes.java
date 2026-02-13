@@ -31,8 +31,6 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Utility class for providing common attributes used in app-centric observability.
@@ -47,18 +45,4 @@ import java.util.Map;
 public class AppCentricAttributes {
   /** The address of the server being called (e.g., "pubsub.googleapis.com"). */
   public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
-
-  /**
-   * Extracts attempt-level attributes from the provided {@link ApiTracerContext}.
-   *
-   * @param context the context containing information about the current API call
-   * @return a map of attributes to be included in attempt-level spans
-   */
-  public static Map<String, String> getAttemptAttributes(ApiTracerContext context) {
-    Map<String, String> attributes = new HashMap<>();
-    if (context.getServerAddress() != null) {
-      attributes.put(SERVER_ADDRESS_ATTRIBUTE, context.getServerAddress());
-    }
-    return attributes;
-  }
 }

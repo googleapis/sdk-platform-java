@@ -53,7 +53,9 @@ class AppCentricTracerTest {
 
   @BeforeEach
   void setUp() {
-    tracer = new AppCentricTracer(recorder, ATTEMPT_SPAN_NAME, new HashMap<>());
+    tracer =
+        new AppCentricTracer(
+            recorder, ApiTracerContext.newBuilder().build(), ATTEMPT_SPAN_NAME, new HashMap<>());
   }
 
   @Test

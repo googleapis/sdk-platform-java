@@ -66,7 +66,7 @@ class AppCentricTracerFactoryTest {
 
     AppCentricTracerFactory factory =
         new AppCentricTracerFactory(
-            recorder, ImmutableMap.of(), ImmutableMap.of("server.port", "443"));
+            recorder, ApiTracerContext.newBuilder().build(), ImmutableMap.of("server.port", "443"));
     ApiTracer tracer =
         factory.newTracer(
             null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
