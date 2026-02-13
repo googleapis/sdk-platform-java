@@ -48,18 +48,18 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class OpenTelemetryTraceRecorderTest {
+class OpenTelemetryTraceManagerTest {
   @Mock private OpenTelemetry openTelemetry;
   @Mock private Tracer tracer;
   @Mock private SpanBuilder spanBuilder;
   @Mock private Span span;
 
-  private OpenTelemetryTraceRecorder recorder;
+  private OpenTelemetryTraceManager recorder;
 
   @BeforeEach
   void setUp() {
     when(openTelemetry.getTracer(anyString())).thenReturn(tracer);
-    recorder = new OpenTelemetryTraceRecorder(openTelemetry);
+    recorder = new OpenTelemetryTraceManager(openTelemetry);
   }
 
   @Test
@@ -97,7 +97,7 @@ class OpenTelemetryTraceRecorderTest {
     when(spanBuilder.setAttribute("key1", "value1")).thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 
-    TraceRecorder.GaxSpan handle = recorder.createSpan(spanName, attributes);
+    TraceManager.Span handle = recorder.createSpan(spanName, attributes);
     handle.end();
 
     verify(span).end();

@@ -36,9 +36,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * An implementation of {@link ApiTracer} that uses a {@link TraceRecorder} to record traces. This
- * implementation is agnostic to the specific {@link TraceRecorder} in order to allow extensions
- * that interact with other backends.
+ * An implementation of {@link ApiTracer} that uses a {@link TraceManager} to record traces. This
+ * implementation is agnostic to the specific {@link TraceManager} in order to allow extensions that
+ * interact with other backends.
  */
 @BetaApi
 @InternalApi
@@ -47,21 +47,21 @@ public class AppCentricTracer implements ApiTracer {
 
   public static final String DEFAULT_LANGUAGE = "Java";
 
-  private final TraceRecorder recorder;
+  private final TraceManager recorder;
   private final Map<String, String> attemptAttributes;
   private final String attemptSpanName;
   private final ApiTracerContext apiTracerContext;
-  private TraceRecorder.GaxSpan attemptHandle;
+  private TraceManager.Span attemptHandle;
 
   /**
    * Creates a new instance of {@code AppCentricTracer}.
    *
-   * @param recorder the {@link TraceRecorder} to use for recording spans
+   * @param recorder the {@link TraceManager} to use for recording spans
    * @param attemptSpanName the name of the individual attempt spans
    * @param attemptAttributes attributes to be added to each attempt span
    */
   public AppCentricTracer(
-      TraceRecorder recorder,
+      TraceManager recorder,
       ApiTracerContext apiTracerContext,
       String attemptSpanName,
       Map<String, String> attemptAttributes) {

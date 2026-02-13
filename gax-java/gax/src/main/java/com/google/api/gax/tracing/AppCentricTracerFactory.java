@@ -39,7 +39,7 @@ import java.util.Map;
 /**
  * A {@link ApiTracerFactory} to build instances of {@link AppCentricTracer}.
  *
- * <p>This class wraps the {@link TraceRecorder} and pass it to {@link AppCentricTracer}. It will be
+ * <p>This class wraps the {@link TraceManager} and pass it to {@link AppCentricTracer}. It will be
  * used to record traces in {@link AppCentricTracer}.
  *
  * <p>This class is expected to be initialized once during client initialization.
@@ -47,7 +47,7 @@ import java.util.Map;
 @BetaApi
 @InternalApi
 public class AppCentricTracerFactory implements ApiTracerFactory {
-  private final TraceRecorder traceRecorder;
+  private final TraceManager traceManager;
 
   /** Mapping of client attributes that are set for every AppCentricTracer at attempt level */
   private final Map<String, String> attemptAttributes;
@@ -55,8 +55,8 @@ public class AppCentricTracerFactory implements ApiTracerFactory {
   private final ApiTracerContext apiTracerContext;
 
   /** Creates a AppCentricTracerFactory */
-  public AppCentricTracerFactory(TraceRecorder traceRecorder) {
-    this(traceRecorder, ApiTracerContext.newBuilder().build(), new HashMap<>());
+  public AppCentricTracerFactory(TraceManager traceManager) {
+    this(traceManager, ApiTracerContext.newBuilder().build(), new HashMap<>());
   }
 
   /**
@@ -66,10 +66,10 @@ public class AppCentricTracerFactory implements ApiTracerFactory {
    */
   @VisibleForTesting
   AppCentricTracerFactory(
-      TraceRecorder traceRecorder,
+      TraceManager traceManager,
       ApiTracerContext apiTracerContext,
       Map<String, String> attemptAttributes) {
-    this.traceRecorder = traceRecorder;
+    this.traceManager = traceManager;
     this.apiTracerContext = apiTracerContext;
     this.attemptAttributes = new HashMap<>(attemptAttributes);
   }
@@ -82,13 +82,13 @@ public class AppCentricTracerFactory implements ApiTracerFactory {
 
     AppCentricTracer appCentricTracer =
         new AppCentricTracer(
-            traceRecorder, this.apiTracerContext, attemptSpanName, this.attemptAttributes);
+            traceManager, this.apiTracerContext, attemptSpanName, this.attemptAttributes);
     return appCentricTracer;
   }
 
   @Override
   public ApiTracerFactory withContext(ApiTracerContext context) {
     Map<String, String> newAttemptAttributes = new HashMap<>(this.attemptAttributes);
-    return new AppCentricTracerFactory(traceRecorder, context, newAttemptAttributes);
+    return new AppCentricTracerFactory(traceManager, context, newAttemptAttributes);
   }
 }

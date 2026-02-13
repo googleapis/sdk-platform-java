@@ -36,15 +36,15 @@ import java.util.Map;
 
 /**
  * Provides an interface for tracing recording. The implementer is expected to use an observability
- * framework, e.g. OpenTelemetry. There should be only one instance of TraceRecorder per client.
+ * framework, e.g. OpenTelemetry. There should be only one instance of TraceManager per client.
  */
 @BetaApi
 @InternalApi
-public interface TraceRecorder {
+public interface TraceManager {
   /** Starts a span and returns a handle to manage its lifecycle. */
-  GaxSpan createSpan(String name, Map<String, String> attributes);
+  Span createSpan(String name, Map<String, String> attributes);
 
-  interface GaxSpan {
+  interface Span {
     void end();
   }
 }

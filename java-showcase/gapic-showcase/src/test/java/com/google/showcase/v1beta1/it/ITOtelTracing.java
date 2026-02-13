@@ -35,7 +35,7 @@ import static com.google.common.truth.Truth.assertThat;
 import com.google.api.gax.tracing.AppCentricAttributes;
 import com.google.api.gax.tracing.AppCentricTracer;
 import com.google.api.gax.tracing.AppCentricTracerFactory;
-import com.google.api.gax.tracing.OpenTelemetryTraceRecorder;
+import com.google.api.gax.tracing.OpenTelemetryTraceManager;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
@@ -82,7 +82,7 @@ class ITOtelTracing {
   @Test
   void testTracing_successfulEcho_grpc() throws Exception {
     AppCentricTracerFactory tracingFactory =
-        new AppCentricTracerFactory(new OpenTelemetryTraceRecorder(openTelemetrySdk));
+        new AppCentricTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
 
     try (EchoClient client =
         TestClientInitializer.createGrpcEchoClientOpentelemetry(tracingFactory)) {
@@ -114,7 +114,7 @@ class ITOtelTracing {
   @Test
   void testTracing_successfulEcho_httpjson() throws Exception {
     AppCentricTracerFactory tracingFactory =
-        new AppCentricTracerFactory(new OpenTelemetryTraceRecorder(openTelemetrySdk));
+        new AppCentricTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
 
     try (EchoClient client =
         TestClientInitializer.createHttpJsonEchoClientOpentelemetry(tracingFactory)) {

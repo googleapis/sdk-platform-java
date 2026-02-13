@@ -33,7 +33,6 @@ package com.google.api.gax.tracing;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import io.opentelemetry.api.OpenTelemetry;
-import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanBuilder;
 import io.opentelemetry.api.trace.SpanKind;
 import java.util.Map;
@@ -44,15 +43,15 @@ import java.util.Map;
  */
 @BetaApi
 @InternalApi
-public class OpenTelemetryTraceRecorder implements TraceRecorder {
+public class OpenTelemetryTraceManager implements TraceManager {
   private final io.opentelemetry.api.trace.Tracer tracer;
 
-  public OpenTelemetryTraceRecorder(OpenTelemetry openTelemetry) {
+  public OpenTelemetryTraceManager(OpenTelemetry openTelemetry) {
     this.tracer = openTelemetry.getTracer("gax-java");
   }
 
   @Override
-  public GaxSpan createSpan(String name, Map<String, String> attributes) {
+  public Span createSpan(String name, Map<String, String> attributes) {
     SpanBuilder spanBuilder = tracer.spanBuilder(name);
 
     // Attempt spans are of the CLIENT kind
@@ -62,15 +61,15 @@ public class OpenTelemetryTraceRecorder implements TraceRecorder {
       attributes.forEach((k, v) -> spanBuilder.setAttribute(k, v));
     }
 
-    Span span = spanBuilder.startSpan();
+    io.opentelemetry.api.trace.Span span = spanBuilder.startSpan();
 
-    return new OtelGaxSpan(span);
+    return new OtelSpan(span);
   }
 
-  private static class OtelGaxSpan implements GaxSpan {
-    private final Span span;
+  private static class OtelSpan implements Span {
+    private final io.opentelemetry.api.trace.Span span;
 
-    private OtelGaxSpan(Span span) {
+    private OtelSpan(io.opentelemetry.api.trace.Span span) {
       this.span = span;
     }
 
