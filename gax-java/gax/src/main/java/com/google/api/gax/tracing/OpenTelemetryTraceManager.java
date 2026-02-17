@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -27,49 +27,55 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package com.google.api.gax.tracing;
 
+import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import com.google.api.core.InternalExtensionOnly;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.trace.SpanBuilder;
+import io.opentelemetry.api.trace.SpanKind;
+import java.util.Map;
 
 /**
- * A factory to create new instances of {@link ApiTracer}s.
- *
- * <p>In general a single instance of an {@link ApiTracer} will correspond to a single logical
- * operation.
- *
- * <p>For internal use only. google-cloud-java libraries should extend {@link BaseApiTracerFactory}.
+ * OpenTelemetry implementation of managing traces. This implementation collects the measurements
+ * related to the lifecyle of an RPC.
  */
+@BetaApi
 @InternalApi
-@InternalExtensionOnly
-public interface ApiTracerFactory {
-  /** The type of operation the {@link ApiTracer} is tracing. */
-  enum OperationType {
-    Unary,
-    Batching,
-    LongRunning,
-    ServerStreaming,
-    ClientStreaming,
-    BidiStreaming
+public class OpenTelemetryTraceManager implements TraceManager {
+  private final io.opentelemetry.api.trace.Tracer tracer;
+
+  public OpenTelemetryTraceManager(OpenTelemetry openTelemetry) {
+    this.tracer = openTelemetry.getTracer("gax-java");
   }
 
-  /**
-   * Create a new {@link ApiTracer} that will be a child of the current context.
-   *
-   * @param parent the parent of this tracer
-   * @param spanName the name of the new span
-   * @param operationType the type of operation that the tracer will trace
-   */
-  ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType);
+  @Override
+  public Span createSpan(String name, Map<String, String> attributes) {
+    SpanBuilder spanBuilder = tracer.spanBuilder(name);
 
-  /**
-   * Returns a new {@link ApiTracerFactory} that will use the provided context to infer attributes
-   * for all tracers created by the factory.
-   *
-   * @param context an {@link ApiTracerContext} object containing information to construct
-   *     attributes
-   */
-  default ApiTracerFactory withContext(ApiTracerContext context) {
-    return this;
+    // Attempt spans are of the CLIENT kind
+    spanBuilder.setSpanKind(SpanKind.CLIENT);
+
+    if (attributes != null) {
+      attributes.forEach((k, v) -> spanBuilder.setAttribute(k, v));
+    }
+
+    io.opentelemetry.api.trace.Span span = spanBuilder.startSpan();
+
+    return new OtelSpan(span);
+  }
+
+  private static class OtelSpan implements Span {
+    private final io.opentelemetry.api.trace.Span span;
+
+    private OtelSpan(io.opentelemetry.api.trace.Span span) {
+      this.span = span;
+    }
+
+    @Override
+    public void end() {
+      span.end();
+    }
   }
 }

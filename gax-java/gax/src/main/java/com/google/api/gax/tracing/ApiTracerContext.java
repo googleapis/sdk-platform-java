@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -27,49 +27,47 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
-import com.google.api.core.InternalExtensionOnly;
+import com.google.auto.value.AutoValue;
+import java.util.HashMap;
+import java.util.Map;
+import javax.annotation.Nullable;
 
 /**
- * A factory to create new instances of {@link ApiTracer}s.
+ * A context object that contains information used to infer attributes that are common for all
+ * {@link ApiTracer}s.
  *
- * <p>In general a single instance of an {@link ApiTracer} will correspond to a single logical
- * operation.
- *
- * <p>For internal use only. google-cloud-java libraries should extend {@link BaseApiTracerFactory}.
+ * <p>For internal use only.
  */
 @InternalApi
-@InternalExtensionOnly
-public interface ApiTracerFactory {
-  /** The type of operation the {@link ApiTracer} is tracing. */
-  enum OperationType {
-    Unary,
-    Batching,
-    LongRunning,
-    ServerStreaming,
-    ClientStreaming,
-    BidiStreaming
+@AutoValue
+public abstract class ApiTracerContext {
+
+  /**
+   * @return a map of attributes to be included in attempt-level spans
+   */
+  public Map<String, String> getAttemptAttributes() {
+    Map<String, String> attributes = new HashMap<>();
+    if (getServerAddress() != null) {
+      attributes.put(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, getServerAddress());
+    }
+    return attributes;
   }
 
-  /**
-   * Create a new {@link ApiTracer} that will be a child of the current context.
-   *
-   * @param parent the parent of this tracer
-   * @param spanName the name of the new span
-   * @param operationType the type of operation that the tracer will trace
-   */
-  ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType);
+  @Nullable
+  public abstract String getServerAddress();
 
-  /**
-   * Returns a new {@link ApiTracerFactory} that will use the provided context to infer attributes
-   * for all tracers created by the factory.
-   *
-   * @param context an {@link ApiTracerContext} object containing information to construct
-   *     attributes
-   */
-  default ApiTracerFactory withContext(ApiTracerContext context) {
-    return this;
+  public static Builder newBuilder() {
+    return new AutoValue_ApiTracerContext.Builder();
+  }
+
+  @AutoValue.Builder
+  public abstract static class Builder {
+    public abstract Builder setServerAddress(String serverAddress);
+
+    public abstract ApiTracerContext build();
   }
 }
