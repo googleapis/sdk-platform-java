@@ -20,7 +20,7 @@
     <gapic-showcase.version>0.36.2</gapic-showcase.version>
     <!-- This is the last version supporting slf4j 1.x, do not upgrade -->
     <slf4j1-logback.version>1.2.13</slf4j1-logback.version>
-    <slf4j2-logback.version>1.5.21</slf4j2-logback.version>
+    <slf4j2-logback.version>1.5.25</slf4j2-logback.version>
   </properties>
 
   <build>
@@ -201,6 +201,14 @@
       <scope>test</scope>
     </dependency>
 
+    <!--  Protobuf 3.x compatibility tests, tensorflow depends on protobuf 3.x gen code and runtime  -->
+    <dependency>
+      <groupId>org.tensorflow</groupId>
+      <artifactId>tensorflow-core-platform</artifactId>
+      <version>1.1.0</version>
+      <scope>test</scope>
+    </dependency>
+
     <!-- Otel testing libraries -->
     <dependency>
       <groupId>io.opentelemetry</groupId>
@@ -356,6 +364,25 @@
                 <testExclude>**/com/google/showcase/v1beta1/it/logging/ITLogging1x.java</testExclude>
                 <testExclude>**/com/google/showcase/v1beta1/it/logging/ITLogging.java</testExclude>
               </testExcludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>protobuf3</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <testExcludes>
+                <testExclude>**/com/google/showcase/v1beta1/it/logging/*.java</testExclude>
+              </testExcludes>
+              <testIncludes>
+                <testInclude>**/com/google/showcase/v1beta1/it/ITProtobuf3Compatibility.java</testInclude>
+              </testIncludes>
             </configuration>
           </plugin>
         </plugins>

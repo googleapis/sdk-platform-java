@@ -129,6 +129,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   private final int processorCount;
   private final Executor executor;
+  @Nullable private final ScheduledExecutorService backgroundExecutor;
   private final HeaderProvider headerProvider;
   private final boolean useS2A;
   private final String endpoint;
@@ -161,6 +162,34 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable
   private final ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
 
+  // This is initialized once for the lifetime of the application. This enables re-using
+  // channels to S2A.
+  private static volatile ChannelCredentials s2aChannelCredentials;
+
+  /**
+   * Resets the s2aChannelCredentials of the {@link InstantiatingGrpcChannelProvider} class for
+   * testing purposes.
+   *
+   * <p>This should only be called from tests.
+   */
+  @VisibleForTesting
+  static void resetS2AChannelCredentials() {
+    synchronized (InstantiatingGrpcChannelProvider.class) {
+      s2aChannelCredentials = null;
+    }
+  }
+
+  /**
+   * Returns the s2aChannelCredentials of the {@link InstantiatingGrpcChannelProvider} class for
+   * testing purposes.
+   *
+   * <p>This should only be called from tests.
+   */
+  @VisibleForTesting
+  static ChannelCredentials getS2AChannelCredentials() {
+    return s2aChannelCredentials;
+  }
+
   /*
    * Experimental feature
    *
@@ -181,6 +210,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   private InstantiatingGrpcChannelProvider(Builder builder) {
     this.processorCount = builder.processorCount;
     this.executor = builder.executor;
+    this.backgroundExecutor = builder.backgroundExecutor;
     this.headerProvider = builder.headerProvider;
     this.useS2A = builder.useS2A;
     this.endpoint = builder.endpoint;
@@ -243,6 +273,16 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Override
   public TransportChannelProvider withExecutor(Executor executor) {
     return toBuilder().setExecutor(executor).build();
+  }
+
+  @Override
+  public boolean needsBackgroundExecutor() {
+    return backgroundExecutor == null;
+  }
+
+  @Override
+  public TransportChannelProvider withBackgroundExecutor(ScheduledExecutorService executor) {
+    return toBuilder().setBackgroundExecutor(executor).build();
   }
 
   @Override
@@ -356,7 +396,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return GrpcTransportChannel.newBuilder()
         .setManagedChannel(
             ChannelPool.create(
-                channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel))
+                channelPoolSettings,
+                InstantiatingGrpcChannelProvider.this::createSingleChannel,
+                backgroundExecutor))
         .setDirectPath(this.canUseDirectPath())
         .build();
   }
@@ -595,43 +637,60 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
    * @return {@link ChannelCredentials} configured to use S2A to create mTLS connection.
    */
   ChannelCredentials createS2ASecuredChannelCredentials() {
-    SecureSessionAgentConfig config = s2aConfigProvider.getConfig();
-    String plaintextAddress = config.getPlaintextAddress();
-    String mtlsAddress = config.getMtlsAddress();
-    if (Strings.isNullOrEmpty(mtlsAddress)) {
-      // Fallback to plaintext connection to S2A.
-      LOG.log(
-          Level.INFO,
-          "Cannot establish an mTLS connection to S2A because autoconfig endpoint did not return a mtls address to reach S2A.");
-      return createPlaintextToS2AChannelCredentials(plaintextAddress);
-    }
-    // Currently, MTLS to MDS is only available on GCE. See:
-    // https://cloud.google.com/compute/docs/metadata/overview#https-mds
-    // Try to load MTLS-MDS creds.
-    File rootFile = new File(MTLS_MDS_ROOT_PATH);
-    File certKeyFile = new File(MTLS_MDS_CERT_CHAIN_AND_KEY_PATH);
-    if (rootFile.isFile() && certKeyFile.isFile()) {
-      // Try to connect to S2A using mTLS.
-      ChannelCredentials mtlsToS2AChannelCredentials = null;
-      try {
-        mtlsToS2AChannelCredentials =
-            createMtlsToS2AChannelCredentials(rootFile, certKeyFile, certKeyFile);
-      } catch (IOException ignore) {
-        // Fallback to plaintext-to-S2A connection on error.
-        LOG.log(
-            Level.WARNING,
-            "Cannot establish an mTLS connection to S2A due to error creating MTLS to MDS TlsChannelCredentials credentials, falling back to plaintext connection to S2A: "
-                + ignore.getMessage());
-        return createPlaintextToS2AChannelCredentials(plaintextAddress);
+    if (s2aChannelCredentials == null) {
+      // s2aChannelCredentials is initialized once and shared by all instances of the class.
+      // To prevent a race on initialization, the object initialization is synchronized on the class
+      // object.
+      synchronized (InstantiatingGrpcChannelProvider.class) {
+        if (s2aChannelCredentials != null) {
+          return s2aChannelCredentials;
+        }
+        SecureSessionAgentConfig config = s2aConfigProvider.getConfig();
+        String plaintextAddress = config.getPlaintextAddress();
+        String mtlsAddress = config.getMtlsAddress();
+        if (Strings.isNullOrEmpty(mtlsAddress)) {
+          // Fallback to plaintext connection to S2A.
+          LOG.log(
+              Level.INFO,
+              "Cannot establish an mTLS connection to S2A because autoconfig endpoint did not return a mtls address to reach S2A.");
+          s2aChannelCredentials = createPlaintextToS2AChannelCredentials(plaintextAddress);
+          return s2aChannelCredentials;
+        }
+        // Currently, MTLS to MDS is only available on GCE. See:
+        // https://cloud.google.com/compute/docs/metadata/overview#https-mds
+        // Try to load MTLS-MDS creds.
+        File rootFile = new File(MTLS_MDS_ROOT_PATH);
+        File certKeyFile = new File(MTLS_MDS_CERT_CHAIN_AND_KEY_PATH);
+        if (rootFile.isFile() && certKeyFile.isFile()) {
+          // Try to connect to S2A using mTLS.
+          ChannelCredentials mtlsToS2AChannelCredentials = null;
+          try {
+            mtlsToS2AChannelCredentials =
+                createMtlsToS2AChannelCredentials(rootFile, certKeyFile, certKeyFile);
+          } catch (IOException ignore) {
+            // Fallback to plaintext-to-S2A connection on error.
+            LOG.log(
+                Level.WARNING,
+                "Cannot establish an mTLS connection to S2A due to error creating MTLS to MDS TlsChannelCredentials credentials, falling back to plaintext connection to S2A: "
+                    + ignore.getMessage());
+            s2aChannelCredentials = createPlaintextToS2AChannelCredentials(plaintextAddress);
+            return s2aChannelCredentials;
+          }
+          s2aChannelCredentials =
+              buildS2AChannelCredentials(mtlsAddress, mtlsToS2AChannelCredentials);
+          return s2aChannelCredentials;
+        } else {
+          // Fallback to plaintext-to-S2A connection if MTLS-MDS creds do not exist.
+          LOG.log(
+              Level.INFO,
+              "Cannot establish an mTLS connection to S2A because MTLS to MDS credentials do not"
+                  + " exist on filesystem, falling back to plaintext connection to S2A");
+          s2aChannelCredentials = createPlaintextToS2AChannelCredentials(plaintextAddress);
+          return s2aChannelCredentials;
+        }
       }
-      return buildS2AChannelCredentials(mtlsAddress, mtlsToS2AChannelCredentials);
-    } else {
-      // Fallback to plaintext-to-S2A connection if MTLS-MDS creds do not exist.
-      LOG.log(
-          Level.INFO,
-          "Cannot establish an mTLS connection to S2A because MTLS to MDS credentials do not exist on filesystem, falling back to plaintext connection to S2A");
-      return createPlaintextToS2AChannelCredentials(plaintextAddress);
     }
+    return s2aChannelCredentials;
   }
 
   private ManagedChannel createSingleChannel() throws IOException {
@@ -839,6 +898,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return channelPoolSettings;
   }
 
+  /** Gets the background executor for channel refresh and resize. */
+  ScheduledExecutorService getBackgroundExecutor() {
+    return backgroundExecutor;
+  }
+
   @Override
   public boolean shouldAutoClose() {
     return true;
@@ -855,6 +919,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   public static final class Builder {
     @Deprecated private int processorCount;
     private Executor executor;
+    private ScheduledExecutorService backgroundExecutor;
     private HeaderProvider headerProvider;
     private String endpoint;
     private String mtlsEndpoint;
@@ -891,6 +956,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     private Builder(InstantiatingGrpcChannelProvider provider) {
       this.processorCount = provider.processorCount;
       this.executor = provider.executor;
+      this.backgroundExecutor = provider.backgroundExecutor;
       this.headerProvider = provider.headerProvider;
       this.endpoint = provider.endpoint;
       this.useS2A = provider.useS2A;
@@ -948,6 +1014,15 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Deprecated
     public Builder setExecutorProvider(ExecutorProvider executorProvider) {
       return setExecutor((Executor) executorProvider.getExecutor());
+    }
+
+    /**
+     * Sets the background executor for this TransportChannelProvider. The life cycle of the
+     * executor should be managed by the caller.
+     */
+    public Builder setBackgroundExecutor(ScheduledExecutorService executor) {
+      this.backgroundExecutor = executor;
+      return this;
     }
 
     /**

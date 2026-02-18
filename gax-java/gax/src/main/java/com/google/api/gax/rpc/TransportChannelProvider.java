@@ -79,6 +79,19 @@ public interface TransportChannelProvider {
   @Deprecated
   TransportChannelProvider withExecutor(ScheduledExecutorService executor);
 
+  /**
+   * True if the TransportProvider needs a background executor. The background executor can be used
+   * for refreshing channels, resizing the channel pool etc.
+   */
+  default boolean needsBackgroundExecutor() {
+    return false;
+  }
+
+  /** Sets the background executor when constructing a new {@link TransportChannel}. */
+  default TransportChannelProvider withBackgroundExecutor(ScheduledExecutorService executor) {
+    return this;
+  }
+
   /** True if the TransportProvider has no headers provided. */
   boolean needsHeaders();
 

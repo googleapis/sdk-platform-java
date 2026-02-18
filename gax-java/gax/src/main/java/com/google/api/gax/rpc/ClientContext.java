@@ -41,6 +41,7 @@ import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.ExecutorAsBackgroundResource;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
 import com.google.auth.ApiKeyCredentials;
@@ -209,9 +210,13 @@ public abstract class ClientContext {
     // executor can only be set from TransportChannelProvider#withExecutor directly, and a provider
     // will have a default executor if it needs one.
     if (transportChannelProvider.needsExecutor() && settings.getExecutorProvider() != null) {
-      transportChannelProvider = transportChannelProvider.withExecutor(backgroundExecutor);
+      transportChannelProvider =
+          transportChannelProvider.withExecutor(settings.getExecutorProvider().getExecutor());
     }
-
+    if (transportChannelProvider.needsBackgroundExecutor()) {
+      transportChannelProvider =
+          transportChannelProvider.withBackgroundExecutor(backgroundExecutor);
+    }
     Map<String, String> headers = getHeaders(settings, credentials);
     if (transportChannelProvider.needsHeaders()) {
       transportChannelProvider = transportChannelProvider.withHeaders(headers);
@@ -265,6 +270,11 @@ public abstract class ClientContext {
     if (watchdogProvider != null && watchdogProvider.shouldAutoClose()) {
       backgroundResources.add(watchdog);
     }
+    ApiTracerContext apiTracerContext =
+        ApiTracerContext.newBuilder()
+            .setServerAddress(endpointContext.resolvedServerAddress())
+            .build();
+    ApiTracerFactory apiTracerFactory = settings.getTracerFactory().withContext(apiTracerContext);
 
     return newBuilder()
         .setBackgroundResources(backgroundResources.build())
@@ -280,7 +290,7 @@ public abstract class ClientContext {
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
         .setStreamWatchdogCheckIntervalDuration(settings.getStreamWatchdogCheckIntervalDuration())
-        .setTracerFactory(settings.getTracerFactory())
+        .setTracerFactory(apiTracerFactory)
         .setEndpointContext(endpointContext)
         .build();
   }

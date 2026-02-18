@@ -1,5 +1,75 @@
 # Changelog
 
+## [2.66.1](https://github.com/googleapis/sdk-platform-java/compare/v2.66.0...v2.66.1) (2026-02-04)
+
+
+### Documentation
+
+* [common-protos] update reference documentation for `SelectionInput.DROPDOWN` to include dynamic data sources and autosuggestion ([9960262](https://github.com/googleapis/sdk-platform-java/commit/9960262cf248400836c04063e6a701bec2aca1ba))
+
+## [2.66.0](https://github.com/googleapis/sdk-platform-java/compare/v2.65.1...v2.66.0) (2026-01-23)
+
+
+### Features
+
+* Upgrade protobuf runtime and gen code to 4.33.x ([#4000](https://github.com/googleapis/sdk-platform-java/issues/4000)) ([#4074](https://github.com/googleapis/sdk-platform-java/issues/4074)) ([3e37376](https://github.com/googleapis/sdk-platform-java/commit/3e37376ccaddf42617436471dc9b014974b8e3df))
+
+
+### Dependencies
+
+* Downgrade opentelemetry to 1.51.0 ([#4075](https://github.com/googleapis/sdk-platform-java/issues/4075)) ([cf65482](https://github.com/googleapis/sdk-platform-java/commit/cf6548232830e0461500d92954050186e255b572))
+* update auth library to 1.42.0 ([#4087](https://github.com/googleapis/sdk-platform-java/issues/4087)) ([ad9ee07](https://github.com/googleapis/sdk-platform-java/commit/ad9ee0731a64585ad8ee0f0ac71bece9f6eaf068))
+* update googleapis/java-cloud-bom digest to ef3656d ([#3630](https://github.com/googleapis/sdk-platform-java/issues/3630)) ([790bcf0](https://github.com/googleapis/sdk-platform-java/commit/790bcf0542dc8aba5afe2f65e80a74d643b40cfe))
+* update http-client to 2.1.0 ([#4086](https://github.com/googleapis/sdk-platform-java/issues/4086)) ([d8bc8f5](https://github.com/googleapis/sdk-platform-java/commit/d8bc8f5d335ffde52a603b47718574858f04f5ee))
+
+## [2.65.1](https://github.com/googleapis/sdk-platform-java/compare/v2.65.0...v2.65.1) (2026-01-13)
+
+
+### Documentation
+
+* Update docs for GoogleCredentialsProvider#setScopesToApply ([#4057](https://github.com/googleapis/sdk-platform-java/issues/4057)) ([0a9962f](https://github.com/googleapis/sdk-platform-java/commit/0a9962f9945b6018796a808f89a6a3a309d1ca04))
+
+## [2.65.0](https://github.com/googleapis/sdk-platform-java/compare/v2.64.2...v2.65.0) (2026-01-12)
+
+
+### Features
+
+* add org.json:json to third-party-dependencies pom ([#4047](https://github.com/googleapis/sdk-platform-java/issues/4047)) ([ffa432e](https://github.com/googleapis/sdk-platform-java/commit/ffa432e4e4ae763845afd48b404836c88698bdc0)), closes [#4046](https://github.com/googleapis/sdk-platform-java/issues/4046)
+* remove dependency management of graal-sdk ([#4033](https://github.com/googleapis/sdk-platform-java/issues/4033)) ([ad05c34](https://github.com/googleapis/sdk-platform-java/commit/ad05c34e205c09ad035f469170b0c62b4423b748))
+
+
+### Bug Fixes
+
+* add api_version breadcrumb to client docs ([#4018](https://github.com/googleapis/sdk-platform-java/issues/4018)) ([a2b2179](https://github.com/googleapis/sdk-platform-java/commit/a2b2179874e6a5435001fe201f4eecc2a8e4c531))
+* Create a single S2AChannelCredentials per application ([#3989](https://github.com/googleapis/sdk-platform-java/issues/3989)) ([3758b43](https://github.com/googleapis/sdk-platform-java/commit/3758b436d7e80b79ad7d5ea330d8f2bf2f430330))
+* provide API to share the same background executor for channel po… ([#4030](https://github.com/googleapis/sdk-platform-java/issues/4030)) ([178182c](https://github.com/googleapis/sdk-platform-java/commit/178182c76c1b35e702215a88adc3ab511dd35a9e))
+
+
+### Dependencies
+
+* update dependencies.txt for grpc-gcp to 1.9.0  ([#4025](https://github.com/googleapis/sdk-platform-java/issues/4025)) ([b68791d](https://github.com/googleapis/sdk-platform-java/commit/b68791d074c02e02a5ccf2f937a5922749a14f56))
+* update google api dependencies ([#3917](https://github.com/googleapis/sdk-platform-java/issues/3917)) ([480cf13](https://github.com/googleapis/sdk-platform-java/commit/480cf13148687c53c4af3da9d48490aeb5bf4b88))
+* update google.http-client.version to 2.0.3 ([#4054](https://github.com/googleapis/sdk-platform-java/issues/4054)) ([b9a8c89](https://github.com/googleapis/sdk-platform-java/commit/b9a8c8924e7b03bca8a97e476abfd012b86f6d45))
+
+
+### Documentation
+
+* Fix retry guide link in javadocs ([#4029](https://github.com/googleapis/sdk-platform-java/issues/4029)) ([b43f77c](https://github.com/googleapis/sdk-platform-java/commit/b43f77c66d93d2423744d0f6d6a0a2a53a06e6d9))
+
+## [2.64.2](https://github.com/googleapis/sdk-platform-java/compare/v2.64.1...v2.64.2) (2025-12-10)
+
+
+### Bug Fixes
+
+* add per-service api_version to gapic_metadata ([#3984](https://github.com/googleapis/sdk-platform-java/issues/3984)) ([d589306](https://github.com/googleapis/sdk-platform-java/commit/d589306c4ecc12a2a744cb9dfb914ccea8fb34fd))
+
+
+### Dependencies
+
+* Upgrade auth to 1.41.0. ([#4008](https://github.com/googleapis/sdk-platform-java/issues/4008)) ([833b3e5](https://github.com/googleapis/sdk-platform-java/commit/833b3e54c0f13ac8183a639c4464dcf58fd44096))
+* upgrade grpc to 1.76.1 ([#3993](https://github.com/googleapis/sdk-platform-java/issues/3993)) ([958611e](https://github.com/googleapis/sdk-platform-java/commit/958611e23460dba596160f3224d8588afdba6bc2))
+* Upgrade grpc to 1.76.2 ([#4006](https://github.com/googleapis/sdk-platform-java/issues/4006)) ([a8060a2](https://github.com/googleapis/sdk-platform-java/commit/a8060a263ba34556b8d4d347a57625849a6859bc))
+
 ## [2.64.1](https://github.com/googleapis/sdk-platform-java/compare/v2.64.0...v2.64.1) (2025-11-07)
 
 
