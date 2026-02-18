@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.67.0](https://github.com/googleapis/sdk-platform-java/compare/v2.66.1...v2.67.0) (2026-02-18)
+
+
+### Features
+
+* **observability:** introduce minimal tracing implementation ([#4105](https://github.com/googleapis/sdk-platform-java/issues/4105)) ([e4e5e89](https://github.com/googleapis/sdk-platform-java/commit/e4e5e893e7a62bd12528e7d448dc2789f71946eb))
+
+
+### Dependencies
+
+* Upgrade Google-Auth-Library to v1.43.0 ([#4114](https://github.com/googleapis/sdk-platform-java/issues/4114)) ([825298b](https://github.com/googleapis/sdk-platform-java/commit/825298b6bf225bb8536ecab9d788f82f3f8eec4d))
+* Upgrade grpc to 1.76.3 ([#4106](https://github.com/googleapis/sdk-platform-java/issues/4106)) ([c6555f5](https://github.com/googleapis/sdk-platform-java/commit/c6555f5f0cd85683db76394271e1f57989cac7d0))
+
 ## [2.66.1](https://github.com/googleapis/sdk-platform-java/compare/v2.66.0...v2.66.1) (2026-02-04)
 
 
