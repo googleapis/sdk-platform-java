@@ -40,6 +40,7 @@ import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
+import com.google.common.net.HostAndPort;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -132,6 +133,8 @@ public abstract class EndpointContext {
   abstract String resolvedUniverseDomain();
 
   public abstract String resolvedEndpoint();
+
+  public abstract String resolvedServerAddress();
 
   public abstract Builder toBuilder();
 
@@ -227,6 +230,8 @@ public abstract class EndpointContext {
     public abstract Builder setUsingGDCH(boolean usingGDCH);
 
     public abstract Builder setResolvedEndpoint(String resolvedEndpoint);
+
+    public abstract Builder setResolvedServerAddress(String serverAddress);
 
     public abstract Builder setResolvedUniverseDomain(String resolvedUniverseDomain);
 
@@ -382,6 +387,23 @@ public abstract class EndpointContext {
       return mtlsEndpoint().contains(Credentials.GOOGLE_DEFAULT_UNIVERSE);
     }
 
+    private String parseServerAddress(String endpoint) {
+      if (Strings.isNullOrEmpty(endpoint)) {
+        return endpoint;
+      }
+      String hostPort = endpoint;
+      if (hostPort.contains("://")) {
+        // Strip the scheme if present. HostAndPort doesn't support schemes.
+        hostPort = hostPort.substring(hostPort.indexOf("://") + 3);
+      }
+      try {
+        return HostAndPort.fromString(hostPort).getHost();
+      } catch (IllegalArgumentException e) {
+        // Fallback for cases HostAndPort can't handle.
+        return hostPort;
+      }
+    }
+
     // Default to port 443 for HTTPS. Using HTTP requires explicitly setting the endpoint
     private String buildEndpointTemplate(String serviceName, String resolvedUniverseDomain) {
       return serviceName + "." + resolvedUniverseDomain + ":443";
@@ -416,7 +438,9 @@ public abstract class EndpointContext {
     public EndpointContext build() throws IOException {
       // The Universe Domain is used to resolve the Endpoint. It should be resolved first
       setResolvedUniverseDomain(determineUniverseDomain());
-      setResolvedEndpoint(determineEndpoint());
+      String endpoint = determineEndpoint();
+      setResolvedEndpoint(endpoint);
+      setResolvedServerAddress(parseServerAddress(endpoint));
       setUseS2A(shouldUseS2A());
       return autoBuild();
     }

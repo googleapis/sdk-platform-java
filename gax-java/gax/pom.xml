@@ -73,6 +73,11 @@
       <artifactId>opentelemetry-api</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-context</artifactId>
+      <optional>true</optional>
+    </dependency>
     <!--    Logging dependency    -->
     <dependency>
       <groupId>org.slf4j</groupId>
