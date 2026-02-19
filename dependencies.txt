@@ -9,14 +9,14 @@
 # Pom-Parent Dependencies
 # These dependencies are declared: https://github.com/googleapis/sdk-platform-java/blob/main/gapic-generator-java-pom-parent/pom.xml
 javax.annotation:javax.annotation-api,javax.annotation-api=1.3.2
-io.grpc:grpc-bom,grpc=1.78.0
-com.google.auth:google-auth-library-bom,google.auth=1.42.1
+io.grpc:grpc-bom,grpc=1.79.0
+com.google.auth:google-auth-library-bom,google.auth=1.43.0
 com.google.http-client:google-http-client,google.http-client=2.1.0
 com.google.code.gson:gson,gson=2.13.2
 com.google.guava:guava,guava=33.5.0-jre
-com.google.protobuf:protobuf-java,protobuf=4.33.4
-io.opentelemetry:opentelemetry-bom,opentelemetry=1.58.0
-com.google.errorprone:error_prone_annotations,errorprone=2.46.0
+com.google.protobuf:protobuf-java,protobuf=4.33.5
+io.opentelemetry:opentelemetry-bom,opentelemetry=1.59.0
+com.google.errorprone:error_prone_annotations,errorprone=2.47.0
 com.google.j2objc:j2objc-annotations,j2objc-annotations=3.1
 org.threeten:threetenbp,threetenbp=1.7.2
 org.slf4j:slf4j-api,slf4j=2.0.17
@@ -37,7 +37,7 @@ commons-codec:commons-codec,codec=1.21.0
 org.apache.httpcomponents:httpclient,httpcomponents.httpclient=4.5.14
 org.apache.httpcomponents:httpcore,httpcomponents.httpcore=4.4.16
 org.apache.httpcomponents.client5:httpclient5,apache-httpclient-5=5.6
-org.apache.httpcomponents.core5:httpcore5,apache-httpcore-5=5.4
+org.apache.httpcomponents.core5:httpcore5,apache-httpcore-5=5.4.1
 org.json:json,json=20251224
 io.perfmark:perfmark-api,perfmark-api=0.27.0
 # Note: This is the google opentelemetry exporter and not the general opentelemetry project

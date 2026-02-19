@@ -33,47 +33,36 @@ package com.google.api.gax.tracing;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.common.annotations.VisibleForTesting;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
- * A {@link ApiTracerFactory} to build instances of {@link AppCentricTracer}.
+ * A {@link ApiTracerFactory} to build instances of {@link SpanTracer}.
  *
- * <p>This class wraps the {@link TraceRecorder} and pass it to {@link AppCentricTracer}. It will be
- * used to record traces in {@link AppCentricTracer}.
+ * <p>This class wraps the {@link TraceManager} and pass it to {@link SpanTracer}. It will be used
+ * to record traces in {@link SpanTracer}.
  *
  * <p>This class is expected to be initialized once during client initialization.
  */
 @BetaApi
 @InternalApi
-public class AppCentricTracerFactory implements ApiTracerFactory {
-  private final TraceRecorder traceRecorder;
+public class SpanTracerFactory implements ApiTracerFactory {
+  private final TraceManager traceManager;
 
-  /** Mapping of client attributes that are set for every AppCentricTracer at operation level */
-  private final Map<String, String> operationAttributes;
+  private final ApiTracerContext apiTracerContext;
 
-  /** Mapping of client attributes that are set for every AppCentricTracer at attempt level */
-  private final Map<String, String> attemptAttributes;
-
-  /** Creates a AppCentricTracerFactory */
-  public AppCentricTracerFactory(TraceRecorder traceRecorder) {
-    this(traceRecorder, new HashMap<>(), new HashMap<>());
+  /** Creates a SpanTracerFactory */
+  public SpanTracerFactory(TraceManager traceManager) {
+    this(traceManager, ApiTracerContext.newBuilder().build());
   }
 
   /**
-   * Pass in a Map of client level attributes which will be added to every single AppCentricTracer
-   * created from the ApiTracerFactory. This is package private since span attributes are determined
+   * Pass in a Map of client level attributes which will be added to every single SpanTracer created
+   * from the ApiTracerFactory. This is package private since span attributes are determined
    * internally.
    */
   @VisibleForTesting
-  AppCentricTracerFactory(
-      TraceRecorder traceRecorder,
-      Map<String, String> operationAttributes,
-      Map<String, String> attemptAttributes) {
-    this.traceRecorder = traceRecorder;
-
-    this.operationAttributes = new HashMap<>(operationAttributes);
-    this.attemptAttributes = new HashMap<>(attemptAttributes);
+  SpanTracerFactory(TraceManager traceManager, ApiTracerContext apiTracerContext) {
+    this.traceManager = traceManager;
+    this.apiTracerContext = apiTracerContext;
   }
 
   @Override
@@ -82,18 +71,12 @@ public class AppCentricTracerFactory implements ApiTracerFactory {
     // feature is developed.
     String attemptSpanName = spanName.getClientName() + "/" + spanName.getMethodName() + "/attempt";
 
-    AppCentricTracer appCentricTracer =
-        new AppCentricTracer(traceRecorder, attemptSpanName, this.attemptAttributes);
-    return appCentricTracer;
+    SpanTracer spanTracer = new SpanTracer(traceManager, this.apiTracerContext, attemptSpanName);
+    return spanTracer;
   }
 
   @Override
   public ApiTracerFactory withContext(ApiTracerContext context) {
-    Map<String, String> newAttemptAttributes = new HashMap<>(this.attemptAttributes);
-    newAttemptAttributes.putAll(AppCentricAttributes.getAttemptAttributes(context));
-    if (context.getRepo() != null) {
-      newAttemptAttributes.put(AppCentricTracer.REPO_ATTRIBUTE, context.getRepo());
-    }
-    return new AppCentricTracerFactory(traceRecorder, operationAttributes, newAttemptAttributes);
+    return new SpanTracerFactory(traceManager, context);
   }
 }

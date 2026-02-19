@@ -32,18 +32,19 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import java.util.Map;
 
 /**
- * Utility class with common attribute names in app-centric observability.
- *
- * <p>For internal use only.
+ * Provides an interface for tracing management. The implementer is expected to use an observability
+ * framework, e.g. OpenTelemetry. There should be only one instance of TraceManager per client.
  */
-@InternalApi
 @BetaApi
-public class AppCentricAttributes {
-  /** The address of the server being called (e.g., "pubsub.googleapis.com"). */
-  public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
+@InternalApi
+public interface TraceManager {
+  /** Starts a span and returns a handle to manage its lifecycle. */
+  Span createSpan(String name, Map<String, String> attributes);
 
-  /** The repository of the client library (e.g., "googleapis/google-cloud-java"). */
-  public static final String REPO_ATTRIBUTE = "gcp.client.repo";
+  interface Span {
+    void end();
+  }
 }

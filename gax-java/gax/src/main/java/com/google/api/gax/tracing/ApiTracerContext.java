@@ -35,6 +35,8 @@ import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,6 +54,17 @@ public abstract class ApiTracerContext {
   private static final Logger LOGGER = Logger.getLogger(ApiTracerContext.class.getName());
   private static final String GAPIC_PROPERTIES_FILE = "/gapic.properties";
   private static final String REPO_KEY = "repo";
+
+  /**
+   * @return a map of attributes to be included in attempt-level spans
+   */
+  public Map<String, String> getAttemptAttributes() {
+    Map<String, String> attributes = new HashMap<>();
+    if (getServerAddress() != null) {
+      attributes.put(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, getServerAddress());
+    }
+    return attributes;
+  }
 
   @Nullable
   public abstract String getServerAddress();

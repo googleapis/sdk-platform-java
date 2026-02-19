@@ -38,35 +38,34 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.google.common.collect.ImmutableMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-class AppCentricTracerFactoryTest {
+class SpanTracerFactoryTest {
 
   @Test
   void testNewTracer_createsOpenTelemetryTracingTracer() {
-    TraceRecorder recorder = mock(TraceRecorder.class);
-    when(recorder.createSpan(anyString(), anyMap()))
-        .thenReturn(mock(TraceRecorder.TraceSpan.class));
+    TraceManager recorder = mock(TraceManager.class);
+    when(recorder.createSpan(anyString(), anyMap())).thenReturn(mock(TraceManager.Span.class));
 
-    AppCentricTracerFactory factory = new AppCentricTracerFactory(recorder);
+    SpanTracerFactory factory = new SpanTracerFactory(recorder);
     ApiTracer tracer =
         factory.newTracer(
             null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
-    assertThat(tracer).isInstanceOf(AppCentricTracer.class);
+    assertThat(tracer).isInstanceOf(SpanTracer.class);
   }
 
   @Test
   void testNewTracer_addsAttributes() {
-    TraceRecorder recorder = mock(TraceRecorder.class);
-    TraceRecorder.TraceSpan attemptHandle = mock(TraceRecorder.TraceSpan.class);
+    TraceManager recorder = mock(TraceManager.class);
+    TraceManager.Span attemptHandle = mock(TraceManager.Span.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
 
-    AppCentricTracerFactory factory =
-        new AppCentricTracerFactory(
-            recorder, ImmutableMap.of(), ImmutableMap.of("server.port", "443"));
+    ApiTracerFactory factory =
+        new SpanTracerFactory(recorder, ApiTracerContext.newBuilder().build());
+    factory =
+        factory.withContext(ApiTracerContext.newBuilder().setServerAddress("test-address").build());
     ApiTracer tracer =
         factory.newTracer(
             null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
@@ -77,19 +76,19 @@ class AppCentricTracerFactoryTest {
     verify(recorder, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
-    assertThat(attemptAttributes).containsEntry("server.port", "443");
+    assertThat(attemptAttributes).containsEntry("server.address", "test-address");
   }
 
   @Test
   void testWithContext_addsInferredAttributes() {
-    TraceRecorder recorder = mock(TraceRecorder.class);
-    TraceRecorder.TraceSpan attemptHandle = mock(TraceRecorder.TraceSpan.class);
+    TraceManager recorder = mock(TraceManager.class);
+    TraceManager.Span attemptHandle = mock(TraceManager.Span.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
 
     ApiTracerContext context =
-        ApiTracerContext.newBuilder().setServerAddress("example.com").setRepo("my-repo").build();
+        ApiTracerContext.newBuilder().setServerAddress("example.com").build();
 
-    AppCentricTracerFactory factory = new AppCentricTracerFactory(recorder);
+    SpanTracerFactory factory = new SpanTracerFactory(recorder);
     ApiTracerFactory factoryWithContext = factory.withContext(context);
 
     ApiTracer tracer =
@@ -104,18 +103,17 @@ class AppCentricTracerFactoryTest {
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes)
         .containsEntry(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, "example.com");
-    assertThat(attemptAttributes).containsEntry(AppCentricTracer.REPO_ATTRIBUTE, "my-repo");
   }
 
   @Test
   void testWithContext_noEndpointContext_doesNotAddAttributes() {
-    TraceRecorder recorder = mock(TraceRecorder.class);
-    TraceRecorder.TraceSpan attemptHandle = mock(TraceRecorder.TraceSpan.class);
+    TraceManager recorder = mock(TraceManager.class);
+    TraceManager.Span attemptHandle = mock(TraceManager.Span.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
 
-    ApiTracerContext context = ApiTracerContext.newBuilder(null).build();
+    ApiTracerContext context = ApiTracerContext.newBuilder().build();
 
-    AppCentricTracerFactory factory = new AppCentricTracerFactory(recorder);
+    SpanTracerFactory factory = new SpanTracerFactory(recorder);
     ApiTracerFactory factoryWithContext = factory.withContext(context);
 
     ApiTracer tracer =
@@ -129,6 +127,5 @@ class AppCentricTracerFactoryTest {
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes).doesNotContainKey(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE);
-    assertThat(attemptAttributes).doesNotContainKey(AppCentricTracer.REPO_ATTRIBUTE);
   }
 }

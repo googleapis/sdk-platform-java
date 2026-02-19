@@ -36,45 +36,48 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * An implementation of {@link ApiTracer} that uses a {@link TraceRecorder} to record traces. This
- * implementation is agnostic to the specific {@link TraceRecorder} in order to allow extensions
- * that interact with other backends.
+ * An implementation of {@link ApiTracer} that uses a {@link TraceManager} to record traces. This
+ * implementation is agnostic to the specific {@link TraceManager} in order to allow extensions that
+ * interact with other backends.
  */
 @BetaApi
 @InternalApi
-public class AppCentricTracer implements ApiTracer {
+public class SpanTracer implements ApiTracer {
   public static final String LANGUAGE_ATTRIBUTE = "gcp.client.language";
-  public static final String REPO_ATTRIBUTE = "gcp.client.repo";
 
   public static final String DEFAULT_LANGUAGE = "Java";
 
-  private final TraceRecorder recorder;
+  private final TraceManager traceManager;
   private final Map<String, String> attemptAttributes;
   private final String attemptSpanName;
-  private TraceRecorder.TraceSpan attemptHandle;
+  private final ApiTracerContext apiTracerContext;
+  private TraceManager.Span attemptHandle;
 
   /**
-   * Creates a new instance of {@code AppCentricTracer}.
+   * Creates a new instance of {@code SpanTracer}.
    *
-   * @param recorder the {@link TraceRecorder} to use for recording spans
+   * @param traceManager the {@link TraceManager} to use for recording spans
    * @param attemptSpanName the name of the individual attempt spans
-   * @param attemptAttributes attributes to be added to each attempt span
    */
-  public AppCentricTracer(
-      TraceRecorder recorder, String attemptSpanName, Map<String, String> attemptAttributes) {
-    this.recorder = recorder;
+  public SpanTracer(
+      TraceManager traceManager, ApiTracerContext apiTracerContext, String attemptSpanName) {
+    this.traceManager = traceManager;
     this.attemptSpanName = attemptSpanName;
-    this.attemptAttributes = new HashMap<>(attemptAttributes);
-    this.attemptAttributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
+    this.apiTracerContext = apiTracerContext;
+    this.attemptAttributes = new HashMap<>();
+    buildAttributes();
+  }
 
-    // Start the long-lived operation span.
+  private void buildAttributes() {
+    this.attemptAttributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
+    this.attemptAttributes.putAll(this.apiTracerContext.getAttemptAttributes());
   }
 
   @Override
   public void attemptStarted(Object request, int attemptNumber) {
     Map<String, String> attemptAttributes = new HashMap<>(this.attemptAttributes);
     // Start the specific attempt span with the operation span as parent
-    this.attemptHandle = recorder.createSpan(attemptSpanName, attemptAttributes);
+    this.attemptHandle = traceManager.createSpan(attemptSpanName, attemptAttributes);
   }
 
   @Override

@@ -32,18 +32,50 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.trace.SpanBuilder;
+import io.opentelemetry.api.trace.SpanKind;
+import java.util.Map;
 
 /**
- * Utility class with common attribute names in app-centric observability.
- *
- * <p>For internal use only.
+ * OpenTelemetry implementation of managing traces. This implementation collects the measurements
+ * related to the lifecyle of an RPC.
  */
-@InternalApi
 @BetaApi
-public class AppCentricAttributes {
-  /** The address of the server being called (e.g., "pubsub.googleapis.com"). */
-  public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
+@InternalApi
+public class OpenTelemetryTraceManager implements TraceManager {
+  private final io.opentelemetry.api.trace.Tracer tracer;
 
-  /** The repository of the client library (e.g., "googleapis/google-cloud-java"). */
-  public static final String REPO_ATTRIBUTE = "gcp.client.repo";
+  public OpenTelemetryTraceManager(OpenTelemetry openTelemetry) {
+    this.tracer = openTelemetry.getTracer("gax-java");
+  }
+
+  @Override
+  public Span createSpan(String name, Map<String, String> attributes) {
+    SpanBuilder spanBuilder = tracer.spanBuilder(name);
+
+    // Attempt spans are of the CLIENT kind
+    spanBuilder.setSpanKind(SpanKind.CLIENT);
+
+    if (attributes != null) {
+      attributes.forEach((k, v) -> spanBuilder.setAttribute(k, v));
+    }
+
+    io.opentelemetry.api.trace.Span span = spanBuilder.startSpan();
+
+    return new OtelSpan(span);
+  }
+
+  private static class OtelSpan implements Span {
+    private final io.opentelemetry.api.trace.Span span;
+
+    private OtelSpan(io.opentelemetry.api.trace.Span span) {
+      this.span = span;
+    }
+
+    @Override
+    public void end() {
+      span.end();
+    }
+  }
 }

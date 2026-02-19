@@ -27,34 +27,53 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package com.google.api.gax.tracing;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-class AppCentricAttributesTest {
+@ExtendWith(MockitoExtension.class)
+class SpanTracerTest {
+  @Mock private TraceManager recorder;
+  @Mock private TraceManager.Span attemptHandle;
+  private SpanTracer tracer;
+  private static final String ATTEMPT_SPAN_NAME = "Service/Method/attempt";
 
-  @Test
-  void testGetAttemptAttributes_serverAddress() {
-    ApiTracerContext context =
-        ApiTracerContext.newBuilder().setServerAddress("test-address").build();
-
-    Map<String, String> attributes = AppCentricAttributes.getAttemptAttributes(context);
-
-    assertThat(attributes).hasSize(1);
-    assertThat(attributes)
-        .containsEntry(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, "test-address");
+  @BeforeEach
+  void setUp() {
+    tracer = new SpanTracer(recorder, ApiTracerContext.newBuilder().build(), ATTEMPT_SPAN_NAME);
   }
 
   @Test
-  void testGetAttemptAttributes_nonePresent() {
-    ApiTracerContext context = ApiTracerContext.newBuilder().build();
+  void testAttemptLifecycle_startsAndEndsAttemptSpan() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    tracer.attemptStarted(new Object(), 1);
+    tracer.attemptSucceeded();
 
-    Map<String, String> attributes = AppCentricAttributes.getAttemptAttributes(context);
+    verify(attemptHandle).end();
+  }
 
-    assertThat(attributes).isEmpty();
+  @Test
+  void testAttemptStarted_includesLanguageAttribute() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
+    verify(recorder).createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
+
+    assertThat(attributesCaptor.getValue())
+        .containsEntry(SpanTracer.LANGUAGE_ATTRIBUTE, SpanTracer.DEFAULT_LANGUAGE);
   }
 }

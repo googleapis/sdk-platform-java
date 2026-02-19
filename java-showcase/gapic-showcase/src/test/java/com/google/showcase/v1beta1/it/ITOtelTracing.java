@@ -33,9 +33,9 @@ package com.google.showcase.v1beta1.it;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.gax.tracing.AppCentricAttributes;
-import com.google.api.gax.tracing.AppCentricTracer;
-import com.google.api.gax.tracing.AppCentricTracerFactory;
-import com.google.api.gax.tracing.OpenTelemetryTraceRecorder;
+import com.google.api.gax.tracing.OpenTelemetryTraceManager;
+import com.google.api.gax.tracing.SpanTracer;
+import com.google.api.gax.tracing.SpanTracerFactory;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
@@ -82,8 +82,8 @@ class ITOtelTracing {
 
   @Test
   void testTracing_successfulEcho_grpc() throws Exception {
-    AppCentricTracerFactory tracingFactory =
-        new AppCentricTracerFactory(new OpenTelemetryTraceRecorder(openTelemetrySdk));
+    SpanTracerFactory tracingFactory =
+        new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
 
     try (EchoClient client =
         TestClientInitializer.createGrpcEchoClientOpentelemetry(tracingFactory)) {
@@ -102,8 +102,8 @@ class ITOtelTracing {
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(AttributeKey.stringKey(AppCentricTracer.LANGUAGE_ATTRIBUTE)))
-          .isEqualTo(AppCentricTracer.DEFAULT_LANGUAGE);
+                  .get(AttributeKey.stringKey(SpanTracer.LANGUAGE_ATTRIBUTE)))
+          .isEqualTo(SpanTracer.DEFAULT_LANGUAGE);
       assertThat(
               attemptSpan
                   .getAttributes()
@@ -112,15 +112,15 @@ class ITOtelTracing {
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(AttributeKey.stringKey(AppCentricTracer.REPO_ATTRIBUTE)))
+                  .get(AttributeKey.stringKey(AppCentricAttributes.REPO_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_REPO);
     }
   }
 
   @Test
   void testTracing_successfulEcho_httpjson() throws Exception {
-    AppCentricTracerFactory tracingFactory =
-        new AppCentricTracerFactory(new OpenTelemetryTraceRecorder(openTelemetrySdk));
+    SpanTracerFactory tracingFactory =
+        new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
 
     try (EchoClient client =
         TestClientInitializer.createHttpJsonEchoClientOpentelemetry(tracingFactory)) {
@@ -139,8 +139,8 @@ class ITOtelTracing {
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(AttributeKey.stringKey(AppCentricTracer.LANGUAGE_ATTRIBUTE)))
-          .isEqualTo(AppCentricTracer.DEFAULT_LANGUAGE);
+                  .get(AttributeKey.stringKey(SpanTracer.LANGUAGE_ATTRIBUTE)))
+          .isEqualTo(SpanTracer.DEFAULT_LANGUAGE);
       assertThat(
               attemptSpan
                   .getAttributes()
@@ -149,7 +149,7 @@ class ITOtelTracing {
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(AttributeKey.stringKey(AppCentricTracer.REPO_ATTRIBUTE)))
+                  .get(AttributeKey.stringKey(AppCentricAttributes.REPO_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_REPO);
     }
   }
