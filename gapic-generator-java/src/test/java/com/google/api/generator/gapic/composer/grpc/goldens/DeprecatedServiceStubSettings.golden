@@ -15,6 +15,7 @@ import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -181,6 +182,11 @@ public class DeprecatedServiceStubSettings extends StubSettings<DeprecatedServic
 
     fastFibonacciSettings = settingsBuilder.fastFibonacciSettings().build();
     slowFibonacciSettings = settingsBuilder.slowFibonacciSettings().build();
+  }
+
+  @Override
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return DeprecatedServiceApiTracerContext.create(serverAddress);
   }
 
   /** Builder for DeprecatedServiceStubSettings. */
