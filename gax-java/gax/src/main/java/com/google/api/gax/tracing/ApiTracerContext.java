@@ -31,15 +31,9 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
-import com.google.auto.value.AutoValue;
-import com.google.common.annotations.VisibleForTesting;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Objects;
 import javax.annotation.Nullable;
 
 /**
@@ -49,11 +43,7 @@ import javax.annotation.Nullable;
  * <p>For internal use only.
  */
 @InternalApi
-@AutoValue
 public abstract class ApiTracerContext {
-  private static final Logger LOGGER = Logger.getLogger(ApiTracerContext.class.getName());
-  private static final String GAPIC_PROPERTIES_FILE = "/gapic.properties";
-  private static final String REPO_KEY = "repo";
 
   /**
    * @return a map of attributes to be included in attempt-level spans
@@ -62,6 +52,9 @@ public abstract class ApiTracerContext {
     Map<String, String> attributes = new HashMap<>();
     if (getServerAddress() != null) {
       attributes.put(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, getServerAddress());
+    }
+    if (getRepo() != null) {
+      attributes.put(AppCentricAttributes.REPO_ATTRIBUTE, getRepo());
     }
     return attributes;
   }
@@ -72,42 +65,39 @@ public abstract class ApiTracerContext {
   @Nullable
   public abstract String getRepo();
 
-  public static Builder newBuilder() {
-    return newBuilder(ApiTracerContext.class.getResourceAsStream(GAPIC_PROPERTIES_FILE));
-  }
-
-  @VisibleForTesting
-  static Builder newBuilder(@Nullable InputStream inputStream) {
-    Builder builder = new AutoValue_ApiTracerContext.Builder();
-    loadRepoFromProperties(builder, inputStream);
-    return builder;
-  }
-
-  private static void loadRepoFromProperties(Builder builder, @Nullable InputStream is) {
-    if (is == null) {
-      return;
-    }
-    try {
-      Properties properties = new Properties();
-      properties.load(is);
-      builder.setRepo(properties.getProperty(REPO_KEY));
-    } catch (IOException e) {
-      LOGGER.log(Level.WARNING, "Could not load gapic.properties", e);
-    } finally {
-      try {
-        is.close();
-      } catch (IOException e) {
-        LOGGER.log(Level.WARNING, "Could not close gapic.properties stream", e);
+  public static ApiTracerContext create(
+      @Nullable final String serverAddress, @Nullable final String repo) {
+    return new ApiTracerContext() {
+      @Override
+      @Nullable
+      public String getServerAddress() {
+        return serverAddress;
       }
-    }
+
+      @Override
+      @Nullable
+      public String getRepo() {
+        return repo;
+      }
+    };
   }
 
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder setServerAddress(String serverAddress);
+  @Override
+  public String toString() {
+    return "ApiTracerContext{serverAddress=" + getServerAddress() + ", repo=" + getRepo() + "}";
+  }
 
-    public abstract Builder setRepo(String repo);
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof ApiTracerContext)) return false;
+    ApiTracerContext that = (ApiTracerContext) o;
+    return Objects.equals(getServerAddress(), that.getServerAddress())
+        && Objects.equals(getRepo(), that.getRepo());
+  }
 
-    public abstract ApiTracerContext build();
+  @Override
+  public int hashCode() {
+    return Objects.hash(getServerAddress(), getRepo());
   }
 }

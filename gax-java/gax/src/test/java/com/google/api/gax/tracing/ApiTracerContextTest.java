@@ -32,61 +32,45 @@ package com.google.api.gax.tracing;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 class ApiTracerContextTest {
 
   @Test
-  void testNewBuilderWithNoPropertiesFile() {
-    ApiTracerContext context =
-        ApiTracerContext.newBuilder(null).setServerAddress("test-address").build();
-
-    assertThat(context.getServerAddress()).isEqualTo("test-address");
-    assertThat(context.getRepo()).isNull();
-  }
-
-  @Test
-  void testNewBuilderWithPropertiesFile() {
-    String propertiesContent = "repo=test-repo";
-    InputStream inputStream =
-        new ByteArrayInputStream(propertiesContent.getBytes(StandardCharsets.UTF_8));
-
-    ApiTracerContext context =
-        ApiTracerContext.newBuilder(inputStream).setServerAddress("test-address").build();
+  void testCreate() {
+    ApiTracerContext context = ApiTracerContext.create("test-address", "test-repo");
 
     assertThat(context.getServerAddress()).isEqualTo("test-address");
     assertThat(context.getRepo()).isEqualTo("test-repo");
   }
 
   @Test
-  void testNewBuilderWithPropertiesFileAndNoRepoKey() {
-    String propertiesContent = "somekey=somevalue";
-    InputStream inputStream =
-        new ByteArrayInputStream(propertiesContent.getBytes(StandardCharsets.UTF_8));
+  void testGetAttemptAttributes() {
+    ApiTracerContext context = ApiTracerContext.create("test-address", "test-repo");
+    Map<String, String> attributes = context.getAttemptAttributes();
 
-    ApiTracerContext context =
-        ApiTracerContext.newBuilder(inputStream).setServerAddress("test-address").build();
-
-    assertThat(context.getServerAddress()).isEqualTo("test-address");
-    assertThat(context.getRepo()).isNull();
+    assertThat(attributes)
+        .containsEntry(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, "test-address");
+    assertThat(attributes).containsEntry(AppCentricAttributes.REPO_ATTRIBUTE, "test-repo");
   }
 
   @Test
-  void testNewBuilderWithPropertiesFileLoadingError() throws IOException {
-    InputStream mockInputStream = Mockito.mock(InputStream.class);
-    Mockito.doThrow(new IOException("Test IO Exception"))
-        .when(mockInputStream)
-        .read(Mockito.any(byte[].class));
+  void testGetAttemptAttributes_nullValues() {
+    ApiTracerContext context = ApiTracerContext.create(null, null);
+    Map<String, String> attributes = context.getAttemptAttributes();
 
-    ApiTracerContext context =
-        ApiTracerContext.newBuilder(mockInputStream).setServerAddress("test-address").build();
+    assertThat(attributes).isEmpty();
+  }
 
-    assertThat(context.getServerAddress()).isEqualTo("test-address");
-    assertThat(context.getRepo()).isNull();
+  @Test
+  void testEqualsAndHashCode() {
+    ApiTracerContext context1 = ApiTracerContext.create("test-address", "test-repo");
+    ApiTracerContext context2 = ApiTracerContext.create("test-address", "test-repo");
+    ApiTracerContext context3 = ApiTracerContext.create("other-address", "test-repo");
+
+    assertThat(context1).isEqualTo(context2);
+    assertThat(context1.hashCode()).isEqualTo(context2.hashCode());
+    assertThat(context1).isNotEqualTo(context3);
   }
 }

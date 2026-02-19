@@ -271,9 +271,7 @@ public abstract class ClientContext {
       backgroundResources.add(watchdog);
     }
     ApiTracerContext apiTracerContext =
-        ApiTracerContext.newBuilder()
-            .setServerAddress(endpointContext.resolvedServerAddress())
-            .build();
+        settings.getApiTracerContext(endpointContext.resolvedServerAddress());
     ApiTracerFactory apiTracerFactory = settings.getTracerFactory().withContext(apiTracerContext);
 
     return newBuilder()
