@@ -104,7 +104,7 @@ if [ -z "${os_architecture}" ]; then
 fi
 
 if [ -z "${repo}" ]; then
-  repo=$(repo)
+  repo=""
 fi
 
 temp_destination_path="${output_folder}/temp_preprocessed-$RANDOM"
