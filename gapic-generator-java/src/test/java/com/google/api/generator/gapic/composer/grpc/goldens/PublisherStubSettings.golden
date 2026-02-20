@@ -520,8 +520,8 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
   }
 
   @Override
-  protected ApiTracerContext getApiTracerContext() {
-    return PublisherApiTracerContext.create(getEndpointContext().resolvedServerAddress());
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return PublisherApiTracerContext.create(serverAddress);
   }
 
   /** Builder for PublisherStubSettings. */

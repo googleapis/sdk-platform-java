@@ -223,8 +223,8 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
   }
 
   @Override
-  protected ApiTracerContext getApiTracerContext() {
-    return ComplianceApiTracerContext.create(getEndpointContext().resolvedServerAddress());
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return ComplianceApiTracerContext.create(serverAddress);
   }
 
   /** Builder for ComplianceStubSettings. */

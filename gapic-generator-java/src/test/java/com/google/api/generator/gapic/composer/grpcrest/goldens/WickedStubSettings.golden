@@ -187,8 +187,8 @@ public class WickedStubSettings extends StubSettings<WickedStubSettings> {
   }
 
   @Override
-  protected ApiTracerContext getApiTracerContext() {
-    return WickedApiTracerContext.create(getEndpointContext().resolvedServerAddress());
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return WickedApiTracerContext.create(serverAddress);
   }
 
   /** Builder for WickedStubSettings. */

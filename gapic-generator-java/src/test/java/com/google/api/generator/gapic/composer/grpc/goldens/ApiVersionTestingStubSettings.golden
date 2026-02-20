@@ -168,8 +168,8 @@ public class EchoWithVersionStubSettings extends StubSettings<EchoWithVersionStu
   }
 
   @Override
-  protected ApiTracerContext getApiTracerContext() {
-    return EchoWithVersionApiTracerContext.create(getEndpointContext().resolvedServerAddress());
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return EchoWithVersionApiTracerContext.create(serverAddress);
   }
 
   /** Builder for EchoWithVersionStubSettings. */

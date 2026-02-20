@@ -258,8 +258,8 @@ public class JobServiceStubSettings extends StubSettings<JobServiceStubSettings>
   }
 
   @Override
-  protected ApiTracerContext getApiTracerContext() {
-    return JobServiceApiTracerContext.create(getEndpointContext().resolvedServerAddress());
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return JobServiceApiTracerContext.create(serverAddress);
   }
 
   /** Builder for JobServiceStubSettings. */

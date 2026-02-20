@@ -222,9 +222,8 @@ public class EchoServiceShouldGeneratePartialUsualStubSettings
   }
 
   @Override
-  protected ApiTracerContext getApiTracerContext() {
-    return EchoServiceShouldGeneratePartialUsualApiTracerContext.create(
-        getEndpointContext().resolvedServerAddress());
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return EchoServiceShouldGeneratePartialUsualApiTracerContext.create(serverAddress);
   }
 
   /** Builder for EchoServiceShouldGeneratePartialUsualStubSettings. */

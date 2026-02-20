@@ -2100,30 +2100,24 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
   private MethodDefinition createGetApiTracerContextMethod(Service service, TypeStore typeStore) {
     TypeNode returnType = FIXED_TYPESTORE.get("ApiTracerContext");
+    VariableExpr serverAddressVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(TypeNode.STRING).setName("serverAddress").build());
 
     TypeNode serviceApiTracerContextType =
         typeStore.get(ClassNames.getServiceApiTracerContextClassName(service));
-
-    Expr getEndpointContextExpr =
-        MethodInvocationExpr.builder().setMethodName("getEndpointContext").build();
-
-    Expr resolvedServerAddressExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(getEndpointContextExpr)
-            .setMethodName("resolvedServerAddress")
-            .setReturnType(TypeNode.STRING)
-            .build();
 
     return MethodDefinition.builder()
         .setIsOverride(true)
         .setScope(ScopeNode.PROTECTED)
         .setReturnType(returnType)
         .setName("getApiTracerContext")
+        .setArguments(serverAddressVarExpr.toBuilder().setIsDecl(true).build())
         .setReturnExpr(
             MethodInvocationExpr.builder()
                 .setStaticReferenceType(serviceApiTracerContextType)
                 .setMethodName("create")
-                .setArguments(resolvedServerAddressExpr)
+                .setArguments(serverAddressVarExpr)
                 .setReturnType(returnType)
                 .build())
         .build();
