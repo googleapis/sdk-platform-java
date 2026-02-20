@@ -16,11 +16,13 @@
 
 package com.google.showcase.v1beta1.stub;
 
+import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.tracing.ApiTracerContext;
 import javax.annotation.Generated;
 
 @InternalApi
+@BetaApi
 @Generated("by gapic-generator-java")
 public class IdentityApiTracerContext extends ApiTracerContext {
   private final String serverAddress;
