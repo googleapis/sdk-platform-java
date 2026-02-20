@@ -33,7 +33,6 @@ package com.google.api.gax.tracing;
 import com.google.api.core.InternalApi;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import javax.annotation.Nullable;
 
 /**
@@ -43,7 +42,18 @@ import javax.annotation.Nullable;
  * <p>For internal use only.
  */
 @InternalApi
-public abstract class ApiTracerContext {
+public class ApiTracerContext {
+  private final String serverAddress;
+  private final String repo;
+
+  protected ApiTracerContext() {
+    this(null, null);
+  }
+
+  protected ApiTracerContext(@Nullable String serverAddress, @Nullable String repo) {
+    this.serverAddress = serverAddress;
+    this.repo = repo;
+  }
 
   /**
    * @return a map of attributes to be included in attempt-level spans
@@ -60,44 +70,17 @@ public abstract class ApiTracerContext {
   }
 
   @Nullable
-  public abstract String getServerAddress();
+  public String getServerAddress() {
+    return serverAddress;
+  }
 
   @Nullable
-  public abstract String getRepo();
+  public String getRepo() {
+    return repo;
+  }
 
   public static ApiTracerContext create(
       @Nullable final String serverAddress, @Nullable final String repo) {
-    return new ApiTracerContext() {
-      @Override
-      @Nullable
-      public String getServerAddress() {
-        return serverAddress;
-      }
-
-      @Override
-      @Nullable
-      public String getRepo() {
-        return repo;
-      }
-    };
-  }
-
-  @Override
-  public String toString() {
-    return "ApiTracerContext{serverAddress=" + getServerAddress() + ", repo=" + getRepo() + "}";
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof ApiTracerContext)) return false;
-    ApiTracerContext that = (ApiTracerContext) o;
-    return Objects.equals(getServerAddress(), that.getServerAddress())
-        && Objects.equals(getRepo(), that.getRepo());
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(getServerAddress(), getRepo());
+    return new ApiTracerContext(serverAddress, repo);
   }
 }
