@@ -126,7 +126,7 @@ def __construct_effective_arg(
     gapic: GapicConfig,
     gapic_inputs: GapicInputs,
     temp_destination_path: str,
-    generation_config: LibraryConfig,
+    generation_config: GenerationConfig,
     library: LibraryConfig,
 ) -> List[str]:
     """
