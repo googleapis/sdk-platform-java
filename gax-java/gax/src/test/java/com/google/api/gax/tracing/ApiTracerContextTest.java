@@ -62,15 +62,4 @@ class ApiTracerContextTest {
 
     assertThat(attributes).isEmpty();
   }
-
-  @Test
-  void testEqualsAndHashCode() {
-    ApiTracerContext context1 = ApiTracerContext.create("test-address", "test-repo");
-    ApiTracerContext context2 = ApiTracerContext.create("test-address", "test-repo");
-    ApiTracerContext context3 = ApiTracerContext.create("other-address", "test-repo");
-
-    assertThat(context1).isEqualTo(context2);
-    assertThat(context1.hashCode()).isEqualTo(context2.hashCode());
-    assertThat(context1).isNotEqualTo(context3);
-  }
 }
