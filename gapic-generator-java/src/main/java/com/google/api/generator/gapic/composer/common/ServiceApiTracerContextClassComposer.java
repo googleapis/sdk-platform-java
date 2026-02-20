@@ -22,6 +22,7 @@ import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -173,15 +174,16 @@ public class ServiceApiTracerContextClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createGetRepoMethod(GapicContext context) {
+    Expr returnExpr = ValueExpr.createNullExpr();
+    if (context.repo().isPresent()) {
+      returnExpr = ValueExpr.withValue(StringObjectValue.withValue(context.repo().get()));
+    }
     return MethodDefinition.builder()
         .setIsOverride(true)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.STRING)
         .setName("getRepo")
-        .setReturnExpr(
-            context.repo().isPresent()
-                ? ValueExpr.withValue(StringObjectValue.withValue(context.repo().get()))
-                : ValueExpr.createNullExpr())
+        .setReturnExpr(returnExpr)
         .build();
   }
 
