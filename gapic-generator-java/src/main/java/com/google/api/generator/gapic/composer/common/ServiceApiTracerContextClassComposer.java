@@ -26,6 +26,7 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
@@ -66,7 +67,7 @@ public class ServiceApiTracerContextClassComposer implements ClassComposer {
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setExtendsType(FIXED_TYPESTORE.get("ApiTracerContext"))
-            .setStatements(createClassStatements(service))
+            .setStatements(createClassStatements())
             .setMethods(createClassMethods(service, context, typeStore))
             .build();
 
@@ -82,7 +83,7 @@ public class ServiceApiTracerContextClassComposer implements ClassComposer {
             .build());
   }
 
-  private static List<Statement> createClassStatements(Service service) {
+  private static List<Statement> createClassStatements() {
     VariableExpr serverAddressVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(TypeNode.STRING).setName("serverAddress").build());
@@ -106,24 +107,26 @@ public class ServiceApiTracerContextClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createConstructor(Service service, TypeStore typeStore) {
+    TypeNode thisType = typeStore.get(ClassNames.getServiceApiTracerContextClassName(service));
     VariableExpr serverAddressVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(TypeNode.STRING).setName("serverAddress").build());
 
+    VariableExpr thisServerAddressVarExpr =
+        VariableExpr.builder()
+            .setVariable(serverAddressVarExpr.variable())
+            .setExprReferenceExpr(ValueExpr.withValue(ThisObjectValue.withType(thisType)))
+            .build();
+
     return MethodDefinition.constructorBuilder()
         .setScope(ScopeNode.PRIVATE)
-        .setReturnType(typeStore.get(ClassNames.getServiceApiTracerContextClassName(service)))
+        .setReturnType(thisType)
         .setArguments(serverAddressVarExpr.toBuilder().setIsDecl(true).build())
         .setBody(
             Arrays.asList(
                 ExprStatement.withExpr(
                     AssignmentExpr.builder()
-                        .setVariableExpr(
-                            VariableExpr.withVariable(
-                                Variable.builder()
-                                    .setType(TypeNode.STRING)
-                                    .setName("this.serverAddress")
-                                    .build()))
+                        .setVariableExpr(thisServerAddressVarExpr)
                         .setValueExpr(serverAddressVarExpr)
                         .build())))
         .build();
