@@ -32,6 +32,7 @@ import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.bigtable.v2.CheckAndMutateRowRequest;
 import com.google.bigtable.v2.CheckAndMutateRowResponse;
 import com.google.bigtable.v2.MutateRowRequest;
@@ -255,6 +256,11 @@ public class BigtableStubSettings extends StubSettings<BigtableStubSettings> {
     checkAndMutateRowSettings = settingsBuilder.checkAndMutateRowSettings().build();
     pingAndWarmSettings = settingsBuilder.pingAndWarmSettings().build();
     readModifyWriteRowSettings = settingsBuilder.readModifyWriteRowSettings().build();
+  }
+
+  @Override
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return BigtableApiTracerContext.create(serverAddress);
   }
 
   /** Builder for BigtableStubSettings. */

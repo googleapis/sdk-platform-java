@@ -45,6 +45,7 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.cloud.compute.v1small.Address;
 import com.google.cloud.compute.v1small.AddressAggregatedList;
 import com.google.cloud.compute.v1small.AddressList;
@@ -398,6 +399,11 @@ public class AddressesStubSettings extends StubSettings<AddressesStubSettings> {
     insertSettings = settingsBuilder.insertSettings().build();
     insertOperationSettings = settingsBuilder.insertOperationSettings().build();
     listSettings = settingsBuilder.listSettings().build();
+  }
+
+  @Override
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return AddressesApiTracerContext.create(serverAddress);
   }
 
   /** Builder for AddressesStubSettings. */

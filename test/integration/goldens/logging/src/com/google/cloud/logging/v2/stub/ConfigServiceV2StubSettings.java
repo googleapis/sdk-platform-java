@@ -47,6 +47,7 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -675,6 +676,11 @@ public class ConfigServiceV2StubSettings extends StubSettings<ConfigServiceV2Stu
     updateSettingsSettings = settingsBuilder.updateSettingsSettings().build();
     copyLogEntriesSettings = settingsBuilder.copyLogEntriesSettings().build();
     copyLogEntriesOperationSettings = settingsBuilder.copyLogEntriesOperationSettings().build();
+  }
+
+  @Override
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return ConfigServiceV2ApiTracerContext.create(serverAddress);
   }
 
   /** Builder for ConfigServiceV2StubSettings. */

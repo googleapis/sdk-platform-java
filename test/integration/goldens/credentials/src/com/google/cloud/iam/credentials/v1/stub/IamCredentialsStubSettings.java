@@ -35,6 +35,7 @@ import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.cloud.iam.credentials.v1.GenerateAccessTokenRequest;
 import com.google.cloud.iam.credentials.v1.GenerateAccessTokenResponse;
 import com.google.cloud.iam.credentials.v1.GenerateIdTokenRequest;
@@ -253,6 +254,11 @@ public class IamCredentialsStubSettings extends StubSettings<IamCredentialsStubS
     generateIdTokenSettings = settingsBuilder.generateIdTokenSettings().build();
     signBlobSettings = settingsBuilder.signBlobSettings().build();
     signJwtSettings = settingsBuilder.signJwtSettings().build();
+  }
+
+  @Override
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return IamCredentialsApiTracerContext.create(serverAddress);
   }
 
   /** Builder for IamCredentialsStubSettings. */
