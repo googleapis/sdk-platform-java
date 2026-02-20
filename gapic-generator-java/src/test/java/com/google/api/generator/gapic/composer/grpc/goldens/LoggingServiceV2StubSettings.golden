@@ -510,8 +510,8 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
   }
 
   @Override
-  protected ApiTracerContext getApiTracerContext(String serverAddress) {
-    return LoggingServiceV2ApiTracerContext.create(serverAddress);
+  protected ApiTracerContext getApiTracerContext() {
+    return LoggingServiceV2ApiTracerContext.create(getEndpointContext().resolvedServerAddress());
   }
 
   /** Builder for LoggingServiceV2StubSettings. */

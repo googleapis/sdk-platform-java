@@ -408,8 +408,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
   }
 
   @Override
-  protected ApiTracerContext getApiTracerContext(String serverAddress) {
-    return EchoApiTracerContext.create(serverAddress);
+  protected ApiTracerContext getApiTracerContext() {
+    return EchoApiTracerContext.create(getEndpointContext().resolvedServerAddress());
   }
 
   /** Builder for EchoStubSettings. */

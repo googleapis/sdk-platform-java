@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package com.google.api.generator.gapic.composer.common;
 
+import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.api.generator.engine.ast.AnnotationNode;
@@ -42,6 +43,12 @@ import java.util.List;
 import javax.annotation.Generated;
 import javax.annotation.Nullable;
 
+/**
+ * Composes a service-specific implementation of {@link ApiTracerContext}.
+ *
+ * <p>The generated class is used to provide client-library-specific attributes (like the repository
+ * URL) to {@link com.google.api.gax.tracing.ApiTracer}s.
+ */
 public class ServiceApiTracerContextClassComposer implements ClassComposer {
   private static final ServiceApiTracerContextClassComposer INSTANCE =
       new ServiceApiTracerContextClassComposer();
@@ -77,6 +84,7 @@ public class ServiceApiTracerContextClassComposer implements ClassComposer {
   private static List<AnnotationNode> createClassAnnotations() {
     return Arrays.asList(
         AnnotationNode.withType(FIXED_TYPESTORE.get("InternalApi")),
+        AnnotationNode.withType(FIXED_TYPESTORE.get("BetaApi")),
         AnnotationNode.builder()
             .setType(FIXED_TYPESTORE.get("Generated"))
             .setDescription("by gapic-generator-java")
@@ -179,7 +187,12 @@ public class ServiceApiTracerContextClassComposer implements ClassComposer {
 
   private static TypeStore createStaticTypes() {
     return new TypeStore(
-        Arrays.asList(InternalApi.class, Generated.class, ApiTracerContext.class, Nullable.class));
+        Arrays.asList(
+            BetaApi.class,
+            InternalApi.class,
+            Generated.class,
+            ApiTracerContext.class,
+            Nullable.class));
   }
 
   private TypeStore createDynamicTypes(Service service, String pakkage) {

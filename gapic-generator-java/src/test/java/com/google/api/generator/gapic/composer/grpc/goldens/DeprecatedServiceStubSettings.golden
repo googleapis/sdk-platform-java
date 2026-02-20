@@ -185,8 +185,8 @@ public class DeprecatedServiceStubSettings extends StubSettings<DeprecatedServic
   }
 
   @Override
-  protected ApiTracerContext getApiTracerContext(String serverAddress) {
-    return DeprecatedServiceApiTracerContext.create(serverAddress);
+  protected ApiTracerContext getApiTracerContext() {
+    return DeprecatedServiceApiTracerContext.create(getEndpointContext().resolvedServerAddress());
   }
 
   /** Builder for DeprecatedServiceStubSettings. */
