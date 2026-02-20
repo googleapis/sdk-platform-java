@@ -250,14 +250,10 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return apiKey;
   }
 
-  /**
-   * Returns an {@link ApiTracerContext} that contains information about the client library.
-   *
-   * @param serverAddress The address of the server being called.
-   */
+  /** Returns an {@link ApiTracerContext} that contains information about the client library. */
   @InternalApi
-  protected ApiTracerContext getApiTracerContext(String serverAddress) {
-    return ApiTracerContext.create(serverAddress, null);
+  protected ApiTracerContext getApiTracerContext() {
+    return ApiTracerContext.create(endpointContext.resolvedServerAddress(), null);
   }
 
   @Override
