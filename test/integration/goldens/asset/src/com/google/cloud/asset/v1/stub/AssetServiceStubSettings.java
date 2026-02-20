@@ -51,6 +51,7 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningMetadata;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningResponse;
@@ -723,6 +724,11 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
     deleteSavedQuerySettings = settingsBuilder.deleteSavedQuerySettings().build();
     batchGetEffectiveIamPoliciesSettings =
         settingsBuilder.batchGetEffectiveIamPoliciesSettings().build();
+  }
+
+  @Override
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return AssetServiceApiTracerContext.create(serverAddress);
   }
 
   /** Builder for AssetServiceStubSettings. */

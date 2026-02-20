@@ -95,11 +95,14 @@ public abstract class GapicContext {
 
   public abstract Transport transport();
 
+  public abstract Optional<String> repo();
+
   public static Builder builder() {
     return new AutoValue_GapicContext.Builder()
         .setMixinServices(Collections.emptyList())
         .setGapicMetadataEnabled(false)
-        .setRestNumericEnumsEnabled(false);
+        .setRestNumericEnumsEnabled(false)
+        .setRepo(Optional.empty());
   }
 
   @AutoValue.Builder
@@ -129,6 +132,8 @@ public abstract class GapicContext {
     public abstract Builder setRestNumericEnumsEnabled(boolean restNumericEnumsEnabled);
 
     public abstract Builder setTransport(Transport transport);
+
+    public abstract Builder setRepo(Optional<String> repo);
 
     abstract ImmutableMap<String, ResourceName> resourceNames();
 

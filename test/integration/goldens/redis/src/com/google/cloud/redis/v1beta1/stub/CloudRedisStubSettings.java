@@ -48,6 +48,7 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.cloud.redis.v1beta1.CreateInstanceRequest;
 import com.google.cloud.redis.v1beta1.DeleteInstanceRequest;
 import com.google.cloud.redis.v1beta1.ExportInstanceRequest;
@@ -475,6 +476,11 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     rescheduleMaintenanceSettings = settingsBuilder.rescheduleMaintenanceSettings().build();
     rescheduleMaintenanceOperationSettings =
         settingsBuilder.rescheduleMaintenanceOperationSettings().build();
+  }
+
+  @Override
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return CloudRedisApiTracerContext.create(serverAddress);
   }
 
   /** Builder for CloudRedisStubSettings. */

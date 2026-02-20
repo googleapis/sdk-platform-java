@@ -30,7 +30,7 @@ RUN cat /java-formatter-version
 RUN V=$(cat /java-formatter-version) && curl -o "/google-java-format.jar" "https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${V}/google-java-format-${V}-all-deps.jar"
 
 # Compile and install packages
-RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+RUN mvn install -B -ntp -T 1.5C -DskipTests -Dcheckstyle.skip -Dclirr.skip -Denforcer.skip -Dfmt.skip
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 

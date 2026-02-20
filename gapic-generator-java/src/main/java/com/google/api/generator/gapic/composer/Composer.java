@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
+import com.google.api.generator.gapic.composer.common.ServiceApiTracerContextClassComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceStubClassComposer;
 import com.google.api.generator.gapic.composer.grpc.MockServiceClassComposer;
@@ -86,6 +87,7 @@ public class Composer {
         .services()
         .forEach(
             s -> {
+              clazzes.add(ServiceApiTracerContextClassComposer.instance().generate(context, s));
               if (context.transport() == Transport.REST) {
                 clazzes.add(
                     com.google.api.generator.gapic.composer.rest.ServiceStubClassComposer.instance()

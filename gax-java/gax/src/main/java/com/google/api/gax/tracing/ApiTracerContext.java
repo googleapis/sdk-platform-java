@@ -31,7 +31,6 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
-import com.google.auto.value.AutoValue;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
@@ -43,8 +42,18 @@ import javax.annotation.Nullable;
  * <p>For internal use only.
  */
 @InternalApi
-@AutoValue
-public abstract class ApiTracerContext {
+public class ApiTracerContext {
+  private final String serverAddress;
+  private final String repo;
+
+  protected ApiTracerContext() {
+    this(null, null);
+  }
+
+  protected ApiTracerContext(@Nullable String serverAddress, @Nullable String repo) {
+    this.serverAddress = serverAddress;
+    this.repo = repo;
+  }
 
   /**
    * @return a map of attributes to be included in attempt-level spans
@@ -54,20 +63,24 @@ public abstract class ApiTracerContext {
     if (getServerAddress() != null) {
       attributes.put(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, getServerAddress());
     }
+    if (getRepo() != null) {
+      attributes.put(AppCentricAttributes.REPO_ATTRIBUTE, getRepo());
+    }
     return attributes;
   }
 
   @Nullable
-  public abstract String getServerAddress();
-
-  public static Builder newBuilder() {
-    return new AutoValue_ApiTracerContext.Builder();
+  public String getServerAddress() {
+    return serverAddress;
   }
 
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder setServerAddress(String serverAddress);
+  @Nullable
+  public String getRepo() {
+    return repo;
+  }
 
-    public abstract ApiTracerContext build();
+  public static ApiTracerContext create(
+      @Nullable final String serverAddress, @Nullable final String repo) {
+    return new ApiTracerContext(serverAddress, repo);
   }
 }

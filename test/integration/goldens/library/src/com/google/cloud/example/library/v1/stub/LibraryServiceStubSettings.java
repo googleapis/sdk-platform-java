@@ -45,6 +45,7 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -422,6 +423,11 @@ public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubS
     deleteBookSettings = settingsBuilder.deleteBookSettings().build();
     updateBookSettings = settingsBuilder.updateBookSettings().build();
     moveBookSettings = settingsBuilder.moveBookSettings().build();
+  }
+
+  @Override
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return LibraryServiceApiTracerContext.create(serverAddress);
   }
 
   /** Builder for LibraryServiceStubSettings. */

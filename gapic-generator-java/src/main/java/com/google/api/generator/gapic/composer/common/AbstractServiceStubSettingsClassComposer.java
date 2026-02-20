@@ -49,6 +49,7 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
@@ -1053,6 +1054,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT));
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createClassConstructor(service, methodSettingsMemberVarExprs, typeStore));
+    javaMethods.add(createGetApiTracerContextMethod(service, typeStore));
     return javaMethods;
   }
 
@@ -2096,6 +2098,31 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         .build();
   }
 
+  private MethodDefinition createGetApiTracerContextMethod(Service service, TypeStore typeStore) {
+    TypeNode returnType = FIXED_TYPESTORE.get("ApiTracerContext");
+    VariableExpr serverAddressVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(TypeNode.STRING).setName("serverAddress").build());
+
+    TypeNode serviceApiTracerContextType =
+        typeStore.get(ClassNames.getServiceApiTracerContextClassName(service));
+
+    return MethodDefinition.builder()
+        .setIsOverride(true)
+        .setScope(ScopeNode.PROTECTED)
+        .setReturnType(returnType)
+        .setName("getApiTracerContext")
+        .setArguments(serverAddressVarExpr.toBuilder().setIsDecl(true).build())
+        .setReturnExpr(
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(serviceApiTracerContextType)
+                .setMethodName("create")
+                .setArguments(serverAddressVarExpr)
+                .setReturnType(returnType)
+                .build())
+        .build();
+  }
+
   private static TypeStore createStaticTypes() {
     List<Class<?>> concreteClazzes =
         Arrays.asList(
@@ -2143,7 +2170,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             StubSettings.class,
             TransportChannelProvider.class,
             UnaryCallSettings.class,
-            UnaryCallable.class);
+            UnaryCallable.class,
+            ApiTracerContext.class);
     return new TypeStore(concreteClazzes);
   }
 
@@ -2174,6 +2202,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .collect(Collectors.toList()),
         true,
         ClassNames.getServiceClientClassName(service));
+
+    typeStore.put(pakkage, ClassNames.getServiceApiTracerContextClassName(service));
 
     return typeStore;
   }

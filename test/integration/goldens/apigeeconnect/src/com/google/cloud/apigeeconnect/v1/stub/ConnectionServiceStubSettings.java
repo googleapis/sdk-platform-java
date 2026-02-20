@@ -44,6 +44,7 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.cloud.apigeeconnect.v1.Connection;
 import com.google.cloud.apigeeconnect.v1.ListConnectionsRequest;
 import com.google.cloud.apigeeconnect.v1.ListConnectionsResponse;
@@ -290,6 +291,11 @@ public class ConnectionServiceStubSettings extends StubSettings<ConnectionServic
     super(settingsBuilder);
 
     listConnectionsSettings = settingsBuilder.listConnectionsSettings().build();
+  }
+
+  @Override
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return ConnectionServiceApiTracerContext.create(serverAddress);
   }
 
   /** Builder for ConnectionServiceStubSettings. */

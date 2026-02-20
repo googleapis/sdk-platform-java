@@ -43,4 +43,7 @@ import com.google.api.core.InternalApi;
 public class AppCentricAttributes {
   /** The address of the server being called (e.g., "pubsub.googleapis.com"). */
   public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
+
+  /** The repository of the client library (e.g., "googleapis/google-cloud-java"). */
+  public static final String REPO_ATTRIBUTE = "gcp.client.repo";
 }

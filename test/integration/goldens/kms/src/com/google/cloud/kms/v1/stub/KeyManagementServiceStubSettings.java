@@ -44,6 +44,7 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.cloud.kms.v1.AsymmetricDecryptRequest;
 import com.google.cloud.kms.v1.AsymmetricDecryptResponse;
 import com.google.cloud.kms.v1.AsymmetricSignRequest;
@@ -740,6 +741,11 @@ public class KeyManagementServiceStubSettings
     listLocationsSettings = settingsBuilder.listLocationsSettings().build();
     getLocationSettings = settingsBuilder.getLocationSettings().build();
     testIamPermissionsSettings = settingsBuilder.testIamPermissionsSettings().build();
+  }
+
+  @Override
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return KeyManagementServiceApiTracerContext.create(serverAddress);
   }
 
   /** Builder for KeyManagementServiceStubSettings. */

@@ -31,6 +31,7 @@ import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.cloud.compute.v1small.GetRegionOperationRequest;
 import com.google.cloud.compute.v1small.Operation;
 import com.google.cloud.compute.v1small.WaitRegionOperationRequest;
@@ -200,6 +201,11 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
 
     getSettings = settingsBuilder.getSettings().build();
     waitSettings = settingsBuilder.waitSettings().build();
+  }
+
+  @Override
+  protected ApiTracerContext getApiTracerContext(String serverAddress) {
+    return RegionOperationsApiTracerContext.create(serverAddress);
   }
 
   /** Builder for RegionOperationsStubSettings. */

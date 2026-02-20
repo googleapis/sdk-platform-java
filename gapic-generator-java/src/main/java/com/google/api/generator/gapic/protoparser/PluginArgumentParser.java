@@ -32,6 +32,7 @@ public class PluginArgumentParser {
   @VisibleForTesting static final String KEY_NUMERIC_ENUM = "rest-numeric-enums";
   @VisibleForTesting static final String KEY_SERVICE_YAML_CONFIG = "api-service-config";
   @VisibleForTesting static final String KEY_TRANSPORT = "transport";
+  @VisibleForTesting static final String KEY_REPO = "repo";
 
   private static final String JSON_FILE_ENDING = "grpc_service_config.json";
   private static final String GAPIC_YAML_FILE_ENDING = "gapic.yaml";
@@ -51,6 +52,10 @@ public class PluginArgumentParser {
 
   static Optional<String> parseTransport(CodeGeneratorRequest request) {
     return parseConfigArgument(request.getParameter(), KEY_TRANSPORT);
+  }
+
+  static Optional<String> parseRepo(CodeGeneratorRequest request) {
+    return parseConfigArgument(request.getParameter(), KEY_REPO);
   }
 
   static boolean hasMetadataFlag(CodeGeneratorRequest request) {

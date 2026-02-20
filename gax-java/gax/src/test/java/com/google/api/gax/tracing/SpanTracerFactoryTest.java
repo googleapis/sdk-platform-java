@@ -42,18 +42,18 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-class AppCentricTracerFactoryTest {
+class SpanTracerFactoryTest {
 
   @Test
   void testNewTracer_createsOpenTelemetryTracingTracer() {
     TraceManager recorder = mock(TraceManager.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(mock(TraceManager.Span.class));
 
-    AppCentricTracerFactory factory = new AppCentricTracerFactory(recorder);
+    SpanTracerFactory factory = new SpanTracerFactory(recorder);
     ApiTracer tracer =
         factory.newTracer(
             null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
-    assertThat(tracer).isInstanceOf(AppCentricTracer.class);
+    assertThat(tracer).isInstanceOf(SpanTracer.class);
   }
 
   @Test
@@ -62,10 +62,8 @@ class AppCentricTracerFactoryTest {
     TraceManager.Span attemptHandle = mock(TraceManager.Span.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
 
-    ApiTracerFactory factory =
-        new AppCentricTracerFactory(recorder, ApiTracerContext.newBuilder().build());
-    factory =
-        factory.withContext(ApiTracerContext.newBuilder().setServerAddress("test-address").build());
+    ApiTracerFactory factory = new SpanTracerFactory(recorder, ApiTracerContext.create(null, null));
+    factory = factory.withContext(ApiTracerContext.create("test-address", null));
     ApiTracer tracer =
         factory.newTracer(
             null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
@@ -85,10 +83,9 @@ class AppCentricTracerFactoryTest {
     TraceManager.Span attemptHandle = mock(TraceManager.Span.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
 
-    ApiTracerContext context =
-        ApiTracerContext.newBuilder().setServerAddress("example.com").build();
+    ApiTracerContext context = ApiTracerContext.create("example.com", null);
 
-    AppCentricTracerFactory factory = new AppCentricTracerFactory(recorder);
+    SpanTracerFactory factory = new SpanTracerFactory(recorder);
     ApiTracerFactory factoryWithContext = factory.withContext(context);
 
     ApiTracer tracer =
@@ -111,9 +108,9 @@ class AppCentricTracerFactoryTest {
     TraceManager.Span attemptHandle = mock(TraceManager.Span.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
 
-    ApiTracerContext context = ApiTracerContext.newBuilder().build();
+    ApiTracerContext context = ApiTracerContext.create(null, null);
 
-    AppCentricTracerFactory factory = new AppCentricTracerFactory(recorder);
+    SpanTracerFactory factory = new SpanTracerFactory(recorder);
     ApiTracerFactory factoryWithContext = factory.withContext(context);
 
     ApiTracer tracer =
