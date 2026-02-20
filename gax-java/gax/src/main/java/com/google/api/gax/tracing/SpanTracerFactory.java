@@ -32,63 +32,51 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.common.annotations.VisibleForTesting;
 
 /**
- * An implementation of {@link ApiTracer} that uses a {@link TraceManager} to record traces. This
- * implementation is agnostic to the specific {@link TraceManager} in order to allow extensions that
- * interact with other backends.
+ * A {@link ApiTracerFactory} to build instances of {@link SpanTracer}.
+ *
+ * <p>This class wraps the {@link TraceManager} and pass it to {@link SpanTracer}. It will be used
+ * to record traces in {@link SpanTracer}.
+ *
+ * <p>This class is expected to be initialized once during client initialization.
  */
 @BetaApi
 @InternalApi
-public class AppCentricTracer implements ApiTracer {
-  public static final String LANGUAGE_ATTRIBUTE = "gcp.client.language";
-
-  public static final String DEFAULT_LANGUAGE = "Java";
-
+public class SpanTracerFactory implements ApiTracerFactory {
   private final TraceManager traceManager;
-  private final Map<String, String> attemptAttributes;
-  private final String attemptSpanName;
+
   private final ApiTracerContext apiTracerContext;
-  private TraceManager.Span attemptHandle;
+
+  /** Creates a SpanTracerFactory */
+  public SpanTracerFactory(TraceManager traceManager) {
+    this(traceManager, ApiTracerContext.newBuilder().build());
+  }
 
   /**
-   * Creates a new instance of {@code AppCentricTracer}.
-   *
-   * @param traceManager the {@link TraceManager} to use for recording spans
-   * @param attemptSpanName the name of the individual attempt spans
+   * Pass in a Map of client level attributes which will be added to every single SpanTracer created
+   * from the ApiTracerFactory. This is package private since span attributes are determined
+   * internally.
    */
-  public AppCentricTracer(
-      TraceManager traceManager, ApiTracerContext apiTracerContext, String attemptSpanName) {
+  @VisibleForTesting
+  SpanTracerFactory(TraceManager traceManager, ApiTracerContext apiTracerContext) {
     this.traceManager = traceManager;
-    this.attemptSpanName = attemptSpanName;
     this.apiTracerContext = apiTracerContext;
-    this.attemptAttributes = new HashMap<>();
-    buildAttributes();
-  }
-
-  private void buildAttributes() {
-    this.attemptAttributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
-    this.attemptAttributes.putAll(this.apiTracerContext.getAttemptAttributes());
   }
 
   @Override
-  public void attemptStarted(Object request, int attemptNumber) {
-    Map<String, String> attemptAttributes = new HashMap<>(this.attemptAttributes);
-    // Start the specific attempt span with the operation span as parent
-    this.attemptHandle = traceManager.createSpan(attemptSpanName, attemptAttributes);
+  public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
+    // TODO(diegomarquezp): this is a placeholder for span names and will be adjusted as the
+    // feature is developed.
+    String attemptSpanName = spanName.getClientName() + "/" + spanName.getMethodName() + "/attempt";
+
+    SpanTracer spanTracer = new SpanTracer(traceManager, this.apiTracerContext, attemptSpanName);
+    return spanTracer;
   }
 
   @Override
-  public void attemptSucceeded() {
-    endAttempt();
-  }
-
-  private void endAttempt() {
-    if (attemptHandle != null) {
-      attemptHandle.end();
-      attemptHandle = null;
-    }
+  public ApiTracerFactory withContext(ApiTracerContext context) {
+    return new SpanTracerFactory(traceManager, context);
   }
 }

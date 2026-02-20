@@ -44,16 +44,15 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class AppCentricTracerTest {
+class SpanTracerTest {
   @Mock private TraceManager recorder;
   @Mock private TraceManager.Span attemptHandle;
-  private AppCentricTracer tracer;
+  private SpanTracer tracer;
   private static final String ATTEMPT_SPAN_NAME = "Service/Method/attempt";
 
   @BeforeEach
   void setUp() {
-    tracer =
-        new AppCentricTracer(recorder, ApiTracerContext.newBuilder().build(), ATTEMPT_SPAN_NAME);
+    tracer = new SpanTracer(recorder, ApiTracerContext.newBuilder().build(), ATTEMPT_SPAN_NAME);
   }
 
   @Test
@@ -75,6 +74,6 @@ class AppCentricTracerTest {
     verify(recorder).createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
 
     assertThat(attributesCaptor.getValue())
-        .containsEntry(AppCentricTracer.LANGUAGE_ATTRIBUTE, AppCentricTracer.DEFAULT_LANGUAGE);
+        .containsEntry(SpanTracer.LANGUAGE_ATTRIBUTE, SpanTracer.DEFAULT_LANGUAGE);
   }
 }
