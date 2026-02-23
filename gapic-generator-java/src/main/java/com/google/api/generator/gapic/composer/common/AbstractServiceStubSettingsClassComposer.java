@@ -50,7 +50,6 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
@@ -2117,7 +2116,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             ApiClientHeaderProvider.class,
             ApiFunction.class,
             ApiFuture.class,
-            ApiTracerContext.class,
             BatchedRequestIssuer.class,
             BatchingCallSettings.class,
             BatchingDescriptor.class,
