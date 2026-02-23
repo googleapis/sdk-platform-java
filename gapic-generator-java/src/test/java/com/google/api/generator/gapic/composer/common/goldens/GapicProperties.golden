@@ -1,0 +1,15 @@
+package com.google.showcase.v1beta1;
+
+import com.google.api.core.InternalApi;
+import com.google.api.gax.rpc.AbstractGapicProperties;
+import javax.annotation.Generated;
+
+@InternalApi
+@Generated("by gapic-generator-java")
+public class GapicProperties extends AbstractGapicProperties {
+
+  @Override
+  public String getRepository() {
+    return "googleapis/sdk-platform-java";
+  }
+}

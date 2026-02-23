@@ -21,6 +21,7 @@ import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -80,13 +81,16 @@ public class GapicPropertiesClassComposer implements ClassComposer {
   }
 
   private MethodDefinition createGetRepositoryMethod(GapicContext context) {
+    Expr returnExpr = ValueExpr.createNullExpr();
+    if (context.repo().isPresent()) {
+      returnExpr = ValueExpr.withValue(StringObjectValue.withValue(context.repo().orElse(null)));
+    }
     return MethodDefinition.builder()
         .setIsOverride(true)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.STRING)
         .setName("getRepository")
-        .setReturnExpr(
-            ValueExpr.withValue(StringObjectValue.withValue(context.repo().orElse(null))))
+        .setReturnExpr(returnExpr)
         .build();
   }
 
