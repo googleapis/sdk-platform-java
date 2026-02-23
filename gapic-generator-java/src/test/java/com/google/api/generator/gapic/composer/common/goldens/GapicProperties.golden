@@ -15,6 +15,6 @@ public class GapicProperties extends AbstractGapicProperties {
 
   @Override
   public String getArtifactName() {
-    return "gapic-showcase";
+    return "com.google.cloud:gapic-showcase";
   }
 }
