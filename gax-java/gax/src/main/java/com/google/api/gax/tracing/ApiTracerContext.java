@@ -31,7 +31,7 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
-import com.google.api.gax.rpc.GapicProperties;
+import com.google.api.gax.rpc.AbstractGapicProperties;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
@@ -45,12 +45,12 @@ import javax.annotation.Nullable;
 @InternalApi
 public class ApiTracerContext {
   private final String serverAddress;
-  private final GapicProperties gapicProperties;
+  private final AbstractGapicProperties abstractGapicProperties;
 
   protected ApiTracerContext(
-      @Nullable String serverAddress, @Nullable GapicProperties gapicProperties) {
+      @Nullable String serverAddress, @Nullable AbstractGapicProperties abstractGapicProperties) {
     this.serverAddress = serverAddress;
-    this.gapicProperties = gapicProperties;
+    this.abstractGapicProperties = abstractGapicProperties;
   }
 
   /**
@@ -61,8 +61,8 @@ public class ApiTracerContext {
     if (getServerAddress() != null) {
       attributes.put(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, getServerAddress());
     }
-    if (gapicProperties != null) {
-      attributes.put(AppCentricAttributes.REPO_ATTRIBUTE, gapicProperties.repository());
+    if (abstractGapicProperties != null) {
+      attributes.put(AppCentricAttributes.REPO_ATTRIBUTE, abstractGapicProperties.getRepository());
     }
     return attributes;
   }
@@ -73,12 +73,13 @@ public class ApiTracerContext {
   }
 
   @Nullable
-  public GapicProperties getGapicProperties() {
-    return gapicProperties;
+  public AbstractGapicProperties getGapicProperties() {
+    return abstractGapicProperties;
   }
 
   public static ApiTracerContext create(
-      @Nullable final String serverAddress, @Nullable final GapicProperties gapicProperties) {
-    return new ApiTracerContext(serverAddress, gapicProperties);
+      @Nullable final String serverAddress,
+      @Nullable final AbstractGapicProperties abstractGapicProperties) {
+    return new ApiTracerContext(serverAddress, abstractGapicProperties);
   }
 }

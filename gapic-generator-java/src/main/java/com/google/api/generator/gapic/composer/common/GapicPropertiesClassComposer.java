@@ -18,7 +18,7 @@ package com.google.api.generator.gapic.composer.common;
 
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.GaxProperties;
-import com.google.api.gax.rpc.GapicProperties;
+import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.MethodDefinition;
@@ -52,7 +52,7 @@ public class GapicPropertiesClassComposer implements ClassComposer {
   @Override
   public GapicClass generate(GapicContext context, Service service) {
     String pakkage = service.pakkage();
-    String className = "GapicProperties";
+    String className = "AbstractGapicProperties";
     TypeStore typeStore = createDynamicTypes(service, pakkage);
 
     ClassDefinition classDef =
@@ -61,7 +61,7 @@ public class GapicPropertiesClassComposer implements ClassComposer {
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
-            .setExtendsType(FIXED_TYPESTORE.get("GapicProperties"))
+            .setExtendsType(FIXED_TYPESTORE.get("AbstractGapicProperties"))
             .setMethods(createClassMethods(context, service, typeStore))
             .build();
 
@@ -113,7 +113,7 @@ public class GapicPropertiesClassComposer implements ClassComposer {
                                 .setType(TypeNode.CLASS_OBJECT)
                                 .setName("class")
                                 .build())
-                        .setStaticReferenceType(typeStore.get("GapicProperties"))
+                        .setStaticReferenceType(typeStore.get("AbstractGapicProperties"))
                         .build())
                 .setReturnType(TypeNode.STRING)
                 .build())
@@ -133,12 +133,15 @@ public class GapicPropertiesClassComposer implements ClassComposer {
   private static TypeStore createStaticTypes() {
     return new TypeStore(
         Arrays.asList(
-            InternalApi.class, Generated.class, GapicProperties.class, GaxProperties.class));
+            InternalApi.class,
+            Generated.class,
+            AbstractGapicProperties.class,
+            GaxProperties.class));
   }
 
   private TypeStore createDynamicTypes(Service service, String pakkage) {
     TypeStore typeStore = new TypeStore();
-    typeStore.put(pakkage, "GapicProperties");
+    typeStore.put(pakkage, "AbstractGapicProperties");
     return typeStore;
   }
 }

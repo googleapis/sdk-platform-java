@@ -31,7 +31,6 @@
 package com.google.api.gax.rpc;
 
 import com.google.api.core.InternalApi;
-import com.google.auto.value.AutoValue;
 import javax.annotation.Nullable;
 
 /**
@@ -40,27 +39,8 @@ import javax.annotation.Nullable;
  * <p>For internal use only.
  */
 @InternalApi
-@AutoValue
-public abstract class GapicProperties {
+public abstract class AbstractGapicProperties {
 
   @Nullable
-  public abstract String repository();
-
-  public static GapicProperties.Builder builder() {
-    return new AutoValue_GapicProperties.Builder().setRepository(null);
-  }
-
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder setRepository(String repository);
-
-    abstract String repository();
-
-    abstract GapicProperties autoBuild();
-
-    public GapicProperties build() {
-      setRepository(repository());
-      return autoBuild();
-    }
-  }
+  public abstract String getRepository();
 }

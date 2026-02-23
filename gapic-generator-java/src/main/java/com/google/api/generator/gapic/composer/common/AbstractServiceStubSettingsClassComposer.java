@@ -31,13 +31,13 @@ import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.BatchedRequestIssuer;
 import com.google.api.gax.rpc.BatchingCallSettings;
 import com.google.api.gax.rpc.BatchingDescriptor;
 import com.google.api.gax.rpc.ClientContext;
-import com.google.api.gax.rpc.GapicProperties;
 import com.google.api.gax.rpc.OperationCallSettings;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.PagedCallSettings;
@@ -2100,7 +2100,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   }
 
   private MethodDefinition createGetGapicPropertiesMethod(Service service, TypeStore typeStore) {
-    TypeNode returnType = FIXED_TYPESTORE.get("GapicProperties");
+    TypeNode returnType = FIXED_TYPESTORE.get("AbstractGapicProperties");
 
     return MethodDefinition.builder()
         .setIsOverride(true)
@@ -2109,7 +2109,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         .setName("getGapicProperties")
         .setReturnExpr(
             MethodInvocationExpr.builder()
-                .setStaticReferenceType(typeStore.get("GapicProperties"))
+                .setStaticReferenceType(typeStore.get("AbstractGapicProperties"))
                 .setMethodName("create")
                 .setArguments(
                     ValueExpr.withValue(StringObjectValue.withValue("gapic-generator-java")),
@@ -2123,7 +2123,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                                         .setType(TypeNode.CLASS_OBJECT)
                                         .setName("class")
                                         .build())
-                                .setStaticReferenceType(typeStore.get("GapicProperties"))
+                                .setStaticReferenceType(typeStore.get("AbstractGapicProperties"))
                                 .build())
                         .build(),
                     ValueExpr.withValue(StringObjectValue.withValue(service.defaultHost())))
@@ -2181,7 +2181,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             UnaryCallSettings.class,
             UnaryCallable.class,
             ApiTracerContext.class,
-            GapicProperties.class);
+            AbstractGapicProperties.class);
     return new TypeStore(concreteClazzes);
   }
 
@@ -2213,7 +2213,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         true,
         ClassNames.getServiceClientClassName(service));
 
-    typeStore.put(service.pakkage(), "GapicProperties");
+    typeStore.put(service.pakkage(), "AbstractGapicProperties");
 
     return typeStore;
   }
