@@ -2191,7 +2191,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Gapic properties
     typeStore.put(
         service.pakkage(),
-        ClassNames.getGapicPropertiesClassName(),
+        "GapicProperties",
         FIXED_TYPESTORE.get("AbstractGapicProperties").reference());
 
     return typeStore;
