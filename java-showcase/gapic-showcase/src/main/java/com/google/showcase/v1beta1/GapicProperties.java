@@ -28,4 +28,9 @@ public class GapicProperties extends AbstractGapicProperties {
   public String getRepository() {
     return "googleapis/sdk-platform-java";
   }
+
+  @Override
+  public String getArtifactName() {
+    return "com.google.cloud:gapic-showcase";
+  }
 }
