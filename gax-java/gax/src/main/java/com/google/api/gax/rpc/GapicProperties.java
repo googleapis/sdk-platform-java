@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -28,57 +28,39 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.api.gax.tracing;
+package com.google.api.gax.rpc;
 
 import com.google.api.core.InternalApi;
-import com.google.api.gax.rpc.GapicProperties;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.auto.value.AutoValue;
 import javax.annotation.Nullable;
 
 /**
- * A context object that contains information used to infer attributes that are common for all
- * {@link ApiTracer}s.
+ * A context object that contains information about the GAPIC library.
  *
  * <p>For internal use only.
  */
 @InternalApi
-public class ApiTracerContext {
-  private final String serverAddress;
-  private final GapicProperties gapicProperties;
-
-  protected ApiTracerContext(
-      @Nullable String serverAddress, @Nullable GapicProperties gapicProperties) {
-    this.serverAddress = serverAddress;
-    this.gapicProperties = gapicProperties;
-  }
-
-  /**
-   * @return a map of attributes to be included in attempt-level spans
-   */
-  public Map<String, String> getAttemptAttributes() {
-    Map<String, String> attributes = new HashMap<>();
-    if (getServerAddress() != null) {
-      attributes.put(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, getServerAddress());
-    }
-    if (gapicProperties != null) {
-      attributes.put(AppCentricAttributes.REPO_ATTRIBUTE, gapicProperties.repository());
-    }
-    return attributes;
-  }
+@AutoValue
+public abstract class GapicProperties {
 
   @Nullable
-  public String getServerAddress() {
-    return serverAddress;
+  public abstract String repository();
+
+  public static GapicProperties.Builder builder() {
+    return new AutoValue_GapicProperties.Builder().setRepository(null);
   }
 
-  @Nullable
-  public GapicProperties getGapicProperties() {
-    return gapicProperties;
-  }
+  @AutoValue.Builder
+  public abstract static class Builder {
+    public abstract Builder setRepository(String repository);
 
-  public static ApiTracerContext create(
-      @Nullable final String serverAddress, @Nullable final GapicProperties gapicProperties) {
-    return new ApiTracerContext(serverAddress, gapicProperties);
+    abstract String repository();
+
+    abstract GapicProperties autoBuild();
+
+    public GapicProperties build() {
+      setRepository(repository());
+      return autoBuild();
+    }
   }
 }

@@ -37,6 +37,7 @@ import com.google.api.gax.rpc.BatchedRequestIssuer;
 import com.google.api.gax.rpc.BatchingCallSettings;
 import com.google.api.gax.rpc.BatchingDescriptor;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.GapicProperties;
 import com.google.api.gax.rpc.OperationCallSettings;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.PagedCallSettings;
@@ -1054,7 +1055,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT));
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createClassConstructor(service, methodSettingsMemberVarExprs, typeStore));
-    javaMethods.add(createGetApiTracerContextMethod(service, typeStore));
+    javaMethods.add(createGetGapicPropertiesMethod(service, typeStore));
     return javaMethods;
   }
 
@@ -2098,26 +2099,34 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         .build();
   }
 
-  private MethodDefinition createGetApiTracerContextMethod(Service service, TypeStore typeStore) {
-    TypeNode returnType = FIXED_TYPESTORE.get("ApiTracerContext");
-    VariableExpr serverAddressVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setType(TypeNode.STRING).setName("serverAddress").build());
-
-    TypeNode serviceApiTracerContextType =
-        typeStore.get(ClassNames.getServiceApiTracerContextClassName(service));
+  private MethodDefinition createGetGapicPropertiesMethod(Service service, TypeStore typeStore) {
+    TypeNode returnType = FIXED_TYPESTORE.get("GapicProperties");
 
     return MethodDefinition.builder()
         .setIsOverride(true)
         .setScope(ScopeNode.PROTECTED)
         .setReturnType(returnType)
-        .setName("getApiTracerContext")
-        .setArguments(serverAddressVarExpr.toBuilder().setIsDecl(true).build())
+        .setName("getGapicProperties")
         .setReturnExpr(
             MethodInvocationExpr.builder()
-                .setStaticReferenceType(serviceApiTracerContextType)
+                .setStaticReferenceType(typeStore.get("GapicProperties"))
                 .setMethodName("create")
-                .setArguments(serverAddressVarExpr)
+                .setArguments(
+                    ValueExpr.withValue(StringObjectValue.withValue("gapic-generator-java")),
+                    MethodInvocationExpr.builder()
+                        .setStaticReferenceType(FIXED_TYPESTORE.get("GaxProperties"))
+                        .setMethodName("getLibraryVersion")
+                        .setArguments(
+                            VariableExpr.builder()
+                                .setVariable(
+                                    Variable.builder()
+                                        .setType(TypeNode.CLASS_OBJECT)
+                                        .setName("class")
+                                        .build())
+                                .setStaticReferenceType(typeStore.get("GapicProperties"))
+                                .build())
+                        .build(),
+                    ValueExpr.withValue(StringObjectValue.withValue(service.defaultHost())))
                 .setReturnType(returnType)
                 .build())
         .build();
@@ -2171,7 +2180,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             TransportChannelProvider.class,
             UnaryCallSettings.class,
             UnaryCallable.class,
-            ApiTracerContext.class);
+            ApiTracerContext.class,
+            GapicProperties.class);
     return new TypeStore(concreteClazzes);
   }
 
@@ -2203,7 +2213,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         true,
         ClassNames.getServiceClientClassName(service));
 
-    typeStore.put(pakkage, ClassNames.getServiceApiTracerContextClassName(service));
+    typeStore.put(service.pakkage(), "GapicProperties");
 
     return typeStore;
   }

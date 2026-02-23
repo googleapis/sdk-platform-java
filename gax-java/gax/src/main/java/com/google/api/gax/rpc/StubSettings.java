@@ -257,7 +257,17 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
    */
   @InternalApi
   protected ApiTracerContext getApiTracerContext(String serverAddress) {
-    return ApiTracerContext.create(serverAddress, null);
+    return ApiTracerContext.create(serverAddress, getGapicProperties());
+  }
+
+  /**
+   * Returns the {@link GapicProperties} for the client library.
+   *
+   * <p>This should be effectively treated as an abstract method.
+   */
+  @InternalApi
+  protected GapicProperties getGapicProperties() {
+    return null;
   }
 
   @Override

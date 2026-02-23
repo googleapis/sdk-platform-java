@@ -32,22 +32,29 @@ package com.google.api.gax.tracing;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import com.google.api.gax.rpc.GapicProperties;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ApiTracerContextTest {
+  private GapicProperties gapicProperties;
+
+  @BeforeEach
+  public void setUp() {
+    gapicProperties = GapicProperties.builder().setRepository("test-repo").build();
+  }
 
   @Test
   void testCreate() {
-    ApiTracerContext context = ApiTracerContext.create("test-address", "test-repo");
+    ApiTracerContext context = ApiTracerContext.create("test-address", gapicProperties);
 
     assertThat(context.getServerAddress()).isEqualTo("test-address");
-    assertThat(context.getRepo()).isEqualTo("test-repo");
   }
 
   @Test
   void testGetAttemptAttributes() {
-    ApiTracerContext context = ApiTracerContext.create("test-address", "test-repo");
+    ApiTracerContext context = ApiTracerContext.create("test-address", gapicProperties);
     Map<String, String> attributes = context.getAttemptAttributes();
 
     assertThat(attributes)
