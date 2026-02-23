@@ -32,7 +32,7 @@ package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import com.google.api.gax.tracing.AppCentricAttributes;
+import com.google.api.gax.tracing.ObservabilityAttributes;
 import com.google.api.gax.tracing.OpenTelemetryTraceManager;
 import com.google.api.gax.tracing.SpanTracer;
 import com.google.api.gax.tracing.SpanTracerFactory;
@@ -55,6 +55,7 @@ import org.junit.jupiter.api.Test;
 class ITOtelTracing {
   private static final String SHOWCASE_SERVER_ADDRESS = "localhost";
   private static final String SHOWCASE_REPO = "googleapis/sdk-platform-java";
+  private static final String SHOWCASE_ARTIFACT = "com.google.cloud:gapic-showcase";
 
   private InMemorySpanExporter spanExporter;
   private OpenTelemetrySdk openTelemetrySdk;
@@ -107,13 +108,18 @@ class ITOtelTracing {
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(AttributeKey.stringKey(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE)))
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_SERVER_ADDRESS);
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(AttributeKey.stringKey(AppCentricAttributes.REPO_ATTRIBUTE)))
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.REPO_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_REPO);
+      assertThat(
+              attemptSpan
+                      .getAttributes()
+                      .get(AttributeKey.stringKey(ObservabilityAttributes.ARTIFACT_ATTRIBUTE)))
+              .isEqualTo(SHOWCASE_ARTIFACT);
     }
   }
 
@@ -144,13 +150,18 @@ class ITOtelTracing {
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(AttributeKey.stringKey(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE)))
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_SERVER_ADDRESS);
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(AttributeKey.stringKey(AppCentricAttributes.REPO_ATTRIBUTE)))
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.REPO_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_REPO);
+      assertThat(
+              attemptSpan
+                      .getAttributes()
+                      .get(AttributeKey.stringKey(ObservabilityAttributes.ARTIFACT_ATTRIBUTE)))
+              .isEqualTo(SHOWCASE_ARTIFACT);
     }
   }
 }

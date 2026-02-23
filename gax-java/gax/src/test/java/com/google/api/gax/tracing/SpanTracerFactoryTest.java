@@ -99,7 +99,7 @@ class SpanTracerFactoryTest {
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes)
-        .containsEntry(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, "example.com");
+        .containsEntry(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, "example.com");
   }
 
   @Test
@@ -123,6 +123,7 @@ class SpanTracerFactoryTest {
     verify(recorder, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
-    assertThat(attemptAttributes).doesNotContainKey(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE);
+    assertThat(attemptAttributes)
+        .doesNotContainKey(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE);
   }
 }

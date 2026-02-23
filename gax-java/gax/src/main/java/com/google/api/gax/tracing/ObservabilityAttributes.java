@@ -40,7 +40,7 @@ import com.google.api.core.InternalApi;
  */
 @InternalApi
 @BetaApi
-public class AppCentricAttributes {
+public class ObservabilityAttributes {
   /** The address of the server being called (e.g., "pubsub.googleapis.com"). */
   public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
 

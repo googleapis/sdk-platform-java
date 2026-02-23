@@ -59,16 +59,16 @@ public class ApiTracerContext {
   public Map<String, String> getAttemptAttributes() {
     Map<String, String> attributes = new HashMap<>();
     if (getServerAddress() != null) {
-      attributes.put(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, getServerAddress());
+      attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, getServerAddress());
     }
     if (gapicProperties == null) {
       return attributes;
     }
     if (gapicProperties.getRepository() != null) {
-      attributes.put(AppCentricAttributes.REPO_ATTRIBUTE, gapicProperties.getRepository());
+      attributes.put(ObservabilityAttributes.REPO_ATTRIBUTE, gapicProperties.getRepository());
     }
     if (gapicProperties.getArtifactName() != null) {
-      attributes.put(AppCentricAttributes.ARTIFACT_ATTRIBUTE, gapicProperties.getArtifactName());
+      attributes.put(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, gapicProperties.getArtifactName());
     }
     return attributes;
   }

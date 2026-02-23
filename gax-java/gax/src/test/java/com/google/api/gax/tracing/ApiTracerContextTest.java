@@ -69,9 +69,10 @@ class ApiTracerContextTest {
     Map<String, String> attributes = context.getAttemptAttributes();
 
     assertThat(attributes)
-        .containsEntry(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, "test-address");
-    assertThat(attributes).containsEntry(AppCentricAttributes.REPO_ATTRIBUTE, "test-repo");
-    assertThat(attributes).containsEntry(AppCentricAttributes.ARTIFACT_ATTRIBUTE, "test-artifact");
+        .containsEntry(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, "test-address");
+    assertThat(attributes).containsEntry(ObservabilityAttributes.REPO_ATTRIBUTE, "test-repo");
+    assertThat(attributes)
+        .containsEntry(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, "test-artifact");
   }
 
   @Test
