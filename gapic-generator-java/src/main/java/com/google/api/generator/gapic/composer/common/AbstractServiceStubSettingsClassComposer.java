@@ -2100,45 +2100,24 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   }
 
   private MethodDefinition createGetGapicPropertiesMethod(Service service, TypeStore typeStore) {
-    TypeNode returnType = FIXED_TYPESTORE.get("AbstractGapicProperties");
-
     return MethodDefinition.builder()
         .setIsOverride(true)
         .setScope(ScopeNode.PROTECTED)
-        .setReturnType(returnType)
+        .setReturnType(FIXED_TYPESTORE.get("AbstractGapicProperties"))
         .setName("getGapicProperties")
-        .setReturnExpr(
-            MethodInvocationExpr.builder()
-                .setStaticReferenceType(typeStore.get("AbstractGapicProperties"))
-                .setMethodName("create")
-                .setArguments(
-                    ValueExpr.withValue(StringObjectValue.withValue("gapic-generator-java")),
-                    MethodInvocationExpr.builder()
-                        .setStaticReferenceType(FIXED_TYPESTORE.get("GaxProperties"))
-                        .setMethodName("getLibraryVersion")
-                        .setArguments(
-                            VariableExpr.builder()
-                                .setVariable(
-                                    Variable.builder()
-                                        .setType(TypeNode.CLASS_OBJECT)
-                                        .setName("class")
-                                        .build())
-                                .setStaticReferenceType(typeStore.get("AbstractGapicProperties"))
-                                .build())
-                        .build(),
-                    ValueExpr.withValue(StringObjectValue.withValue(service.defaultHost())))
-                .setReturnType(returnType)
-                .build())
+        .setReturnExpr(NewObjectExpr.withType(typeStore.get("GapicProperties")))
         .build();
   }
 
   private static TypeStore createStaticTypes() {
     List<Class<?>> concreteClazzes =
         Arrays.asList(
+            AbstractGapicProperties.class,
             ApiCallContext.class,
             ApiClientHeaderProvider.class,
             ApiFunction.class,
             ApiFuture.class,
+            ApiTracerContext.class,
             BatchedRequestIssuer.class,
             BatchingCallSettings.class,
             BatchingDescriptor.class,
@@ -2179,9 +2158,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             StubSettings.class,
             TransportChannelProvider.class,
             UnaryCallSettings.class,
-            UnaryCallable.class,
-            ApiTracerContext.class,
-            AbstractGapicProperties.class);
+            UnaryCallable.class);
     return new TypeStore(concreteClazzes);
   }
 
@@ -2213,7 +2190,11 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         true,
         ClassNames.getServiceClientClassName(service));
 
-    typeStore.put(service.pakkage(), "AbstractGapicProperties");
+    // Gapic properties
+    typeStore.put(
+        service.pakkage(),
+        ClassNames.getGapicPropertiesClassName(),
+        FIXED_TYPESTORE.get("AbstractGapicProperties").reference());
 
     return typeStore;
   }

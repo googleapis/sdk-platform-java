@@ -22,13 +22,10 @@ import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.MethodDefinition;
-import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
-import com.google.api.generator.engine.ast.Variable;
-import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -52,8 +49,7 @@ public class GapicPropertiesClassComposer implements ClassComposer {
   @Override
   public GapicClass generate(GapicContext context, Service service) {
     String pakkage = service.pakkage();
-    String className = "AbstractGapicProperties";
-    TypeStore typeStore = createDynamicTypes(service, pakkage);
+    String className = "GapicProperties";
 
     ClassDefinition classDef =
         ClassDefinition.builder()
@@ -62,7 +58,7 @@ public class GapicPropertiesClassComposer implements ClassComposer {
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setExtendsType(FIXED_TYPESTORE.get("AbstractGapicProperties"))
-            .setMethods(createClassMethods(context, service, typeStore))
+            .setMethods(createClassMethods(context))
             .build();
 
     return GapicClass.create(GapicClass.Kind.MAIN, classDef);
@@ -77,56 +73,20 @@ public class GapicPropertiesClassComposer implements ClassComposer {
             .build());
   }
 
-  private List<MethodDefinition> createClassMethods(
-      GapicContext context, Service service, TypeStore typeStore) {
+  private List<MethodDefinition> createClassMethods(GapicContext context) {
     List<MethodDefinition> methods = new ArrayList<>();
-    methods.add(createGetLibraryNameMethod(service));
-    methods.add(createGetLibraryVersionMethod(service, typeStore));
-    methods.add(createGetApiEndpointMethod(service));
+    methods.add(createGetRepositoryMethod(context));
     return methods;
   }
 
-  private MethodDefinition createGetLibraryNameMethod(Service service) {
+  private MethodDefinition createGetRepositoryMethod(GapicContext context) {
     return MethodDefinition.builder()
         .setIsOverride(true)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.STRING)
-        .setName("getLibraryName")
-        .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("gapic-generator-java")))
-        .build();
-  }
-
-  private MethodDefinition createGetLibraryVersionMethod(Service service, TypeStore typeStore) {
-    return MethodDefinition.builder()
-        .setIsOverride(true)
-        .setScope(ScopeNode.PUBLIC)
-        .setReturnType(TypeNode.STRING)
-        .setName("getLibraryVersion")
+        .setName("getRepository")
         .setReturnExpr(
-            MethodInvocationExpr.builder()
-                .setStaticReferenceType(FIXED_TYPESTORE.get("GaxProperties"))
-                .setMethodName("getLibraryVersion")
-                .setArguments(
-                    VariableExpr.builder()
-                        .setVariable(
-                            Variable.builder()
-                                .setType(TypeNode.CLASS_OBJECT)
-                                .setName("class")
-                                .build())
-                        .setStaticReferenceType(typeStore.get("AbstractGapicProperties"))
-                        .build())
-                .setReturnType(TypeNode.STRING)
-                .build())
-        .build();
-  }
-
-  private MethodDefinition createGetApiEndpointMethod(Service service) {
-    return MethodDefinition.builder()
-        .setIsOverride(true)
-        .setScope(ScopeNode.PUBLIC)
-        .setReturnType(TypeNode.STRING)
-        .setName("getApiEndpoint")
-        .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue(service.defaultHost())))
+            ValueExpr.withValue(StringObjectValue.withValue(context.repo().orElse(null))))
         .build();
   }
 
@@ -137,11 +97,5 @@ public class GapicPropertiesClassComposer implements ClassComposer {
             Generated.class,
             AbstractGapicProperties.class,
             GaxProperties.class));
-  }
-
-  private TypeStore createDynamicTypes(Service service, String pakkage) {
-    TypeStore typeStore = new TypeStore();
-    typeStore.put(pakkage, "AbstractGapicProperties");
-    return typeStore;
   }
 }

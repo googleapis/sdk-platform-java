@@ -34,7 +34,7 @@ public class ClassNames {
   private static final String TRANSPORT_SERVICE_STUB_CLASS_NAME_PATTERN = "%s%sStub";
   private static final String TRANSPORT_SERVICE_CALLABLE_FACTORY_CLASS_NAME_PATTERN =
       "%s%sCallableFactory";
-  private static final String SERVICE_API_TRACER_CONTEXT_CLASS_NAME_PATTERN = "%sApiTracerContext";
+  private static final String GAPIC_PROPERTIES_CLASS_NAME = "GapicProperties";
 
   private final List<String> transportPrefixes;
 
@@ -117,10 +117,8 @@ public class ClassNames {
     return String.format(MOCK_SERVICE_IMPL_CLASS_NAME_PATTERN, service.name());
   }
 
-  public static String getServiceApiTracerContextClassName(Service service) {
-    return String.format(
-        SERVICE_API_TRACER_CONTEXT_CLASS_NAME_PATTERN,
-        monolithBackwardsCompatibleName(service.name()));
+  public static String getGapicPropertiesClassName() {
+    return GAPIC_PROPERTIES_CLASS_NAME;
   }
 
   private static String monolithBackwardsCompatibleName(String rawServiceName) {
