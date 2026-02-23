@@ -53,12 +53,12 @@ public class TypeStore {
             VaporReference.builder().setName(typeName).setPakkage(pakkage).build()));
   }
 
-  public void put(String pakkage, String typeName, Reference parentReference) {
+  public void put(String pakkage, String typeName, Reference supertypeReference) {
     VaporReference reference =
         VaporReference.builder()
             .setName(typeName)
             .setPakkage(pakkage)
-            .setSupertypeReference(parentReference)
+            .setSupertypeReference(supertypeReference)
             .build();
     store.put(typeName, TypeNode.withReference(reference));
   }
