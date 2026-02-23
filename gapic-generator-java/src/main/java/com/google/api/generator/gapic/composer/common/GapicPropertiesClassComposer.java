@@ -77,6 +77,7 @@ public class GapicPropertiesClassComposer implements ClassComposer {
   private List<MethodDefinition> createClassMethods(GapicContext context) {
     List<MethodDefinition> methods = new ArrayList<>();
     methods.add(createGetRepositoryMethod(context));
+    methods.add(createGetArtifactNameMethod(context));
     return methods;
   }
 
@@ -90,6 +91,21 @@ public class GapicPropertiesClassComposer implements ClassComposer {
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.STRING)
         .setName("getRepository")
+        .setReturnExpr(returnExpr)
+        .build();
+  }
+
+  private MethodDefinition createGetArtifactNameMethod(GapicContext context) {
+    Expr returnExpr = ValueExpr.createNullExpr();
+    if (context.artifact().isPresent()) {
+      returnExpr =
+          ValueExpr.withValue(StringObjectValue.withValue(context.artifact().orElse(null)));
+    }
+    return MethodDefinition.builder()
+        .setIsOverride(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.STRING)
+        .setName("getArtifactName")
         .setReturnExpr(returnExpr)
         .build();
   }

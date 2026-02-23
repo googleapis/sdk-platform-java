@@ -45,12 +45,12 @@ import javax.annotation.Nullable;
 @InternalApi
 public class ApiTracerContext {
   private final String serverAddress;
-  private final AbstractGapicProperties abstractGapicProperties;
+  private final AbstractGapicProperties gapicProperties;
 
   protected ApiTracerContext(
-      @Nullable String serverAddress, @Nullable AbstractGapicProperties abstractGapicProperties) {
+      @Nullable String serverAddress, @Nullable AbstractGapicProperties gapicProperties) {
     this.serverAddress = serverAddress;
-    this.abstractGapicProperties = abstractGapicProperties;
+    this.gapicProperties = gapicProperties;
   }
 
   /**
@@ -61,8 +61,14 @@ public class ApiTracerContext {
     if (getServerAddress() != null) {
       attributes.put(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, getServerAddress());
     }
-    if (abstractGapicProperties != null) {
-      attributes.put(AppCentricAttributes.REPO_ATTRIBUTE, abstractGapicProperties.getRepository());
+    if (gapicProperties == null) {
+      return attributes;
+    }
+    if (gapicProperties.getRepository() != null) {
+      attributes.put(AppCentricAttributes.REPO_ATTRIBUTE, gapicProperties.getRepository());
+    }
+    if (gapicProperties.getArtifactName() != null) {
+      attributes.put(AppCentricAttributes.ARTIFACT_ATTRIBUTE, gapicProperties.getArtifactName());
     }
     return attributes;
   }
@@ -74,7 +80,7 @@ public class ApiTracerContext {
 
   @Nullable
   public AbstractGapicProperties getGapicProperties() {
-    return abstractGapicProperties;
+    return gapicProperties;
   }
 
   public static ApiTracerContext create(

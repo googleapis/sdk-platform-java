@@ -43,4 +43,7 @@ public abstract class AbstractGapicProperties {
 
   @Nullable
   public abstract String getRepository();
+
+  @Nullable
+  public abstract String getArtifactName();
 }

@@ -48,6 +48,11 @@ class ApiTracerContextTest {
           public String getRepository() {
             return "test-repo";
           }
+
+          @Override
+          public String getArtifactName() {
+            return "test-artifact";
+          }
         };
   }
 
@@ -66,6 +71,7 @@ class ApiTracerContextTest {
     assertThat(attributes)
         .containsEntry(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, "test-address");
     assertThat(attributes).containsEntry(AppCentricAttributes.REPO_ATTRIBUTE, "test-repo");
+    assertThat(attributes).containsEntry(AppCentricAttributes.ARTIFACT_ATTRIBUTE, "test-artifact");
   }
 
   @Test

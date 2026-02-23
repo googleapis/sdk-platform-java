@@ -14,34 +14,18 @@
  * limitations under the License.
  */
 
-package com.google.showcase.v1beta1.stub;
+package com.google.showcase.v1beta1;
 
-import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import com.google.api.gax.tracing.ApiTracerContext;
+import com.google.api.gax.rpc.AbstractGapicProperties;
 import javax.annotation.Generated;
 
 @InternalApi
-@BetaApi
 @Generated("by gapic-generator-java")
-public class TestingApiTracerContext extends ApiTracerContext {
-  private final String serverAddress;
-
-  private TestingApiTracerContext(String serverAddress) {
-    this.serverAddress = serverAddress;
-  }
-
-  public static TestingApiTracerContext create(String serverAddress) {
-    return new TestingApiTracerContext(serverAddress);
-  }
+public class GapicProperties extends AbstractGapicProperties {
 
   @Override
-  public String getServerAddress() {
-    return serverAddress;
-  }
-
-  @Override
-  public String getRepo() {
+  public String getRepository() {
     return "googleapis/sdk-platform-java";
   }
 }

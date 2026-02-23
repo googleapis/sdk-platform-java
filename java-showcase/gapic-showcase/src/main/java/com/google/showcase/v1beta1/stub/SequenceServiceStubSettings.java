@@ -32,6 +32,7 @@ import com.google.api.gax.httpjson.GaxHttpJsonProperties;
 import com.google.api.gax.httpjson.HttpJsonTransportChannel;
 import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
@@ -45,7 +46,6 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
@@ -65,6 +65,7 @@ import com.google.showcase.v1beta1.AttemptStreamingSequenceRequest;
 import com.google.showcase.v1beta1.AttemptStreamingSequenceResponse;
 import com.google.showcase.v1beta1.CreateSequenceRequest;
 import com.google.showcase.v1beta1.CreateStreamingSequenceRequest;
+import com.google.showcase.v1beta1.GapicProperties;
 import com.google.showcase.v1beta1.GetSequenceReportRequest;
 import com.google.showcase.v1beta1.GetStreamingSequenceReportRequest;
 import com.google.showcase.v1beta1.Sequence;
@@ -385,8 +386,8 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
   }
 
   @Override
-  protected ApiTracerContext getApiTracerContext(String serverAddress) {
-    return SequenceServiceApiTracerContext.create(serverAddress);
+  protected AbstractGapicProperties getGapicProperties() {
+    return new GapicProperties();
   }
 
   /** Builder for SequenceServiceStubSettings. */

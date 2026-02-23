@@ -37,6 +37,7 @@ import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
@@ -52,7 +53,6 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
@@ -74,6 +74,7 @@ import com.google.showcase.v1beta1.CreateBlurbRequest;
 import com.google.showcase.v1beta1.CreateRoomRequest;
 import com.google.showcase.v1beta1.DeleteBlurbRequest;
 import com.google.showcase.v1beta1.DeleteRoomRequest;
+import com.google.showcase.v1beta1.GapicProperties;
 import com.google.showcase.v1beta1.GetBlurbRequest;
 import com.google.showcase.v1beta1.GetRoomRequest;
 import com.google.showcase.v1beta1.ListBlurbsRequest;
@@ -589,8 +590,8 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
   }
 
   @Override
-  protected ApiTracerContext getApiTracerContext(String serverAddress) {
-    return MessagingApiTracerContext.create(serverAddress);
+  protected AbstractGapicProperties getGapicProperties() {
+    return new GapicProperties();
   }
 
   /** Builder for MessagingStubSettings. */

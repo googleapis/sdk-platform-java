@@ -73,6 +73,7 @@ public class TestProtoLoader {
           + " paginated calls. Set the 'showcase-trailer' metadata key on any method\n"
           + " to have the values echoed in the response trailers.";
   private static final String ECHO_SERVICE_REPOSITORY = "googleapis/sdk-platform-java";
+  private static final String ECHO_SERVICE_ARTIFACT = "gapic-showcase";
   private final String testFilesDirectory;
   private final Transport transport;
 
@@ -204,6 +205,7 @@ public class TestProtoLoader {
         .setHelperResourceNames(outputResourceNames)
         .setTransport(transport)
         .setRepo(Optional.of(ECHO_SERVICE_REPOSITORY))
+        .setArtifact(Optional.of(ECHO_SERVICE_ARTIFACT))
         .build();
   }
 

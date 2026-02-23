@@ -46,4 +46,7 @@ public class AppCentricAttributes {
 
   /** The repository of the client library (e.g., "googleapis/google-cloud-java"). */
   public static final String REPO_ATTRIBUTE = "gcp.client.repo";
+
+  /** The artifact name of the client library (e.g., "google-cloud-vision"). */
+  public static final String ARTIFACT_ATTRIBUTE = "gcp.client.artifact";
 }
