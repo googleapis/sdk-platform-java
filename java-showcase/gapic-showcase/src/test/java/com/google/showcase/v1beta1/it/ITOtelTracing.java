@@ -117,9 +117,9 @@ class ITOtelTracing {
           .isEqualTo(SHOWCASE_REPO);
       assertThat(
               attemptSpan
-                      .getAttributes()
-                      .get(AttributeKey.stringKey(ObservabilityAttributes.ARTIFACT_ATTRIBUTE)))
-              .isEqualTo(SHOWCASE_ARTIFACT);
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.ARTIFACT_ATTRIBUTE)))
+          .isEqualTo(SHOWCASE_ARTIFACT);
     }
   }
 
@@ -159,9 +159,9 @@ class ITOtelTracing {
           .isEqualTo(SHOWCASE_REPO);
       assertThat(
               attemptSpan
-                      .getAttributes()
-                      .get(AttributeKey.stringKey(ObservabilityAttributes.ARTIFACT_ATTRIBUTE)))
-              .isEqualTo(SHOWCASE_ARTIFACT);
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.ARTIFACT_ATTRIBUTE)))
+          .isEqualTo(SHOWCASE_ARTIFACT);
     }
   }
 }
