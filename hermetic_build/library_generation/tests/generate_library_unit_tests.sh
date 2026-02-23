@@ -28,10 +28,11 @@ get_gapic_opts_with_rest_test() {
   local transport="grpc"
   local rest_numeric_enums="true"
   local repo="googleapis/google-cloud-java"
+  local artifact="google-cloud-library"
   local gapic_opts
-  gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "" "" "" "${repo}")"
+  gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "" "" "" "${repo}" "${artifact}")"
   assertEquals \
-  "transport=grpc,rest-numeric-enums,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml,repo=${repo}" \
+  "transport=grpc,rest-numeric-enums,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml,repo=${repo},artifact=${artifact}" \
   "${gapic_opts}"
 }
 
@@ -40,10 +41,11 @@ get_gapic_opts_without_rest_test() {
   local transport="grpc"
   local rest_numeric_enums="false"
   local repo="googleapis/google-cloud-java"
+  local artifact="google-cloud-library"
   local gapic_opts
-  gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "" "" "" "${repo}")"
+  gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "" "" "" "${repo}" "${artifact}")"
   assertEquals \
-  "transport=grpc,,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml,repo=${repo}" \
+  "transport=grpc,,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml,repo=${repo},artifact=${artifact}" \
   "$gapic_opts"
 }
 
@@ -52,10 +54,11 @@ get_gapic_opts_with_non_default_test() {
   local transport="grpc"
   local rest_numeric_enums="false"
   local repo="googleapis/google-cloud-java"
+  local artifact="google-cloud-library"
   local gapic_opts
-  gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "${proto_path}/example_gapic.yaml" "${proto_path}/example_grpc_service_config.json" "${proto_path}/example.yaml" "${repo}")"
+  gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "${proto_path}/example_gapic.yaml" "${proto_path}/example_grpc_service_config.json" "${proto_path}/example.yaml" "${repo}" "${artifact}")"
   assertEquals \
-  "transport=grpc,,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml,repo=${repo}" \
+  "transport=grpc,,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml,repo=${repo},artifact=${artifact}" \
   "$gapic_opts"
 }
 

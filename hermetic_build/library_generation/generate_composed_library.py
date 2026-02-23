@@ -79,7 +79,7 @@ def generate_composed_library(
             transport=library.get_transport(gapic_inputs),
         )
         temp_destination_path = f"java-{gapic.proto_path.replace('/','-')}"
-        effective_arguments = __construct_effective_arg(
+        effective_arguments = _construct_effective_arg(
             base_arguments=[],
             gapic=gapic,
             gapic_inputs=gapic_inputs,
@@ -121,7 +121,7 @@ def generate_composed_library(
     )
 
 
-def __construct_effective_arg(
+def _construct_effective_arg(
     base_arguments: List[str],
     gapic: GapicConfig,
     gapic_inputs: GapicInputs,
@@ -159,6 +159,8 @@ def __construct_effective_arg(
         gapic_inputs.include_samples,
         "--repo",
         util.get_library_repository(generation_config, library),
+        "--artifact",
+        library.distribution_name,
     ]
     arguments += ["--destination_path", temp_destination_path]
 
