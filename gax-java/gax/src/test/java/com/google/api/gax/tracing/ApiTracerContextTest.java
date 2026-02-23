@@ -57,13 +57,6 @@ class ApiTracerContextTest {
   }
 
   @Test
-  void testCreate() {
-    ApiTracerContext context = ApiTracerContext.create("test-address", abstractGapicProperties);
-
-    assertThat(context.getServerAddress()).isEqualTo("test-address");
-  }
-
-  @Test
   void testGetAttemptAttributes() {
     ApiTracerContext context = ApiTracerContext.create("test-address", abstractGapicProperties);
     Map<String, String> attributes = context.getAttemptAttributes();

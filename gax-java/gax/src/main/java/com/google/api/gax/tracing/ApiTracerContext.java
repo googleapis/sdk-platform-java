@@ -58,8 +58,8 @@ public class ApiTracerContext {
    */
   public Map<String, String> getAttemptAttributes() {
     Map<String, String> attributes = new HashMap<>();
-    if (getServerAddress() != null) {
-      attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, getServerAddress());
+    if (serverAddress != null) {
+      attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress);
     }
     if (gapicProperties == null) {
       return attributes;
@@ -71,16 +71,6 @@ public class ApiTracerContext {
       attributes.put(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, gapicProperties.getArtifactName());
     }
     return attributes;
-  }
-
-  @Nullable
-  public String getServerAddress() {
-    return serverAddress;
-  }
-
-  @Nullable
-  public AbstractGapicProperties getGapicProperties() {
-    return gapicProperties;
   }
 
   public static ApiTracerContext create(
