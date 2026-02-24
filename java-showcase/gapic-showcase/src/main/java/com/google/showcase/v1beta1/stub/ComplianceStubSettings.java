@@ -32,10 +32,10 @@ import com.google.api.gax.httpjson.GaxHttpJsonProperties;
 import com.google.api.gax.httpjson.HttpJsonTransportChannel;
 import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
-import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.GapicProperties;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.PagedListDescriptor;
@@ -60,7 +60,6 @@ import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
 import com.google.showcase.v1beta1.EnumRequest;
 import com.google.showcase.v1beta1.EnumResponse;
-import com.google.showcase.v1beta1.GapicProperties;
 import com.google.showcase.v1beta1.RepeatRequest;
 import com.google.showcase.v1beta1.RepeatResponse;
 import java.io.IOException;
@@ -395,8 +394,11 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
   }
 
   @Override
-  protected AbstractGapicProperties getGapicProperties() {
-    return new GapicProperties();
+  protected GapicProperties getGapicProperties() {
+    return GapicProperties.builder()
+            .setArtifactName("com.google.cloud:gapic-showcase")
+            .setRepository("googleapis/sdk-platform-java")
+            .build();
   }
 
   /** Builder for ComplianceStubSettings. */

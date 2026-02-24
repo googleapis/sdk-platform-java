@@ -34,10 +34,10 @@ import com.google.api.gax.httpjson.GaxHttpJsonProperties;
 import com.google.api.gax.httpjson.HttpJsonTransportChannel;
 import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
-import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.GapicProperties;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.PagedListDescriptor;
@@ -64,7 +64,6 @@ import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.CreateSessionRequest;
 import com.google.showcase.v1beta1.DeleteSessionRequest;
 import com.google.showcase.v1beta1.DeleteTestRequest;
-import com.google.showcase.v1beta1.GapicProperties;
 import com.google.showcase.v1beta1.GetSessionRequest;
 import com.google.showcase.v1beta1.ListSessionsRequest;
 import com.google.showcase.v1beta1.ListSessionsResponse;
@@ -497,10 +496,13 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
     testIamPermissionsSettings = settingsBuilder.testIamPermissionsSettings().build();
   }
 
-  @Override
-  protected AbstractGapicProperties getGapicProperties() {
-    return new GapicProperties();
-  }
+    @Override
+    protected GapicProperties getGapicProperties() {
+        return GapicProperties.builder()
+                .setArtifactName("com.google.cloud:gapic-showcase")
+                .setRepository("googleapis/sdk-platform-java")
+                .build();
+    }
 
   /** Builder for TestingStubSettings. */
   public static class Builder extends StubSettings.Builder<TestingStubSettings, Builder> {

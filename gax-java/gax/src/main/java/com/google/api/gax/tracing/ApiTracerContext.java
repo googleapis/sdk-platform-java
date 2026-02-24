@@ -31,7 +31,8 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
-import com.google.api.gax.rpc.AbstractGapicProperties;
+import com.google.api.gax.rpc.GapicProperties;
+
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
@@ -45,10 +46,10 @@ import javax.annotation.Nullable;
 @InternalApi
 public class ApiTracerContext {
   private final String serverAddress;
-  private final AbstractGapicProperties gapicProperties;
+  private final GapicProperties gapicProperties;
 
   protected ApiTracerContext(
-      @Nullable String serverAddress, @Nullable AbstractGapicProperties gapicProperties) {
+      @Nullable String serverAddress, @Nullable GapicProperties gapicProperties) {
     this.serverAddress = serverAddress;
     this.gapicProperties = gapicProperties;
   }
@@ -64,18 +65,18 @@ public class ApiTracerContext {
     if (gapicProperties == null) {
       return attributes;
     }
-    if (gapicProperties.getRepository() != null) {
-      attributes.put(ObservabilityAttributes.REPO_ATTRIBUTE, gapicProperties.getRepository());
+    if (gapicProperties.repository() != null) {
+      attributes.put(ObservabilityAttributes.REPO_ATTRIBUTE, gapicProperties.repository());
     }
-    if (gapicProperties.getArtifactName() != null) {
-      attributes.put(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, gapicProperties.getArtifactName());
+    if (gapicProperties.artifactName() != null) {
+      attributes.put(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, gapicProperties.artifactName());
     }
     return attributes;
   }
 
   public static ApiTracerContext create(
       @Nullable final String serverAddress,
-      @Nullable final AbstractGapicProperties abstractGapicProperties) {
-    return new ApiTracerContext(serverAddress, abstractGapicProperties);
+      @Nullable final GapicProperties gapicProperties) {
+    return new ApiTracerContext(serverAddress, gapicProperties);
   }
 }

@@ -32,10 +32,10 @@ import com.google.api.gax.httpjson.GaxHttpJsonProperties;
 import com.google.api.gax.httpjson.HttpJsonTransportChannel;
 import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
-import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.GapicProperties;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.PagedListDescriptor;
@@ -65,7 +65,6 @@ import com.google.showcase.v1beta1.AttemptStreamingSequenceRequest;
 import com.google.showcase.v1beta1.AttemptStreamingSequenceResponse;
 import com.google.showcase.v1beta1.CreateSequenceRequest;
 import com.google.showcase.v1beta1.CreateStreamingSequenceRequest;
-import com.google.showcase.v1beta1.GapicProperties;
 import com.google.showcase.v1beta1.GetSequenceReportRequest;
 import com.google.showcase.v1beta1.GetStreamingSequenceReportRequest;
 import com.google.showcase.v1beta1.Sequence;
@@ -386,8 +385,11 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
   }
 
   @Override
-  protected AbstractGapicProperties getGapicProperties() {
-    return new GapicProperties();
+  protected GapicProperties getGapicProperties() {
+    return GapicProperties.builder()
+            .setArtifactName("com.google.cloud:gapic-showcase")
+            .setRepository("googleapis/sdk-platform-java")
+            .build();
   }
 
   /** Builder for SequenceServiceStubSettings. */

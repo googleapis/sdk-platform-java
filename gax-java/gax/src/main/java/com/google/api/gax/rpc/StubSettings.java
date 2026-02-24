@@ -261,12 +261,12 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   }
 
   /**
-   * Returns the {@link AbstractGapicProperties} for the client library.
+   * Returns the {@link GapicProperties} for the client library.
    *
    * <p>This should be effectively treated as an abstract method.
    */
   @InternalApi
-  protected AbstractGapicProperties getGapicProperties() {
+  protected GapicProperties getGapicProperties() {
     return null;
   }
 
