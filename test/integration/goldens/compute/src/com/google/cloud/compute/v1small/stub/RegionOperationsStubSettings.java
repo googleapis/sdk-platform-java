@@ -25,13 +25,14 @@ import com.google.api.gax.httpjson.GaxHttpJsonProperties;
 import com.google.api.gax.httpjson.HttpJsonTransportChannel;
 import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
-import com.google.api.gax.tracing.ApiTracerContext;
+import com.google.cloud.compute.v1small.GapicProperties;
 import com.google.cloud.compute.v1small.GetRegionOperationRequest;
 import com.google.cloud.compute.v1small.Operation;
 import com.google.cloud.compute.v1small.WaitRegionOperationRequest;
@@ -204,8 +205,8 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
   }
 
   @Override
-  protected ApiTracerContext getApiTracerContext(String serverAddress) {
-    return RegionOperationsApiTracerContext.create(serverAddress);
+  protected AbstractGapicProperties getGapicProperties() {
+    return new GapicProperties();
   }
 
   /** Builder for RegionOperationsStubSettings. */

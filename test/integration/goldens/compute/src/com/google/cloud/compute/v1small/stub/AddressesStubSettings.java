@@ -32,6 +32,7 @@ import com.google.api.gax.httpjson.ProtoOperationTransformers;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
@@ -45,13 +46,13 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.cloud.compute.v1small.Address;
 import com.google.cloud.compute.v1small.AddressAggregatedList;
 import com.google.cloud.compute.v1small.AddressList;
 import com.google.cloud.compute.v1small.AddressesScopedList;
 import com.google.cloud.compute.v1small.AggregatedListAddressesRequest;
 import com.google.cloud.compute.v1small.DeleteAddressRequest;
+import com.google.cloud.compute.v1small.GapicProperties;
 import com.google.cloud.compute.v1small.InsertAddressRequest;
 import com.google.cloud.compute.v1small.ListAddressesRequest;
 import com.google.cloud.compute.v1small.Operation;
@@ -402,8 +403,8 @@ public class AddressesStubSettings extends StubSettings<AddressesStubSettings> {
   }
 
   @Override
-  protected ApiTracerContext getApiTracerContext(String serverAddress) {
-    return AddressesApiTracerContext.create(serverAddress);
+  protected AbstractGapicProperties getGapicProperties() {
+    return new GapicProperties();
   }
 
   /** Builder for AddressesStubSettings. */

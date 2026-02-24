@@ -35,6 +35,7 @@ import com.google.api.gax.grpc.GaxGrpcProperties;
 import com.google.api.gax.grpc.GrpcTransportChannel;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.BatchedRequestIssuer;
@@ -50,7 +51,7 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.api.gax.tracing.ApiTracerContext;
+import com.google.cloud.pubsub.v1.GapicProperties;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -564,8 +565,8 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
   }
 
   @Override
-  protected ApiTracerContext getApiTracerContext(String serverAddress) {
-    return PublisherApiTracerContext.create(serverAddress);
+  protected AbstractGapicProperties getGapicProperties() {
+    return new GapicProperties();
   }
 
   /** Builder for PublisherStubSettings. */

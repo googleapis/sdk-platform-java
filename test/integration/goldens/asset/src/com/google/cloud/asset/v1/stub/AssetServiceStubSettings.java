@@ -38,6 +38,7 @@ import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
@@ -51,7 +52,6 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningMetadata;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningResponse;
@@ -71,6 +71,7 @@ import com.google.cloud.asset.v1.DeleteSavedQueryRequest;
 import com.google.cloud.asset.v1.ExportAssetsRequest;
 import com.google.cloud.asset.v1.ExportAssetsResponse;
 import com.google.cloud.asset.v1.Feed;
+import com.google.cloud.asset.v1.GapicProperties;
 import com.google.cloud.asset.v1.GetFeedRequest;
 import com.google.cloud.asset.v1.GetSavedQueryRequest;
 import com.google.cloud.asset.v1.IamPolicySearchResult;
@@ -727,8 +728,8 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
   }
 
   @Override
-  protected ApiTracerContext getApiTracerContext(String serverAddress) {
-    return AssetServiceApiTracerContext.create(serverAddress);
+  protected AbstractGapicProperties getGapicProperties() {
+    return new GapicProperties();
   }
 
   /** Builder for AssetServiceStubSettings. */

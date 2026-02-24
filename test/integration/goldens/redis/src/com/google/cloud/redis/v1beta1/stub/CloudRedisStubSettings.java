@@ -35,6 +35,7 @@ import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
@@ -48,11 +49,11 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.cloud.redis.v1beta1.CreateInstanceRequest;
 import com.google.cloud.redis.v1beta1.DeleteInstanceRequest;
 import com.google.cloud.redis.v1beta1.ExportInstanceRequest;
 import com.google.cloud.redis.v1beta1.FailoverInstanceRequest;
+import com.google.cloud.redis.v1beta1.GapicProperties;
 import com.google.cloud.redis.v1beta1.GetInstanceAuthStringRequest;
 import com.google.cloud.redis.v1beta1.GetInstanceRequest;
 import com.google.cloud.redis.v1beta1.ImportInstanceRequest;
@@ -479,8 +480,8 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
   }
 
   @Override
-  protected ApiTracerContext getApiTracerContext(String serverAddress) {
-    return CloudRedisApiTracerContext.create(serverAddress);
+  protected AbstractGapicProperties getGapicProperties() {
+    return new GapicProperties();
   }
 
   /** Builder for CloudRedisStubSettings. */
