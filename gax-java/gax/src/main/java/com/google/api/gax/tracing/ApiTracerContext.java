@@ -52,7 +52,7 @@ public abstract class ApiTracerContext {
   public Map<String, String> getAttemptAttributes() {
     Map<String, String> attributes = new HashMap<>();
     if (getServerAddress() != null) {
-      attributes.put(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, getServerAddress());
+      attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, getServerAddress());
     }
     return attributes;
   }

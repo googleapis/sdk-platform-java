@@ -42,18 +42,18 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-class AppCentricTracerFactoryTest {
+class SpanTracerFactoryTest {
 
   @Test
   void testNewTracer_createsOpenTelemetryTracingTracer() {
     TraceManager recorder = mock(TraceManager.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(mock(TraceManager.Span.class));
 
-    AppCentricTracerFactory factory = new AppCentricTracerFactory(recorder);
+    SpanTracerFactory factory = new SpanTracerFactory(recorder);
     ApiTracer tracer =
         factory.newTracer(
             null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
-    assertThat(tracer).isInstanceOf(AppCentricTracer.class);
+    assertThat(tracer).isInstanceOf(SpanTracer.class);
   }
 
   @Test
@@ -63,7 +63,7 @@ class AppCentricTracerFactoryTest {
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
 
     ApiTracerFactory factory =
-        new AppCentricTracerFactory(recorder, ApiTracerContext.newBuilder().build());
+        new SpanTracerFactory(recorder, ApiTracerContext.newBuilder().build());
     factory =
         factory.withContext(ApiTracerContext.newBuilder().setServerAddress("test-address").build());
     ApiTracer tracer =
@@ -88,7 +88,7 @@ class AppCentricTracerFactoryTest {
     ApiTracerContext context =
         ApiTracerContext.newBuilder().setServerAddress("example.com").build();
 
-    AppCentricTracerFactory factory = new AppCentricTracerFactory(recorder);
+    SpanTracerFactory factory = new SpanTracerFactory(recorder);
     ApiTracerFactory factoryWithContext = factory.withContext(context);
 
     ApiTracer tracer =
@@ -102,7 +102,7 @@ class AppCentricTracerFactoryTest {
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes)
-        .containsEntry(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE, "example.com");
+        .containsEntry(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, "example.com");
   }
 
   @Test
@@ -113,7 +113,7 @@ class AppCentricTracerFactoryTest {
 
     ApiTracerContext context = ApiTracerContext.newBuilder().build();
 
-    AppCentricTracerFactory factory = new AppCentricTracerFactory(recorder);
+    SpanTracerFactory factory = new SpanTracerFactory(recorder);
     ApiTracerFactory factoryWithContext = factory.withContext(context);
 
     ApiTracer tracer =
@@ -126,6 +126,7 @@ class AppCentricTracerFactoryTest {
     verify(recorder, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
-    assertThat(attemptAttributes).doesNotContainKey(AppCentricAttributes.SERVER_ADDRESS_ATTRIBUTE);
+    assertThat(attemptAttributes)
+        .doesNotContainKey(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE);
   }
 }
