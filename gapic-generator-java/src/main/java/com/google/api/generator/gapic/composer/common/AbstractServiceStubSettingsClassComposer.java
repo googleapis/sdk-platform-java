@@ -31,7 +31,6 @@ import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
-import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.BatchedRequestIssuer;
@@ -1054,7 +1053,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT));
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createClassConstructor(service, methodSettingsMemberVarExprs, typeStore));
-    javaMethods.add(createGetGapicPropertiesMethod(service, typeStore));
     return javaMethods;
   }
 
@@ -2098,20 +2096,9 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         .build();
   }
 
-  private MethodDefinition createGetGapicPropertiesMethod(Service service, TypeStore typeStore) {
-    return MethodDefinition.builder()
-        .setIsOverride(true)
-        .setScope(ScopeNode.PROTECTED)
-        .setReturnType(FIXED_TYPESTORE.get("AbstractGapicProperties"))
-        .setName("getGapicProperties")
-        .setReturnExpr(NewObjectExpr.withType(typeStore.get("GapicProperties")))
-        .build();
-  }
-
   private static TypeStore createStaticTypes() {
     List<Class<?>> concreteClazzes =
         Arrays.asList(
-            AbstractGapicProperties.class,
             ApiCallContext.class,
             ApiClientHeaderProvider.class,
             ApiFunction.class,
@@ -2187,12 +2174,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .collect(Collectors.toList()),
         true,
         ClassNames.getServiceClientClassName(service));
-
-    // Gapic properties
-    typeStore.put(
-        service.pakkage(),
-        "GapicProperties",
-        FIXED_TYPESTORE.get("AbstractGapicProperties").reference());
 
     return typeStore;
   }

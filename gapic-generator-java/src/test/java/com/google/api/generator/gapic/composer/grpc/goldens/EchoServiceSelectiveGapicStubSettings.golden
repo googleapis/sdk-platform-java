@@ -11,7 +11,6 @@ import com.google.api.gax.grpc.GaxGrpcProperties;
 import com.google.api.gax.grpc.GrpcTransportChannel;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
-import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.StatusCode;
@@ -25,7 +24,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.selective.generate.v1beta1.EchoRequest;
 import com.google.selective.generate.v1beta1.EchoResponse;
-import com.google.selective.generate.v1beta1.GapicProperties;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.Generated;
@@ -220,11 +218,6 @@ public class EchoServiceShouldGeneratePartialUsualStubSettings
         settingsBuilder.chatShouldGenerateAsInternalSettings().build();
     echoShouldGenerateAsInternalSettings =
         settingsBuilder.echoShouldGenerateAsInternalSettings().build();
-  }
-
-  @Override
-  protected AbstractGapicProperties getGapicProperties() {
-    return new GapicProperties();
   }
 
   /** Builder for EchoServiceShouldGeneratePartialUsualStubSettings. */

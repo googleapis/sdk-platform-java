@@ -15,7 +15,6 @@
 package com.google.api.generator.gapic.composer.store;
 
 import com.google.api.generator.engine.ast.ConcreteReference;
-import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Message;
@@ -51,16 +50,6 @@ public class TypeStore {
         typeName,
         TypeNode.withReference(
             VaporReference.builder().setName(typeName).setPakkage(pakkage).build()));
-  }
-
-  public void put(String pakkage, String typeName, Reference supertypeReference) {
-    VaporReference reference =
-        VaporReference.builder()
-            .setName(typeName)
-            .setPakkage(pakkage)
-            .setSupertypeReference(supertypeReference)
-            .build();
-    store.put(typeName, TypeNode.withReference(reference));
   }
 
   public void putAll(String pakkage, List<String> typeNames) {

@@ -38,7 +38,6 @@ import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
-import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
@@ -71,7 +70,6 @@ import com.google.cloud.asset.v1.DeleteSavedQueryRequest;
 import com.google.cloud.asset.v1.ExportAssetsRequest;
 import com.google.cloud.asset.v1.ExportAssetsResponse;
 import com.google.cloud.asset.v1.Feed;
-import com.google.cloud.asset.v1.GapicProperties;
 import com.google.cloud.asset.v1.GetFeedRequest;
 import com.google.cloud.asset.v1.GetSavedQueryRequest;
 import com.google.cloud.asset.v1.IamPolicySearchResult;
@@ -725,11 +723,6 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
     deleteSavedQuerySettings = settingsBuilder.deleteSavedQuerySettings().build();
     batchGetEffectiveIamPoliciesSettings =
         settingsBuilder.batchGetEffectiveIamPoliciesSettings().build();
-  }
-
-  @Override
-  protected AbstractGapicProperties getGapicProperties() {
-    return new GapicProperties();
   }
 
   /** Builder for AssetServiceStubSettings. */

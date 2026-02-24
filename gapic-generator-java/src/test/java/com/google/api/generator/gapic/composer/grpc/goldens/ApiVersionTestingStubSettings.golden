@@ -9,7 +9,6 @@ import com.google.api.gax.grpc.GaxGrpcProperties;
 import com.google.api.gax.grpc.GrpcTransportChannel;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
-import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.StatusCode;
@@ -18,7 +17,6 @@ import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.version.test.EchoRequest;
 import com.google.api.version.test.EchoResponse;
-import com.google.api.version.test.GapicProperties;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -166,11 +164,6 @@ public class EchoWithVersionStubSettings extends StubSettings<EchoWithVersionStu
     super(settingsBuilder);
 
     echoWithVersionMethodSettings = settingsBuilder.echoWithVersionMethodSettings().build();
-  }
-
-  @Override
-  protected AbstractGapicProperties getGapicProperties() {
-    return new GapicProperties();
   }
 
   /** Builder for EchoWithVersionStubSettings. */

@@ -31,7 +31,6 @@ import com.google.api.gax.grpc.GaxGrpcProperties;
 import com.google.api.gax.grpc.GrpcTransportChannel;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
-import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
@@ -68,7 +67,6 @@ import com.google.storage.v2.DeleteBucketRequest;
 import com.google.storage.v2.DeleteHmacKeyRequest;
 import com.google.storage.v2.DeleteNotificationRequest;
 import com.google.storage.v2.DeleteObjectRequest;
-import com.google.storage.v2.GapicProperties;
 import com.google.storage.v2.GetBucketRequest;
 import com.google.storage.v2.GetHmacKeyRequest;
 import com.google.storage.v2.GetNotificationRequest;
@@ -695,11 +693,6 @@ public class StorageStubSettings extends StubSettings<StorageStubSettings> {
     getHmacKeySettings = settingsBuilder.getHmacKeySettings().build();
     listHmacKeysSettings = settingsBuilder.listHmacKeysSettings().build();
     updateHmacKeySettings = settingsBuilder.updateHmacKeySettings().build();
-  }
-
-  @Override
-  protected AbstractGapicProperties getGapicProperties() {
-    return new GapicProperties();
   }
 
   /** Builder for StorageStubSettings. */

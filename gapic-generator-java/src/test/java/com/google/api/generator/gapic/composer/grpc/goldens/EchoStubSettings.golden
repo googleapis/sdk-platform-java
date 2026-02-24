@@ -17,7 +17,6 @@ import com.google.api.gax.grpc.ProtoOperationTransformers;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
-import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
@@ -43,7 +42,6 @@ import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.ExpandRequest;
-import com.google.showcase.v1beta1.GapicProperties;
 import com.google.showcase.v1beta1.Object;
 import com.google.showcase.v1beta1.PagedExpandLegacyRequest;
 import com.google.showcase.v1beta1.PagedExpandRequest;
@@ -406,11 +404,6 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     blockSettings = settingsBuilder.blockSettings().build();
     collideNameSettings = settingsBuilder.collideNameSettings().build();
     pagedExpandLegacySettings = settingsBuilder.pagedExpandLegacySettings().build();
-  }
-
-  @Override
-  protected AbstractGapicProperties getGapicProperties() {
-    return new GapicProperties();
   }
 
   /** Builder for EchoStubSettings. */

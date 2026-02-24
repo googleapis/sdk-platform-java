@@ -14,10 +14,8 @@
 
 package com.google.api.generator.gapic.protoparser;
 
-import static com.google.api.generator.gapic.protoparser.PluginArgumentParser.KEY_ARTIFACT;
 import static com.google.api.generator.gapic.protoparser.PluginArgumentParser.KEY_METADATA;
 import static com.google.api.generator.gapic.protoparser.PluginArgumentParser.KEY_NUMERIC_ENUM;
-import static com.google.api.generator.gapic.protoparser.PluginArgumentParser.KEY_REPO;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -271,36 +269,6 @@ class PluginArgumentParserTest {
     assertTrue(PluginArgumentParser.hasFlag(rawArgument, KEY_METADATA));
   }
 
-  @Test
-  void parseRepo_onlyOnePresent() {
-    String repo = "googleapis/sdk-platform-java";
-    CodeGeneratorRequest request =
-        CodeGeneratorRequest.newBuilder().setParameter(createRepo(repo)).build();
-    assertEquals(repo, PluginArgumentParser.parseRepo(request).get());
-  }
-
-  @Test
-  void parseRepo_noneFound() {
-    CodeGeneratorRequest request =
-        CodeGeneratorRequest.newBuilder().setParameter("metadata").build();
-    assertFalse(PluginArgumentParser.parseRepo(request).isPresent());
-  }
-
-  @Test
-  void parseArtifact_onlyOnePresent() {
-    String artifact = "google-cloud-library";
-    CodeGeneratorRequest request =
-        CodeGeneratorRequest.newBuilder().setParameter(createArtifact(artifact)).build();
-    assertEquals(artifact, PluginArgumentParser.parseArtifact(request).get());
-  }
-
-  @Test
-  void parseArtifact_noneFound() {
-    CodeGeneratorRequest request =
-        CodeGeneratorRequest.newBuilder().setParameter("metadata").build();
-    assertFalse(PluginArgumentParser.parseArtifact(request).isPresent());
-  }
-
   private static String createGrpcServiceConfig(String path) {
     return String.format("%s=%s", PluginArgumentParser.KEY_GRPC_SERVICE_CONFIG, path);
   }
@@ -311,13 +279,5 @@ class PluginArgumentParserTest {
 
   private static String createServiceConfig(String path) {
     return String.format("%s=%s", PluginArgumentParser.KEY_SERVICE_YAML_CONFIG, path);
-  }
-
-  private static String createRepo(String repo) {
-    return String.format("%s=%s", KEY_REPO, repo);
-  }
-
-  private static String createArtifact(String artifact) {
-    return String.format("%s=%s", KEY_ARTIFACT, artifact);
   }
 }

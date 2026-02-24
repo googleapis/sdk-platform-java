@@ -19,7 +19,6 @@ import com.google.api.gax.grpc.GaxGrpcProperties;
 import com.google.api.gax.grpc.GrpcTransportChannel;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
-import com.google.api.gax.rpc.AbstractGapicProperties;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.BatchedRequestIssuer;
@@ -43,7 +42,6 @@ import com.google.protobuf.Empty;
 import com.google.pubsub.v1.DeleteTopicRequest;
 import com.google.pubsub.v1.DetachSubscriptionRequest;
 import com.google.pubsub.v1.DetachSubscriptionResponse;
-import com.google.pubsub.v1.GapicProperties;
 import com.google.pubsub.v1.GetTopicRequest;
 import com.google.pubsub.v1.ListTopicSnapshotsRequest;
 import com.google.pubsub.v1.ListTopicSnapshotsResponse;
@@ -518,11 +516,6 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
     listTopicSnapshotsSettings = settingsBuilder.listTopicSnapshotsSettings().build();
     deleteTopicSettings = settingsBuilder.deleteTopicSettings().build();
     detachSubscriptionSettings = settingsBuilder.detachSubscriptionSettings().build();
-  }
-
-  @Override
-  protected AbstractGapicProperties getGapicProperties() {
-    return new GapicProperties();
   }
 
   /** Builder for PublisherStubSettings. */

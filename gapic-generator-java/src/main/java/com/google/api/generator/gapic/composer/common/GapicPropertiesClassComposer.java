@@ -18,7 +18,7 @@ package com.google.api.generator.gapic.composer.common;
 
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.GaxProperties;
-import com.google.api.gax.rpc.AbstractGapicProperties;
+import com.google.api.gax.rpc.GapicProperties;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Expr;
@@ -58,7 +58,7 @@ public class GapicPropertiesClassComposer implements ClassComposer {
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
-            .setExtendsType(FIXED_TYPESTORE.get("AbstractGapicProperties"))
+            .setExtendsType(FIXED_TYPESTORE.get("GapicProperties"))
             .setMethods(createClassMethods(context))
             .build();
 
@@ -115,7 +115,7 @@ public class GapicPropertiesClassComposer implements ClassComposer {
         Arrays.asList(
             InternalApi.class,
             Generated.class,
-            AbstractGapicProperties.class,
+            GapicProperties.class,
             GaxProperties.class));
   }
 }

@@ -17,7 +17,6 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
-import com.google.api.generator.gapic.composer.common.GapicPropertiesClassComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceStubClassComposer;
 import com.google.api.generator.gapic.composer.grpc.MockServiceClassComposer;
@@ -70,10 +69,6 @@ public class Composer {
     clazzes.addAll(generateClientSettingsClasses(context));
     clazzes.addAll(generateMockClasses(context, context.services()));
     clazzes.addAll(generateTestClasses(context));
-    if (context.containsServices()) {
-      clazzes.add(
-          GapicPropertiesClassComposer.instance().generate(context, context.services().get(0)));
-    }
     return clazzes;
   }
 
