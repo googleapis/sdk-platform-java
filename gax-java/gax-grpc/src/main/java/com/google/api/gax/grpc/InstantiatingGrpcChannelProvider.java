@@ -67,6 +67,8 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.TlsChannelCredentials;
 import io.grpc.alts.GoogleDefaultChannelCredentials;
 import io.grpc.auth.MoreCallCredentials;
+import io.grpc.util.AdvancedTlsX509KeyManager;
+import io.grpc.util.AdvancedTlsX509TrustManager;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -78,6 +80,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -598,13 +601,32 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
    */
   @VisibleForTesting
   ChannelCredentials createMtlsToS2AChannelCredentials(
-      File trustBundle, File privateKey, File certChain) throws IOException {
+      File trustBundle, File privateKey, File certChain)
+      throws IOException, GeneralSecurityException {
     if (trustBundle == null || privateKey == null || certChain == null) {
       return null;
     }
+   AdvancedTlsX509KeyManager keyManager = new AdvancedTlsX509KeyManager();
+    ScheduledExecutorService keyManagerExecutor = Executors.newSingleThreadScheduledExecutor(
+        r -> {
+          Thread t = new Thread(r, "s2a-key-manager-updater");
+          t.setDaemon(true);
+          return t;
+        });
+
+    keyManager.updateIdentityCredentials(certChain, privateKey, 1, TimeUnit.HOURS, keyManagerExecutor);
+    AdvancedTlsX509TrustManager trustManager = AdvancedTlsX509TrustManager.newBuilder().build();
+    ScheduledExecutorService trustManagerExecutor = Executors.newSingleThreadScheduledExecutor(
+        r -> {
+          Thread t = new Thread(r, "s2a-trust-manager-updater");
+          t.setDaemon(true);
+          return t;
+        });
+
+    trustManager.updateTrustCredentials(trustBundle, 1, TimeUnit.HOURS, trustManagerExecutor);
     return TlsChannelCredentials.newBuilder()
-        .keyManager(privateKey, certChain)
-        .trustManager(trustBundle)
+        .keyManager(keyManager)
+        .trustManager(trustManager)
         .build();
   }
 
