@@ -34,6 +34,7 @@ import com.google.api.gax.rpc.ResponseObserver;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.StreamController;
 import com.google.common.base.Preconditions;
+import com.google.protobuf.TypeRegistry;
 
 /**
  * {@code HttpJsonDirectServerStreamingCallable} creates server-streaming REST calls.
@@ -49,17 +50,24 @@ class HttpJsonDirectServerStreamingCallable<RequestT, ResponseT>
     extends ServerStreamingCallable<RequestT, ResponseT> {
 
   private final ApiMethodDescriptor<RequestT, ResponseT> descriptor;
+  private final TypeRegistry typeRegistry;
 
-  HttpJsonDirectServerStreamingCallable(ApiMethodDescriptor<RequestT, ResponseT> descriptor) {
+  HttpJsonDirectServerStreamingCallable(
+      ApiMethodDescriptor<RequestT, ResponseT> descriptor, TypeRegistry typeRegistry) {
     this.descriptor = descriptor;
+    this.typeRegistry = typeRegistry;
   }
 
   @Override
   public void call(
-      RequestT request, ResponseObserver<ResponseT> responseObserver, ApiCallContext context) {
-
+      RequestT request, ResponseObserver<ResponseT> responseObserver, ApiCallContext inputContext) {
     Preconditions.checkNotNull(request);
     Preconditions.checkNotNull(responseObserver);
+    HttpJsonCallContext context = HttpJsonCallContext.createDefault().nullToSelf(inputContext);
+
+    context =
+        context.withCallOptions(
+            context.getCallOptions().toBuilder().setTypeRegistry(typeRegistry).build());
 
     HttpJsonClientCall<RequestT, ResponseT> call = HttpJsonClientCalls.newCall(descriptor, context);
     HttpJsonDirectStreamController<RequestT, ResponseT> controller =
