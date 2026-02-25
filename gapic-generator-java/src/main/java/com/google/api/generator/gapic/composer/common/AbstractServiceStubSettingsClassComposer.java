@@ -501,7 +501,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       boolean isNestedClass,
       Set<String> deprecatedSettingVarNames,
       Set<String> internalSettingVarNames) {
-    // Maintain insertion order.
     Map<String, VariableExpr> varExprs = new LinkedHashMap<>();
 
     // Creates class variables <method>Settings, e.g. echoSettings.
