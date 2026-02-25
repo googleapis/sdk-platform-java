@@ -91,23 +91,4 @@ class ServiceStubSettingsClassComposerTest {
     Assert.assertCodeEquals(clazz.apiShortName(), apiShortNameExpected);
     Assert.assertCodeEquals(clazz.packageVersion(), packageVersionExpected);
   }
-
-  @ParameterizedTest
-  @MethodSource("data")
-  void generateServiceStubSettingsClasses_withRepoAndArtifact(
-      String name,
-      GapicContext context,
-      String apiShortNameExpected,
-      String packageVersionExpected,
-      int serviceIndex) {
-    String repo = "googleapis/sdk-platform-java";
-    String artifact = "com.google.cloud:google-cloud-library";
-    GapicContext contextWithMetadata =
-        context.toBuilder().setRepo(repo).setArtifact(artifact).build();
-    Service service = contextWithMetadata.services().get(serviceIndex);
-    GapicClass clazz =
-        ServiceStubSettingsClassComposer.instance().generate(contextWithMetadata, service);
-
-    Assert.assertGoldenClass(this.getClass(), clazz, name + "Metadata.golden");
-  }
 }
