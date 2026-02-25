@@ -36,7 +36,7 @@ import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
-import com.google.api.gax.rpc.GapicProperties;
+import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.PagedListDescriptor;
@@ -414,8 +414,8 @@ public class IdentityStubSettings extends StubSettings<IdentityStubSettings> {
   }
 
   @Override
-  protected GapicProperties getGapicProperties() {
-    return GapicProperties.builder()
+  protected LibraryMetadata getLibraryMetadata() {
+    return LibraryMetadata.builder()
             .setArtifactName("com.google.cloud:gapic-showcase")
             .setRepository("googleapis/sdk-platform-java")
             .build();

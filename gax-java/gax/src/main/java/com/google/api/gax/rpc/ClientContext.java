@@ -273,7 +273,7 @@ public abstract class ClientContext {
     ApiTracerContext apiTracerContext =
         ApiTracerContext.newBuilder()
             .setServerAddress(endpointContext.resolvedServerAddress())
-            .setGapicProperties(settings.getGapicProperties())
+            .setLibraryMetadata(settings.getLibraryMetadata())
             .build();
     ApiTracerFactory apiTracerFactory = settings.getTracerFactory().withContext(apiTracerContext);
 

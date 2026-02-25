@@ -43,7 +43,7 @@ import javax.annotation.Nullable;
 @InternalApi
 @BetaApi
 @AutoValue
-public abstract class GapicProperties {
+public abstract class LibraryMetadata {
 
   @Nullable
   public abstract String repository();
@@ -51,8 +51,8 @@ public abstract class GapicProperties {
   @Nullable
   public abstract String artifactName();
 
-  public static GapicProperties.Builder builder() {
-    return new AutoValue_GapicProperties.Builder();
+  public static LibraryMetadata.Builder builder() {
+    return new AutoValue_LibraryMetadata.Builder();
   }
 
   @AutoValue.Builder
@@ -61,6 +61,6 @@ public abstract class GapicProperties {
 
     public abstract Builder setArtifactName(@Nullable String artifactName);
 
-    public abstract GapicProperties build();
+    public abstract LibraryMetadata build();
   }
 }
