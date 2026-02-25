@@ -93,7 +93,7 @@ public class GrpcRestTestProtoLoader extends TestProtoLoader {
         .setHelperResourceNames(outputResourceNames)
         .setTransport(getTransport())
         .setRepo(ECHO_SERVICE_REPOSITORY)
-        .setArtifact(ECHO_SERVICE_REPOSITORY)
+        .setArtifact(ECHO_SERVICE_ARTIFACT)
         .build();
   }
 
