@@ -521,7 +521,10 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder()
+        .setArtifactName("com.google.cloud:google-cloud-library")
+        .setRepository("googleapis/sdk-platform-java")
+        .build();
   }
 
   /** Builder for PublisherStubSettings. */
