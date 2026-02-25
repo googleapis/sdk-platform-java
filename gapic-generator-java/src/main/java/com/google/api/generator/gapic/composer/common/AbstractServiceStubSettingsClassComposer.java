@@ -422,6 +422,14 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setType(FIXED_TYPESTORE.get("Generated"))
             .setDescription("by gapic-generator-java")
             .build());
+
+    // suppress build warnings of generated of "[CanonicalDuration] Duration can be expressed more
+    // clearly with different units"
+    annotations.add(
+        AnnotationNode.builder()
+            .setType(FIXED_TYPESTORE.get("SuppressWarnings"))
+            .setDescription("CanonicalDuration")
+            .build());
     return annotations;
   }
 
@@ -2141,6 +2149,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             StatusCode.class,
             StreamingCallSettings.class,
             StubSettings.class,
+            SuppressWarnings.class,
             TransportChannelProvider.class,
             UnaryCallSettings.class,
             UnaryCallable.class);
