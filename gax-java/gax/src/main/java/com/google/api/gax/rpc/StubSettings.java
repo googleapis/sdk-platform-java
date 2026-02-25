@@ -44,7 +44,6 @@ import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.core.FixedExecutorProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.core.NoCredentialsProvider;
-import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
 import com.google.auth.oauth2.QuotaProjectIdProvider;
@@ -248,16 +247,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   /** Gets the API Key that should be used for authentication. */
   public final String getApiKey() {
     return apiKey;
-  }
-
-  /**
-   * Returns an {@link ApiTracerContext} that contains information about the client library.
-   *
-   * @param serverAddress The address of the server being called.
-   */
-  @InternalApi
-  protected ApiTracerContext getApiTracerContext(String serverAddress) {
-    return ApiTracerContext.create(serverAddress, getGapicProperties());
   }
 
   /**

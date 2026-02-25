@@ -58,7 +58,11 @@ class ApiTracerContextTest {
 
   @Test
   void testGetAttemptAttributes() {
-    ApiTracerContext context = ApiTracerContext.create("test-address", gapicProperties);
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setServerAddress("test-address")
+            .setGapicProperties(gapicProperties)
+            .build();
     Map<String, String> attributes = context.getAttemptAttributes();
 
     assertThat(attributes)
@@ -70,7 +74,7 @@ class ApiTracerContextTest {
 
   @Test
   void testGetAttemptAttributes_nullValues() {
-    ApiTracerContext context = ApiTracerContext.create(null, null);
+    ApiTracerContext context = ApiTracerContext.empty();
     Map<String, String> attributes = context.getAttemptAttributes();
 
     assertThat(attributes).isEmpty();

@@ -32,7 +32,7 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.GapicProperties;
-
+import com.google.auto.value.AutoValue;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
@@ -44,39 +44,48 @@ import javax.annotation.Nullable;
  * <p>For internal use only.
  */
 @InternalApi
-public class ApiTracerContext {
-  private final String serverAddress;
-  private final GapicProperties gapicProperties;
+@AutoValue
+public abstract class ApiTracerContext {
+  @Nullable
+  public abstract String serverAddress();
 
-  protected ApiTracerContext(
-      @Nullable String serverAddress, @Nullable GapicProperties gapicProperties) {
-    this.serverAddress = serverAddress;
-    this.gapicProperties = gapicProperties;
-  }
+  @Nullable
+  public abstract GapicProperties gapicProperties();
 
   /**
    * @return a map of attributes to be included in attempt-level spans
    */
   public Map<String, String> getAttemptAttributes() {
     Map<String, String> attributes = new HashMap<>();
-    if (serverAddress != null) {
-      attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress);
+    if (serverAddress() != null) {
+      attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress());
     }
-    if (gapicProperties == null) {
+    if (gapicProperties() == null) {
       return attributes;
     }
-    if (gapicProperties.repository() != null) {
-      attributes.put(ObservabilityAttributes.REPO_ATTRIBUTE, gapicProperties.repository());
+    if (gapicProperties().repository() != null) {
+      attributes.put(ObservabilityAttributes.REPO_ATTRIBUTE, gapicProperties().repository());
     }
-    if (gapicProperties.artifactName() != null) {
-      attributes.put(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, gapicProperties.artifactName());
+    if (gapicProperties().artifactName() != null) {
+      attributes.put(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, gapicProperties().artifactName());
     }
     return attributes;
   }
 
-  public static ApiTracerContext create(
-      @Nullable final String serverAddress,
-      @Nullable final GapicProperties gapicProperties) {
-    return new ApiTracerContext(serverAddress, gapicProperties);
+  public static ApiTracerContext empty() {
+    return newBuilder().build();
+  }
+
+  public static Builder newBuilder() {
+    return new AutoValue_ApiTracerContext.Builder();
+  }
+
+  @AutoValue.Builder
+  public abstract static class Builder {
+    public abstract Builder setServerAddress(@Nullable String serverAddress);
+
+    public abstract Builder setGapicProperties(@Nullable GapicProperties gapicProperties);
+
+    public abstract ApiTracerContext build();
   }
 }

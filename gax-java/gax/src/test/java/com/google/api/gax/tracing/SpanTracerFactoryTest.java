@@ -62,8 +62,9 @@ class SpanTracerFactoryTest {
     TraceManager.Span attemptHandle = mock(TraceManager.Span.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
 
-    ApiTracerFactory factory = new SpanTracerFactory(recorder, ApiTracerContext.create(null, null));
-    factory = factory.withContext(ApiTracerContext.create("test-address", null));
+    ApiTracerFactory factory = new SpanTracerFactory(recorder, ApiTracerContext.empty());
+    factory =
+        factory.withContext(ApiTracerContext.newBuilder().setServerAddress("test-address").build());
     ApiTracer tracer =
         factory.newTracer(
             null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
@@ -83,7 +84,8 @@ class SpanTracerFactoryTest {
     TraceManager.Span attemptHandle = mock(TraceManager.Span.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
 
-    ApiTracerContext context = ApiTracerContext.create("example.com", null);
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder().setServerAddress("example.com").build();
 
     SpanTracerFactory factory = new SpanTracerFactory(recorder);
     ApiTracerFactory factoryWithContext = factory.withContext(context);
@@ -108,7 +110,7 @@ class SpanTracerFactoryTest {
     TraceManager.Span attemptHandle = mock(TraceManager.Span.class);
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
 
-    ApiTracerContext context = ApiTracerContext.create(null, null);
+    ApiTracerContext context = ApiTracerContext.empty();
 
     SpanTracerFactory factory = new SpanTracerFactory(recorder);
     ApiTracerFactory factoryWithContext = factory.withContext(context);

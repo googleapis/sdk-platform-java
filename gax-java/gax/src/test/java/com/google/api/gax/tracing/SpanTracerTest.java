@@ -52,7 +52,7 @@ class SpanTracerTest {
 
   @BeforeEach
   void setUp() {
-    tracer = new SpanTracer(recorder, ApiTracerContext.create(null, null), ATTEMPT_SPAN_NAME);
+    tracer = new SpanTracer(recorder, ApiTracerContext.empty(), ATTEMPT_SPAN_NAME);
   }
 
   @Test
