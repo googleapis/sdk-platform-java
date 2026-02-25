@@ -415,7 +415,7 @@ public class IdentityStubSettings extends StubSettings<IdentityStubSettings> {
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.builder()
+    return LibraryMetadata.newBuilder()
             .setArtifactName("com.google.cloud:gapic-showcase")
             .setRepository("googleapis/sdk-platform-java")
             .build();

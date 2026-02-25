@@ -38,22 +38,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ApiTracerContextTest {
-  private LibraryMetadata gapicProperties;
+  private LibraryMetadata libraryMetadata;
 
   @BeforeEach
   public void setUp() {
-    gapicProperties =
-        new LibraryMetadata() {
-          @Override
-          public String repository() {
-            return "test-repo";
-          }
-
-          @Override
-          public String artifactName() {
-            return "test-artifact";
-          }
-        };
+    libraryMetadata =
+        LibraryMetadata.newBuilder()
+            .setArtifactName("test-artifact")
+            .setRepository("test-repo")
+            .build();
   }
 
   @Test
@@ -61,7 +54,7 @@ class ApiTracerContextTest {
     ApiTracerContext context =
         ApiTracerContext.newBuilder()
             .setServerAddress("test-address")
-            .setLibraryMetadata(gapicProperties)
+            .setLibraryMetadata(libraryMetadata)
             .build();
     Map<String, String> attributes = context.getAttemptAttributes();
 

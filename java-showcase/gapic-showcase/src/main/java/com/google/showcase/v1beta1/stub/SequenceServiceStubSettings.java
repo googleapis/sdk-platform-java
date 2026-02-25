@@ -386,7 +386,7 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.builder()
+    return LibraryMetadata.newBuilder()
             .setArtifactName("com.google.cloud:gapic-showcase")
             .setRepository("googleapis/sdk-platform-java")
             .build();

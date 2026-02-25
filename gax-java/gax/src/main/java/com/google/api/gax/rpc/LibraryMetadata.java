@@ -51,7 +51,7 @@ public abstract class LibraryMetadata {
   @Nullable
   public abstract String artifactName();
 
-  public static LibraryMetadata.Builder builder() {
+  public static LibraryMetadata.Builder newBuilder() {
     return new AutoValue_LibraryMetadata.Builder();
   }
 
