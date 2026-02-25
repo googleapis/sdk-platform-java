@@ -496,13 +496,13 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
     testIamPermissionsSettings = settingsBuilder.testIamPermissionsSettings().build();
   }
 
-    @Override
-    protected LibraryMetadata getLibraryMetadata() {
-        return LibraryMetadata.newBuilder()
-                .setArtifactName("com.google.cloud:gapic-showcase")
-                .setRepository("googleapis/sdk-platform-java")
-                .build();
-    }
+  @Override
+  protected LibraryMetadata getLibraryMetadata() {
+    return LibraryMetadata.newBuilder()
+        .setArtifactName("com.google.cloud:gapic-showcase")
+        .setRepository("googleapis/sdk-platform-java")
+        .build();
+  }
 
   /** Builder for TestingStubSettings. */
   public static class Builder extends StubSettings.Builder<TestingStubSettings, Builder> {

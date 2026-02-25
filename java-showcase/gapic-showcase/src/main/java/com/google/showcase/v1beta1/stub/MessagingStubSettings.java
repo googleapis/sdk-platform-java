@@ -590,10 +590,10 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-      return LibraryMetadata.newBuilder()
-              .setArtifactName("com.google.cloud:gapic-showcase")
-              .setRepository("googleapis/sdk-platform-java")
-              .build();
+    return LibraryMetadata.newBuilder()
+        .setArtifactName("com.google.cloud:gapic-showcase")
+        .setRepository("googleapis/sdk-platform-java")
+        .build();
   }
 
   /** Builder for MessagingStubSettings. */

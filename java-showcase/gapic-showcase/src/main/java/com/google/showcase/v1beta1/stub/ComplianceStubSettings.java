@@ -396,9 +396,9 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
   @Override
   protected LibraryMetadata getLibraryMetadata() {
     return LibraryMetadata.newBuilder()
-            .setArtifactName("com.google.cloud:gapic-showcase")
-            .setRepository("googleapis/sdk-platform-java")
-            .build();
+        .setArtifactName("com.google.cloud:gapic-showcase")
+        .setRepository("googleapis/sdk-platform-java")
+        .build();
   }
 
   /** Builder for ComplianceStubSettings. */
