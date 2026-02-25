@@ -37,7 +37,7 @@ public class Assert {
   public static void assertCodeEquals(Path goldenPath, String codegen) {
     List<String> diffList = Differ.diff(goldenPath, codegen);
     if (!diffList.isEmpty()) {
-      throw new AssertionFailedError("Differences found: \n" + String.join("\n", diffList));
+      throw new AssertionFailedError("Differences found in: " + goldenPath + ": \n" + String.join("\n", diffList));
     }
   }
 

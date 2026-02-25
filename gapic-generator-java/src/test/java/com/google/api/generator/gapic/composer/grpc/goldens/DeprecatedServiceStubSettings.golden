@@ -81,6 +81,7 @@ import javax.annotation.Generated;
  */
 @Deprecated
 @Generated("by gapic-generator-java")
+@SuppressWarnings("CanonicalDuration")
 public class DeprecatedServiceStubSettings extends StubSettings<DeprecatedServiceStubSettings> {
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =

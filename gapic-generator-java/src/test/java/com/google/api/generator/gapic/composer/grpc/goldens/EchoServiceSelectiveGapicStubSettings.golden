@@ -83,6 +83,7 @@ import javax.annotation.Generated;
  */
 @BetaApi
 @Generated("by gapic-generator-java")
+@SuppressWarnings("CanonicalDuration")
 public class EchoServiceShouldGeneratePartialUsualStubSettings
     extends StubSettings<EchoServiceShouldGeneratePartialUsualStubSettings> {
   /** The default scopes of the service. */
