@@ -43,6 +43,8 @@ import java.util.Set;
 
 public class GrpcRestTestProtoLoader extends TestProtoLoader {
   private static final GrpcRestTestProtoLoader INSTANCE = new GrpcRestTestProtoLoader();
+  private static final String ECHO_SERVICE_REPOSITORY = "googleapis/sdk-platform-java";
+  private static final String ECHO_SERVICE_ARTIFACT = "com.google.cloud:gapic-showcase";
 
   protected GrpcRestTestProtoLoader() {
     super(Transport.GRPC_REST, "src/test/resources/");
@@ -90,6 +92,8 @@ public class GrpcRestTestProtoLoader extends TestProtoLoader {
         .setServiceYamlProto(service)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(getTransport())
+        .setRepo(ECHO_SERVICE_REPOSITORY)
+        .setArtifact(ECHO_SERVICE_REPOSITORY)
         .build();
   }
 
@@ -121,6 +125,8 @@ public class GrpcRestTestProtoLoader extends TestProtoLoader {
         .setServiceConfig(config)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(getTransport())
+        .setRepo(ECHO_SERVICE_REPOSITORY)
+        .setArtifact(ECHO_SERVICE_ARTIFACT)
         .build();
   }
 }
