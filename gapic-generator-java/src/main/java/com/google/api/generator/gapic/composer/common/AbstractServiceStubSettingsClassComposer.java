@@ -423,8 +423,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setDescription("by gapic-generator-java")
             .build());
 
-    // suppress build warnings of generated of "[CanonicalDuration] Duration can be expressed more
-    // clearly with different units"
+    // Suppress the error-prone CanonicalDuration warning in generated code.
     annotations.add(
         AnnotationNode.builder()
             .setType(FIXED_TYPESTORE.get("SuppressWarnings"))
