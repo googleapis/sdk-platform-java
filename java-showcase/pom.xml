@@ -32,7 +32,7 @@
       <dependency>
         <groupId>com.google.cloud</groupId>
         <artifactId>google-cloud-shared-dependencies</artifactId>
-        <version>3.55.0</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
+        <version>3.57.1-SNAPSHOT</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -79,6 +79,7 @@
               <!--   Do not compile by default (without logging deps)  -->
               <testExcludes>
                 <testExclude>**/com/google/showcase/v1beta1/it/logging/*.java</testExclude>
+                <testExclude>**/com/google/showcase/v1beta1/it/ITProtobuf3Compatibility.java</testExclude>
               </testExcludes>
             </configuration>
           </plugin>
@@ -120,6 +121,7 @@
               <!--   Do not compile by default (without logging deps)  -->
               <testExcludes>
                 <testExclude>**/com/google/showcase/v1beta1/it/logging/*.java</testExclude>
+                <testExclude>**/com/google/showcase/v1beta1/it/ITProtobuf3Compatibility.java</testExclude>
               </testExcludes>
             </configuration>
           </plugin>

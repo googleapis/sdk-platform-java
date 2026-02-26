@@ -62,7 +62,7 @@ jobs:
       - name: Create issue if previous step fails
         if: ${{ failure() }}
         env:
-          GITHUB_TOKEN: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}
         run: |
           gh issue create \
             --title "Nightly-java8 build on ${{ matrix.os }} failed." \

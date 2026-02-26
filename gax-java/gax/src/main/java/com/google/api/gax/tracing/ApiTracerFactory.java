@@ -61,4 +61,15 @@ public interface ApiTracerFactory {
    * @param operationType the type of operation that the tracer will trace
    */
   ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType);
+
+  /**
+   * Returns a new {@link ApiTracerFactory} that will use the provided context to infer attributes
+   * for all tracers created by the factory.
+   *
+   * @param context an {@link ApiTracerContext} object containing information to construct
+   *     attributes
+   */
+  default ApiTracerFactory withContext(ApiTracerContext context) {
+    return this;
+  }
 }

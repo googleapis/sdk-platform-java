@@ -26,6 +26,7 @@ import com.google.api.gax.rpc.BatchedRequestIssuer;
 import com.google.api.gax.rpc.BatchingCallSettings;
 import com.google.api.gax.rpc.BatchingDescriptor;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.PagedListDescriptor;
@@ -506,6 +507,11 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
         settingsBuilder.listMonitoredResourceDescriptorsSettings().build();
     listLogsSettings = settingsBuilder.listLogsSettings().build();
     tailLogEntriesSettings = settingsBuilder.tailLogEntriesSettings().build();
+  }
+
+  @Override
+  protected LibraryMetadata getLibraryMetadata() {
+    return LibraryMetadata.newBuilder().build();
   }
 
   /** Builder for LoggingServiceV2StubSettings. */

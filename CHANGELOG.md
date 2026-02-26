@@ -1,5 +1,47 @@
 # Changelog
 
+## [2.67.0](https://github.com/googleapis/sdk-platform-java/compare/v2.66.1...v2.67.0) (2026-02-18)
+
+
+### Features
+
+* **observability:** introduce minimal tracing implementation ([#4105](https://github.com/googleapis/sdk-platform-java/issues/4105)) ([e4e5e89](https://github.com/googleapis/sdk-platform-java/commit/e4e5e893e7a62bd12528e7d448dc2789f71946eb))
+
+
+### Dependencies
+
+* Upgrade Google-Auth-Library to v1.43.0 ([#4114](https://github.com/googleapis/sdk-platform-java/issues/4114)) ([825298b](https://github.com/googleapis/sdk-platform-java/commit/825298b6bf225bb8536ecab9d788f82f3f8eec4d))
+* Upgrade grpc to 1.76.3 ([#4106](https://github.com/googleapis/sdk-platform-java/issues/4106)) ([c6555f5](https://github.com/googleapis/sdk-platform-java/commit/c6555f5f0cd85683db76394271e1f57989cac7d0))
+
+## [2.66.1](https://github.com/googleapis/sdk-platform-java/compare/v2.66.0...v2.66.1) (2026-02-04)
+
+
+### Documentation
+
+* [common-protos] update reference documentation for `SelectionInput.DROPDOWN` to include dynamic data sources and autosuggestion ([9960262](https://github.com/googleapis/sdk-platform-java/commit/9960262cf248400836c04063e6a701bec2aca1ba))
+
+## [2.66.0](https://github.com/googleapis/sdk-platform-java/compare/v2.65.1...v2.66.0) (2026-01-23)
+
+
+### Features
+
+* Upgrade protobuf runtime and gen code to 4.33.x ([#4000](https://github.com/googleapis/sdk-platform-java/issues/4000)) ([#4074](https://github.com/googleapis/sdk-platform-java/issues/4074)) ([3e37376](https://github.com/googleapis/sdk-platform-java/commit/3e37376ccaddf42617436471dc9b014974b8e3df))
+
+
+### Dependencies
+
+* Downgrade opentelemetry to 1.51.0 ([#4075](https://github.com/googleapis/sdk-platform-java/issues/4075)) ([cf65482](https://github.com/googleapis/sdk-platform-java/commit/cf6548232830e0461500d92954050186e255b572))
+* update auth library to 1.42.0 ([#4087](https://github.com/googleapis/sdk-platform-java/issues/4087)) ([ad9ee07](https://github.com/googleapis/sdk-platform-java/commit/ad9ee0731a64585ad8ee0f0ac71bece9f6eaf068))
+* update googleapis/java-cloud-bom digest to ef3656d ([#3630](https://github.com/googleapis/sdk-platform-java/issues/3630)) ([790bcf0](https://github.com/googleapis/sdk-platform-java/commit/790bcf0542dc8aba5afe2f65e80a74d643b40cfe))
+* update http-client to 2.1.0 ([#4086](https://github.com/googleapis/sdk-platform-java/issues/4086)) ([d8bc8f5](https://github.com/googleapis/sdk-platform-java/commit/d8bc8f5d335ffde52a603b47718574858f04f5ee))
+
+## [2.65.1](https://github.com/googleapis/sdk-platform-java/compare/v2.65.0...v2.65.1) (2026-01-13)
+
+
+### Documentation
+
+* Update docs for GoogleCredentialsProvider#setScopesToApply ([#4057](https://github.com/googleapis/sdk-platform-java/issues/4057)) ([0a9962f](https://github.com/googleapis/sdk-platform-java/commit/0a9962f9945b6018796a808f89a6a3a309d1ca04))
+
 ## [2.65.0](https://github.com/googleapis/sdk-platform-java/compare/v2.64.2...v2.65.0) (2026-01-12)
 
 
