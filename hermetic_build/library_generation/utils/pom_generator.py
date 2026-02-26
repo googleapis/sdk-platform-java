@@ -67,10 +67,15 @@ def get_version_from(
             if artifact_id in line:
                 return line.split(":")[index].strip()
 
-module_allowlist = set([
-    'google-auth-library-java',
-    'sdk-platform-java',
-])
+
+module_allowlist = set(
+    [
+        "google-auth-library-java",
+        "sdk-platform-java",
+    ]
+)
+
+
 def __search_for_java_modules(
     repository_path: str,
 ) -> List[str]:
