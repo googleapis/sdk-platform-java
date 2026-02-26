@@ -54,7 +54,7 @@ import com.google.api.gax.rpc.testing.FakeClientSettings;
 import com.google.api.gax.rpc.testing.FakeStubSettings;
 import com.google.api.gax.rpc.testing.FakeTransportChannel;
 import com.google.api.gax.tracing.ApiTracerFactory;
-import com.google.api.gax.tracing.BaseApiTracerFactory;
+import com.google.api.gax.tracing.SpanTracerFactory;
 import com.google.auth.ApiKeyCredentials;
 import com.google.auth.CredentialTypeForMetrics;
 import com.google.auth.Credentials;
@@ -1291,33 +1291,20 @@ class ClientContextTest {
   }
 
   @Test
-  void testCreate_withNullTracerFactory() throws IOException {
-    FakeStubSettings.Builder builder = FakeStubSettings.newBuilder();
-    builder.setTransportChannelProvider(getFakeTransportChannelProvider());
-    builder.setCredentialsProvider(
-        FixedCredentialsProvider.create(Mockito.mock(Credentials.class)));
-
-    FakeStubSettings settings = Mockito.spy(builder.build());
-    Mockito.doReturn(null).when(settings).getTracerFactory();
-
-    ClientContext context = ClientContext.create(settings);
-    assertThat(context.getTracerFactory()).isSameInstanceAs(BaseApiTracerFactory.getInstance());
-  }
-
-  @Test
   void testCreate_withTracerFactoryReturningNullWithContext() throws IOException {
     FakeStubSettings.Builder builder = FakeStubSettings.newBuilder();
     builder.setTransportChannelProvider(getFakeTransportChannelProvider());
     builder.setCredentialsProvider(
         FixedCredentialsProvider.create(Mockito.mock(Credentials.class)));
 
-    ApiTracerFactory apiTracerFactory = Mockito.mock(ApiTracerFactory.class);
-    Mockito.doReturn(null).when(apiTracerFactory).withContext(Mockito.any());
+    ApiTracerFactory apiTracerFactory = Mockito.mock(SpanTracerFactory.class);
+    Mockito.doReturn(apiTracerFactory).when(apiTracerFactory).withContext(Mockito.any());
 
     FakeStubSettings settings = Mockito.spy(builder.build());
     Mockito.doReturn(apiTracerFactory).when(settings).getTracerFactory();
 
     ClientContext context = ClientContext.create(settings);
-    assertThat(context.getTracerFactory()).isSameInstanceAs(BaseApiTracerFactory.getInstance());
+    assertThat(context.getTracerFactory()).isSameInstanceAs(apiTracerFactory);
+    verify(apiTracerFactory, times(1)).withContext(Mockito.any());
   }
 }

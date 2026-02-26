@@ -44,6 +44,7 @@ import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
 import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
+import com.google.api.gax.tracing.SpanTracerFactory;
 import com.google.auth.ApiKeyCredentials;
 import com.google.auth.CredentialTypeForMetrics;
 import com.google.auth.Credentials;
@@ -275,11 +276,8 @@ public abstract class ClientContext {
             .setServerAddress(endpointContext.resolvedServerAddress())
             .build();
     ApiTracerFactory apiTracerFactory = settings.getTracerFactory();
-    if (apiTracerFactory != null) {
+    if (apiTracerFactory instanceof SpanTracerFactory) {
       apiTracerFactory = apiTracerFactory.withContext(apiTracerContext);
-    }
-    if (apiTracerFactory == null) {
-      apiTracerFactory = BaseApiTracerFactory.getInstance();
     }
 
     return newBuilder()
