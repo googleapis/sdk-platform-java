@@ -31,6 +31,7 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
+import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.auto.value.AutoValue;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,20 +46,31 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class ApiTracerContext {
+  @Nullable
+  public abstract String serverAddress();
+
+  public abstract LibraryMetadata libraryMetadata();
 
   /**
    * @return a map of attributes to be included in attempt-level spans
    */
   public Map<String, String> getAttemptAttributes() {
     Map<String, String> attributes = new HashMap<>();
-    if (getServerAddress() != null) {
-      attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, getServerAddress());
+    if (serverAddress() != null) {
+      attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress());
+    }
+    if (libraryMetadata().repository() != null) {
+      attributes.put(ObservabilityAttributes.REPO_ATTRIBUTE, libraryMetadata().repository());
+    }
+    if (libraryMetadata().artifactName() != null) {
+      attributes.put(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, libraryMetadata().artifactName());
     }
     return attributes;
   }
 
-  @Nullable
-  public abstract String getServerAddress();
+  public static ApiTracerContext empty() {
+    return newBuilder().setLibraryMetadata(LibraryMetadata.empty()).build();
+  }
 
   public static Builder newBuilder() {
     return new AutoValue_ApiTracerContext.Builder();
@@ -66,7 +78,9 @@ public abstract class ApiTracerContext {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setServerAddress(String serverAddress);
+    public abstract Builder setServerAddress(@Nullable String serverAddress);
+
+    public abstract Builder setLibraryMetadata(LibraryMetadata gapicProperties);
 
     public abstract ApiTracerContext build();
   }

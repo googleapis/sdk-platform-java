@@ -18,6 +18,11 @@ from library_generation.utils.utilities import (
     run_process_and_print_output as bash_call,
     run_process_and_get_output_string as get_bash_call_output,
 )
+from library_generation.generate_composed_library import _construct_effective_arg
+from common.model.gapic_config import GapicConfig
+from common.model.gapic_inputs import GapicInputs
+from common.model.generation_config import GenerationConfig
+from common.model.library_config import LibraryConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -153,3 +158,44 @@ class GenerateLibraryUnitTests(unittest.TestCase):
         result = self._run_command("get_java_formatter_location")
         self.assertEqual(1, result.returncode)
         self.assertRegex(result.stdout.decode(), "Can't find Java formatter in")
+
+    def test_construct_effective_arg_confirm_repo_and_artifact(self):
+        gapic_config = GapicConfig(proto_path="google/cloud/test/v1")
+        gapic_inputs = GapicInputs(
+            proto_only="false",
+            additional_protos="google/cloud/common_resources.proto",
+            transport="grpc",
+            rest_numeric_enum="true",
+            gapic_yaml="google/cloud/test/v1/test_gapic.yaml",
+            service_config="google/cloud/test/v1/test_service_config.json",
+            service_yaml="google/cloud/test/v1/test.yaml",
+            include_samples="true",
+        )
+        library_config = LibraryConfig(
+            api_shortname="test",
+            name_pretty="Test API",
+            product_documentation="https://cloud.google.com/test",
+            api_description="Test API description",
+            gapic_configs=[gapic_config],
+            library_name="test-library",
+            distribution_name="com.google.cloud:google-cloud-test-library",
+        )
+        generation_config = GenerationConfig(
+            gapic_generator_version="2.34.0",
+            googleapis_commitish="main",
+            libraries=[library_config],
+        )
+
+        effective_args = _construct_effective_arg(
+            base_arguments=[],
+            gapic=gapic_config,
+            gapic_inputs=gapic_inputs,
+            temp_destination_path="temp",
+            generation_config=generation_config,
+            library=library_config,
+        )
+
+        self.assertIn("--repo", effective_args)
+        self.assertIn("googleapis/java-test-library", effective_args)
+        self.assertIn("--artifact", effective_args)
+        self.assertIn("com.google.cloud:google-cloud-test-library", effective_args)

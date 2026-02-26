@@ -28,25 +28,43 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.api.gax.tracing;
+package com.google.api.gax.rpc;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import com.google.auto.value.AutoValue;
+import javax.annotation.Nullable;
 
 /**
- * Utility class with common attribute names in app-centric observability.
+ * A context object that contains information about the GAPIC library.
  *
  * <p>For internal use only.
  */
 @InternalApi
 @BetaApi
-public class ObservabilityAttributes {
-  /** The address of the server being called (e.g., "pubsub.googleapis.com"). */
-  public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
+@AutoValue
+public abstract class LibraryMetadata {
 
-  /** The repository of the client library (e.g., "googleapis/google-cloud-java"). */
-  public static final String REPO_ATTRIBUTE = "gcp.client.repo";
+  @Nullable
+  public abstract String repository();
 
-  /** The artifact name of the client library (e.g., "google-cloud-vision"). */
-  public static final String ARTIFACT_ATTRIBUTE = "gcp.client.artifact";
+  @Nullable
+  public abstract String artifactName();
+
+  public static LibraryMetadata empty() {
+    return newBuilder().build();
+  }
+
+  public static LibraryMetadata.Builder newBuilder() {
+    return new AutoValue_LibraryMetadata.Builder();
+  }
+
+  @AutoValue.Builder
+  public abstract static class Builder {
+    public abstract Builder setRepository(@Nullable String repository);
+
+    public abstract Builder setArtifactName(@Nullable String artifactName);
+
+    public abstract LibraryMetadata build();
+  }
 }

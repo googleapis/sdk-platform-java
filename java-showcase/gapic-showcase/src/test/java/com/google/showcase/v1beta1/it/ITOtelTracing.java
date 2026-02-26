@@ -54,6 +54,8 @@ import org.junit.jupiter.api.Test;
 
 class ITOtelTracing {
   private static final String SHOWCASE_SERVER_ADDRESS = "localhost";
+  private static final String SHOWCASE_REPO = "googleapis/sdk-platform-java";
+  private static final String SHOWCASE_ARTIFACT = "com.google.cloud:gapic-showcase";
 
   private InMemorySpanExporter spanExporter;
   private OpenTelemetrySdk openTelemetrySdk;
@@ -108,6 +110,16 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_SERVER_ADDRESS);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.REPO_ATTRIBUTE)))
+          .isEqualTo(SHOWCASE_REPO);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.ARTIFACT_ATTRIBUTE)))
+          .isEqualTo(SHOWCASE_ARTIFACT);
     }
   }
 
@@ -140,6 +152,16 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_SERVER_ADDRESS);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.REPO_ATTRIBUTE)))
+          .isEqualTo(SHOWCASE_REPO);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.ARTIFACT_ATTRIBUTE)))
+          .isEqualTo(SHOWCASE_ARTIFACT);
     }
   }
 }

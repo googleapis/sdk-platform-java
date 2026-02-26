@@ -269,6 +269,28 @@ class PluginArgumentParserTest {
     assertTrue(PluginArgumentParser.hasFlag(rawArgument, KEY_METADATA));
   }
 
+  @Test
+  void parseRepo() {
+    String repo = "googleapis/sdk-platform-java";
+    String rawArgument = String.format("repo=%s", repo);
+    assertEquals(
+        repo,
+        PluginArgumentParser.parseRepo(
+                CodeGeneratorRequest.newBuilder().setParameter(rawArgument).build())
+            .get());
+  }
+
+  @Test
+  void parseArtifact() {
+    String artifact = "com.google.cloud:google-cloud-library";
+    String rawArgument = String.format("artifact=%s", artifact);
+    assertEquals(
+        artifact,
+        PluginArgumentParser.parseArtifact(
+                CodeGeneratorRequest.newBuilder().setParameter(rawArgument).build())
+            .get());
+  }
+
   private static String createGrpcServiceConfig(String path) {
     return String.format("%s=%s", PluginArgumentParser.KEY_GRPC_SERVICE_CONFIG, path);
   }

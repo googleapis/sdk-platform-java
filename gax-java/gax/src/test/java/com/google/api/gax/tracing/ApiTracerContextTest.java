@@ -27,53 +27,58 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package com.google.api.gax.tracing;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
+import com.google.api.gax.rpc.LibraryMetadata;
 import java.util.Map;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
-class SpanTracerTest {
-  @Mock private TraceManager recorder;
-  @Mock private TraceManager.Span attemptHandle;
-  private SpanTracer tracer;
-  private static final String ATTEMPT_SPAN_NAME = "Service/Method/attempt";
+class ApiTracerContextTest {
 
-  @BeforeEach
-  void setUp() {
-    tracer = new SpanTracer(recorder, ApiTracerContext.empty(), ATTEMPT_SPAN_NAME);
+  @Test
+  void testGetAttemptAttributes_serverAddress() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setServerAddress("test-address")
+            .build();
+    Map<String, String> attributes = context.getAttemptAttributes();
+
+    assertThat(attributes)
+        .containsEntry(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, "test-address");
   }
 
   @Test
-  void testAttemptLifecycle_startsAndEndsAttemptSpan() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
-    tracer.attemptStarted(new Object(), 1);
-    tracer.attemptSucceeded();
+  void testGetAttemptAttributes_repo() {
+    LibraryMetadata libraryMetadata =
+        LibraryMetadata.newBuilder().setRepository("test-repo").build();
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder().setLibraryMetadata(libraryMetadata).build();
+    Map<String, String> attributes = context.getAttemptAttributes();
 
-    verify(attemptHandle).end();
+    assertThat(attributes).containsEntry(ObservabilityAttributes.REPO_ATTRIBUTE, "test-repo");
   }
 
   @Test
-  void testAttemptStarted_includesLanguageAttribute() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+  void testGetAttemptAttributes_artifact() {
+    LibraryMetadata libraryMetadata =
+        LibraryMetadata.newBuilder().setArtifactName("test-artifact").build();
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder().setLibraryMetadata(libraryMetadata).build();
+    Map<String, String> attributes = context.getAttemptAttributes();
 
-    tracer.attemptStarted(new Object(), 1);
+    assertThat(attributes)
+        .containsEntry(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, "test-artifact");
+  }
 
-    ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(recorder).createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
+  @Test
+  void testGetAttemptAttributes_empty() {
+    ApiTracerContext context = ApiTracerContext.empty();
+    Map<String, String> attributes = context.getAttemptAttributes();
 
-    assertThat(attributesCaptor.getValue())
-        .containsEntry(SpanTracer.LANGUAGE_ATTRIBUTE, SpanTracer.DEFAULT_LANGUAGE);
+    assertThat(attributes).isEmpty();
   }
 }
