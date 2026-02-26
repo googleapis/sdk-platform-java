@@ -169,6 +169,7 @@ import javax.annotation.Generated;
  */
 @BetaApi
 @Generated("by gapic-generator-java")
+@SuppressWarnings("CanonicalDuration")
 public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
