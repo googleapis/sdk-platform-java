@@ -49,17 +49,17 @@ import com.google.common.util.concurrent.MoreExecutors;
 public class TracedBatchingCallable<RequestT, ResponseT>
     extends UnaryCallable<RequestT, ResponseT> {
   private final ApiTracerFactory tracerFactory;
-  private final SpanName spanName;
+  private final ApiTracerContext apiTracerContext;
   private final BatchingDescriptor<RequestT, ResponseT> batchingDescriptor;
   private final UnaryCallable<RequestT, ResponseT> innerCallable;
 
   public TracedBatchingCallable(
       UnaryCallable<RequestT, ResponseT> innerCallable,
       ApiTracerFactory tracerFactory,
-      SpanName spanName,
+      ApiTracerContext apiTracerContext,
       BatchingDescriptor<RequestT, ResponseT> batchingDescriptor) {
     this.tracerFactory = tracerFactory;
-    this.spanName = spanName;
+    this.apiTracerContext = apiTracerContext;
     this.batchingDescriptor = batchingDescriptor;
     this.innerCallable = innerCallable;
   }
@@ -69,7 +69,8 @@ public class TracedBatchingCallable<RequestT, ResponseT>
     // NOTE: This will be invoked asynchronously outside of the original caller's thread.
     // So this start a top level tracer.
     ApiTracer tracer =
-        tracerFactory.newTracer(context.getTracer(), spanName, OperationType.Batching);
+        tracerFactory.newTracer(
+            context.getTracer(), apiTracerContext.getSpanName(), OperationType.Batching);
     TraceFinisher<ResponseT> finisher = new TraceFinisher<>(tracer);
 
     try {

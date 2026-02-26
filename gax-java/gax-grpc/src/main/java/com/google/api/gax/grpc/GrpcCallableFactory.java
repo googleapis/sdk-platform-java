@@ -36,6 +36,7 @@ import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.Callables;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.ClientStreamingCallable;
+import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.api.gax.rpc.LongRunningClient;
 import com.google.api.gax.rpc.OperationCallSettings;
 import com.google.api.gax.rpc.OperationCallable;
@@ -46,6 +47,7 @@ import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StreamingCallSettings;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.api.gax.tracing.SpanName;
 import com.google.api.gax.tracing.TracedBatchingCallable;
 import com.google.api.gax.tracing.TracedBidiCallable;
@@ -66,7 +68,8 @@ import javax.annotation.Nonnull;
 /** Class with utility methods to create grpc-based direct callables. */
 public class GrpcCallableFactory {
   // Used to extract service and method name from a grpc MethodDescriptor.
-  private static final Pattern FULL_METHOD_NAME_REGEX = Pattern.compile("^.*?([^./]+)/([^./]+)$");
+  private static final String FULL_METHOD_NAME_REGEX = "^.*?([^./]+)/([^./]+)$";
+  private static final Pattern FULL_METHOD_NAME_PATTERN = Pattern.compile(FULL_METHOD_NAME_REGEX);
 
   private GrpcCallableFactory() {}
 
@@ -112,7 +115,7 @@ public class GrpcCallableFactory {
         new TracedUnaryCallable<>(
             callable,
             clientContext.getTracerFactory(),
-            getSpanName(grpcCallSettings.getMethodDescriptor()));
+            getApiTracerContext(grpcCallSettings.getMethodDescriptor()));
 
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
@@ -161,7 +164,7 @@ public class GrpcCallableFactory {
         new TracedBatchingCallable<>(
             baseCallable,
             clientContext.getTracerFactory(),
-            getSpanName(grpcCallSettings.getMethodDescriptor()),
+            getApiTracerContext(grpcCallSettings.getMethodDescriptor()),
             batchingCallSettings.getBatchingDescriptor());
 
     UnaryCallable<RequestT, ResponseT> batchingCallable =
@@ -200,7 +203,7 @@ public class GrpcCallableFactory {
     // Create a sub-trace for the initial RPC that starts the operation.
     UnaryCallable<RequestT, OperationSnapshot> tracedInitialCallable =
         new TracedOperationInitialCallable<>(
-            initialCallable, clientContext.getTracerFactory(), initialSpanName);
+            initialCallable, clientContext.getTracerFactory(), getApiTracerContext(grpcCallSettings.getMethodDescriptor()));
 
     LongRunningClient longRunningClient = new GrpcLongRunningClient(operationsStub);
     OperationCallable<RequestT, ResponseT, MetadataT> operationCallable =
@@ -209,7 +212,7 @@ public class GrpcCallableFactory {
 
     OperationCallable<RequestT, ResponseT, MetadataT> tracedOperationCallable =
         new TracedOperationCallable<>(
-            operationCallable, clientContext.getTracerFactory(), operationSpanName);
+            operationCallable, clientContext.getTracerFactory(), getApiTracerContext(grpcCallSettings.getMethodDescriptor()));
 
     return tracedOperationCallable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
@@ -237,7 +240,7 @@ public class GrpcCallableFactory {
         new TracedBidiCallable<>(
             callable,
             clientContext.getTracerFactory(),
-            getSpanName(grpcCallSettings.getMethodDescriptor()));
+            getApiTracerContext(grpcCallSettings.getMethodDescriptor()));
 
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
@@ -295,7 +298,7 @@ public class GrpcCallableFactory {
         new TracedServerStreamingCallable<>(
             callable,
             clientContext.getTracerFactory(),
-            getSpanName(grpcCallSettings.getMethodDescriptor()));
+            getApiTracerContext(grpcCallSettings.getMethodDescriptor()));
 
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
@@ -323,16 +326,26 @@ public class GrpcCallableFactory {
         new TracedClientStreamingCallable<>(
             callable,
             clientContext.getTracerFactory(),
-            getSpanName(grpcCallSettings.getMethodDescriptor()));
+            getApiTracerContext(grpcCallSettings.getMethodDescriptor()));
 
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
 
   @InternalApi("Visible for testing")
   static SpanName getSpanName(@Nonnull MethodDescriptor<?, ?> methodDescriptor) {
-    Matcher matcher = FULL_METHOD_NAME_REGEX.matcher(methodDescriptor.getFullMethodName());
+    Matcher matcher = FULL_METHOD_NAME_PATTERN.matcher(methodDescriptor.getFullMethodName());
 
     Preconditions.checkArgument(matcher.matches(), "Invalid fullMethodName");
     return SpanName.of(matcher.group(1), matcher.group(2));
+  }
+
+  private static ApiTracerContext getApiTracerContext(
+      @Nonnull MethodDescriptor<?, ?> methodDescriptor) {
+    return ApiTracerContext.newBuilder()
+        .setRpcSystemName("grpc")
+        .setRpcMethod(methodDescriptor.getFullMethodName())
+        .setFullMethodNameRegex(FULL_METHOD_NAME_REGEX)
+        .setLibraryMetadata(LibraryMetadata.empty())
+        .build();
   }
 }

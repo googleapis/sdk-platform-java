@@ -50,15 +50,15 @@ public class TracedOperationCallable<RequestT, ResponseT, MetadataT>
 
   private @Nonnull OperationCallable<RequestT, ResponseT, MetadataT> innerCallable;
   private @Nonnull ApiTracerFactory tracerFactory;
-  private @Nonnull SpanName spanName;
+  private @Nonnull ApiTracerContext apiTracerContext;
 
   public TracedOperationCallable(
       @Nonnull OperationCallable<RequestT, ResponseT, MetadataT> innerCallable,
       @Nonnull ApiTracerFactory tracerFactory,
-      @Nonnull SpanName spanName) {
+      @Nonnull ApiTracerContext apiTracerContext) {
     this.innerCallable = innerCallable;
     this.tracerFactory = tracerFactory;
-    this.spanName = spanName;
+    this.apiTracerContext = apiTracerContext;
   }
 
   /**
@@ -70,7 +70,8 @@ public class TracedOperationCallable<RequestT, ResponseT, MetadataT>
       RequestT request, ApiCallContext context) {
 
     ApiTracer tracer =
-        tracerFactory.newTracer(context.getTracer(), spanName, OperationType.LongRunning);
+        tracerFactory.newTracer(
+            context.getTracer(), apiTracerContext.getSpanName(), OperationType.LongRunning);
     TraceFinisher<ResponseT> finisher = new TraceFinisher<>(tracer);
 
     try {
@@ -93,7 +94,8 @@ public class TracedOperationCallable<RequestT, ResponseT, MetadataT>
   public OperationFuture<ResponseT, MetadataT> resumeFutureCall(
       String operationName, ApiCallContext context) {
     ApiTracer tracer =
-        tracerFactory.newTracer(context.getTracer(), spanName, OperationType.LongRunning);
+        tracerFactory.newTracer(
+            context.getTracer(), apiTracerContext.getSpanName(), OperationType.LongRunning);
     TraceFinisher<ResponseT> finisher = new TraceFinisher<>(tracer);
 
     try {
@@ -112,6 +114,7 @@ public class TracedOperationCallable<RequestT, ResponseT, MetadataT>
   /** Wrap operation cancellation in a {@link OperationType#Unary} trace. */
   @Override
   public ApiFuture<Void> cancel(String operationName, ApiCallContext context) {
+    SpanName spanName = apiTracerContext.getSpanName();
     SpanName cancelSpanName =
         SpanName.of(spanName.getClientName(), spanName.getMethodName() + ".Cancel");
 

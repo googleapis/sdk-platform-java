@@ -120,6 +120,16 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.ARTIFACT_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_ARTIFACT);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.RPC_SYSTEM_NAME_ATTRIBUTE)))
+          .isEqualTo("grpc");
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.RPC_METHOD_ATTRIBUTE)))
+          .isEqualTo("google.showcase.v1beta1.Echo/Echo");
     }
   }
 
@@ -162,6 +172,16 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.ARTIFACT_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_ARTIFACT);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.RPC_SYSTEM_NAME_ATTRIBUTE)))
+          .isEqualTo("http");
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.RPC_METHOD_ATTRIBUTE)))
+          .isEqualTo("google.showcase.v1beta1.Echo/Echo");
     }
   }
 }

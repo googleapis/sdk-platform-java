@@ -33,8 +33,11 @@ package com.google.api.gax.tracing;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Preconditions;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.annotation.Nullable;
 
 /**
@@ -51,6 +54,15 @@ public abstract class ApiTracerContext {
 
   public abstract LibraryMetadata libraryMetadata();
 
+  @Nullable
+  public abstract String rpcSystemName();
+
+  @Nullable
+  public abstract String rpcMethod();
+
+  @Nullable
+  public abstract String fullMethodNameRegex();
+
   /**
    * @return a map of attributes to be included in attempt-level spans
    */
@@ -58,6 +70,12 @@ public abstract class ApiTracerContext {
     Map<String, String> attributes = new HashMap<>();
     if (serverAddress() != null) {
       attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress());
+    }
+    if (rpcMethod() != null) {
+      attributes.put(ObservabilityAttributes.RPC_METHOD_ATTRIBUTE, rpcMethod());
+    }
+    if (rpcSystemName() != null) {
+      attributes.put(ObservabilityAttributes.RPC_SYSTEM_NAME_ATTRIBUTE, rpcSystemName());
     }
     if (libraryMetadata().repository() != null) {
       attributes.put(ObservabilityAttributes.REPO_ATTRIBUTE, libraryMetadata().repository());
@@ -68,6 +86,47 @@ public abstract class ApiTracerContext {
     return attributes;
   }
 
+  /**
+   * @return a {@link SpanName} object constructed from the rpcMethod and fullMethodNameRegex
+   */
+  public SpanName getSpanName() {
+    Preconditions.checkState(rpcMethod() != null, "rpcMethod must be set to get SpanName");
+    Preconditions.checkState(
+        fullMethodNameRegex() != null, "fullMethodNameRegex must be set to get SpanName");
+
+    Pattern pattern = Pattern.compile(fullMethodNameRegex());
+    Matcher matcher = pattern.matcher(rpcMethod());
+
+    Preconditions.checkArgument(matcher.matches(), "Invalid rpcMethod: " + rpcMethod());
+    return SpanName.of(matcher.group(1), matcher.group(2));
+  }
+
+  /**
+   * Merges this context with another context. The values in the other context take precedence.
+   *
+   * @param other the other context to merge with
+   * @return a new {@link ApiTracerContext} with merged values
+   */
+  public ApiTracerContext merge(ApiTracerContext other) {
+    Builder builder = toBuilder();
+    if (other.serverAddress() != null) {
+      builder.setServerAddress(other.serverAddress());
+    }
+    if (!other.libraryMetadata().isEmpty()) {
+      builder.setLibraryMetadata(other.libraryMetadata());
+    }
+    if (other.rpcSystemName() != null) {
+      builder.setRpcSystemName(other.rpcSystemName());
+    }
+    if (other.rpcMethod() != null) {
+      builder.setRpcMethod(other.rpcMethod());
+    }
+    if (other.fullMethodNameRegex() != null) {
+      builder.setFullMethodNameRegex(other.fullMethodNameRegex());
+    }
+    return builder.build();
+  }
+
   public static ApiTracerContext empty() {
     return newBuilder().setLibraryMetadata(LibraryMetadata.empty()).build();
   }
@@ -76,11 +135,19 @@ public abstract class ApiTracerContext {
     return new AutoValue_ApiTracerContext.Builder();
   }
 
+  public abstract Builder toBuilder();
+
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setServerAddress(@Nullable String serverAddress);
 
     public abstract Builder setLibraryMetadata(LibraryMetadata gapicProperties);
+
+    public abstract Builder setRpcSystemName(@Nullable String rpcSystemName);
+
+    public abstract Builder setRpcMethod(@Nullable String rpcMethod);
+
+    public abstract Builder setFullMethodNameRegex(@Nullable String fullMethodNameRegex);
 
     public abstract ApiTracerContext build();
   }

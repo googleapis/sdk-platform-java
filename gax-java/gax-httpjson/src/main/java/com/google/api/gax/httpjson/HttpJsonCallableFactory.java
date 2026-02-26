@@ -35,6 +35,7 @@ import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.BatchingCallSettings;
 import com.google.api.gax.rpc.Callables;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.api.gax.rpc.LongRunningClient;
 import com.google.api.gax.rpc.OperationCallSettings;
 import com.google.api.gax.rpc.OperationCallable;
@@ -43,6 +44,7 @@ import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.api.gax.tracing.SpanName;
 import com.google.api.gax.tracing.TracedUnaryCallable;
 import com.google.common.base.Preconditions;
@@ -55,7 +57,8 @@ public class HttpJsonCallableFactory {
   // Used to extract service and method name from a grpc MethodDescriptor.
   // fullMethodName has the format: service.resource.action
   // For example: compute.instances.addAccessConfig
-  private static final Pattern FULL_METHOD_NAME_REGEX = Pattern.compile("^(.+)\\.(.+)$");
+  private static final String FULL_METHOD_NAME_REGEX = "^(.+)\\.(.+)$";
+  private static final Pattern FULL_METHOD_NAME_PATTERN = Pattern.compile(FULL_METHOD_NAME_REGEX);
 
   private HttpJsonCallableFactory() {}
 
@@ -88,7 +91,7 @@ public class HttpJsonCallableFactory {
         new TracedUnaryCallable<>(
             callable,
             clientContext.getTracerFactory(),
-            getSpanName(httpJsonCallSettings.getMethodDescriptor()));
+            getApiTracerContext(httpJsonCallSettings.getMethodDescriptor()));
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
 
@@ -228,9 +231,19 @@ public class HttpJsonCallableFactory {
 
   @InternalApi("Visible for testing")
   static SpanName getSpanName(@Nonnull ApiMethodDescriptor<?, ?> methodDescriptor) {
-    Matcher matcher = FULL_METHOD_NAME_REGEX.matcher(methodDescriptor.getFullMethodName());
+    Matcher matcher = FULL_METHOD_NAME_PATTERN.matcher(methodDescriptor.getFullMethodName());
 
     Preconditions.checkArgument(matcher.matches(), "Invalid fullMethodName");
     return SpanName.of(matcher.group(1), matcher.group(2));
+  }
+
+  private static ApiTracerContext getApiTracerContext(
+      @Nonnull ApiMethodDescriptor<?, ?> methodDescriptor) {
+    return ApiTracerContext.newBuilder()
+        .setRpcSystemName("http")
+        .setRpcMethod(methodDescriptor.getFullMethodName())
+        .setFullMethodNameRegex(FULL_METHOD_NAME_REGEX)
+        .setLibraryMetadata(LibraryMetadata.empty())
+        .build();
   }
 }

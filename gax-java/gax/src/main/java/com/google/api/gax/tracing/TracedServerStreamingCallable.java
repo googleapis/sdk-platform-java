@@ -49,15 +49,16 @@ public final class TracedServerStreamingCallable<RequestT, ResponseT>
     extends ServerStreamingCallable<RequestT, ResponseT> {
 
   @Nonnull private final ApiTracerFactory tracerFactory;
-  @Nonnull private final SpanName spanName;
+  @Nonnull private final ApiTracerContext apiTracerContext;
   @Nonnull private final ServerStreamingCallable<RequestT, ResponseT> innerCallable;
 
   public TracedServerStreamingCallable(
       @Nonnull ServerStreamingCallable<RequestT, ResponseT> innerCallable,
       @Nonnull ApiTracerFactory tracerFactory,
-      @Nonnull SpanName spanName) {
+      @Nonnull ApiTracerContext apiTracerContext) {
     this.tracerFactory = Preconditions.checkNotNull(tracerFactory, "tracerFactory can't be null");
-    this.spanName = Preconditions.checkNotNull(spanName, "spanName can't be null");
+    this.apiTracerContext =
+        Preconditions.checkNotNull(apiTracerContext, "apiTracerContext can't be null");
     this.innerCallable = Preconditions.checkNotNull(innerCallable, "innerCallable can't be null");
   }
 
@@ -66,7 +67,8 @@ public final class TracedServerStreamingCallable<RequestT, ResponseT>
       RequestT request, ResponseObserver<ResponseT> responseObserver, ApiCallContext context) {
 
     ApiTracer tracer =
-        tracerFactory.newTracer(context.getTracer(), spanName, OperationType.ServerStreaming);
+        tracerFactory.newTracer(
+            context.getTracer(), apiTracerContext.getSpanName(), OperationType.ServerStreaming);
     TracedResponseObserver<ResponseT> tracedObserver =
         new TracedResponseObserver<>(tracer, responseObserver);
 
