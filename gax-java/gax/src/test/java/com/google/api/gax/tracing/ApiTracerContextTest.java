@@ -41,7 +41,10 @@ class ApiTracerContextTest {
   @Test
   void testGetAttemptAttributes_serverAddress() {
     ApiTracerContext context =
-        ApiTracerContext.newBuilder().setServerAddress("test-address").build();
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setServerAddress("test-address")
+            .build();
     Map<String, String> attributes = context.getAttemptAttributes();
 
     assertThat(attributes)
@@ -72,7 +75,7 @@ class ApiTracerContextTest {
   }
 
   @Test
-  void testGetAttemptAttributes_nullValues() {
+  void testGetAttemptAttributes_empty() {
     ApiTracerContext context = ApiTracerContext.empty();
     Map<String, String> attributes = context.getAttemptAttributes();
 

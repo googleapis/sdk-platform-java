@@ -38,6 +38,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.google.api.gax.rpc.LibraryMetadata;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -64,7 +65,11 @@ class SpanTracerFactoryTest {
 
     ApiTracerFactory factory = new SpanTracerFactory(recorder, ApiTracerContext.empty());
     factory =
-        factory.withContext(ApiTracerContext.newBuilder().setServerAddress("test-address").build());
+        factory.withContext(
+            ApiTracerContext.newBuilder()
+                .setLibraryMetadata(LibraryMetadata.empty())
+                .setServerAddress("test-address")
+                .build());
     ApiTracer tracer =
         factory.newTracer(
             null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
@@ -85,7 +90,10 @@ class SpanTracerFactoryTest {
     when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
 
     ApiTracerContext context =
-        ApiTracerContext.newBuilder().setServerAddress("example.com").build();
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setServerAddress("example.com")
+            .build();
 
     SpanTracerFactory factory = new SpanTracerFactory(recorder);
     ApiTracerFactory factoryWithContext = factory.withContext(context);

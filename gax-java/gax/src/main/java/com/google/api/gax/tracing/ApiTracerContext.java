@@ -49,7 +49,6 @@ public abstract class ApiTracerContext {
   @Nullable
   public abstract String serverAddress();
 
-  @Nullable
   public abstract LibraryMetadata libraryMetadata();
 
   /**
@@ -59,9 +58,6 @@ public abstract class ApiTracerContext {
     Map<String, String> attributes = new HashMap<>();
     if (serverAddress() != null) {
       attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress());
-    }
-    if (libraryMetadata() == null) {
-      return attributes;
     }
     if (libraryMetadata().repository() != null) {
       attributes.put(ObservabilityAttributes.REPO_ATTRIBUTE, libraryMetadata().repository());
@@ -73,7 +69,7 @@ public abstract class ApiTracerContext {
   }
 
   public static ApiTracerContext empty() {
-    return newBuilder().build();
+    return newBuilder().setLibraryMetadata(LibraryMetadata.empty()).build();
   }
 
   public static Builder newBuilder() {
@@ -84,7 +80,7 @@ public abstract class ApiTracerContext {
   public abstract static class Builder {
     public abstract Builder setServerAddress(@Nullable String serverAddress);
 
-    public abstract Builder setLibraryMetadata(@Nullable LibraryMetadata gapicProperties);
+    public abstract Builder setLibraryMetadata(LibraryMetadata gapicProperties);
 
     public abstract ApiTracerContext build();
   }

@@ -256,7 +256,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
    */
   @InternalApi
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.empty();
   }
 
   @Override
