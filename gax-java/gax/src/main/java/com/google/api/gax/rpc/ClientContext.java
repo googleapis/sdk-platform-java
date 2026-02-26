@@ -274,7 +274,13 @@ public abstract class ClientContext {
         ApiTracerContext.newBuilder()
             .setServerAddress(endpointContext.resolvedServerAddress())
             .build();
-    ApiTracerFactory apiTracerFactory = settings.getTracerFactory().withContext(apiTracerContext);
+    ApiTracerFactory apiTracerFactory = settings.getTracerFactory();
+    if (apiTracerFactory != null) {
+      apiTracerFactory = apiTracerFactory.withContext(apiTracerContext);
+    }
+    if (apiTracerFactory == null) {
+      apiTracerFactory = BaseApiTracerFactory.getInstance();
+    }
 
     return newBuilder()
         .setBackgroundResources(backgroundResources.build())
