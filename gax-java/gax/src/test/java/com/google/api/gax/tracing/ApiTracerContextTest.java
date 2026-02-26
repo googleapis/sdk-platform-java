@@ -34,33 +34,39 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.gax.rpc.LibraryMetadata;
 import java.util.Map;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ApiTracerContextTest {
-  private LibraryMetadata libraryMetadata;
-
-  @BeforeEach
-  public void setUp() {
-    libraryMetadata =
-        LibraryMetadata.newBuilder()
-            .setArtifactName("test-artifact")
-            .setRepository("test-repo")
-            .build();
-  }
 
   @Test
-  void testGetAttemptAttributes() {
+  void testGetAttemptAttributes_serverAddress() {
     ApiTracerContext context =
-        ApiTracerContext.newBuilder()
-            .setServerAddress("test-address")
-            .setLibraryMetadata(libraryMetadata)
-            .build();
+        ApiTracerContext.newBuilder().setServerAddress("test-address").build();
     Map<String, String> attributes = context.getAttemptAttributes();
 
     assertThat(attributes)
         .containsEntry(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, "test-address");
+  }
+
+  @Test
+  void testGetAttemptAttributes_repo() {
+    LibraryMetadata libraryMetadata =
+        LibraryMetadata.newBuilder().setRepository("test-repo").build();
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder().setLibraryMetadata(libraryMetadata).build();
+    Map<String, String> attributes = context.getAttemptAttributes();
+
     assertThat(attributes).containsEntry(ObservabilityAttributes.REPO_ATTRIBUTE, "test-repo");
+  }
+
+  @Test
+  void testGetAttemptAttributes_artifact() {
+    LibraryMetadata libraryMetadata =
+        LibraryMetadata.newBuilder().setArtifactName("test-artifact").build();
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder().setLibraryMetadata(libraryMetadata).build();
+    Map<String, String> attributes = context.getAttemptAttributes();
+
     assertThat(attributes)
         .containsEntry(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, "test-artifact");
   }
