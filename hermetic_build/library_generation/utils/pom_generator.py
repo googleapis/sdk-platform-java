@@ -28,7 +28,6 @@ version_tag = "version"
 def generate_root_pom(repository_path: str) -> None:
     print("Regenerating root pom.xml")
     modules = __search_for_java_modules(repository_path)
-    print(f"Found modules: {modules}")
     render(
         template_name="root-pom.xml.j2",
         output_name=f"{repository_path}/pom.xml",
@@ -68,7 +67,7 @@ def get_version_from(
                 return line.split(":")[index].strip()
 
 
-module_allowlist = set(
+MODULE_ALLOWLIST = set(
     [
         "google-auth-library-java",
         "sdk-platform-java",
@@ -82,10 +81,9 @@ def __search_for_java_modules(
     repo = Path(repository_path).resolve()
     modules = []
     for sub_dir in repo.iterdir():
-        print(f"Checking {sub_dir}\n")
-        if sub_dir.is_dir() and sub_dir.name.startswith("java-"):
-            modules.append(sub_dir.name)
-        elif sub_dir.is_dir() and sub_dir.name in module_allowlist:
+        if sub_dir.is_dir() and (
+            sub_dir.name.startswith("java-") or sub_dir.name in MODULE_ALLOWLIST
+        ):
             modules.append(sub_dir.name)
     return sorted(modules)
 
