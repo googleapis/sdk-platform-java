@@ -12,14 +12,18 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["dependencies.txt"],
-      "matchStrings": ["(?<depName>.*),(.*)=(?<currentValue>.*)"],
+      "managerFilePatterns": [
+        "/dependencies.txt/"
+      ],
+      "matchStrings": [
+        "(?<depName>.*),(.*)=(?<currentValue>.*)"
+      ],
       "datasourceTemplate": "maven"
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "^gax-java/dependencies\\.properties$"
+      "managerFilePatterns": [
+        "/^gax-java/dependencies\\.properties$/"
       ],
       "matchStrings": [
         "=(?<depName>.+\\:.+?):(?<currentValue>.+?)\\n"
@@ -28,8 +32,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "^gax-java/dependencies\\.properties$"
+      "managerFilePatterns": [
+        "/^gax-java/dependencies\\.properties$/"
       ],
       "matchStrings": [
         "version\\.google_java_format=(?<currentValue>.+?)\\n"
@@ -39,9 +43,9 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "^gax-java/dependencies\\.properties$",
-        "^\\.cloudbuild/library_generation/library_generation.*\\.Dockerfile$"
+      "managerFilePatterns": [
+        "/^gax-java/dependencies\\.properties$/",
+        "/^\\.cloudbuild/library_generation/library_generation.*\\.Dockerfile$/"
       ],
       "matchStrings": [
         "version\\.io_grpc=(?<currentValue>.+?)\\n",
@@ -52,8 +56,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "^.kokoro/presubmit/graalvm-native.*.cfg$"
+      "managerFilePatterns": [
+        "/^.kokoro/presubmit/graalvm-native.*.cfg$/"
       ],
       "matchStrings": [
         "value: \"gcr.io/cloud-devrel-kokoro-resources/graalvm:(?<currentValue>.*?)\"",
@@ -64,8 +68,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "^.cloudbuild/*"
+      "managerFilePatterns": [
+        "/^.cloudbuild/*/"
       ],
       "matchStrings": [
         "  _JAVA_SHARED_CONFIG_VERSION: '(?<currentValue>.+?)'"
@@ -75,8 +79,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "^.cloudbuild/library_generation/library_generation.*\\.Dockerfile$"
+      "managerFilePatterns": [
+        "/^.cloudbuild/library_generation/library_generation.*\\.Dockerfile$/"
       ],
       "matchStrings": [
         "OWLBOT_CLI_COMMITTISH=(?<currentDigest>.*?)\\n"
@@ -219,11 +223,15 @@
     },
     {
       "matchManagers": [
-        "regex"
+        "custom.regex"
       ],
       "semanticCommitType": "chore",
-      "matchFileNames": ["dependencies.txt"],
-      "matchDatasources": ["maven"],
+      "matchFileNames": [
+        "dependencies.txt"
+      ],
+      "matchDatasources": [
+        "maven"
+      ],
       "groupName": "Upper Bound Dependencies File",
       "description": "Group all dependencies from the Upper Bound Dependencies File"
     }
