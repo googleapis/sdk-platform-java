@@ -54,15 +54,14 @@ public class TracedClientStreamingCallable<RequestT, ResponseT>
     extends ClientStreamingCallable<RequestT, ResponseT> {
   private final ClientStreamingCallable<RequestT, ResponseT> innerCallable;
   private final ApiTracerFactory tracerFactory;
-  private final ApiTracerContext apiTracerContext;
+  private final SpanName spanName;
 
   public TracedClientStreamingCallable(
       @Nonnull ClientStreamingCallable<RequestT, ResponseT> innerCallable,
       @Nonnull ApiTracerFactory tracerFactory,
-      @Nonnull ApiTracerContext apiTracerContext) {
+      @Nonnull SpanName spanName) {
     this.tracerFactory = Preconditions.checkNotNull(tracerFactory, "tracerFactory can't be null");
-    this.apiTracerContext =
-        Preconditions.checkNotNull(apiTracerContext, "apiTracerContext can't be null");
+    this.spanName = Preconditions.checkNotNull(spanName, "spanName can't be null");
     this.innerCallable = Preconditions.checkNotNull(innerCallable, "innerCallable can't be null");
   }
 
@@ -71,8 +70,7 @@ public class TracedClientStreamingCallable<RequestT, ResponseT>
       ApiStreamObserver<ResponseT> responseObserver, ApiCallContext context) {
 
     ApiTracer tracer =
-        tracerFactory.newTracer(
-            context.getTracer(), apiTracerContext.getSpanName(), OperationType.ClientStreaming);
+        tracerFactory.newTracer(context.getTracer(), spanName, OperationType.ClientStreaming);
     context = context.withTracer(tracer);
 
     // Shared state that allows the response observer to know that the error it received was

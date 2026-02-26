@@ -53,16 +53,15 @@ public class TracedBidiCallable<RequestT, ResponseT>
     extends BidiStreamingCallable<RequestT, ResponseT> {
 
   @Nonnull private final ApiTracerFactory tracerFactory;
-  @Nonnull private final ApiTracerContext apiTracerContext;
+  @Nonnull private final SpanName spanName;
   @Nonnull private final BidiStreamingCallable<RequestT, ResponseT> innerCallable;
 
   public TracedBidiCallable(
       @Nonnull BidiStreamingCallable<RequestT, ResponseT> innerCallable,
       @Nonnull ApiTracerFactory tracerFactory,
-      @Nonnull ApiTracerContext apiTracerContext) {
+      @Nonnull SpanName spanName) {
     this.tracerFactory = Preconditions.checkNotNull(tracerFactory, "tracerFactory can't be null");
-    this.apiTracerContext =
-        Preconditions.checkNotNull(apiTracerContext, "apiTracerContext can't be null");
+    this.spanName = Preconditions.checkNotNull(spanName, "spanName can't be null");
     this.innerCallable = Preconditions.checkNotNull(innerCallable, "innerCallable can't be null");
   }
 
@@ -73,8 +72,7 @@ public class TracedBidiCallable<RequestT, ResponseT>
       ApiCallContext context) {
 
     ApiTracer tracer =
-        tracerFactory.newTracer(
-            context.getTracer(), apiTracerContext.getSpanName(), OperationType.BidiStreaming);
+        tracerFactory.newTracer(context.getTracer(), spanName, OperationType.BidiStreaming);
     context = context.withTracer(tracer);
 
     AtomicBoolean wasCancelled = new AtomicBoolean();

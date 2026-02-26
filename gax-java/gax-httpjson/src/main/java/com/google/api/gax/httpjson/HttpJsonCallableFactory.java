@@ -87,11 +87,13 @@ public class HttpJsonCallableFactory {
     callable =
         Callables.retrying(
             callable, callSettings, clientContext, httpJsonCallSettings.getRequestMutator());
+
+    SpanName spanName = getSpanName(httpJsonCallSettings.getMethodDescriptor());
     callable =
         new TracedUnaryCallable<>(
             callable,
-            clientContext.getTracerFactory(),
-            getApiTracerContext(httpJsonCallSettings.getMethodDescriptor()));
+            clientContext.getTracerFactory().withContext(getApiTracerContext(httpJsonCallSettings.getMethodDescriptor())),
+            spanName);
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
 

@@ -48,15 +48,15 @@ import com.google.common.util.concurrent.MoreExecutors;
 public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<RequestT, ResponseT> {
   private final UnaryCallable<RequestT, ResponseT> innerCallable;
   private final ApiTracerFactory tracerFactory;
-  private final ApiTracerContext apiTracerContext;
+  private final SpanName spanName;
 
   public TracedUnaryCallable(
       UnaryCallable<RequestT, ResponseT> innerCallable,
       ApiTracerFactory tracerFactory,
-      ApiTracerContext apiTracerContext) {
+      SpanName spanName) {
     this.innerCallable = innerCallable;
     this.tracerFactory = tracerFactory;
-    this.apiTracerContext = apiTracerContext;
+    this.spanName = spanName;
   }
 
   /**
@@ -67,10 +67,7 @@ public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<Requ
    */
   @Override
   public ApiFuture<ResponseT> futureCall(RequestT request, ApiCallContext context) {
-    ApiTracer tracer =
-        tracerFactory
-            .withContext(apiTracerContext)
-            .newTracer(context.getTracer(), apiTracerContext.getSpanName(), OperationType.Unary);
+    ApiTracer tracer = tracerFactory.newTracer(context.getTracer(), spanName, OperationType.Unary);
     TraceFinisher<ResponseT> finisher = new TraceFinisher<>(tracer);
 
     try {
