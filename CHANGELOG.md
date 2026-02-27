@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.68.0](https://github.com/googleapis/sdk-platform-java/compare/v2.67.0...v2.68.0) (2026-02-27)
+
+
+### Features
+
+* **o11y:** introduce `gcp.client.repo` and `gcp.client.artifact` attributes ([#4120](https://github.com/googleapis/sdk-platform-java/issues/4120)) ([105f644](https://github.com/googleapis/sdk-platform-java/commit/105f644209cb78845a423d949cb7633a86d07868))
+
+
+### Bug Fixes
+
+* add null checks for ApiTracerFactory in ClientContext ([#4122](https://github.com/googleapis/sdk-platform-java/issues/4122)) ([4b3dbe2](https://github.com/googleapis/sdk-platform-java/commit/4b3dbe29b32dd0fba6c7a5f4a08fafa2798eeca5))
+* suppress warnings in generated projects for non-idiomatic durations ([#4119](https://github.com/googleapis/sdk-platform-java/issues/4119)) ([4206e6e](https://github.com/googleapis/sdk-platform-java/commit/4206e6ed7546d6b8330dcb8dc29179e59677ccd3))
+
 ## [2.67.0](https://github.com/googleapis/sdk-platform-java/compare/v2.66.1...v2.67.0) (2026-02-18)
 
 
