@@ -107,6 +107,28 @@ class ApiTracerContextTest {
   }
 
   @Test
+  void testGetSpanNamePartsGrpc_withSuffix() {
+    @SuppressWarnings("unchecked")
+    MethodDescriptor<?, ?> descriptor =
+        MethodDescriptor.newBuilder()
+            .setType(MethodDescriptor.MethodType.SERVER_STREAMING)
+            .setFullMethodName("google.bigtable.v2.Bigtable/ReadRows")
+            .setRequestMarshaller(Mockito.mock(MethodDescriptor.Marshaller.class))
+            .setResponseMarshaller(Mockito.mock(MethodDescriptor.Marshaller.class))
+            .build();
+
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setRpcMethod(descriptor.getFullMethodName())
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .setMethodNameSuffix("Operation")
+            .build();
+    assertThat(context.getClientName()).isEqualTo("Bigtable");
+    assertThat(context.getMethodName()).isEqualTo("ReadRowsOperation");
+  }
+
+  @Test
   void testGetSpanNamePartsUnqualifiedGrpc() {
     @SuppressWarnings("unchecked")
     MethodDescriptor<?, ?> descriptor =

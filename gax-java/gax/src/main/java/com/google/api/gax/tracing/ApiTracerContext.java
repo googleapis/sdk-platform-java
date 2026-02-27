@@ -78,6 +78,9 @@ public abstract class ApiTracerContext {
   @Nullable
   public abstract Transport transport();
 
+  @Nullable
+  public abstract String methodNameSuffix();
+
   /**
    * @return a map of attributes to be included in attempt-level spans
    */
@@ -112,7 +115,11 @@ public abstract class ApiTracerContext {
    * @return the method name part of the span name
    */
   public String getMethodName() {
-    return getParsedFullMethodNameParts()[1];
+    String methodName = getParsedFullMethodNameParts()[1];
+    if (methodNameSuffix() != null) {
+      methodName += methodNameSuffix();
+    }
+    return methodName;
   }
 
   private String[] getParsedFullMethodNameParts() {
@@ -148,6 +155,9 @@ public abstract class ApiTracerContext {
     if (other.transport() != null) {
       builder.setTransport(other.transport());
     }
+    if (other.methodNameSuffix() != null) {
+      builder.setMethodNameSuffix(other.methodNameSuffix());
+    }
     return builder.build();
   }
 
@@ -170,6 +180,8 @@ public abstract class ApiTracerContext {
     public abstract Builder setRpcMethod(@Nullable String rpcMethod);
 
     public abstract Builder setTransport(@Nullable Transport transport);
+
+    public abstract Builder setMethodNameSuffix(@Nullable String methodNameSuffix);
 
     public abstract ApiTracerContext build();
   }

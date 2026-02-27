@@ -209,7 +209,11 @@ public class GrpcCallableFactory {
             operationCallable,
             clientContext
                 .getTracerFactory()
-                .withContext(getApiTracerContext(grpcCallSettings.getMethodDescriptor())));
+                .withContext(
+                    getApiTracerContext(grpcCallSettings.getMethodDescriptor())
+                        .toBuilder()
+                        .setMethodNameSuffix("Operation")
+                        .build()));
 
     return tracedOperationCallable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
