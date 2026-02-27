@@ -55,6 +55,10 @@ public abstract class LibraryMetadata {
     return newBuilder().build();
   }
 
+  public boolean isEmpty() {
+    return repository() == null && artifactName() == null;
+  }
+
   public static LibraryMetadata.Builder newBuilder() {
     return new AutoValue_LibraryMetadata.Builder();
   }

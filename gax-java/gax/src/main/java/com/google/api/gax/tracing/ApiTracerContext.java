@@ -33,8 +33,11 @@ package com.google.api.gax.tracing;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Preconditions;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.annotation.Nullable;
 
 /**
@@ -46,10 +49,37 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class ApiTracerContext {
+
+  public enum Transport {
+    GRPC,
+    HTTP
+  }
+
+  // Used to extract service and method name from a grpc MethodDescriptor.
+  static final String GRPC_FULL_METHOD_NAME_REGEX = "^.*?([^./]+)/([^./]+)$";
+  static final String HTTP_FULL_METHOD_NAME_REGEX = "^(.+)\\.(.+)$";
+
   @Nullable
   public abstract String serverAddress();
 
   public abstract LibraryMetadata libraryMetadata();
+
+  @Nullable
+  public String rpcSystemName() {
+    if (transport() == null) {
+      return null;
+    }
+    return transport() == Transport.GRPC ? "grpc" : "http";
+  }
+
+  @Nullable
+  public abstract String rpcMethod();
+
+  @Nullable
+  public abstract Transport transport();
+
+  @Nullable
+  public abstract String methodNameSuffix();
 
   /**
    * @return a map of attributes to be included in attempt-level spans
@@ -58,6 +88,12 @@ public abstract class ApiTracerContext {
     Map<String, String> attributes = new HashMap<>();
     if (serverAddress() != null) {
       attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress());
+    }
+    if (rpcMethod() != null) {
+      attributes.put(ObservabilityAttributes.RPC_METHOD_ATTRIBUTE, rpcMethod());
+    }
+    if (rpcSystemName() != null) {
+      attributes.put(ObservabilityAttributes.RPC_SYSTEM_NAME_ATTRIBUTE, rpcSystemName());
     }
     if (libraryMetadata().repository() != null) {
       attributes.put(ObservabilityAttributes.REPO_ATTRIBUTE, libraryMetadata().repository());
@@ -68,6 +104,63 @@ public abstract class ApiTracerContext {
     return attributes;
   }
 
+  /**
+   * @return the client name part of the span name
+   */
+  public String getClientName() {
+    return getParsedFullMethodNameParts()[0];
+  }
+
+  /**
+   * @return the method name part of the span name
+   */
+  public String getMethodName() {
+    String methodName = getParsedFullMethodNameParts()[1];
+    if (methodNameSuffix() != null) {
+      methodName += methodNameSuffix();
+    }
+    return methodName;
+  }
+
+  private String[] getParsedFullMethodNameParts() {
+    Preconditions.checkState(rpcMethod() != null, "rpcMethod must be set to get SpanName");
+    Preconditions.checkState(transport() != null, "transport must be set to get SpanName");
+
+    String regex =
+        transport() == Transport.GRPC ? GRPC_FULL_METHOD_NAME_REGEX : HTTP_FULL_METHOD_NAME_REGEX;
+    Pattern pattern = Pattern.compile(regex);
+    Matcher matcher = pattern.matcher(rpcMethod());
+
+    Preconditions.checkArgument(matcher.matches(), "Invalid rpcMethod: " + rpcMethod());
+    return new String[] {matcher.group(1), matcher.group(2)};
+  }
+
+  /**
+   * Merges this context with another context. The values in the other context take precedence.
+   *
+   * @param other the other context to merge with
+   * @return a new {@link ApiTracerContext} with merged values
+   */
+  public ApiTracerContext merge(ApiTracerContext other) {
+    Builder builder = toBuilder();
+    if (other.serverAddress() != null) {
+      builder.setServerAddress(other.serverAddress());
+    }
+    if (!other.libraryMetadata().isEmpty()) {
+      builder.setLibraryMetadata(other.libraryMetadata());
+    }
+    if (other.rpcMethod() != null) {
+      builder.setRpcMethod(other.rpcMethod());
+    }
+    if (other.transport() != null) {
+      builder.setTransport(other.transport());
+    }
+    if (other.methodNameSuffix() != null) {
+      builder.setMethodNameSuffix(other.methodNameSuffix());
+    }
+    return builder.build();
+  }
+
   public static ApiTracerContext empty() {
     return newBuilder().setLibraryMetadata(LibraryMetadata.empty()).build();
   }
@@ -76,11 +169,19 @@ public abstract class ApiTracerContext {
     return new AutoValue_ApiTracerContext.Builder();
   }
 
+  public abstract Builder toBuilder();
+
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setServerAddress(@Nullable String serverAddress);
 
     public abstract Builder setLibraryMetadata(LibraryMetadata gapicProperties);
+
+    public abstract Builder setRpcMethod(@Nullable String rpcMethod);
+
+    public abstract Builder setTransport(@Nullable Transport transport);
+
+    public abstract Builder setMethodNameSuffix(@Nullable String methodNameSuffix);
 
     public abstract ApiTracerContext build();
   }

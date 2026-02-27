@@ -52,7 +52,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class TracedBatchingCallableTest {
-  private static final SpanName SPAN_NAME = SpanName.of("FakeClient", "FakeRpc");
 
   @Mock private ApiTracerFactory tracerFactory;
   @Mock private ApiTracer tracer;
@@ -66,8 +65,7 @@ class TracedBatchingCallableTest {
   @BeforeEach
   void setUp() {
     // Wire the mock tracer factory
-    when(tracerFactory.newTracer(
-            any(ApiTracer.class), any(SpanName.class), eq(OperationType.Batching)))
+    when(tracerFactory.newTracer(any(ApiTracer.class), eq(OperationType.Batching)))
         .thenReturn(tracer);
 
     // Wire the mock inner callable
@@ -77,15 +75,14 @@ class TracedBatchingCallableTest {
 
     // Build the system under test
     tracedBatchingCallable =
-        new TracedBatchingCallable<>(innerCallable, tracerFactory, SPAN_NAME, batchingDescriptor);
+        new TracedBatchingCallable<>(innerCallable, tracerFactory, batchingDescriptor);
     callContext = FakeCallContext.createDefault();
   }
 
   @Test
   void testRootTracerCreated() {
     tracedBatchingCallable.futureCall("test", callContext);
-    verify(tracerFactory, times(1))
-        .newTracer(callContext.getTracer(), SPAN_NAME, OperationType.Batching);
+    verify(tracerFactory, times(1)).newTracer(callContext.getTracer(), OperationType.Batching);
   }
 
   @Test

@@ -50,15 +50,12 @@ public class TracedOperationCallable<RequestT, ResponseT, MetadataT>
 
   private @Nonnull OperationCallable<RequestT, ResponseT, MetadataT> innerCallable;
   private @Nonnull ApiTracerFactory tracerFactory;
-  private @Nonnull SpanName spanName;
 
   public TracedOperationCallable(
       @Nonnull OperationCallable<RequestT, ResponseT, MetadataT> innerCallable,
-      @Nonnull ApiTracerFactory tracerFactory,
-      @Nonnull SpanName spanName) {
+      @Nonnull ApiTracerFactory tracerFactory) {
     this.innerCallable = innerCallable;
     this.tracerFactory = tracerFactory;
-    this.spanName = spanName;
   }
 
   /**
@@ -69,8 +66,7 @@ public class TracedOperationCallable<RequestT, ResponseT, MetadataT>
   public OperationFuture<ResponseT, MetadataT> futureCall(
       RequestT request, ApiCallContext context) {
 
-    ApiTracer tracer =
-        tracerFactory.newTracer(context.getTracer(), spanName, OperationType.LongRunning);
+    ApiTracer tracer = tracerFactory.newTracer(context.getTracer(), OperationType.LongRunning);
     TraceFinisher<ResponseT> finisher = new TraceFinisher<>(tracer);
 
     try {
@@ -92,8 +88,7 @@ public class TracedOperationCallable<RequestT, ResponseT, MetadataT>
   @Override
   public OperationFuture<ResponseT, MetadataT> resumeFutureCall(
       String operationName, ApiCallContext context) {
-    ApiTracer tracer =
-        tracerFactory.newTracer(context.getTracer(), spanName, OperationType.LongRunning);
+    ApiTracer tracer = tracerFactory.newTracer(context.getTracer(), OperationType.LongRunning);
     TraceFinisher<ResponseT> finisher = new TraceFinisher<>(tracer);
 
     try {
@@ -112,11 +107,7 @@ public class TracedOperationCallable<RequestT, ResponseT, MetadataT>
   /** Wrap operation cancellation in a {@link OperationType#Unary} trace. */
   @Override
   public ApiFuture<Void> cancel(String operationName, ApiCallContext context) {
-    SpanName cancelSpanName =
-        SpanName.of(spanName.getClientName(), spanName.getMethodName() + ".Cancel");
-
-    ApiTracer tracer =
-        tracerFactory.newTracer(context.getTracer(), cancelSpanName, OperationType.Unary);
+    ApiTracer tracer = tracerFactory.newTracer(context.getTracer(), OperationType.Unary);
     TraceFinisher<Void> finisher = new TraceFinisher<>(tracer);
 
     try {

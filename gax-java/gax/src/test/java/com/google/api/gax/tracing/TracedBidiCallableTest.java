@@ -55,7 +55,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class TracedBidiCallableTest {
-  private static final SpanName SPAN_NAME = SpanName.of("fake-client", "fake-method");
   private FakeBidiObserver outerObserver;
   private FakeCallContext outerCallContext;
 
@@ -73,19 +72,18 @@ class TracedBidiCallableTest {
     outerObserver = new FakeBidiObserver();
     outerCallContext = FakeCallContext.createDefault();
 
-    when(tracerFactory.newTracer(parentTracer, SPAN_NAME, OperationType.BidiStreaming))
-        .thenReturn(tracer);
+    when(tracerFactory.newTracer(parentTracer, OperationType.BidiStreaming)).thenReturn(tracer);
 
     innerCallable = new FakeBidiCallable();
     innerController = new FakeStreamController();
-    tracedCallable = new TracedBidiCallable<>(innerCallable, tracerFactory, SPAN_NAME);
+    tracedCallable = new TracedBidiCallable<>(innerCallable, tracerFactory);
   }
 
   @Test
   void testTracerCreated() {
     tracedCallable.call(outerObserver, outerCallContext);
 
-    verify(tracerFactory, times(1)).newTracer(parentTracer, SPAN_NAME, OperationType.BidiStreaming);
+    verify(tracerFactory, times(1)).newTracer(parentTracer, OperationType.BidiStreaming);
   }
 
   @Test

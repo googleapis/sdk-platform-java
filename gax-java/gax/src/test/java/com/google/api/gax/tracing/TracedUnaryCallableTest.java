@@ -50,8 +50,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class TracedUnaryCallableTest {
-  private static final SpanName SPAN_NAME = SpanName.of("FakeClient", "FakeRpc");
-
   @Mock private ApiTracerFactory tracerFactory;
   private ApiTracer parentTracer;
   @Mock private ApiTracer tracer;
@@ -66,23 +64,21 @@ class TracedUnaryCallableTest {
     parentTracer = BaseApiTracer.getInstance();
 
     // Wire the mock tracer factory
-    when(tracerFactory.newTracer(
-            any(ApiTracer.class), any(SpanName.class), eq(OperationType.Unary)))
-        .thenReturn(tracer);
+    when(tracerFactory.newTracer(any(ApiTracer.class), eq(OperationType.Unary))).thenReturn(tracer);
 
     // Wire the mock inner callable
     innerResult = SettableApiFuture.create();
     when(innerCallable.futureCall(anyString(), any(ApiCallContext.class))).thenReturn(innerResult);
 
     // Build the system under test
-    tracedUnaryCallable = new TracedUnaryCallable<>(innerCallable, tracerFactory, SPAN_NAME);
+    tracedUnaryCallable = new TracedUnaryCallable<>(innerCallable, tracerFactory);
     callContext = FakeCallContext.createDefault();
   }
 
   @Test
   void testTracerCreated() {
     tracedUnaryCallable.futureCall("test", callContext);
-    verify(tracerFactory, times(1)).newTracer(parentTracer, SPAN_NAME, OperationType.Unary);
+    verify(tracerFactory, times(1)).newTracer(parentTracer, OperationType.Unary);
   }
 
   @Test

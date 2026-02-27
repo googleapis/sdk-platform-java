@@ -76,7 +76,12 @@ public class SpanTracerFactory implements ApiTracerFactory {
   }
 
   @Override
+  public ApiTracerContext getApiTracerContext() {
+    return apiTracerContext;
+  }
+
+  @Override
   public ApiTracerFactory withContext(ApiTracerContext context) {
-    return new SpanTracerFactory(traceManager, context);
+    return new SpanTracerFactory(traceManager, apiTracerContext.merge(context));
   }
 }
