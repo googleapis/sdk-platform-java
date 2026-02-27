@@ -242,9 +242,8 @@ public class HttpJsonCallableFactory {
   private static ApiTracerContext getApiTracerContext(
       @Nonnull ApiMethodDescriptor<?, ?> methodDescriptor) {
     return ApiTracerContext.newBuilder()
-        .setRpcSystemName("http")
+        .setTransport(ApiTracerContext.Transport.HTTP)
         .setRpcMethod(methodDescriptor.getFullMethodName())
-        .setFullMethodNameRegex(FULL_METHOD_NAME_REGEX)
         .setLibraryMetadata(LibraryMetadata.empty())
         .build();
   }

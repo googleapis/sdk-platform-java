@@ -33,8 +33,11 @@ package com.google.api.gax.tracing;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.gax.rpc.LibraryMetadata;
+import com.google.common.collect.ImmutableMap;
+import io.grpc.MethodDescriptor;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 class ApiTracerContextTest {
 
@@ -80,5 +83,72 @@ class ApiTracerContextTest {
     Map<String, String> attributes = context.getAttemptAttributes();
 
     assertThat(attributes).isEmpty();
+  }
+
+  @Test
+  void testGetSpanNameGrpc() {
+    @SuppressWarnings("unchecked")
+    MethodDescriptor<?, ?> descriptor =
+        MethodDescriptor.newBuilder()
+            .setType(MethodDescriptor.MethodType.SERVER_STREAMING)
+            .setFullMethodName("google.bigtable.v2.Bigtable/ReadRows")
+            .setRequestMarshaller(Mockito.mock(MethodDescriptor.Marshaller.class))
+            .setResponseMarshaller(Mockito.mock(MethodDescriptor.Marshaller.class))
+            .build();
+
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setRpcMethod(descriptor.getFullMethodName())
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .build();
+    assertThat(context.getSpanName()).isEqualTo(SpanName.of("Bigtable", "ReadRows"));
+  }
+
+  @Test
+  void testGetSpanNameUnqualifiedGrpc() {
+    @SuppressWarnings("unchecked")
+    MethodDescriptor<?, ?> descriptor =
+        MethodDescriptor.newBuilder()
+            .setType(MethodDescriptor.MethodType.SERVER_STREAMING)
+            .setFullMethodName("UnqualifiedService/ReadRows")
+            .setRequestMarshaller(Mockito.mock(MethodDescriptor.Marshaller.class))
+            .setResponseMarshaller(Mockito.mock(MethodDescriptor.Marshaller.class))
+            .build();
+
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setRpcMethod(descriptor.getFullMethodName())
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .build();
+    assertThat(context.getSpanName()).isEqualTo(SpanName.of("UnqualifiedService", "ReadRows"));
+  }
+
+  @Test
+  void testGetSpanNameHttp() {
+    Map<String, SpanName> validNames =
+        ImmutableMap.of(
+            "compute.projects.disableXpnHost", SpanName.of("compute.projects", "disableXpnHost"),
+            "client.method", SpanName.of("client", "method"));
+
+    for (Map.Entry<String, SpanName> entry : validNames.entrySet()) {
+      @SuppressWarnings("unchecked")
+      MethodDescriptor<?, ?> descriptor =
+          MethodDescriptor.newBuilder()
+              .setFullMethodName(entry.getKey())
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setRequestMarshaller(Mockito.mock(MethodDescriptor.Marshaller.class))
+              .setResponseMarshaller(Mockito.mock(MethodDescriptor.Marshaller.class))
+              .build();
+
+      ApiTracerContext context =
+          ApiTracerContext.newBuilder()
+              .setLibraryMetadata(LibraryMetadata.empty())
+              .setRpcMethod(descriptor.getFullMethodName())
+              .setTransport(ApiTracerContext.Transport.HTTP)
+              .build();
+      assertThat(context.getSpanName()).isEqualTo(entry.getValue());
+    }
   }
 }

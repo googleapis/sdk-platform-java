@@ -67,9 +67,6 @@ import javax.annotation.Nonnull;
 
 /** Class with utility methods to create grpc-based direct callables. */
 public class GrpcCallableFactory {
-  // Used to extract service and method name from a grpc MethodDescriptor.
-  private static final String FULL_METHOD_NAME_REGEX = "^.*?([^./]+)/([^./]+)$";
-  private static final Pattern FULL_METHOD_NAME_PATTERN = Pattern.compile(FULL_METHOD_NAME_REGEX);
 
   private GrpcCallableFactory() {}
 
@@ -349,9 +346,8 @@ public class GrpcCallableFactory {
   private static ApiTracerContext getApiTracerContext(
       @Nonnull MethodDescriptor<?, ?> methodDescriptor) {
     return ApiTracerContext.newBuilder()
-        .setRpcSystemName("grpc")
         .setRpcMethod(methodDescriptor.getFullMethodName())
-        .setFullMethodNameRegex(FULL_METHOD_NAME_REGEX)
+        .setTransport(ApiTracerContext.Transport.GRPC)
         .setLibraryMetadata(LibraryMetadata.empty())
         .build();
   }
