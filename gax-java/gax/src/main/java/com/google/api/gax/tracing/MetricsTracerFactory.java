@@ -50,9 +50,11 @@ public class MetricsTracerFactory implements ApiTracerFactory {
   /** Mapping of client attributes that are set for every MetricsTracer */
   private final Map<String, String> attributes;
 
+  private final ApiTracerContext apiTracerContext;
+
   /** Creates a MetricsTracerFactory with no additional client level attributes. */
   public MetricsTracerFactory(MetricsRecorder metricsRecorder) {
-    this(metricsRecorder, ImmutableMap.of());
+    this(metricsRecorder, ImmutableMap.of(), ApiTracerContext.empty());
   }
 
   /**
@@ -60,8 +62,20 @@ public class MetricsTracerFactory implements ApiTracerFactory {
    * created from the ApiTracerFactory.
    */
   public MetricsTracerFactory(MetricsRecorder metricsRecorder, Map<String, String> attributes) {
+    this(metricsRecorder, attributes, ApiTracerContext.empty());
+  }
+
+  /**
+   * Pass in a Map of client level attributes which will be added to every single MetricsTracer
+   * created from the ApiTracerFactory.
+   */
+  public MetricsTracerFactory(
+      MetricsRecorder metricsRecorder,
+      Map<String, String> attributes,
+      ApiTracerContext apiTracerContext) {
     this.metricsRecorder = metricsRecorder;
     this.attributes = ImmutableMap.copyOf(attributes);
+    this.apiTracerContext = apiTracerContext;
   }
 
   @Override
@@ -71,5 +85,15 @@ public class MetricsTracerFactory implements ApiTracerFactory {
             MethodName.of(spanName.getClientName(), spanName.getMethodName()), metricsRecorder);
     attributes.forEach(metricsTracer::addAttributes);
     return metricsTracer;
+  }
+
+  @Override
+  public ApiTracerContext getApiTracerContext() {
+    return apiTracerContext;
+  }
+
+  @Override
+  public ApiTracerFactory withContext(ApiTracerContext context) {
+    return new MetricsTracerFactory(metricsRecorder, attributes, apiTracerContext.merge(context));
   }
 }
