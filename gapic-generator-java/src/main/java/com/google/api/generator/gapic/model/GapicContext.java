@@ -70,6 +70,12 @@ public abstract class GapicContext {
   @Nullable
   public abstract com.google.api.Service serviceYamlProto();
 
+  @Nullable
+  public abstract String repo();
+
+  @Nullable
+  public abstract String artifact();
+
   public boolean containsServices() {
     return !services().isEmpty();
   }
@@ -129,6 +135,10 @@ public abstract class GapicContext {
     public abstract Builder setRestNumericEnumsEnabled(boolean restNumericEnumsEnabled);
 
     public abstract Builder setTransport(Transport transport);
+
+    public abstract Builder setRepo(String repo);
+
+    public abstract Builder setArtifact(String artifact);
 
     abstract ImmutableMap<String, ResourceName> resourceNames();
 
