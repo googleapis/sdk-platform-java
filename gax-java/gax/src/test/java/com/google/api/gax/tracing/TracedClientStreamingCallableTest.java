@@ -55,7 +55,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class TracedClientStreamingCallableTest {
-  private static final SpanName SPAN_NAME = SpanName.of("fake-client", "fake-method");
   @Mock private ApiTracerFactory tracerFactory;
   private ApiTracer parentTracer = BaseApiTracer.getInstance();
   @Mock private ApiTracer tracer;
@@ -67,10 +66,9 @@ class TracedClientStreamingCallableTest {
 
   @BeforeEach
   void setUp() {
-    when(tracerFactory.newTracer(parentTracer, SPAN_NAME, OperationType.ClientStreaming))
-        .thenReturn(tracer);
+    when(tracerFactory.newTracer(parentTracer, OperationType.ClientStreaming)).thenReturn(tracer);
     innerCallable = new FakeClientCallable();
-    tracedCallable = new TracedClientStreamingCallable<>(innerCallable, tracerFactory, SPAN_NAME);
+    tracedCallable = new TracedClientStreamingCallable<>(innerCallable, tracerFactory);
     outerResponseObsever = new FakeStreamObserver();
     callContext = FakeCallContext.createDefault();
   }
@@ -79,8 +77,7 @@ class TracedClientStreamingCallableTest {
   void testTracerCreated() {
     tracedCallable.clientStreamingCall(outerResponseObsever, callContext);
 
-    verify(tracerFactory, times(1))
-        .newTracer(parentTracer, SPAN_NAME, OperationType.ClientStreaming);
+    verify(tracerFactory, times(1)).newTracer(parentTracer, OperationType.ClientStreaming);
   }
 
   @Test

@@ -56,8 +56,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class TracedOperationCallableTest {
-  private static final SpanName SPAN_NAME = SpanName.of("FakeClient", "FakeOperation");
-
   @Mock private ApiTracerFactory tracerFactory;
   private ApiTracer parentTracer;
   @Mock private ApiTracer tracer;
@@ -72,8 +70,7 @@ class TracedOperationCallableTest {
     parentTracer = BaseApiTracer.getInstance();
 
     // Wire the mock tracer factory
-    when(tracerFactory.newTracer(
-            any(ApiTracer.class), any(SpanName.class), eq(OperationType.LongRunning)))
+    when(tracerFactory.newTracer(any(ApiTracer.class), eq(OperationType.LongRunning)))
         .thenReturn(tracer);
 
     // Wire the mock inner callable
@@ -81,15 +78,14 @@ class TracedOperationCallableTest {
     when(innerCallable.futureCall(anyString(), any(ApiCallContext.class))).thenReturn(innerResult);
 
     // Build the system under test
-    tracedOperationCallable =
-        new TracedOperationCallable<>(innerCallable, tracerFactory, SPAN_NAME);
+    tracedOperationCallable = new TracedOperationCallable<>(innerCallable, tracerFactory);
     callContext = FakeCallContext.createDefault();
   }
 
   @Test
   void testTracerCreated() {
     tracedOperationCallable.futureCall("test", callContext);
-    verify(tracerFactory, times(1)).newTracer(parentTracer, SPAN_NAME, OperationType.LongRunning);
+    verify(tracerFactory, times(1)).newTracer(parentTracer, OperationType.LongRunning);
   }
 
   @Test
@@ -111,9 +107,7 @@ class TracedOperationCallableTest {
   void testExternalOperationCancel() {
     Mockito.reset(innerCallable, tracerFactory);
 
-    when(tracerFactory.newTracer(
-            any(ApiTracer.class), any(SpanName.class), eq(OperationType.Unary)))
-        .thenReturn(tracer);
+    when(tracerFactory.newTracer(any(ApiTracer.class), eq(OperationType.Unary))).thenReturn(tracer);
 
     SettableApiFuture<Void> innerCancelResult = SettableApiFuture.create();
     when(innerCallable.cancel(anyString(), any(ApiCallContext.class)))
@@ -121,11 +115,7 @@ class TracedOperationCallableTest {
 
     tracedOperationCallable.cancel("some external operation", callContext);
 
-    verify(tracerFactory, times(1))
-        .newTracer(
-            parentTracer,
-            SpanName.of(SPAN_NAME.getClientName(), SPAN_NAME.getMethodName() + ".Cancel"),
-            OperationType.Unary);
+    verify(tracerFactory, times(1)).newTracer(parentTracer, OperationType.Unary);
   }
 
   @Test
