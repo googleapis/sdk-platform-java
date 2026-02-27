@@ -86,7 +86,7 @@ class ApiTracerContextTest {
   }
 
   @Test
-  void testGetSpanNameGrpc() {
+  void testGetSpanNamePartsGrpc() {
     @SuppressWarnings("unchecked")
     MethodDescriptor<?, ?> descriptor =
         MethodDescriptor.newBuilder()
@@ -102,11 +102,12 @@ class ApiTracerContextTest {
             .setRpcMethod(descriptor.getFullMethodName())
             .setTransport(ApiTracerContext.Transport.GRPC)
             .build();
-    assertThat(context.getSpanName()).isEqualTo(SpanName.of("Bigtable", "ReadRows"));
+    assertThat(context.getClientName()).isEqualTo("Bigtable");
+    assertThat(context.getMethodName()).isEqualTo("ReadRows");
   }
 
   @Test
-  void testGetSpanNameUnqualifiedGrpc() {
+  void testGetSpanNamePartsUnqualifiedGrpc() {
     @SuppressWarnings("unchecked")
     MethodDescriptor<?, ?> descriptor =
         MethodDescriptor.newBuilder()
@@ -122,17 +123,18 @@ class ApiTracerContextTest {
             .setRpcMethod(descriptor.getFullMethodName())
             .setTransport(ApiTracerContext.Transport.GRPC)
             .build();
-    assertThat(context.getSpanName()).isEqualTo(SpanName.of("UnqualifiedService", "ReadRows"));
+    assertThat(context.getClientName()).isEqualTo("UnqualifiedService");
+    assertThat(context.getMethodName()).isEqualTo("ReadRows");
   }
 
   @Test
-  void testGetSpanNameHttp() {
-    Map<String, SpanName> validNames =
+  void testGetSpanNamePartsHttp() {
+    Map<String, String[]> validNames =
         ImmutableMap.of(
-            "compute.projects.disableXpnHost", SpanName.of("compute.projects", "disableXpnHost"),
-            "client.method", SpanName.of("client", "method"));
+            "compute.projects.disableXpnHost", new String[] {"compute.projects", "disableXpnHost"},
+            "client.method", new String[] {"client", "method"});
 
-    for (Map.Entry<String, SpanName> entry : validNames.entrySet()) {
+    for (Map.Entry<String, String[]> entry : validNames.entrySet()) {
       @SuppressWarnings("unchecked")
       MethodDescriptor<?, ?> descriptor =
           MethodDescriptor.newBuilder()
@@ -148,7 +150,8 @@ class ApiTracerContextTest {
               .setRpcMethod(descriptor.getFullMethodName())
               .setTransport(ApiTracerContext.Transport.HTTP)
               .build();
-      assertThat(context.getSpanName()).isEqualTo(entry.getValue());
+      assertThat(context.getClientName()).isEqualTo(entry.getValue()[0]);
+      assertThat(context.getMethodName()).isEqualTo(entry.getValue()[1]);
     }
   }
 }

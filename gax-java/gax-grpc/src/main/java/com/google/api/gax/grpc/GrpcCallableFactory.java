@@ -48,7 +48,6 @@ import com.google.api.gax.rpc.StreamingCallSettings;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.tracing.ApiTracerContext;
-import com.google.api.gax.tracing.SpanName;
 import com.google.api.gax.tracing.TracedBatchingCallable;
 import com.google.api.gax.tracing.TracedBidiCallable;
 import com.google.api.gax.tracing.TracedClientStreamingCallable;
@@ -56,13 +55,10 @@ import com.google.api.gax.tracing.TracedOperationCallable;
 import com.google.api.gax.tracing.TracedOperationInitialCallable;
 import com.google.api.gax.tracing.TracedServerStreamingCallable;
 import com.google.api.gax.tracing.TracedUnaryCallable;
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.OperationsStub;
 import io.grpc.MethodDescriptor;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 
 /** Class with utility methods to create grpc-based direct callables. */
@@ -333,14 +329,6 @@ public class GrpcCallableFactory {
                 .withContext(getApiTracerContext(grpcCallSettings.getMethodDescriptor())));
 
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
-  }
-
-  @InternalApi("Visible for testing")
-  static SpanName getSpanName(@Nonnull MethodDescriptor<?, ?> methodDescriptor) {
-    Matcher matcher = FULL_METHOD_NAME_PATTERN.matcher(methodDescriptor.getFullMethodName());
-
-    Preconditions.checkArgument(matcher.matches(), "Invalid fullMethodName");
-    return SpanName.of(matcher.group(1), matcher.group(2));
   }
 
   private static ApiTracerContext getApiTracerContext(

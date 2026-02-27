@@ -69,7 +69,23 @@ public interface ApiTracerFactory {
    * @param operationType the type of operation that the tracer will trace
    */
   default ApiTracer newTracer(ApiTracer parent, OperationType operationType) {
-    return newTracer(parent, getApiTracerContext().getSpanName(), operationType);
+    return newTracer(parent, operationType, "");
+  }
+
+  /**
+   * Create a new {@link ApiTracer} that will be a child of the current context.
+   *
+   * @param parent the parent of this tracer
+   * @param operationType the type of operation that the tracer will trace
+   * @param spanMethodNameSuffix the suffix of the method name
+   */
+  default ApiTracer newTracer(
+      ApiTracer parent, OperationType operationType, String spanMethodNameSuffix) {
+    ApiTracerContext context = getApiTracerContext();
+    SpanName spanName =
+        SpanName.of(context.getClientName(), context.getMethodName() + spanMethodNameSuffix);
+
+    return newTracer(parent, spanName, operationType);
   }
 
   /**

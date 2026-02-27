@@ -102,17 +102,20 @@ public abstract class ApiTracerContext {
   }
 
   /**
-   * @return a {@link SpanName} object constructed from the rpcMethod and fullMethodNameRegex
+   * @return the client name part of the span name
    */
-  public SpanName getSpanName() {
-    return getSpanName("");
+  public String getClientName() {
+    return getParsedFullMethodNameParts()[0];
   }
 
   /**
-   * @return a {@link SpanName} object constructed from the rpcMethod and fullMethodNameRegex
-   * @param spanMethodNameSuffix the suffix of the method name
+   * @return the method name part of the span name
    */
-  public SpanName getSpanName(String spanMethodNameSuffix) {
+  public String getMethodName() {
+    return getParsedFullMethodNameParts()[1];
+  }
+
+  private String[] getParsedFullMethodNameParts() {
     Preconditions.checkState(rpcMethod() != null, "rpcMethod must be set to get SpanName");
     Preconditions.checkState(transport() != null, "transport must be set to get SpanName");
 
@@ -122,7 +125,7 @@ public abstract class ApiTracerContext {
     Matcher matcher = pattern.matcher(rpcMethod());
 
     Preconditions.checkArgument(matcher.matches(), "Invalid rpcMethod: " + rpcMethod());
-    return SpanName.of(matcher.group(1), matcher.group(2) + spanMethodNameSuffix);
+    return new String[] {matcher.group(1), matcher.group(2)};
   }
 
   /**
