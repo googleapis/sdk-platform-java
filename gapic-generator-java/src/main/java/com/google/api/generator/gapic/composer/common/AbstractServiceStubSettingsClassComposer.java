@@ -37,6 +37,7 @@ import com.google.api.gax.rpc.BatchedRequestIssuer;
 import com.google.api.gax.rpc.BatchingCallSettings;
 import com.google.api.gax.rpc.BatchingDescriptor;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.api.gax.rpc.OperationCallSettings;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.PagedCallSettings;
@@ -209,6 +210,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                     service, serviceConfig, methodSettingsMemberVarExprs, messageTypes, typeStore))
             .setMethods(
                 createClassMethods(
+                    context,
                     service,
                     methodSettingsMemberVarExprs,
                     deprecatedSettingVarNames,
@@ -506,7 +508,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       boolean isNestedClass,
       Set<String> deprecatedSettingVarNames,
       Set<String> internalSettingVarNames) {
-    // Maintain insertion order.
     Map<String, VariableExpr> varExprs = new LinkedHashMap<>();
 
     // Creates class variables <method>Settings, e.g. echoSettings.
@@ -545,6 +546,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       Map<String, VariableExpr> methodSettingsMemberVarExprs,
       Map<String, Message> messageTypes,
       TypeStore typeStore) {
+    // Maintain insertion order.
     Function<Expr, Statement> exprToStatementFn = e -> ExprStatement.withExpr(e);
     List<Statement> statements = new ArrayList<>();
 
@@ -1040,6 +1042,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   }
 
   private List<MethodDefinition> createClassMethods(
+      GapicContext context,
       Service service,
       Map<String, VariableExpr> methodSettingsMemberVarExprs,
       Set<String> deprecatedSettingVarNames,
@@ -1060,6 +1063,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT));
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createClassConstructor(service, methodSettingsMemberVarExprs, typeStore));
+    javaMethods.add(createGetLibraryMetadataMethod(context));
     return javaMethods;
   }
 
@@ -2103,6 +2107,48 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         .build();
   }
 
+  private MethodDefinition createGetLibraryMetadataMethod(GapicContext context) {
+    TypeNode returnType = FIXED_TYPESTORE.get("LibraryMetadata");
+    MethodInvocationExpr libraryMetadataBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(FIXED_TYPESTORE.get("LibraryMetadata"))
+            .setMethodName("newBuilder")
+            .build();
+
+    if (!Strings.isNullOrEmpty(context.artifact())) {
+      libraryMetadataBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(libraryMetadataBuilderExpr)
+              .setMethodName("setArtifactName")
+              .setArguments(ValueExpr.withValue(StringObjectValue.withValue(context.artifact())))
+              .build();
+    }
+
+    if (!Strings.isNullOrEmpty(context.repo())) {
+      libraryMetadataBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(libraryMetadataBuilderExpr)
+              .setMethodName("setRepository")
+              .setArguments(ValueExpr.withValue(StringObjectValue.withValue(context.repo())))
+              .build();
+    }
+
+    Expr returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(libraryMetadataBuilderExpr)
+            .setMethodName("build")
+            .setReturnType(returnType)
+            .build();
+
+    return MethodDefinition.builder()
+        .setIsOverride(true)
+        .setScope(ScopeNode.PROTECTED)
+        .setReturnType(returnType)
+        .setName("getLibraryMetadata")
+        .setReturnExpr(returnExpr)
+        .build();
+  }
+
   private static TypeStore createStaticTypes() {
     List<Class<?>> concreteClazzes =
         Arrays.asList(
@@ -2128,6 +2174,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             ImmutableMap.class,
             ImmutableSet.class,
             InstantiatingExecutorProvider.class,
+            LibraryMetadata.class,
             LimitExceededBehavior.class,
             List.class,
             Lists.class,

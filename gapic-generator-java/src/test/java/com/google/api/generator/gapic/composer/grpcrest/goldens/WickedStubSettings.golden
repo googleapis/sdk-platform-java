@@ -12,6 +12,7 @@ import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StreamingCallSettings;
 import com.google.api.gax.rpc.StubSettings;
@@ -184,6 +185,14 @@ public class WickedStubSettings extends StubSettings<WickedStubSettings> {
     craftEvilPlanSettings = settingsBuilder.craftEvilPlanSettings().build();
     brainstormEvilPlansSettings = settingsBuilder.brainstormEvilPlansSettings().build();
     persuadeEvilPlanSettings = settingsBuilder.persuadeEvilPlanSettings().build();
+  }
+
+  @Override
+  protected LibraryMetadata getLibraryMetadata() {
+    return LibraryMetadata.newBuilder()
+        .setArtifactName("com.google.cloud:gapic-showcase")
+        .setRepository("googleapis/sdk-platform-java")
+        .build();
   }
 
   /** Builder for WickedStubSettings. */
