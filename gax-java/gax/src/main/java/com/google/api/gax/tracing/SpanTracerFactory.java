@@ -51,7 +51,7 @@ public class SpanTracerFactory implements ApiTracerFactory {
 
   /** Creates a SpanTracerFactory */
   public SpanTracerFactory(TraceManager traceManager) {
-    this(traceManager, ApiTracerContext.newBuilder().build());
+    this(traceManager, ApiTracerContext.empty());
   }
 
   /**

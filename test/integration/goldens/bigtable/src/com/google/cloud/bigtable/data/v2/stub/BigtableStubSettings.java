@@ -27,6 +27,7 @@ import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StubSettings;
@@ -106,6 +107,7 @@ import javax.annotation.Generated;
  * retries.
  */
 @Generated("by gapic-generator-java")
+@SuppressWarnings("CanonicalDuration")
 public class BigtableStubSettings extends StubSettings<BigtableStubSettings> {
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
@@ -255,6 +257,11 @@ public class BigtableStubSettings extends StubSettings<BigtableStubSettings> {
     checkAndMutateRowSettings = settingsBuilder.checkAndMutateRowSettings().build();
     pingAndWarmSettings = settingsBuilder.pingAndWarmSettings().build();
     readModifyWriteRowSettings = settingsBuilder.readModifyWriteRowSettings().build();
+  }
+
+  @Override
+  protected LibraryMetadata getLibraryMetadata() {
+    return LibraryMetadata.newBuilder().build();
   }
 
   /** Builder for BigtableStubSettings. */

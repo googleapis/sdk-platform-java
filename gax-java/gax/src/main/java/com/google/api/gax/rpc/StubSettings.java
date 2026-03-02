@@ -249,6 +249,16 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return apiKey;
   }
 
+  /**
+   * Returns the {@link LibraryMetadata} for the client library.
+   *
+   * <p>This should be effectively treated as an abstract method.
+   */
+  @InternalApi
+  protected LibraryMetadata getLibraryMetadata() {
+    return LibraryMetadata.empty();
+  }
+
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
