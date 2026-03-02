@@ -81,6 +81,12 @@ public abstract class ApiTracerContext {
   @Nullable
   public abstract String methodNameSuffix();
 
+  @Nullable
+  public abstract String httpMethod();
+
+  @Nullable
+  public abstract String httpPathTemplate();
+
   /**
    * @return a map of attributes to be included in attempt-level spans
    */
@@ -100,6 +106,11 @@ public abstract class ApiTracerContext {
     }
     if (libraryMetadata().artifactName() != null) {
       attributes.put(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, libraryMetadata().artifactName());
+    }
+    if (transport() == Transport.HTTP) {
+      if (httpMethod() != null) {
+        attributes.put(ObservabilityAttributes.HTTP_METHOD_ATTRIBUTE, httpMethod());
+      }
     }
     return attributes;
   }
@@ -158,6 +169,12 @@ public abstract class ApiTracerContext {
     if (other.methodNameSuffix() != null) {
       builder.setMethodNameSuffix(other.methodNameSuffix());
     }
+    if (other.httpMethod() != null) {
+      builder.setHttpMethod(other.httpMethod());
+    }
+    if (other.httpPathTemplate() != null) {
+      builder.setHttpPathTemplate(other.httpPathTemplate());
+    }
     return builder.build();
   }
 
@@ -182,6 +199,10 @@ public abstract class ApiTracerContext {
     public abstract Builder setTransport(@Nullable Transport transport);
 
     public abstract Builder setMethodNameSuffix(@Nullable String methodNameSuffix);
+
+    public abstract Builder setHttpMethod(@Nullable String httpMethod);
+
+    public abstract Builder setHttpPathTemplate(@Nullable String rawString);
 
     public abstract ApiTracerContext build();
   }

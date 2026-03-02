@@ -33,6 +33,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 
 import com.google.api.client.http.HttpMethods;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.api.gax.tracing.SpanName;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -60,7 +61,8 @@ class HttpJsonCallableFactoryTest {
               .setResponseParser(Mockito.mock(HttpResponseParser.class))
               .build();
 
-      SpanName actualSpanName = HttpJsonCallableFactory.getSpanName(descriptor);
+      ApiTracerContext context = HttpJsonCallableFactory.getApiTracerContext(descriptor);
+      SpanName actualSpanName = SpanName.of(context.getClientName(), context.getMethodName());
       assertThat(actualSpanName).isEqualTo(entry.getValue());
     }
   }
@@ -81,7 +83,8 @@ class HttpJsonCallableFactoryTest {
 
       IllegalArgumentException actualError = null;
       try {
-        SpanName spanName = HttpJsonCallableFactory.getSpanName(descriptor);
+        ApiTracerContext context = HttpJsonCallableFactory.getApiTracerContext(descriptor);
+        SpanName spanName = SpanName.of(context.getClientName(), context.getMethodName());
         assertWithMessage(
                 "Invalid method descriptor should not have a valid span name: %s should not generate the spanName: %s",
                 invalidName, spanName)

@@ -84,10 +84,9 @@ public class SpanTracerFactory implements ApiTracerFactory {
     if (context.transport() == ApiTracerContext.Transport.GRPC) {
       attemptSpanName = context.fullMethodName();
     } else {
-      // TODO(diegomarquezp): this is a placeholder for the HTTP span name and will be adjusted as
-      // the
-      // feature is developed.
-      attemptSpanName = context.getClientName() + "/" + context.getMethodName() + "/attempt";
+      attemptSpanName =
+          String.format(
+              "%s %s", apiTracerContext.httpMethod(), apiTracerContext.httpPathTemplate());
     }
 
     SpanTracer spanTracer = new SpanTracer(traceManager, context, attemptSpanName);

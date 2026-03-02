@@ -55,4 +55,7 @@ public class ObservabilityAttributes {
 
   /** The artifact name of the client library (e.g., "google-cloud-vision"). */
   public static final String RPC_SYSTEM_NAME_ATTRIBUTE = "rpc.system.name";
+
+  /** The HTTP method of the request (e.g., "GET"). Only used in HTTP transport. */
+  public static final String HTTP_METHOD_ATTRIBUTE = "http.request.method";
 }

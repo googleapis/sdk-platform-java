@@ -35,6 +35,7 @@ import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.BatchingCallSettings;
 import com.google.api.gax.rpc.Callables;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.api.gax.rpc.LongRunningClient;
 import com.google.api.gax.rpc.OperationCallSettings;
 import com.google.api.gax.rpc.OperationCallable;
@@ -43,10 +44,8 @@ import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.api.gax.tracing.SpanName;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.api.gax.tracing.TracedUnaryCallable;
-import com.google.common.base.Preconditions;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 
@@ -88,7 +87,7 @@ public class HttpJsonCallableFactory {
         new TracedUnaryCallable<>(
             callable,
             clientContext.getTracerFactory(),
-            getSpanName(httpJsonCallSettings.getMethodDescriptor()));
+            getApiTracerContext(httpJsonCallSettings.getMethodDescriptor()));
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
 
@@ -227,10 +226,13 @@ public class HttpJsonCallableFactory {
   }
 
   @InternalApi("Visible for testing")
-  static SpanName getSpanName(@Nonnull ApiMethodDescriptor<?, ?> methodDescriptor) {
-    Matcher matcher = FULL_METHOD_NAME_REGEX.matcher(methodDescriptor.getFullMethodName());
-
-    Preconditions.checkArgument(matcher.matches(), "Invalid fullMethodName");
-    return SpanName.of(matcher.group(1), matcher.group(2));
+  static ApiTracerContext getApiTracerContext(@Nonnull ApiMethodDescriptor<?, ?> methodDescriptor) {
+    return ApiTracerContext.newBuilder()
+            .setFullMethodName(methodDescriptor.getFullMethodName())
+            .setHttpMethod(methodDescriptor.getHttpMethod())
+            .setHttpPathTemplate(methodDescriptor.getRequestFormatter().getPathTemplate().toRawString())
+            .setTransport(ApiTracerContext.Transport.HTTP)
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .build();
   }
 }
