@@ -131,6 +131,7 @@ import javax.annotation.Generated;
  * retries.
  */
 @Generated("by gapic-generator-java")
+@SuppressWarnings("CanonicalDuration")
 public class SubscriberStubSettings extends StubSettings<SubscriberStubSettings> {
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
