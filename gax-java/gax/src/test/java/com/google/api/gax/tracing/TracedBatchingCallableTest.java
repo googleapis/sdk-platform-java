@@ -41,18 +41,26 @@ import static org.mockito.Mockito.when;
 import com.google.api.core.SettableApiFuture;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.BatchingDescriptor;
+import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.rpc.testing.FakeCallContext;
+import com.google.api.gax.tracing.ApiTracerContext.Transport;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class TracedBatchingCallableTest {
   private static final SpanName SPAN_NAME = SpanName.of("FakeClient", "FakeRpc");
+  private static final ApiTracerContext TRACER_CONTEXT =
+      ApiTracerContext.newBuilder()
+          .setFullMethodName("FakeClient/FakeRpc")
+          .setTransport(Transport.GRPC)
+          .setLibraryMetadata(LibraryMetadata.empty())
+          .build();
 
   @Mock private ApiTracerFactory tracerFactory;
   @Mock private ApiTracer tracer;
@@ -63,33 +71,49 @@ class TracedBatchingCallableTest {
   private TracedBatchingCallable<String, String> tracedBatchingCallable;
   private FakeCallContext callContext;
 
-  @BeforeEach
-  void setUp() {
+  void init(boolean useContext) {
     // Wire the mock tracer factory
-    when(tracerFactory.newTracer(
-            any(ApiTracer.class), any(SpanName.class), eq(OperationType.Batching)))
-        .thenReturn(tracer);
+    if (useContext) {
+      when(tracerFactory.newTracer(
+              any(ApiTracer.class), any(ApiTracerContext.class), eq(OperationType.Batching)))
+          .thenReturn(tracer);
+      tracedBatchingCallable =
+          new TracedBatchingCallable<>(
+              innerCallable, tracerFactory, TRACER_CONTEXT, batchingDescriptor);
+    } else {
+      when(tracerFactory.newTracer(
+              any(ApiTracer.class), any(SpanName.class), eq(OperationType.Batching)))
+          .thenReturn(tracer);
+      tracedBatchingCallable =
+          new TracedBatchingCallable<>(innerCallable, tracerFactory, SPAN_NAME, batchingDescriptor);
+    }
 
     // Wire the mock inner callable
     // This is a very hacky mock, the actual batching infrastructure is completely omitted here.
     innerResult = SettableApiFuture.create();
     when(innerCallable.futureCall(anyString(), any(ApiCallContext.class))).thenReturn(innerResult);
 
-    // Build the system under test
-    tracedBatchingCallable =
-        new TracedBatchingCallable<>(innerCallable, tracerFactory, SPAN_NAME, batchingDescriptor);
     callContext = FakeCallContext.createDefault();
   }
 
-  @Test
-  void testRootTracerCreated() {
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testRootTracerCreated(boolean useContext) {
+    init(useContext);
     tracedBatchingCallable.futureCall("test", callContext);
-    verify(tracerFactory, times(1))
-        .newTracer(callContext.getTracer(), SPAN_NAME, OperationType.Batching);
+    if (useContext) {
+      verify(tracerFactory, times(1))
+          .newTracer(callContext.getTracer(), TRACER_CONTEXT, OperationType.Batching);
+    } else {
+      verify(tracerFactory, times(1))
+          .newTracer(callContext.getTracer(), SPAN_NAME, OperationType.Batching);
+    }
   }
 
-  @Test
-  void testBatchAttributesStamped() {
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testBatchAttributesStamped(boolean useContext) {
+    init(useContext);
     when(batchingDescriptor.countElements(anyString())).thenReturn(10L);
     when(batchingDescriptor.countBytes(anyString())).thenReturn(20L);
 
@@ -97,16 +121,20 @@ class TracedBatchingCallableTest {
     verify(tracer).batchRequestSent(10, 20);
   }
 
-  @Test
-  void testOperationFinish() {
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testOperationFinish(boolean useContext) {
+    init(useContext);
     innerResult.set("successful result");
     tracedBatchingCallable.futureCall("test", callContext);
 
     verify(tracer, times(1)).operationSucceeded();
   }
 
-  @Test
-  void testOperationFailed() {
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testOperationFailed(boolean useContext) {
+    init(useContext);
     RuntimeException fakeError = new RuntimeException("fake error");
     innerResult.setException(fakeError);
     tracedBatchingCallable.futureCall("test", callContext);
@@ -114,8 +142,10 @@ class TracedBatchingCallableTest {
     verify(tracer, times(1)).operationFailed(fakeError);
   }
 
-  @Test
-  void testSyncError() {
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testSyncError(boolean useContext) {
+    init(useContext);
     RuntimeException fakeError = new RuntimeException("fake error");
 
     // Reset the irrelevant expectations from setup. (only needed to silence the warnings).

@@ -90,7 +90,7 @@ public abstract class ApiTracerContext {
       attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress());
     }
     if (fullMethodName() != null) {
-      attributes.put(ObservabilityAttributes.RPC_METHOD_ATTRIBUTE, fullMethodName());
+      attributes.put(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE, fullMethodName());
     }
     if (rpcSystemName() != null) {
       attributes.put(ObservabilityAttributes.RPC_SYSTEM_NAME_ATTRIBUTE, rpcSystemName());

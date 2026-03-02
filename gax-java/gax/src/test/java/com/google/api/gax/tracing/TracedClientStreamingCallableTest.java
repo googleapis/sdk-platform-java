@@ -30,6 +30,8 @@
 package com.google.api.gax.tracing;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -38,24 +40,33 @@ import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.api.gax.rpc.CancelledException;
 import com.google.api.gax.rpc.ClientStreamingCallable;
+import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
+import com.google.api.gax.tracing.ApiTracerContext.Transport;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.concurrent.CancellationException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class TracedClientStreamingCallableTest {
   private static final SpanName SPAN_NAME = SpanName.of("fake-client", "fake-method");
+  private static final ApiTracerContext TRACER_CONTEXT =
+      ApiTracerContext.newBuilder()
+          .setFullMethodName("fake-client/fake-method")
+          .setTransport(Transport.GRPC)
+          .setLibraryMetadata(LibraryMetadata.empty())
+          .build();
+
   @Mock private ApiTracerFactory tracerFactory;
   private ApiTracer parentTracer = BaseApiTracer.getInstance();
   @Mock private ApiTracer tracer;
@@ -65,26 +76,42 @@ class TracedClientStreamingCallableTest {
   private FakeStreamObserver outerResponseObsever;
   private FakeCallContext callContext;
 
-  @BeforeEach
-  void setUp() {
-    when(tracerFactory.newTracer(parentTracer, SPAN_NAME, OperationType.ClientStreaming))
-        .thenReturn(tracer);
-    innerCallable = new FakeClientCallable();
-    tracedCallable = new TracedClientStreamingCallable<>(innerCallable, tracerFactory, SPAN_NAME);
+  void init(boolean useContext) {
     outerResponseObsever = new FakeStreamObserver();
     callContext = FakeCallContext.createDefault();
+    innerCallable = new FakeClientCallable();
+    if (useContext) {
+      when(tracerFactory.newTracer(
+              any(ApiTracer.class), any(ApiTracerContext.class), eq(OperationType.ClientStreaming)))
+          .thenReturn(tracer);
+      tracedCallable =
+          new TracedClientStreamingCallable<>(innerCallable, tracerFactory, TRACER_CONTEXT);
+    } else {
+      when(tracerFactory.newTracer(parentTracer, SPAN_NAME, OperationType.ClientStreaming))
+          .thenReturn(tracer);
+      tracedCallable = new TracedClientStreamingCallable<>(innerCallable, tracerFactory, SPAN_NAME);
+    }
   }
 
-  @Test
-  void testTracerCreated() {
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testTracerCreated(boolean useContext) {
+    init(useContext);
     tracedCallable.clientStreamingCall(outerResponseObsever, callContext);
 
-    verify(tracerFactory, times(1))
-        .newTracer(parentTracer, SPAN_NAME, OperationType.ClientStreaming);
+    if (useContext) {
+      verify(tracerFactory, times(1))
+          .newTracer(parentTracer, TRACER_CONTEXT, OperationType.ClientStreaming);
+    } else {
+      verify(tracerFactory, times(1))
+          .newTracer(parentTracer, SPAN_NAME, OperationType.ClientStreaming);
+    }
   }
 
-  @Test
-  void testCallContextPropagated() {
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testCallContextPropagated(boolean useContext) {
+    init(useContext);
     ImmutableMap<String, List<String>> extraHeaders =
         ImmutableMap.<String, List<String>>of("header1", ImmutableList.of("value1"));
 
@@ -94,8 +121,10 @@ class TracedClientStreamingCallableTest {
     assertThat(innerCallable.callContext.getExtraHeaders()).isEqualTo(extraHeaders);
   }
 
-  @Test
-  void testOperationCancelled() {
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testOperationCancelled(boolean useContext) {
+    init(useContext);
     ApiStreamObserver<String> clientStream =
         tracedCallable.clientStreamingCall(outerResponseObsever, callContext);
 
@@ -110,8 +139,10 @@ class TracedClientStreamingCallableTest {
     verify(tracer, times(1)).operationCancelled();
   }
 
-  @Test
-  void testOperationFinished() {
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testOperationFinished(boolean useContext) {
+    init(useContext);
     tracedCallable.clientStreamingCall(outerResponseObsever, callContext);
     innerCallable.responseObserver.onNext("ignored");
     innerCallable.responseObserver.onCompleted();
@@ -119,8 +150,10 @@ class TracedClientStreamingCallableTest {
     verify(tracer, times(1)).operationSucceeded();
   }
 
-  @Test
-  void testOperationFailed() {
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testOperationFailed(boolean useContext) {
+    init(useContext);
     RuntimeException expectedError = new RuntimeException("fake error");
     tracedCallable.clientStreamingCall(outerResponseObsever, callContext);
     innerCallable.responseObserver.onError(expectedError);
@@ -128,8 +161,10 @@ class TracedClientStreamingCallableTest {
     verify(tracer, times(1)).operationFailed(expectedError);
   }
 
-  @Test
-  void testSyncError() {
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testSyncError(boolean useContext) {
+    init(useContext);
     RuntimeException expectedError = new RuntimeException("fake error");
     innerCallable.syncError = expectedError;
 
@@ -142,8 +177,10 @@ class TracedClientStreamingCallableTest {
     verify(tracer, times(1)).operationFailed(expectedError);
   }
 
-  @Test
-  void testRequestNotify() {
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testRequestNotify(boolean useContext) {
+    init(useContext);
     ApiStreamObserver<String> requestStream =
         tracedCallable.clientStreamingCall(outerResponseObsever, callContext);
 
