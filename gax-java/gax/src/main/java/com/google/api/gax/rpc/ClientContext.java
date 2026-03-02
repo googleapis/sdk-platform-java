@@ -273,6 +273,7 @@ public abstract class ClientContext {
     ApiTracerContext apiTracerContext =
         ApiTracerContext.newBuilder()
             .setServerAddress(endpointContext.resolvedServerAddress())
+            .setServerPort(endpointContext.resolvedServerPort())
             .build();
     ApiTracerFactory apiTracerFactory = settings.getTracerFactory().withContext(apiTracerContext);
 

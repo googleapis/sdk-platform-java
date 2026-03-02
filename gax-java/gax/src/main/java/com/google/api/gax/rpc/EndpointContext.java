@@ -136,6 +136,9 @@ public abstract class EndpointContext {
 
   public abstract String resolvedServerAddress();
 
+  @Nullable
+  public abstract Integer resolvedServerPort();
+
   public abstract Builder toBuilder();
 
   public static Builder newBuilder() {
@@ -232,6 +235,8 @@ public abstract class EndpointContext {
     public abstract Builder setResolvedEndpoint(String resolvedEndpoint);
 
     public abstract Builder setResolvedServerAddress(String serverAddress);
+
+    public abstract Builder setResolvedServerPort(Integer serverPort);
 
     public abstract Builder setResolvedUniverseDomain(String resolvedUniverseDomain);
 
@@ -404,6 +409,27 @@ public abstract class EndpointContext {
       }
     }
 
+    private Integer parseServerPort(String endpoint) {
+      if (Strings.isNullOrEmpty(endpoint)) {
+        return null;
+      }
+      String hostPort = endpoint;
+      if (hostPort.contains("://")) {
+        // Strip the scheme if present. HostAndPort doesn't support schemes.
+        hostPort = hostPort.substring(hostPort.indexOf("://") + 3);
+      }
+      try {
+        HostAndPort parsedHostPort = HostAndPort.fromString(hostPort);
+        if (parsedHostPort.hasPort()) {
+          return parsedHostPort.getPort();
+        }
+        return null;
+      } catch (IllegalArgumentException e) {
+        // Fallback for cases HostAndPort can't handle.
+        return null;
+      }
+    }
+
     // Default to port 443 for HTTPS. Using HTTP requires explicitly setting the endpoint
     private String buildEndpointTemplate(String serviceName, String resolvedUniverseDomain) {
       return serviceName + "." + resolvedUniverseDomain + ":443";
@@ -441,6 +467,7 @@ public abstract class EndpointContext {
       String endpoint = determineEndpoint();
       setResolvedEndpoint(endpoint);
       setResolvedServerAddress(parseServerAddress(endpoint));
+      setResolvedServerPort(parseServerPort(endpoint));
       setUseS2A(shouldUseS2A());
       return autoBuild();
     }

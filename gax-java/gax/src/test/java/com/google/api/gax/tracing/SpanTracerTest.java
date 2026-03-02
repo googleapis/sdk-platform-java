@@ -70,7 +70,7 @@ class SpanTracerTest {
 
     tracer.attemptStarted(new Object(), 1);
 
-    ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
+    ArgumentCaptor<Map<String, Object>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
     verify(recorder).createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
 
     assertThat(attributesCaptor.getValue())

@@ -49,16 +49,22 @@ public abstract class ApiTracerContext {
   /**
    * @return a map of attributes to be included in attempt-level spans
    */
-  public Map<String, String> getAttemptAttributes() {
-    Map<String, String> attributes = new HashMap<>();
+  public Map<String, Object> getAttemptAttributes() {
+    Map<String, Object> attributes = new HashMap<>();
     if (getServerAddress() != null) {
       attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, getServerAddress());
+    }
+    if (getServerPort() != null) {
+      attributes.put(ObservabilityAttributes.SERVER_PORT_ATTRIBUTE, getServerPort());
     }
     return attributes;
   }
 
   @Nullable
   public abstract String getServerAddress();
+
+  @Nullable
+  public abstract Integer getServerPort();
 
   public static Builder newBuilder() {
     return new AutoValue_ApiTracerContext.Builder();
@@ -67,6 +73,8 @@ public abstract class ApiTracerContext {
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setServerAddress(String serverAddress);
+
+    public abstract Builder setServerPort(Integer serverPort);
 
     public abstract ApiTracerContext build();
   }

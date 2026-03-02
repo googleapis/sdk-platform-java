@@ -43,4 +43,7 @@ import com.google.api.core.InternalApi;
 public class ObservabilityAttributes {
   /** The address of the server being called (e.g., "pubsub.googleapis.com"). */
   public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
+
+  /** The port of the server being called (e.g., 443). */
+  public static final String SERVER_PORT_ATTRIBUTE = "server.port";
 }
