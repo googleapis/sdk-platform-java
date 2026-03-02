@@ -73,7 +73,7 @@ public abstract class ApiTracerContext {
   }
 
   @Nullable
-  public abstract String rpcMethod();
+  public abstract String fullMethodName();
 
   @Nullable
   public abstract Transport transport();
@@ -89,8 +89,8 @@ public abstract class ApiTracerContext {
     if (serverAddress() != null) {
       attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress());
     }
-    if (rpcMethod() != null) {
-      attributes.put(ObservabilityAttributes.RPC_METHOD_ATTRIBUTE, rpcMethod());
+    if (fullMethodName() != null) {
+      attributes.put(ObservabilityAttributes.RPC_METHOD_ATTRIBUTE, fullMethodName());
     }
     if (rpcSystemName() != null) {
       attributes.put(ObservabilityAttributes.RPC_SYSTEM_NAME_ATTRIBUTE, rpcSystemName());
@@ -123,15 +123,15 @@ public abstract class ApiTracerContext {
   }
 
   private String[] getParsedFullMethodNameParts() {
-    Preconditions.checkState(rpcMethod() != null, "rpcMethod must be set to get SpanName");
+    Preconditions.checkState(fullMethodName() != null, "rpcMethod must be set to get SpanName");
     Preconditions.checkState(transport() != null, "transport must be set to get SpanName");
 
     String regex =
         transport() == Transport.GRPC ? GRPC_FULL_METHOD_NAME_REGEX : HTTP_FULL_METHOD_NAME_REGEX;
     Pattern pattern = Pattern.compile(regex);
-    Matcher matcher = pattern.matcher(rpcMethod());
+    Matcher matcher = pattern.matcher(fullMethodName());
 
-    Preconditions.checkArgument(matcher.matches(), "Invalid rpcMethod: " + rpcMethod());
+    Preconditions.checkArgument(matcher.matches(), "Invalid rpcMethod: " + fullMethodName());
     return new String[] {matcher.group(1), matcher.group(2)};
   }
 
@@ -149,8 +149,8 @@ public abstract class ApiTracerContext {
     if (!other.libraryMetadata().isEmpty()) {
       builder.setLibraryMetadata(other.libraryMetadata());
     }
-    if (other.rpcMethod() != null) {
-      builder.setRpcMethod(other.rpcMethod());
+    if (other.fullMethodName() != null) {
+      builder.setFullMethodName(other.fullMethodName());
     }
     if (other.transport() != null) {
       builder.setTransport(other.transport());
@@ -177,7 +177,7 @@ public abstract class ApiTracerContext {
 
     public abstract Builder setLibraryMetadata(LibraryMetadata gapicProperties);
 
-    public abstract Builder setRpcMethod(@Nullable String rpcMethod);
+    public abstract Builder setFullMethodName(@Nullable String rpcMethod);
 
     public abstract Builder setTransport(@Nullable Transport transport);
 

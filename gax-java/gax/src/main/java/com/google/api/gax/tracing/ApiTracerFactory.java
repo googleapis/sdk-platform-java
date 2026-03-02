@@ -69,7 +69,8 @@ public interface ApiTracerFactory {
    * @param tracerContext the method-definition-specific tracer context
    * @param operationType the type of operation that the tracer will trace
    */
-  default ApiTracer newTracer(ApiTracer parent, ApiTracerContext tracerContext, OperationType operationType) {
+  default ApiTracer newTracer(
+      ApiTracer parent, ApiTracerContext tracerContext, OperationType operationType) {
     ApiTracerContext context = getApiTracerContext().merge(tracerContext);
     SpanName spanName = SpanName.of(context.getClientName(), context.getMethodName());
     return newTracer(parent, spanName, operationType);

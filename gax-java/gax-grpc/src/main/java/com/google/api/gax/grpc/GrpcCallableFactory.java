@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.grpc;
 
-import com.google.api.core.InternalApi;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.BatchingCallSettings;
 import com.google.api.gax.rpc.BidiStreamingCallable;
@@ -330,7 +329,7 @@ public class GrpcCallableFactory {
   private static ApiTracerContext getApiTracerContext(
       @Nonnull MethodDescriptor<?, ?> methodDescriptor) {
     return ApiTracerContext.newBuilder()
-        .setRpcMethod(methodDescriptor.getFullMethodName())
+        .setFullMethodName(methodDescriptor.getFullMethodName())
         .setTransport(ApiTracerContext.Transport.GRPC)
         .setLibraryMetadata(LibraryMetadata.empty())
         .build();

@@ -99,7 +99,7 @@ class ApiTracerContextTest {
     ApiTracerContext context =
         ApiTracerContext.newBuilder()
             .setLibraryMetadata(LibraryMetadata.empty())
-            .setRpcMethod(descriptor.getFullMethodName())
+            .setFullMethodName(descriptor.getFullMethodName())
             .setTransport(ApiTracerContext.Transport.GRPC)
             .build();
     assertThat(context.getClientName()).isEqualTo("Bigtable");
@@ -120,7 +120,7 @@ class ApiTracerContextTest {
     ApiTracerContext context =
         ApiTracerContext.newBuilder()
             .setLibraryMetadata(LibraryMetadata.empty())
-            .setRpcMethod(descriptor.getFullMethodName())
+            .setFullMethodName(descriptor.getFullMethodName())
             .setTransport(ApiTracerContext.Transport.GRPC)
             .setMethodNameSuffix("Operation")
             .build();
@@ -142,7 +142,7 @@ class ApiTracerContextTest {
     ApiTracerContext context =
         ApiTracerContext.newBuilder()
             .setLibraryMetadata(LibraryMetadata.empty())
-            .setRpcMethod(descriptor.getFullMethodName())
+            .setFullMethodName(descriptor.getFullMethodName())
             .setTransport(ApiTracerContext.Transport.GRPC)
             .build();
     assertThat(context.getClientName()).isEqualTo("UnqualifiedService");
@@ -169,7 +169,7 @@ class ApiTracerContextTest {
       ApiTracerContext context =
           ApiTracerContext.newBuilder()
               .setLibraryMetadata(LibraryMetadata.empty())
-              .setRpcMethod(descriptor.getFullMethodName())
+              .setFullMethodName(descriptor.getFullMethodName())
               .setTransport(ApiTracerContext.Transport.HTTP)
               .build();
       assertThat(context.getClientName()).isEqualTo(entry.getValue()[0]);
