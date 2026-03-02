@@ -57,6 +57,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class TracedServerStreamingCallableTest {
+  private static final SpanName SPAN_NAME = SpanName.of("FakeClient", "FakeRpc");
 
   @Mock private ApiTracerFactory tracerFactory;
   @Mock private ApiTracer tracer;
@@ -70,7 +71,8 @@ class TracedServerStreamingCallableTest {
   @BeforeEach
   void setUp() {
     // Wire the mock tracer factory
-    when(tracerFactory.newTracer(any(ApiTracer.class), eq(OperationType.ServerStreaming)))
+    when(tracerFactory.newTracer(
+            any(ApiTracer.class), any(SpanName.class), eq(OperationType.ServerStreaming)))
         .thenReturn(tracer);
     innerCallable = new MockServerStreamingCallable<>();
 
@@ -78,13 +80,14 @@ class TracedServerStreamingCallableTest {
     callContext = FakeCallContext.createDefault().withTracer(parentTracer);
 
     // Build the system under test
-    tracedCallable = new TracedServerStreamingCallable<>(innerCallable, tracerFactory);
+    tracedCallable = new TracedServerStreamingCallable<>(innerCallable, tracerFactory, SPAN_NAME);
   }
 
   @Test
   void testTracerCreated() {
     tracedCallable.call("test", responseObserver, callContext);
-    verify(tracerFactory, times(1)).newTracer(parentTracer, OperationType.ServerStreaming);
+    verify(tracerFactory, times(1))
+        .newTracer(parentTracer, SPAN_NAME, OperationType.ServerStreaming);
   }
 
   @Test
@@ -155,7 +158,7 @@ class TracedServerStreamingCallableTest {
             any(ApiCallContext.class));
 
     // Recreate the tracedCallable using the new inner callable
-    tracedCallable = new TracedServerStreamingCallable<>(innerCallable, tracerFactory);
+    tracedCallable = new TracedServerStreamingCallable<>(innerCallable, tracerFactory, SPAN_NAME);
 
     try {
       tracedCallable.call("test", responseObserver, callContext);

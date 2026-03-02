@@ -55,6 +55,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class TracedCallableTest {
+  private static final SpanName SPAN_NAME = SpanName.of("FakeClient", "FakeRpc");
 
   @Mock private ApiTracerFactory tracerFactory;
   private ApiTracer parentTracer;
@@ -70,7 +71,9 @@ class TracedCallableTest {
     parentTracer = BaseApiTracer.getInstance();
 
     // Wire the mock tracer factory
-    when(tracerFactory.newTracer(any(ApiTracer.class), eq(OperationType.Unary))).thenReturn(tracer);
+    when(tracerFactory.newTracer(
+            any(ApiTracer.class), any(SpanName.class), eq(OperationType.Unary)))
+        .thenReturn(tracer);
 
     // Wire the mock inner callable
     innerResult = SettableApiFuture.create();
@@ -84,7 +87,7 @@ class TracedCallableTest {
       UnaryCallSettings<Object, Object> callSettings) {
     UnaryCallable<String, String> callable =
         Callables.retrying(innerCallable, callSettings, clientContext);
-    return new TracedUnaryCallable<>(callable, tracerFactory);
+    return new TracedUnaryCallable<>(callable, tracerFactory, SPAN_NAME);
   }
 
   @Test
@@ -99,7 +102,7 @@ class TracedCallableTest {
 
     ApiFuture<String> future = callable.futureCall("Is your refrigerator running?", callContext);
 
-    verify(tracerFactory, times(1)).newTracer(parentTracer, OperationType.Unary);
+    verify(tracerFactory, times(1)).newTracer(parentTracer, SPAN_NAME, OperationType.Unary);
     verify(tracer, times(1)).attemptStarted(anyString(), anyInt());
     verify(tracer, times(1)).attemptSucceeded();
     verify(tracer, times(1)).operationSucceeded();
