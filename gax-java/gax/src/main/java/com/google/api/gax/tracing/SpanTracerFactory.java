@@ -77,19 +77,19 @@ public class SpanTracerFactory implements ApiTracerFactory {
 
   @Override
   public ApiTracer newTracer(
-      ApiTracer parent, ApiTracerContext apiTracerContext, OperationType operationType) {
-    ApiTracerContext context = this.apiTracerContext.merge(apiTracerContext);
+      ApiTracer parent, ApiTracerContext requestTracerContext, OperationType operationType) {
+    ApiTracerContext mergedContext = this.apiTracerContext.merge(requestTracerContext);
 
     String attemptSpanName;
-    if (context.transport() == ApiTracerContext.Transport.GRPC) {
-      attemptSpanName = context.fullMethodName();
+    if (mergedContext.transport() == ApiTracerContext.Transport.GRPC) {
+      attemptSpanName = mergedContext.fullMethodName();
     } else {
       attemptSpanName =
           String.format(
-              "%s %s", apiTracerContext.httpMethod(), apiTracerContext.httpPathTemplate());
+              "%s %s", requestTracerContext.httpMethod(), requestTracerContext.httpPathTemplate());
     }
 
-    SpanTracer spanTracer = new SpanTracer(traceManager, context, attemptSpanName);
+    SpanTracer spanTracer = new SpanTracer(traceManager, mergedContext, attemptSpanName);
     return spanTracer;
   }
 
