@@ -67,13 +67,23 @@ def get_version_from(
                 return line.split(":")[index].strip()
 
 
+MODULE_ALLOWLIST = set(
+    [
+        "google-auth-library-java",
+        "sdk-platform-java",
+    ]
+)
+
+
 def __search_for_java_modules(
     repository_path: str,
 ) -> List[str]:
     repo = Path(repository_path).resolve()
     modules = []
     for sub_dir in repo.iterdir():
-        if sub_dir.is_dir() and sub_dir.name.startswith("java-"):
+        if sub_dir.is_dir() and (
+            sub_dir.name.startswith("java-") or sub_dir.name in MODULE_ALLOWLIST
+        ):
             modules.append(sub_dir.name)
     return sorted(modules)
 
