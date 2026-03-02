@@ -197,11 +197,13 @@ class SpanTracerFactoryTest {
   }
 
   @Test
-  void testNewTracer_withContext_http_usesPlaceholder() {
+  void testNewTracer_withContext_http_usesHttpMethodAndPathTemplate() {
     ApiTracerContext context =
         ApiTracerContext.newBuilder()
             .setFullMethodName("google.cloud.v1.Service.Method")
             .setTransport(Transport.HTTP)
+            .setHttpMethod("POST")
+            .setHttpPathTemplate("v1/projects/{project}/methods")
             .setLibraryMetadata(LibraryMetadata.empty())
             .build();
 
@@ -210,7 +212,7 @@ class SpanTracerFactoryTest {
 
     tracer.attemptStarted(null, 1);
 
-    verify(traceManager).createSpan(eq("google.cloud.v1.Service/Method/attempt"), anyMap());
+    verify(traceManager).createSpan(eq("POST v1/projects/{project}/methods"), anyMap());
   }
 
   @Test
