@@ -228,11 +228,11 @@ public class HttpJsonCallableFactory {
   @InternalApi("Visible for testing")
   static ApiTracerContext getApiTracerContext(@Nonnull ApiMethodDescriptor<?, ?> methodDescriptor) {
     return ApiTracerContext.newBuilder()
-            .setFullMethodName(methodDescriptor.getFullMethodName())
-            .setHttpMethod(methodDescriptor.getHttpMethod())
-            .setHttpPathTemplate(methodDescriptor.getRequestFormatter().getPathTemplate().toRawString())
-            .setTransport(ApiTracerContext.Transport.HTTP)
-            .setLibraryMetadata(LibraryMetadata.empty())
-            .build();
+        .setFullMethodName(methodDescriptor.getFullMethodName())
+        .setHttpMethod(methodDescriptor.getHttpMethod())
+        .setHttpPathTemplate(methodDescriptor.getRequestFormatter().getPathTemplate().toRawString())
+        .setTransport(ApiTracerContext.Transport.HTTP)
+        .setLibraryMetadata(LibraryMetadata.empty())
+        .build();
   }
 }
