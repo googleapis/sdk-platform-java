@@ -107,9 +107,8 @@ public class GrpcCallableFactory {
     callable =
         new TracedUnaryCallable<>(
             callable,
-            clientContext
-                .getTracerFactory()
-                .withContext(getApiTracerContext(grpcCallSettings.getMethodDescriptor())));
+            clientContext.getTracerFactory(),
+            getApiTracerContext(grpcCallSettings.getMethodDescriptor()));
 
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
@@ -157,9 +156,8 @@ public class GrpcCallableFactory {
     UnaryCallable<RequestT, ResponseT> tracedCallable =
         new TracedBatchingCallable<>(
             baseCallable,
-            clientContext
-                .getTracerFactory()
-                .withContext(getApiTracerContext(grpcCallSettings.getMethodDescriptor())),
+            clientContext.getTracerFactory(),
+            getApiTracerContext(grpcCallSettings.getMethodDescriptor()),
             batchingCallSettings.getBatchingDescriptor());
 
     UnaryCallable<RequestT, ResponseT> batchingCallable =
@@ -195,9 +193,8 @@ public class GrpcCallableFactory {
     UnaryCallable<RequestT, OperationSnapshot> tracedInitialCallable =
         new TracedOperationInitialCallable<>(
             initialCallable,
-            clientContext
-                .getTracerFactory()
-                .withContext(getApiTracerContext(grpcCallSettings.getMethodDescriptor())));
+            clientContext.getTracerFactory(),
+            getApiTracerContext(grpcCallSettings.getMethodDescriptor()));
 
     LongRunningClient longRunningClient = new GrpcLongRunningClient(operationsStub);
     OperationCallable<RequestT, ResponseT, MetadataT> operationCallable =
@@ -207,13 +204,11 @@ public class GrpcCallableFactory {
     OperationCallable<RequestT, ResponseT, MetadataT> tracedOperationCallable =
         new TracedOperationCallable<>(
             operationCallable,
-            clientContext
-                .getTracerFactory()
-                .withContext(
-                    getApiTracerContext(grpcCallSettings.getMethodDescriptor())
-                        .toBuilder()
-                        .setMethodNameSuffix("Operation")
-                        .build()));
+            clientContext.getTracerFactory(),
+            getApiTracerContext(grpcCallSettings.getMethodDescriptor())
+                .toBuilder()
+                .setMethodNameSuffix("Operation")
+                .build());
 
     return tracedOperationCallable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
@@ -240,9 +235,8 @@ public class GrpcCallableFactory {
     callable =
         new TracedBidiCallable<>(
             callable,
-            clientContext
-                .getTracerFactory()
-                .withContext(getApiTracerContext(grpcCallSettings.getMethodDescriptor())));
+            clientContext.getTracerFactory(),
+            getApiTracerContext(grpcCallSettings.getMethodDescriptor()));
 
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
@@ -299,9 +293,8 @@ public class GrpcCallableFactory {
     callable =
         new TracedServerStreamingCallable<>(
             callable,
-            clientContext
-                .getTracerFactory()
-                .withContext(getApiTracerContext(grpcCallSettings.getMethodDescriptor())));
+            clientContext.getTracerFactory(),
+            getApiTracerContext(grpcCallSettings.getMethodDescriptor()));
 
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
@@ -328,9 +321,8 @@ public class GrpcCallableFactory {
     callable =
         new TracedClientStreamingCallable<>(
             callable,
-            clientContext
-                .getTracerFactory()
-                .withContext(getApiTracerContext(grpcCallSettings.getMethodDescriptor())));
+            clientContext.getTracerFactory(),
+            getApiTracerContext(grpcCallSettings.getMethodDescriptor()));
 
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }

@@ -38,6 +38,7 @@ import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
 import com.google.common.util.concurrent.MoreExecutors;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * This callable wraps a {@link OperationCallable} in a {@link ApiTracer}.
@@ -50,12 +51,27 @@ public class TracedOperationCallable<RequestT, ResponseT, MetadataT>
 
   private @Nonnull OperationCallable<RequestT, ResponseT, MetadataT> innerCallable;
   private @Nonnull ApiTracerFactory tracerFactory;
+  private @Nullable SpanName spanName;
+  private @Nullable ApiTracerContext apiTracerContext;
 
   public TracedOperationCallable(
       @Nonnull OperationCallable<RequestT, ResponseT, MetadataT> innerCallable,
-      @Nonnull ApiTracerFactory tracerFactory) {
+      @Nonnull ApiTracerFactory tracerFactory,
+      @Nonnull SpanName spanName) {
     this.innerCallable = innerCallable;
     this.tracerFactory = tracerFactory;
+    this.spanName = spanName;
+    this.apiTracerContext = null;
+  }
+
+  public TracedOperationCallable(
+      @Nonnull OperationCallable<RequestT, ResponseT, MetadataT> innerCallable,
+      @Nonnull ApiTracerFactory tracerFactory,
+      @Nonnull ApiTracerContext apiTracerContext) {
+    this.innerCallable = innerCallable;
+    this.tracerFactory = tracerFactory;
+    this.apiTracerContext = apiTracerContext;
+    this.spanName = null;
   }
 
   /**
@@ -66,7 +82,13 @@ public class TracedOperationCallable<RequestT, ResponseT, MetadataT>
   public OperationFuture<ResponseT, MetadataT> futureCall(
       RequestT request, ApiCallContext context) {
 
-    ApiTracer tracer = tracerFactory.newTracer(context.getTracer(), OperationType.LongRunning);
+    ApiTracer tracer;
+    if (apiTracerContext != null) {
+      tracer =
+          tracerFactory.newTracer(context.getTracer(), apiTracerContext, OperationType.LongRunning);
+    } else {
+      tracer = tracerFactory.newTracer(context.getTracer(), spanName, OperationType.LongRunning);
+    }
     TraceFinisher<ResponseT> finisher = new TraceFinisher<>(tracer);
 
     try {
@@ -88,7 +110,13 @@ public class TracedOperationCallable<RequestT, ResponseT, MetadataT>
   @Override
   public OperationFuture<ResponseT, MetadataT> resumeFutureCall(
       String operationName, ApiCallContext context) {
-    ApiTracer tracer = tracerFactory.newTracer(context.getTracer(), OperationType.LongRunning);
+    ApiTracer tracer;
+    if (apiTracerContext != null) {
+      tracer =
+          tracerFactory.newTracer(context.getTracer(), apiTracerContext, OperationType.LongRunning);
+    } else {
+      tracer = tracerFactory.newTracer(context.getTracer(), spanName, OperationType.LongRunning);
+    }
     TraceFinisher<ResponseT> finisher = new TraceFinisher<>(tracer);
 
     try {
@@ -107,7 +135,18 @@ public class TracedOperationCallable<RequestT, ResponseT, MetadataT>
   /** Wrap operation cancellation in a {@link OperationType#Unary} trace. */
   @Override
   public ApiFuture<Void> cancel(String operationName, ApiCallContext context) {
-    ApiTracer tracer = tracerFactory.newTracer(context.getTracer(), OperationType.Unary);
+    ApiTracer tracer;
+    if (apiTracerContext != null) {
+      String suffix = apiTracerContext.methodNameSuffix();
+      String newSuffix = (suffix == null ? "" : suffix) + ".Cancel";
+      ApiTracerContext cancelContext =
+          apiTracerContext.toBuilder().setMethodNameSuffix(newSuffix).build();
+      tracer = tracerFactory.newTracer(context.getTracer(), cancelContext, OperationType.Unary);
+    } else {
+      SpanName cancelSpanName =
+          SpanName.of(spanName.getClientName(), spanName.getMethodName() + ".Cancel");
+      tracer = tracerFactory.newTracer(context.getTracer(), cancelSpanName, OperationType.Unary);
+    }
     TraceFinisher<Void> finisher = new TraceFinisher<>(tracer);
 
     try {

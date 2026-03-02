@@ -47,8 +47,17 @@ public class TracedOperationInitialCallable<RequestT>
     extends TracedUnaryCallable<RequestT, OperationSnapshot> {
 
   public TracedOperationInitialCallable(
-      UnaryCallable<RequestT, OperationSnapshot> innerCallable, ApiTracerFactory tracedFactory) {
-    super(innerCallable, tracedFactory);
+      UnaryCallable<RequestT, OperationSnapshot> innerCallable,
+      ApiTracerFactory tracedFactory,
+      SpanName spanName) {
+    super(innerCallable, tracedFactory, spanName);
+  }
+
+  public TracedOperationInitialCallable(
+      UnaryCallable<RequestT, OperationSnapshot> innerCallable,
+      ApiTracerFactory tracedFactory,
+      ApiTracerContext apiTracerContext) {
+    super(innerCallable, tracedFactory, apiTracerContext);
   }
 
   @Override

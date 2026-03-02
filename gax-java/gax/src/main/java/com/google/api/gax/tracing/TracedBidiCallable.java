@@ -41,6 +41,7 @@ import com.google.common.base.Preconditions;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * A wrapper callable that will wrap a callable chain in a trace.
@@ -53,13 +54,29 @@ public class TracedBidiCallable<RequestT, ResponseT>
     extends BidiStreamingCallable<RequestT, ResponseT> {
 
   @Nonnull private final ApiTracerFactory tracerFactory;
+  @Nullable private final SpanName spanName;
+  @Nullable private final ApiTracerContext apiTracerContext;
   @Nonnull private final BidiStreamingCallable<RequestT, ResponseT> innerCallable;
 
   public TracedBidiCallable(
       @Nonnull BidiStreamingCallable<RequestT, ResponseT> innerCallable,
-      @Nonnull ApiTracerFactory tracerFactory) {
+      @Nonnull ApiTracerFactory tracerFactory,
+      @Nonnull SpanName spanName) {
     this.tracerFactory = Preconditions.checkNotNull(tracerFactory, "tracerFactory can't be null");
+    this.spanName = Preconditions.checkNotNull(spanName, "spanName can't be null");
     this.innerCallable = Preconditions.checkNotNull(innerCallable, "innerCallable can't be null");
+    this.apiTracerContext = null;
+  }
+
+  public TracedBidiCallable(
+      @Nonnull BidiStreamingCallable<RequestT, ResponseT> innerCallable,
+      @Nonnull ApiTracerFactory tracerFactory,
+      @Nonnull ApiTracerContext apiTracerContext) {
+    this.tracerFactory = Preconditions.checkNotNull(tracerFactory, "tracerFactory can't be null");
+    this.apiTracerContext =
+        Preconditions.checkNotNull(apiTracerContext, "apiTracerContext can't be null");
+    this.innerCallable = Preconditions.checkNotNull(innerCallable, "innerCallable can't be null");
+    this.spanName = null;
   }
 
   @Override
@@ -68,7 +85,14 @@ public class TracedBidiCallable<RequestT, ResponseT>
       ClientStreamReadyObserver<RequestT> onReady,
       ApiCallContext context) {
 
-    ApiTracer tracer = tracerFactory.newTracer(context.getTracer(), OperationType.BidiStreaming);
+    ApiTracer tracer;
+    if (apiTracerContext != null) {
+      tracer =
+          tracerFactory.newTracer(
+              context.getTracer(), apiTracerContext, OperationType.BidiStreaming);
+    } else {
+      tracer = tracerFactory.newTracer(context.getTracer(), spanName, OperationType.BidiStreaming);
+    }
     context = context.withTracer(tracer);
 
     AtomicBoolean wasCancelled = new AtomicBoolean();

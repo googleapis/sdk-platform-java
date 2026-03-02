@@ -38,6 +38,7 @@ import com.google.api.gax.rpc.BatchingDescriptor;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
 import com.google.common.util.concurrent.MoreExecutors;
+import javax.annotation.Nullable;
 
 /**
  * This callable wraps a batching callable chain in a {@link ApiTracer}.
@@ -49,23 +50,46 @@ import com.google.common.util.concurrent.MoreExecutors;
 public class TracedBatchingCallable<RequestT, ResponseT>
     extends UnaryCallable<RequestT, ResponseT> {
   private final ApiTracerFactory tracerFactory;
+  @Nullable private final SpanName spanName;
+  @Nullable private final ApiTracerContext apiTracerContext;
   private final BatchingDescriptor<RequestT, ResponseT> batchingDescriptor;
   private final UnaryCallable<RequestT, ResponseT> innerCallable;
 
   public TracedBatchingCallable(
       UnaryCallable<RequestT, ResponseT> innerCallable,
       ApiTracerFactory tracerFactory,
+      SpanName spanName,
       BatchingDescriptor<RequestT, ResponseT> batchingDescriptor) {
     this.tracerFactory = tracerFactory;
+    this.spanName = spanName;
     this.batchingDescriptor = batchingDescriptor;
     this.innerCallable = innerCallable;
+    this.apiTracerContext = null;
+  }
+
+  public TracedBatchingCallable(
+      UnaryCallable<RequestT, ResponseT> innerCallable,
+      ApiTracerFactory tracerFactory,
+      ApiTracerContext apiTracerContext,
+      BatchingDescriptor<RequestT, ResponseT> batchingDescriptor) {
+    this.tracerFactory = tracerFactory;
+    this.apiTracerContext = apiTracerContext;
+    this.batchingDescriptor = batchingDescriptor;
+    this.innerCallable = innerCallable;
+    this.spanName = null;
   }
 
   @Override
   public ApiFuture<ResponseT> futureCall(RequestT request, ApiCallContext context) {
     // NOTE: This will be invoked asynchronously outside of the original caller's thread.
     // So this start a top level tracer.
-    ApiTracer tracer = tracerFactory.newTracer(context.getTracer(), OperationType.Batching);
+    ApiTracer tracer;
+    if (apiTracerContext != null) {
+      tracer =
+          tracerFactory.newTracer(context.getTracer(), apiTracerContext, OperationType.Batching);
+    } else {
+      tracer = tracerFactory.newTracer(context.getTracer(), spanName, OperationType.Batching);
+    }
     TraceFinisher<ResponseT> finisher = new TraceFinisher<>(tracer);
 
     try {
