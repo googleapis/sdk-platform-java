@@ -65,11 +65,32 @@ public abstract class ApiTracerContext {
   static final String GRPC_FULL_METHOD_NAME_REGEX = "^.*?([^./]+)/([^./]+)$";
   static final String HTTP_FULL_METHOD_NAME_REGEX = "^(.+)\\.(.+)$";
 
+  /**
+   * Returns the server address of the RPC.
+   *
+   * <p>Example: "pubsub.googleapis.com". This maps to the {@code server.address} attribute.
+   *
+   * @return the server address, or {@code null} if not set
+   */
   @Nullable
   public abstract String serverAddress();
 
+  /**
+   * Returns the library metadata associated with the RPC.
+   *
+   * <p>See {@link LibraryMetadata} for examples of how this maps to observability attributes.
+   *
+   * @return the library metadata
+   */
   public abstract LibraryMetadata libraryMetadata();
 
+  /**
+   * Returns the RPC system name based on the transport.
+   *
+   * <p>Example: "grpc" or "http". This maps to the {@code rpc.system.name} attribute.
+   *
+   * @return the RPC system name, or {@code null} if the transport is not set
+   */
   @Nullable
   public String rpcSystemName() {
     if (transport() == null) {
@@ -78,14 +99,87 @@ public abstract class ApiTracerContext {
     return transport().label;
   }
 
+  /**
+   * Returns the full name of the RPC method. Used in gRPC requests.
+   *
+   * <p>This is typically in the format "package.Service/Method"
+   *
+   * <p>Example: "google.pubsub.v1.Publisher/Publish". This maps to the {@code rpc.method}
+   * attribute.
+   *
+   * @return the full method name, or {@code null} if not set
+   */
   @Nullable
   public abstract String fullMethodName();
 
+  /**
+   * Returns the transport protocol used for the RPC.
+   *
+   * <p>Example: {@link Transport#GRPC}. This is used to derive the {@code rpc.system.name}
+   * attribute (e.g., "grpc").
+   *
+   * @return the transport protocol, or {@code null} if not set
+   */
   @Nullable
   public abstract Transport transport();
 
   @Nullable
   public abstract String methodNameSuffix();
+
+  /**
+   * Returns the client name part of the RPC.
+   *
+   * <p>This is extracted from {@link #fullMethodName()} using a regex that depends on the {@link
+   * #transport()}.
+   *
+   * <ul>
+   *   <li>For {@link Transport#GRPC}, if {@code fullMethodName()} is
+   *       "google.pubsub.v1.Publisher/Publish", the client name is "Publisher".
+   *   <li>For {@link Transport#HTTP}, if {@code fullMethodName()} is
+   *       "google.pubsub.v1.Publisher.Publish", the client name is "google.pubsub.v1.Publisher".
+   * </ul>
+   *
+   * @return the client name part of the RPC
+   */
+  public String getClientName() {
+    return getParsedFullMethodNameParts()[0];
+  }
+
+  /**
+   * Returns the method name part of the RPC.
+   *
+   * <p>This is extracted from {@link #fullMethodName()} using a regex that depends on the {@link
+   * #transport()}, and then the {@link #methodNameSuffix()} is appended if present.
+   *
+   * <ul>
+   *   <li>For {@link Transport#GRPC} if {@code fullMethodName()} is
+   *       "google.pubsub.v1.Publisher/Publish", the base method name is "Publish".
+   *   <li>For {@link Transport#HTTP}, if {@code fullMethodName()} is
+   *       "google.pubsub.v1.Publisher.Publish", the base method name is "Publish".
+   * </ul>
+   *
+   * @return the method name part of the RPC
+   */
+  public String getMethodName() {
+    String methodName = getParsedFullMethodNameParts()[1];
+    if (methodNameSuffix() != null) {
+      methodName += methodNameSuffix();
+    }
+    return methodName;
+  }
+
+  private String[] getParsedFullMethodNameParts() {
+    Preconditions.checkState(fullMethodName() != null, "rpcMethod must be set to get SpanName");
+    Preconditions.checkState(transport() != null, "transport must be set to get SpanName");
+
+    String regex =
+        transport() == Transport.GRPC ? GRPC_FULL_METHOD_NAME_REGEX : HTTP_FULL_METHOD_NAME_REGEX;
+    Pattern pattern = Pattern.compile(regex);
+    Matcher matcher = pattern.matcher(fullMethodName());
+
+    Preconditions.checkArgument(matcher.matches(), "Invalid rpcMethod: " + fullMethodName());
+    return new String[] {matcher.group(1), matcher.group(2)};
+  }
 
   /**
    * @return a map of attributes to be included in attempt-level spans
@@ -108,37 +202,6 @@ public abstract class ApiTracerContext {
       attributes.put(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, libraryMetadata().artifactName());
     }
     return attributes;
-  }
-
-  /**
-   * @return the client name part of the span name
-   */
-  public String getClientName() {
-    return getParsedFullMethodNameParts()[0];
-  }
-
-  /**
-   * @return the method name part of the span name
-   */
-  public String getMethodName() {
-    String methodName = getParsedFullMethodNameParts()[1];
-    if (methodNameSuffix() != null) {
-      methodName += methodNameSuffix();
-    }
-    return methodName;
-  }
-
-  private String[] getParsedFullMethodNameParts() {
-    Preconditions.checkState(fullMethodName() != null, "rpcMethod must be set to get SpanName");
-    Preconditions.checkState(transport() != null, "transport must be set to get SpanName");
-
-    String regex =
-        transport() == Transport.GRPC ? GRPC_FULL_METHOD_NAME_REGEX : HTTP_FULL_METHOD_NAME_REGEX;
-    Pattern pattern = Pattern.compile(regex);
-    Matcher matcher = pattern.matcher(fullMethodName());
-
-    Preconditions.checkArgument(matcher.matches(), "Invalid rpcMethod: " + fullMethodName());
-    return new String[] {matcher.group(1), matcher.group(2)};
   }
 
   /**
