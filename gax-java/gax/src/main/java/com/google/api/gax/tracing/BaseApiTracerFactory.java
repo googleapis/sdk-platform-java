@@ -44,29 +44,11 @@ public class BaseApiTracerFactory implements ApiTracerFactory {
     return INSTANCE;
   }
 
-  protected final ApiTracerContext apiTracerContext;
-
-  protected BaseApiTracerFactory() {
-    this(ApiTracerContext.empty());
-  }
-
-  protected BaseApiTracerFactory(ApiTracerContext apiTracerContext) {
-    this.apiTracerContext = apiTracerContext;
-  }
+  protected BaseApiTracerFactory() {}
 
   /** {@inheritDoc} */
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
     return BaseApiTracer.getInstance();
-  }
-
-  @Override
-  public ApiTracerContext getApiTracerContext() {
-    return apiTracerContext;
-  }
-
-  @Override
-  public ApiTracerFactory withContext(ApiTracerContext context) {
-    return new BaseApiTracerFactory(apiTracerContext.merge(context));
   }
 }
