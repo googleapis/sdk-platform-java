@@ -17,13 +17,13 @@ package com.google.api.generator.gapic.composer.utils;
 import static org.junit.Assert.assertEquals;
 
 import com.google.api.generator.test.utils.LineFormatter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class CommentFormatterTest {
+class CommentFormatterTest {
   private static final String SERVICE_DESCRIPTION_HEADER_PATTERN = "Service Description: %s";
 
   @Test
-  public void parseCommentWithItemizedList_paragraphContainsList() {
+  void parseCommentWithItemizedList_paragraphContainsList() {
     String protobufComment =
         LineFormatter.lines(
             "Service Name\n\n",
@@ -43,7 +43,7 @@ public class CommentFormatterTest {
   }
 
   @Test
-  public void parseCommentWithItemizedList_paragraphStartsWithList() {
+  void parseCommentWithItemizedList_paragraphStartsWithList() {
     String protobufComment =
         LineFormatter.lines(
             "Paragraphs starting with list items should still be parsed as list:\n\n",
@@ -61,7 +61,7 @@ public class CommentFormatterTest {
   }
 
   @Test
-  public void parseCommentWithPrefixPattern_addIfStartsWithParagraph() {
+  void parseCommentWithPrefixPattern_addIfStartsWithParagraph() {
     String protobufComment =
         LineFormatter.lines(
             "Service Name\n\n",
@@ -83,7 +83,7 @@ public class CommentFormatterTest {
   }
 
   @Test
-  public void parseCommentWithPrefixPattern_ignoreIfStartsWithList() {
+  void parseCommentWithPrefixPattern_ignoreIfStartsWithList() {
     String protobufComment = LineFormatter.lines(" * This is item one\n", " * This is item two");
     String result =
         CommentFormatter.formatAsJavaDocComment(

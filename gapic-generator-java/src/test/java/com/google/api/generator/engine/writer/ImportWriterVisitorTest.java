@@ -71,22 +71,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.LongStream;
 import javax.annotation.Generated;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ImportWriterVisitorTest {
+class ImportWriterVisitorTest {
   private static final String CURRENT_PACKAGE = "com.google.api.generator.engine.foobar";
   private static final String CURRENT_CLASS = "SomeClass";
   private ImportWriterVisitor writerVisitor;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     writerVisitor = new ImportWriterVisitor();
     writerVisitor.initialize(CURRENT_PACKAGE, CURRENT_CLASS);
   }
 
   @Test
-  public void writeReferenceTypeImports_basic() {
+  void writeReferenceTypeImports_basic() {
     TypeNode.withReference(ConcreteReference.withClazz(List.class)).accept(writerVisitor);
     assertEquals("import java.util.List;\n\n", writerVisitor.write());
 
@@ -98,7 +98,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeReferenceTypeImports_useFullName() {
+  void writeReferenceTypeImports_useFullName() {
     TypeNode.withReference(
             ConcreteReference.builder().setClazz(List.class).setUseFullName(true).build())
         .accept(writerVisitor);
@@ -116,7 +116,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeNewObjectExprImports_basic() {
+  void writeNewObjectExprImports_basic() {
     // [Constructing] `new ArrayList<>()`
     NewObjectExpr newObjectExpr =
         NewObjectExpr.builder()
@@ -128,7 +128,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeNewObjectExprImports_withArgs() {
+  void writeNewObjectExprImports_withArgs() {
     // [Constructing] `new FileOutputStream(File file)` and the argument needs to be imported.
     ConcreteReference fileOutputStreamRef = ConcreteReference.withClazz(FileOutputStream.class);
     ConcreteReference fileRef = ConcreteReference.withClazz(File.class);
@@ -147,7 +147,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeNewObjectExprImports_genericsAndVariableArgs() {
+  void writeNewObjectExprImports_genericsAndVariableArgs() {
     // [Constructing] `new HashMap<List<String>, Integer>>(int initialCapacity, float loadFactor)`
     ConcreteReference listRef =
         ConcreteReference.builder()
@@ -179,7 +179,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeNewObjectExprImports_methodExprArg() {
+  void writeNewObjectExprImports_methodExprArg() {
     // [Constructing] `new IOException(message, cause(mapArg))` and `cause(mapArg)` is a method
     // invocation with a `HashMap` argument.
     TypeNode exceptionType = TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
@@ -208,7 +208,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeTernaryExprImports() {
+  void writeTernaryExprImports() {
     MethodInvocationExpr conditionExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
@@ -246,7 +246,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExprImports_staticReference() {
+  void writeVariableExprImports_staticReference() {
     VariableExpr variableExpr =
         VariableExpr.builder()
             .setVariable(
@@ -268,7 +268,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExprImports_wildcardType() {
+  void writeVariableExprImports_wildcardType() {
     TypeNode wildcardListType =
         TypeNode.withReference(
             ConcreteReference.builder()
@@ -286,7 +286,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExprImport_wildcardTypeWithUpperBound() {
+  void writeVariableExprImport_wildcardTypeWithUpperBound() {
     TypeNode wildcardListType =
         TypeNode.withReference(
             ConcreteReference.builder()
@@ -310,7 +310,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExprImports_reference() {
+  void writeVariableExprImports_reference() {
     Variable variable =
         Variable.builder()
             .setName("expr")
@@ -334,7 +334,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExprImports_nestedReference() {
+  void writeVariableExprImports_nestedReference() {
     Variable variable =
         Variable.builder()
             .setName("expr")
@@ -367,7 +367,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExprImports_withAnnotations() {
+  void writeVariableExprImports_withAnnotations() {
     Variable variable =
         Variable.builder()
             .setName("expr")
@@ -393,7 +393,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExprImports_annotationsWithDescription() {
+  void writeVariableExprImports_annotationsWithDescription() {
     Variable variable =
         Variable.builder()
             .setName("expr")
@@ -430,7 +430,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeVaporReferenceImport_outermostForNestedClass() {
+  void writeVaporReferenceImport_outermostForNestedClass() {
     VaporReference nestedVaporReference =
         VaporReference.builder()
             .setName("Inner")
@@ -443,7 +443,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeConcreteReferenceImport_outermostForNestedClass() {
+  void writeConcreteReferenceImport_outermostForNestedClass() {
     ConcreteReference nestedConcreteReference =
         ConcreteReference.withClazz(Outer.Middle.Inner.class);
     TypeNode.withReference(nestedConcreteReference).accept(writerVisitor);
@@ -451,7 +451,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeAnonymousClassExprImports() {
+  void writeAnonymousClassExprImports() {
     // [Constructing] Function<List<IOException>, MethodDefinition>
     ConcreteReference exceptionListRef =
         ConcreteReference.builder()
@@ -526,7 +526,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeThrowExprImports_basic() {
+  void writeThrowExprImports_basic() {
     TypeNode exceptionTypes =
         TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
     String message = "Some message asdf";
@@ -537,7 +537,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeThrowExprImports_throwExpr() {
+  void writeThrowExprImports_throwExpr() {
     Expr exprToThrow =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
@@ -557,7 +557,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeThrowExprImports_messageExpr() {
+  void writeThrowExprImports_messageExpr() {
     TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
     Expr messageExpr =
         MethodInvocationExpr.builder()
@@ -584,7 +584,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeThrowExprImports_messageAndCauseExpr() {
+  void writeThrowExprImports_messageAndCauseExpr() {
     TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
     Expr messageExpr =
         MethodInvocationExpr.builder()
@@ -620,7 +620,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeInstanceofExprImports_basic() {
+  void writeInstanceofExprImports_basic() {
     TypeNode exprType = TypeNode.withReference(ConcreteReference.withClazz(Expr.class));
     TypeNode assignExprType =
         TypeNode.withReference(ConcreteReference.withClazz(AssignmentExpr.class));
@@ -639,7 +639,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeEnumRefExprImports_basic() {
+  void writeEnumRefExprImports_basic() {
     TypeNode enumType =
         TypeNode.withReference(
             ConcreteReference.builder()
@@ -655,7 +655,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeEnumRefExprImports_nested() {
+  void writeEnumRefExprImports_nested() {
     TypeNode enumType =
         TypeNode.withReference(ConcreteReference.withClazz(TypeNode.TypeKind.class));
     EnumRefExpr enumRefExpr = EnumRefExpr.builder().setName("VOID").setType(enumType).build();
@@ -664,7 +664,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeReturnExprImports_basic() {
+  void writeReturnExprImports_basic() {
     ReturnExpr returnExpr =
         ReturnExpr.withExpr(
             MethodInvocationExpr.builder()
@@ -676,7 +676,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodDefinitionImports_templatedMixedNamesAndTypes() {
+  void writeMethodDefinitionImports_templatedMixedNamesAndTypes() {
     Reference mapRef = ConcreteReference.withClazz(Map.class);
     List<VariableExpr> arguments =
         Arrays.asList(
@@ -718,7 +718,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeReferenceConstructorExprImports_basic() {
+  void writeReferenceConstructorExprImports_basic() {
     VaporReference ref =
         VaporReference.builder().setName("Parent").setPakkage("com.google.example.v1").build();
     TypeNode classType = TypeNode.withReference(ref);
@@ -729,7 +729,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeReferenceConstructorExprImports_withArgs() {
+  void writeReferenceConstructorExprImports_withArgs() {
     VaporReference ref =
         VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
     TypeNode classType = TypeNode.withReference(ref);
@@ -749,7 +749,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeArithmeticOperationExprImports() {
+  void writeArithmeticOperationExprImports() {
     MethodInvocationExpr lhsExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
@@ -764,7 +764,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeSynchronizedStatementImports_basicThis() {
+  void writeSynchronizedStatementImports_basicThis() {
     SynchronizedStatement synchronizedStatement =
         SynchronizedStatement.builder()
             .setLock(
@@ -786,7 +786,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeSuperObjectValueImports() {
+  void writeSuperObjectValueImports() {
     VaporReference ref =
         VaporReference.builder()
             .setName("Student")
@@ -805,7 +805,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeSynchronizedStatementImports_basicVariableExpr() {
+  void writeSynchronizedStatementImports_basicVariableExpr() {
     VariableExpr strVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -833,7 +833,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeUnaryOperationExprImports_LogicalNot() {
+  void writeUnaryOperationExprImports_LogicalNot() {
     MethodInvocationExpr expr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
@@ -846,7 +846,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeUnaryOperationExprImports_PostIncrement() {
+  void writeUnaryOperationExprImports_PostIncrement() {
     MethodInvocationExpr expr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
@@ -859,7 +859,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeRelationalOperationExprImports() {
+  void writeRelationalOperationExprImports() {
     MethodInvocationExpr lhsExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
@@ -889,7 +889,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeLogicalOperationExprImports() {
+  void writeLogicalOperationExprImports() {
     MethodInvocationExpr lhsExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
@@ -908,14 +908,14 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeEmptyLineStatementImports() {
+  void writeEmptyLineStatementImports() {
     EmptyLineStatement statement = EmptyLineStatement.create();
     statement.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEmpty();
   }
 
   @Test
-  public void writePackageInfoDefinitionImports() {
+  void writePackageInfoDefinitionImports() {
     PackageInfoDefinition packageInfo =
         PackageInfoDefinition.builder()
             .setPakkage("com.google.example.library.v1")
@@ -935,7 +935,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeLambdaExprImports() {
+  void writeLambdaExprImports() {
     // Similar to method defnitions.
     Reference mapRef = ConcreteReference.withClazz(Map.class);
     List<VariableExpr> arguments =
@@ -981,7 +981,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void importArrayExprTypes() {
+  void importArrayExprTypes() {
     ArrayExpr arrayExpr =
         ArrayExpr.builder()
             .setType(

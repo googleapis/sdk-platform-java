@@ -29,13 +29,15 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+
 import com.google.api.core.InternalExtensionOnly;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import java.util.Set;
-import org.threeten.bp.Duration;
 
 /**
  * A base settings class to configure a UnaryCallable. An instance of UnaryCallSettings is not
@@ -194,19 +196,29 @@ public class UnaryCallSettings<RequestT, ResponseT> {
       return this;
     }
 
-    /** Disables retries and sets the RPC timeout. */
+    /**
+     * This method is obsolete. Use {@link #setSimpleTimeoutNoRetriesDuration(java.time.Duration)}
+     * instead.
+     */
+    @ObsoleteApi("Use setSimpleTimeoutNoRetriesDuration(java.time.Duration) instead")
     public UnaryCallSettings.Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
-        Duration timeout) {
+        org.threeten.bp.Duration timeout) {
+      return setSimpleTimeoutNoRetriesDuration(toJavaTimeDuration(timeout));
+    }
+
+    /** Disables retries and sets the RPC timeout. */
+    public UnaryCallSettings.Builder<RequestT, ResponseT> setSimpleTimeoutNoRetriesDuration(
+        java.time.Duration timeout) {
       setRetryableCodes();
       setRetrySettings(
           RetrySettings.newBuilder()
-              .setTotalTimeout(timeout)
-              .setInitialRetryDelay(Duration.ZERO)
+              .setTotalTimeoutDuration(timeout)
+              .setInitialRetryDelayDuration(java.time.Duration.ZERO)
               .setRetryDelayMultiplier(1)
-              .setMaxRetryDelay(Duration.ZERO)
-              .setInitialRpcTimeout(timeout)
+              .setMaxRetryDelayDuration(java.time.Duration.ZERO)
+              .setInitialRpcTimeoutDuration(timeout)
               .setRpcTimeoutMultiplier(1)
-              .setMaxRpcTimeout(timeout)
+              .setMaxRpcTimeoutDuration(timeout)
               .setMaxAttempts(1)
               .build());
       return this;

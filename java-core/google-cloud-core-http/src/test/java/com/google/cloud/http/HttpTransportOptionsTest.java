@@ -16,11 +16,11 @@
 
 package com.google.cloud.http;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
@@ -50,10 +50,10 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.regex.Pattern;
 import org.easymock.EasyMock;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class HttpTransportOptionsTest {
+class HttpTransportOptionsTest {
   private static final HttpTransport MOCK_HTTP_TRANSPORT =
       new MockHttpTransport() {
         @Override
@@ -88,8 +88,8 @@ public class HttpTransportOptionsTest {
   private Credentials customCredentials;
   private HttpRequest defaultHttpRequest;
 
-  @Before
-  public void setup() throws IOException {
+  @BeforeEach
+  void setup() throws IOException {
     defaultHeaderProvider = EasyMock.createMock(HeaderProvider.class);
     EasyMock.expect(defaultHeaderProvider.getHeaders()).andReturn(new HashMap<>());
 
@@ -109,7 +109,7 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void testBuilder() {
+  void testBuilder() {
     assertEquals(1234, OPTIONS.getConnectTimeout());
     assertSame(MOCK_HTTP_TRANSPORT_FACTORY, OPTIONS.getHttpTransportFactory());
     assertEquals(5678, OPTIONS.getReadTimeout());
@@ -119,19 +119,19 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void testBaseEquals() {
+  void testBaseEquals() {
     assertEquals(OPTIONS, OPTIONS_COPY);
     assertNotEquals(DEFAULT_OPTIONS, OPTIONS);
   }
 
   @Test
-  public void testBaseHashCode() {
+  void testBaseHashCode() {
     assertEquals(OPTIONS.hashCode(), OPTIONS_COPY.hashCode());
     assertNotEquals(DEFAULT_OPTIONS.hashCode(), OPTIONS.hashCode());
   }
 
   @Test
-  public void testHeader() {
+  void testHeader() {
     String expectedHeaderPattern = "^gl-java/.+ gccl/.* gax/.+";
     ServiceOptions<?, ?> serviceOptions = EasyMock.createMock(ServiceOptions.class);
     HeaderProvider headerProvider =
@@ -145,7 +145,7 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void testHttpRequestInitializer_defaultUniverseDomainSettings_defaultCredentials()
+  void testHttpRequestInitializer_defaultUniverseDomainSettings_defaultCredentials()
       throws IOException {
     TestServiceOptions testServiceOptions =
         generateTestServiceOptions(Credentials.GOOGLE_DEFAULT_UNIVERSE, defaultCredentials);
@@ -156,7 +156,7 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void testHttpRequestInitializer_defaultUniverseDomainSettings_customCredentials() {
+  void testHttpRequestInitializer_defaultUniverseDomainSettings_customCredentials() {
     TestServiceOptions testServiceOptions =
         generateTestServiceOptions(Credentials.GOOGLE_DEFAULT_UNIVERSE, customCredentials);
     HttpRequestInitializer httpRequestInitializer =
@@ -171,7 +171,7 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void testHttpRequestInitializer_customUniverseDomainSettings_defaultCredentials() {
+  void testHttpRequestInitializer_customUniverseDomainSettings_defaultCredentials() {
     TestServiceOptions testServiceOptions =
         generateTestServiceOptions(CUSTOM_UNIVERSE_DOMAIN, defaultCredentials);
     HttpRequestInitializer httpRequestInitializer =
@@ -186,7 +186,7 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void testHttpRequestInitializer_customUniverseDomainSettings_customCredentials()
+  void testHttpRequestInitializer_customUniverseDomainSettings_customCredentials()
       throws IOException {
     TestServiceOptions testServiceOptions =
         generateTestServiceOptions(CUSTOM_UNIVERSE_DOMAIN, customCredentials);
@@ -197,8 +197,7 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void testHttpRequestInitializer_defaultUniverseDomainSettings_noCredentials()
-      throws IOException {
+  void testHttpRequestInitializer_defaultUniverseDomainSettings_noCredentials() throws IOException {
     NoCredentials noCredentials = NoCredentials.getInstance();
     TestServiceOptions testServiceOptions =
         generateTestServiceOptions(Credentials.GOOGLE_DEFAULT_UNIVERSE, noCredentials);
@@ -209,7 +208,7 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void testHttpRequestInitializer_customUniverseDomainSettings_noCredentials() {
+  void testHttpRequestInitializer_customUniverseDomainSettings_noCredentials() {
     NoCredentials noCredentials = NoCredentials.getInstance();
     TestServiceOptions testServiceOptions =
         generateTestServiceOptions(CUSTOM_UNIVERSE_DOMAIN, noCredentials);

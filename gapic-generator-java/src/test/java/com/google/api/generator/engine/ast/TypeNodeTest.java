@@ -22,9 +22,9 @@ import static org.junit.Assert.assertTrue;
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TypeNodeTest {
+class TypeNodeTest {
   private static final TypeNode INT_ARRAY =
       TypeNode.builder().setTypeKind(TypeKind.INT).setIsArray(true).build();
   private static final TypeNode INTEGER_ARRAY =
@@ -37,7 +37,7 @@ public class TypeNodeTest {
       TypeNode.builder().setTypeKind(TypeKind.BOOLEAN).setIsArray(true).build();
 
   @Test
-  public void strictEquals_basic() {
+  void strictEquals_basic() {
     assertFalse(TypeNode.INT.strictEquals(TypeNode.BOOLEAN));
     assertFalse(TypeNode.CHAR.strictEquals(TypeNode.NULL));
     assertFalse(TypeNode.INT.strictEquals(INT_ARRAY));
@@ -45,7 +45,7 @@ public class TypeNodeTest {
   }
 
   @Test
-  public void strictEquals_referenceType() {
+  void strictEquals_referenceType() {
     TypeNode list = TypeNode.withReference(ConcreteReference.withClazz(List.class));
     TypeNode intList =
         TypeNode.withReference(
@@ -64,7 +64,7 @@ public class TypeNodeTest {
   }
 
   @Test
-  public void isBoxedTypeEquals_basic() {
+  void isBoxedTypeEquals_basic() {
     assertTrue(TypeNode.INT.isBoxedTypeEquals(TypeNode.INT_OBJECT));
     assertTrue(TypeNode.DOUBLE_OBJECT.isBoxedTypeEquals(TypeNode.DOUBLE));
     assertFalse(TypeNode.BOOLEAN_OBJECT.isBoxedTypeEquals(TypeNode.SHORT));
@@ -73,14 +73,14 @@ public class TypeNodeTest {
   }
 
   @Test
-  public void isBoxedTypeEquals_arrayType() {
+  void isBoxedTypeEquals_arrayType() {
     assertFalse(TypeNode.INT.isBoxedTypeEquals(INT_ARRAY));
     assertFalse(INTEGER_ARRAY.isBoxedTypeEquals(INT_ARRAY));
     assertFalse(BOOLEAN_ARRAY.isBoxedTypeEquals(INT_ARRAY));
   }
 
   @Test
-  public void equals_basic() {
+  void equals_basic() {
     assertTrue(TypeNode.INT.equals(TypeNode.INT_OBJECT));
     assertTrue(TypeNode.DOUBLE_OBJECT.equals(TypeNode.DOUBLE));
     assertTrue(TypeNode.BOOLEAN.equals(TypeNode.BOOLEAN));
@@ -92,7 +92,7 @@ public class TypeNodeTest {
   }
 
   @Test
-  public void type_wildcardGenerics() {
+  void type_wildcardGenerics() {
     // No exception thrown equates to success.
     TypeNode.withReference(
         ConcreteReference.builder()
@@ -102,7 +102,7 @@ public class TypeNodeTest {
   }
 
   @Test
-  public void type_wildcardUpperBoundGenerics() {
+  void type_wildcardUpperBoundGenerics() {
     // No exception thrown equates to success.
     TypeNode.withReference(
         ConcreteReference.builder()
@@ -114,7 +114,7 @@ public class TypeNodeTest {
   }
 
   @Test
-  public void compareTypes() {
+  void compareTypes() {
     // Primitive and primitive.
     // Can't compare objects to themselves, so this test is omitted.
     assertThat(TypeNode.INT.compareTo(TypeNode.BOOLEAN)).isGreaterThan(0);
@@ -144,13 +144,13 @@ public class TypeNodeTest {
   }
 
   @Test
-  public void invalidType_topLevelWildcard() {
+  void invalidType_topLevelWildcard() {
     assertThrows(
         IllegalStateException.class, () -> TypeNode.withReference(ConcreteReference.wildcard()));
   }
 
   @Test
-  public void isBoxedType_basic() {
+  void isBoxedType_basic() {
     assertTrue(TypeNode.isBoxedType(TypeNode.INT_OBJECT));
     assertTrue(TypeNode.isBoxedType(TypeNode.BOOLEAN_OBJECT));
     assertTrue(TypeNode.isBoxedType(TypeNode.DOUBLE_OBJECT));

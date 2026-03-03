@@ -17,11 +17,11 @@ package com.google.api.generator.gapic.utils;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class JavaStyleTest {
+class JavaStyleTest {
   @Test
-  public void emptyOrNull() {
+  void emptyOrNull() {
     String value = "";
     assertEquals("", JavaStyle.toLowerCamelCase(value));
     assertEquals("", JavaStyle.toUpperCamelCase(value));
@@ -32,42 +32,42 @@ public class JavaStyleTest {
   }
 
   @Test
-  public void singleWord() {
+  void singleWord() {
     String value = "dog";
     assertEquals("dog", JavaStyle.toLowerCamelCase(value));
     assertEquals("Dog", JavaStyle.toUpperCamelCase(value));
   }
 
   @Test
-  public void fromLowerSnake() {
+  void fromLowerSnake() {
     String value = "factory_decorator_delegate_impl";
     assertEquals("factoryDecoratorDelegateImpl", JavaStyle.toLowerCamelCase(value));
     assertEquals("FactoryDecoratorDelegateImpl", JavaStyle.toUpperCamelCase(value));
   }
 
   @Test
-  public void fromUpperSnake() {
+  void fromUpperSnake() {
     String value = "FACTORY_DECORATOR_DELEGATE_IMPL";
     assertEquals("factoryDecoratorDelegateImpl", JavaStyle.toLowerCamelCase(value));
     assertEquals("FactoryDecoratorDelegateImpl", JavaStyle.toUpperCamelCase(value));
   }
 
   @Test
-  public void fromLowerCamelCase() {
+  void fromLowerCamelCase() {
     String value = "factoryDecoratorDelegateImpl";
     assertEquals("factoryDecoratorDelegateImpl", JavaStyle.toLowerCamelCase(value));
     assertEquals("FactoryDecoratorDelegateImpl", JavaStyle.toUpperCamelCase(value));
   }
 
   @Test
-  public void fromUpperCamelCase() {
+  void fromUpperCamelCase() {
     String value = "FactoryDecoratorDelegateImpl";
     assertEquals("factoryDecoratorDelegateImpl", JavaStyle.toLowerCamelCase(value));
     assertEquals("FactoryDecoratorDelegateImpl", JavaStyle.toUpperCamelCase(value));
   }
 
   @Test
-  public void wordAndNumber() {
+  void wordAndNumber() {
     String value = "dog2";
     assertEquals("dog2", JavaStyle.toLowerCamelCase(value));
     assertEquals("Dog2", JavaStyle.toUpperCamelCase(value));
@@ -77,14 +77,14 @@ public class JavaStyleTest {
   }
 
   @Test
-  public void upperWordAndNumber() {
+  void upperWordAndNumber() {
     String value = "Dog_v2";
     assertEquals("dogV2", JavaStyle.toLowerCamelCase(value));
     assertEquals("DogV2", JavaStyle.toUpperCamelCase(value));
   }
 
   @Test
-  public void upperWordAndCharsAfterDigit() {
+  void upperWordAndCharsAfterDigit() {
     String value = "dogV2cc";
     assertEquals("dogV2Cc", JavaStyle.toLowerCamelCase(value));
     assertEquals("DogV2Cc", JavaStyle.toUpperCamelCase(value));
@@ -103,7 +103,7 @@ public class JavaStyleTest {
   }
 
   @Test
-  public void acronyms() {
+  void acronyms() {
     String value = "iam_http_xml_dog";
     assertEquals("iamHttpXmlDog", JavaStyle.toLowerCamelCase(value));
     assertEquals("IamHttpXmlDog", JavaStyle.toUpperCamelCase(value));
@@ -113,7 +113,7 @@ public class JavaStyleTest {
   }
 
   @Test
-  public void keyword() {
+  void keyword() {
     String value = "import";
     assertEquals("import_", JavaStyle.toLowerCamelCase(value));
     assertEquals("Import", JavaStyle.toUpperCamelCase(value));

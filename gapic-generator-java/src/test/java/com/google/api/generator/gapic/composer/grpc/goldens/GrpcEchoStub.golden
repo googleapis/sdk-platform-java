@@ -22,6 +22,7 @@ import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.ExpandRequest;
 import com.google.showcase.v1beta1.Object;
+import com.google.showcase.v1beta1.PagedExpandLegacyRequest;
 import com.google.showcase.v1beta1.PagedExpandRequest;
 import com.google.showcase.v1beta1.PagedExpandResponse;
 import com.google.showcase.v1beta1.WaitMetadata;
@@ -48,6 +49,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.v1beta1.Echo/Echo")
           .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ExpandRequest, EchoResponse> expandMethodDescriptor =
@@ -56,6 +58,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.v1beta1.Echo/Expand")
           .setRequestMarshaller(ProtoUtils.marshaller(ExpandRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<EchoRequest, EchoResponse> collectMethodDescriptor =
@@ -64,6 +67,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.v1beta1.Echo/Collect")
           .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<EchoRequest, EchoResponse> chatMethodDescriptor =
@@ -72,6 +76,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.v1beta1.Echo/Chat")
           .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<EchoRequest, EchoResponse> chatAgainMethodDescriptor =
@@ -80,6 +85,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.v1beta1.Echo/ChatAgain")
           .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<PagedExpandRequest, PagedExpandResponse>
@@ -90,6 +96,7 @@ public class GrpcEchoStub extends EchoStub {
               .setRequestMarshaller(ProtoUtils.marshaller(PagedExpandRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(PagedExpandResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<PagedExpandRequest, PagedExpandResponse>
@@ -100,6 +107,7 @@ public class GrpcEchoStub extends EchoStub {
               .setRequestMarshaller(ProtoUtils.marshaller(PagedExpandRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(PagedExpandResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<WaitRequest, Operation> waitMethodDescriptor =
@@ -108,6 +116,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.v1beta1.Echo/Wait")
           .setRequestMarshaller(ProtoUtils.marshaller(WaitRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Operation.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<BlockRequest, BlockResponse> blockMethodDescriptor =
@@ -116,6 +125,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.v1beta1.Echo/Block")
           .setRequestMarshaller(ProtoUtils.marshaller(BlockRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(BlockResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<EchoRequest, Object> collideNameMethodDescriptor =
@@ -124,7 +134,20 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.v1beta1.Echo/CollideName")
           .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Object.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
+
+  private static final MethodDescriptor<PagedExpandLegacyRequest, PagedExpandResponse>
+      pagedExpandLegacyMethodDescriptor =
+          MethodDescriptor.<PagedExpandLegacyRequest, PagedExpandResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName("google.showcase.v1beta1.Echo/PagedExpandLegacy")
+              .setRequestMarshaller(
+                  ProtoUtils.marshaller(PagedExpandLegacyRequest.getDefaultInstance()))
+              .setResponseMarshaller(
+                  ProtoUtils.marshaller(PagedExpandResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
+              .build();
 
   private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;
   private final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable;
@@ -141,6 +164,8 @@ public class GrpcEchoStub extends EchoStub {
   private final OperationCallable<WaitRequest, WaitResponse, WaitMetadata> waitOperationCallable;
   private final UnaryCallable<BlockRequest, BlockResponse> blockCallable;
   private final UnaryCallable<EchoRequest, Object> collideNameCallable;
+  private final UnaryCallable<PagedExpandLegacyRequest, PagedExpandResponse>
+      pagedExpandLegacyCallable;
 
   private final BackgroundResource backgroundResources;
   private final GrpcOperationsStub operationsStub;
@@ -220,6 +245,11 @@ public class GrpcEchoStub extends EchoStub {
         GrpcCallSettings.<EchoRequest, Object>newBuilder()
             .setMethodDescriptor(collideNameMethodDescriptor)
             .build();
+    GrpcCallSettings<PagedExpandLegacyRequest, PagedExpandResponse>
+        pagedExpandLegacyTransportSettings =
+            GrpcCallSettings.<PagedExpandLegacyRequest, PagedExpandResponse>newBuilder()
+                .setMethodDescriptor(pagedExpandLegacyMethodDescriptor)
+                .build();
 
     this.echoCallable =
         callableFactory.createUnaryCallable(
@@ -264,6 +294,11 @@ public class GrpcEchoStub extends EchoStub {
     this.collideNameCallable =
         callableFactory.createUnaryCallable(
             collideNameTransportSettings, settings.collideNameSettings(), clientContext);
+    this.pagedExpandLegacyCallable =
+        callableFactory.createUnaryCallable(
+            pagedExpandLegacyTransportSettings,
+            settings.pagedExpandLegacySettings(),
+            clientContext);
 
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
@@ -337,6 +372,11 @@ public class GrpcEchoStub extends EchoStub {
   @Override
   public UnaryCallable<EchoRequest, Object> collideNameCallable() {
     return collideNameCallable;
+  }
+
+  @Override
+  public UnaryCallable<PagedExpandLegacyRequest, PagedExpandResponse> pagedExpandLegacyCallable() {
+    return pagedExpandLegacyCallable;
   }
 
   @Override

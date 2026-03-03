@@ -22,22 +22,22 @@ import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ResourceNameTokenizerTest {
+class ResourceNameTokenizerTest {
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     echoFileDescriptor = EchoOuterClass.getDescriptor();
     echoService = echoFileDescriptor.getServices().get(0);
     assertEquals(echoService.getName(), "Echo");
   }
 
   @Test
-  public void parseTokenHierarchy_basic() {
+  void parseTokenHierarchy_basic() {
     List<String> patterns =
         Arrays.asList(
             "projects/{project}/locations/{location}/autoscalingPolicies/{autoscaling_policy}",
@@ -52,7 +52,7 @@ public class ResourceNameTokenizerTest {
   }
 
   @Test
-  public void parseTokenHierarchy_substringsInPattern() {
+  void parseTokenHierarchy_substringsInPattern() {
     List<String> patterns =
         Arrays.asList(
             "customers/{customer}/customerExtensionSettings/{customer_extension_setting}");
@@ -62,7 +62,7 @@ public class ResourceNameTokenizerTest {
   }
 
   @Test
-  public void parseTokenHierarchy_wildcards() {
+  void parseTokenHierarchy_wildcards() {
     List<String> patterns =
         Arrays.asList(
             "projects/{project}/metricDescriptors/{metric_descriptor=**}",
@@ -76,7 +76,7 @@ public class ResourceNameTokenizerTest {
   }
 
   @Test
-  public void parseTokenHierarchy_singletonCollection() {
+  void parseTokenHierarchy_singletonCollection() {
     List<String> patterns =
         Arrays.asList(
             "projects/{project}/agent/sessions/{session}",
@@ -89,7 +89,7 @@ public class ResourceNameTokenizerTest {
   }
 
   @Test
-  public void parseTokenHierarchy_singletonCollectionAndNonSlashSeparators() {
+  void parseTokenHierarchy_singletonCollectionAndNonSlashSeparators() {
     List<String> patterns =
         Arrays.asList(
             "users/{user}/profile/blurbs/legacy/{legacy_user}~{blurb}",
@@ -110,7 +110,7 @@ public class ResourceNameTokenizerTest {
   }
 
   @Test
-  public void parseTokenHierarchy_invalidPatterns() {
+  void parseTokenHierarchy_invalidPatterns() {
     List<String> patterns =
         Arrays.asList(
             "projects/{project}/agent/sessions/{session}/anotherSingleton",

@@ -26,21 +26,21 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ResourceReferenceParserTest {
+class ResourceReferenceParserTest {
   private static final String MAIN_PACKAGE = "com.google.testgapic.v1beta1";
 
   private FileDescriptor lockerServiceFileDescriptor;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     lockerServiceFileDescriptor = LockerProto.getDescriptor();
   }
 
   @Test
-  public void parseParentResourceName_createFromPattern() {
+  void parseParentResourceName_createFromPattern() {
     String resourceNamePackage = String.format("%s.common", MAIN_PACKAGE);
     String domainName = "cloudbilling.googleapis.com";
     String description = "This is the resource name description";
@@ -76,7 +76,7 @@ public class ResourceReferenceParserTest {
   }
 
   @Test
-  public void parseParentResourceName_parentResourceNameExists() {
+  void parseParentResourceName_parentResourceNameExists() {
     Map<String, ResourceName> typeStringsToResourceNames =
         ResourceNameParser.parseResourceNamesFromFile(lockerServiceFileDescriptor);
 
@@ -103,7 +103,7 @@ public class ResourceReferenceParserTest {
   }
 
   @Test
-  public void parseParentResourceName_badPattern() {
+  void parseParentResourceName_badPattern() {
     Optional<ResourceName> parentResourceNameOpt =
         ResourceReferenceParser.parseParentResourceName(
             "projects/{project}/billingAccounts",
@@ -117,19 +117,19 @@ public class ResourceReferenceParserTest {
   }
 
   @Test
-  public void resolvePackages_resourcePackageIsSubpackageOfService() {
+  void resolvePackages_resourcePackageIsSubpackageOfService() {
     String resourcePackage = "com.google.testgapic.v1beta1.common";
     assertEquals(
         resourcePackage, ResourceReferenceParser.resolvePackages(resourcePackage, MAIN_PACKAGE));
   }
 
   @Test
-  public void resolvePackages_resourcePackageIsSameAsService() {
+  void resolvePackages_resourcePackageIsSameAsService() {
     assertEquals(MAIN_PACKAGE, ResourceReferenceParser.resolvePackages(MAIN_PACKAGE, MAIN_PACKAGE));
   }
 
   @Test
-  public void resolvePackages_resourcePackageIsNotSubpackageOfService() {
+  void resolvePackages_resourcePackageIsNotSubpackageOfService() {
     assertEquals(
         MAIN_PACKAGE, ResourceReferenceParser.resolvePackages("com.google.cloud", MAIN_PACKAGE));
   }

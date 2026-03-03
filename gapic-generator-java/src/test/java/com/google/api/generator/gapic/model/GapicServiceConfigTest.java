@@ -34,15 +34,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class GapicServiceConfigTest {
+class GapicServiceConfigTest {
 
   private static final double EPSILON = 1e-4;
   private static final String TESTDATA_DIRECTORY = "src/test/resources/";
 
   @Test
-  public void serviceConfig_noConfigsFound() {
+  void serviceConfig_noConfigsFound() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Service service = parseService(echoFileDescriptor);
 
@@ -70,7 +70,7 @@ public class GapicServiceConfigTest {
   }
 
   @Test
-  public void serviceConfig_basic() {
+  void serviceConfig_basic() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Service service = parseService(echoFileDescriptor);
 
@@ -124,7 +124,7 @@ public class GapicServiceConfigTest {
   }
 
   @Test
-  public void serviceConfig_withBatchingSettings() {
+  void serviceConfig_withBatchingSettings() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Service service = parseService(echoFileDescriptor);
 
@@ -197,7 +197,7 @@ public class GapicServiceConfigTest {
   }
 
   @Test
-  public void serviceConfig_withLroRetrySettings() {
+  void serviceConfig_withLroRetrySettings() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Service service = parseService(echoFileDescriptor);
 

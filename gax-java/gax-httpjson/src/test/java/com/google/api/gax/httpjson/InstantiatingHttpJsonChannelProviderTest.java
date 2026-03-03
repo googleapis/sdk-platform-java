@@ -30,12 +30,13 @@
 package com.google.api.gax.httpjson;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.mtls.AbstractMtlsTransportChannelTest;
-import com.google.api.gax.rpc.mtls.MtlsProvider;
+import com.google.api.gax.rpc.mtls.CertificateBasedAccess;
+import com.google.auth.mtls.MtlsProvider;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
@@ -43,23 +44,32 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChannelTest {
+class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChannelTest {
 
   private static final String DEFAULT_ENDPOINT = "localhost:8080";
   private static final Map<String, String> DEFAULT_HEADER_MAP = Collections.emptyMap();
+  private CertificateBasedAccess certificateBasedAccess;
+
+  @BeforeEach
+  public void setup() throws IOException {
+    certificateBasedAccess =
+        new CertificateBasedAccess(
+            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "never" : "false");
+  }
 
   @Test
-  public void basicTest() throws IOException {
+  void basicTest() throws IOException {
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
-    TransportChannelProvider provider = InstantiatingHttpJsonChannelProvider.newBuilder().build();
+    TransportChannelProvider provider =
+        InstantiatingHttpJsonChannelProvider.newBuilder()
+            .setCertificateBasedAccess(certificateBasedAccess)
+            .build();
 
     assertThat(provider.needsEndpoint()).isTrue();
     provider = provider.withEndpoint(DEFAULT_ENDPOINT);
@@ -109,36 +119,11 @@ public class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransp
   // Ensure that a default executor is created by the ManagedHttpJsonChannel even
   // if not provided by the TransportChannelProvider
   @Test
-  public void managedChannelUsesDefaultChannelExecutor() throws IOException {
-    InstantiatingHttpJsonChannelProvider instantiatingHttpJsonChannelProvider =
-        InstantiatingHttpJsonChannelProvider.newBuilder().setEndpoint(DEFAULT_ENDPOINT).build();
-    instantiatingHttpJsonChannelProvider =
-        (InstantiatingHttpJsonChannelProvider)
-            instantiatingHttpJsonChannelProvider.withHeaders(DEFAULT_HEADER_MAP);
-    HttpJsonTransportChannel httpJsonTransportChannel =
-        instantiatingHttpJsonChannelProvider.getTransportChannel();
-
-    // By default, the channel will be wrapped with ManagedHttpJsonInterceptorChannel
-    ManagedHttpJsonInterceptorChannel interceptorChannel =
-        (ManagedHttpJsonInterceptorChannel) httpJsonTransportChannel.getManagedChannel();
-    ManagedHttpJsonChannel managedHttpJsonChannel = interceptorChannel.getChannel();
-    assertThat(managedHttpJsonChannel.getExecutor()).isNotNull();
-
-    // Clean up the resources (executor, deadlineScheduler, httpTransport)
-    instantiatingHttpJsonChannelProvider.getTransportChannel().shutdownNow();
-  }
-
-  // Ensure that the user's executor is used by the ManagedHttpJsonChannel
-  @Test
-  public void managedChannelUsesCustomExecutor() throws IOException {
-    // Custom executor to use -- Lifecycle must be managed by this test
-    ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
-    executor.shutdown();
-
+  void managedChannelUsesDefaultChannelExecutor() throws IOException {
     InstantiatingHttpJsonChannelProvider instantiatingHttpJsonChannelProvider =
         InstantiatingHttpJsonChannelProvider.newBuilder()
             .setEndpoint(DEFAULT_ENDPOINT)
-            .setExecutor(executor)
+            .setCertificateBasedAccess(certificateBasedAccess)
             .build();
     instantiatingHttpJsonChannelProvider =
         (InstantiatingHttpJsonChannelProvider)
@@ -149,21 +134,61 @@ public class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransp
     // By default, the channel will be wrapped with ManagedHttpJsonInterceptorChannel
     ManagedHttpJsonInterceptorChannel interceptorChannel =
         (ManagedHttpJsonInterceptorChannel) httpJsonTransportChannel.getManagedChannel();
-    ManagedHttpJsonChannel managedHttpJsonChannel = interceptorChannel.getChannel();
-    assertThat(managedHttpJsonChannel.getExecutor()).isNotNull();
-    assertThat(managedHttpJsonChannel.getExecutor()).isEqualTo(executor);
+    // call getChannel() twice because interceptors are chained in layers by recursive construction
+    // inside com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider.createChannel
+    ManagedHttpJsonInterceptorChannel managedHttpJsonChannel =
+        (ManagedHttpJsonInterceptorChannel) interceptorChannel.getChannel();
+    ManagedHttpJsonChannel channel = managedHttpJsonChannel.getChannel();
+    assertThat(channel.getExecutor()).isNotNull();
+
+    // Clean up the resources (executor, deadlineScheduler, httpTransport)
+    instantiatingHttpJsonChannelProvider.getTransportChannel().shutdownNow();
+  }
+
+  // Ensure that the user's executor is used by the ManagedHttpJsonChannel
+  @Test
+  void managedChannelUsesCustomExecutor() throws IOException {
+    // Custom executor to use -- Lifecycle must be managed by this test
+    ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
+    executor.shutdown();
+
+    InstantiatingHttpJsonChannelProvider instantiatingHttpJsonChannelProvider =
+        InstantiatingHttpJsonChannelProvider.newBuilder()
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setExecutor(executor)
+            .setCertificateBasedAccess(certificateBasedAccess)
+            .build();
+    instantiatingHttpJsonChannelProvider =
+        (InstantiatingHttpJsonChannelProvider)
+            instantiatingHttpJsonChannelProvider.withHeaders(DEFAULT_HEADER_MAP);
+    HttpJsonTransportChannel httpJsonTransportChannel =
+        instantiatingHttpJsonChannelProvider.getTransportChannel();
+
+    // By default, the channel will be wrapped with ManagedHttpJsonInterceptorChannel
+    ManagedHttpJsonInterceptorChannel interceptorChannel =
+        (ManagedHttpJsonInterceptorChannel) httpJsonTransportChannel.getManagedChannel();
+    // call getChannel() twice because interceptors are chained in layers by recursive construction
+    // inside com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider.createChannel
+    ManagedHttpJsonInterceptorChannel managedHttpJsonChannel =
+        (ManagedHttpJsonInterceptorChannel) interceptorChannel.getChannel();
+    ManagedHttpJsonChannel channel = managedHttpJsonChannel.getChannel();
+
+    assertThat(channel.getExecutor()).isNotNull();
+    assertThat(channel.getExecutor()).isEqualTo(executor);
 
     // Clean up the resources (executor, deadlineScheduler, httpTransport)
     instantiatingHttpJsonChannelProvider.getTransportChannel().shutdownNow();
   }
 
   @Override
-  protected Object getMtlsObjectFromTransportChannel(MtlsProvider provider)
+  protected Object getMtlsObjectFromTransportChannel(
+      MtlsProvider provider, CertificateBasedAccess certificateBasedAccess)
       throws IOException, GeneralSecurityException {
     InstantiatingHttpJsonChannelProvider channelProvider =
         InstantiatingHttpJsonChannelProvider.newBuilder()
             .setEndpoint("localhost:8080")
             .setMtlsProvider(provider)
+            .setCertificateBasedAccess(certificateBasedAccess)
             .setHeaderProvider(Mockito.mock(HeaderProvider.class))
             .setExecutor(Mockito.mock(Executor.class))
             .build();

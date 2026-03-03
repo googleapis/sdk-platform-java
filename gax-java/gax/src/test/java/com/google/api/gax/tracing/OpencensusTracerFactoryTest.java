@@ -47,25 +47,21 @@ import io.opencensus.trace.SpanBuilder;
 import io.opencensus.trace.Tracer;
 import io.opencensus.trace.unsafe.ContextUtils;
 import java.util.Map;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(JUnit4.class)
-public class OpencensusTracerFactoryTest {
-  @Rule public final MockitoRule mockitoRule = MockitoJUnit.rule();
+@ExtendWith(MockitoExtension.class)
+class OpencensusTracerFactoryTest {
   @Mock private Tracer internalTracer;
   @Mock private SpanBuilder spanBuilder;
   @Mock private Span span;
   private final Map<String, String> defaultSpanAttributes = ImmutableMap.of();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     when(internalTracer.spanBuilderWithExplicitParent(anyString(), nullable(Span.class)))
         .thenReturn(spanBuilder);
 
@@ -75,7 +71,7 @@ public class OpencensusTracerFactoryTest {
   }
 
   @Test
-  public void testSpanNamePassthrough() {
+  void testSpanNamePassthrough() {
     OpencensusTracerFactory factory =
         new OpencensusTracerFactory(internalTracer, ImmutableMap.<String, String>of());
 
@@ -87,7 +83,7 @@ public class OpencensusTracerFactoryTest {
   }
 
   @Test
-  public void testImplicitParentSpan() {
+  void testImplicitParentSpan() {
     OpencensusTracerFactory factory =
         new OpencensusTracerFactory(internalTracer, defaultSpanAttributes);
 
@@ -107,7 +103,7 @@ public class OpencensusTracerFactoryTest {
   }
 
   @Test
-  public void testExplicitParent() {
+  void testExplicitParent() {
     OpencensusTracerFactory factory =
         new OpencensusTracerFactory(internalTracer, defaultSpanAttributes);
 
@@ -121,7 +117,7 @@ public class OpencensusTracerFactoryTest {
   }
 
   @Test
-  public void testExplicitParentOverridesImplicit() {
+  void testExplicitParentOverridesImplicit() {
     OpencensusTracerFactory factory =
         new OpencensusTracerFactory(internalTracer, defaultSpanAttributes);
 
@@ -141,7 +137,7 @@ public class OpencensusTracerFactoryTest {
   }
 
   @Test
-  public void testSpanAttributes() {
+  void testSpanAttributes() {
     OpencensusTracerFactory factory =
         new OpencensusTracerFactory(internalTracer, ImmutableMap.of("gax.version", "1.2.3"));
 

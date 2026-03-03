@@ -82,6 +82,11 @@ public class HttpJsonCallableFactory {
     callable =
         Callables.retrying(
             callable, callSettings, clientContext, httpJsonCallSettings.getRequestMutator());
+    callable =
+        new TracedUnaryCallable<>(
+            callable,
+            clientContext.getTracerFactory(),
+            getSpanName(httpJsonCallSettings.getMethodDescriptor()));
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
 
@@ -133,12 +138,6 @@ public class HttpJsonCallableFactory {
       ClientContext clientContext) {
     UnaryCallable<RequestT, ResponseT> innerCallable =
         createDirectUnaryCallable(httpJsonCallSettings);
-
-    innerCallable =
-        new TracedUnaryCallable<>(
-            innerCallable,
-            clientContext.getTracerFactory(),
-            getSpanName(httpJsonCallSettings.getMethodDescriptor()));
 
     return createUnaryCallable(innerCallable, callSettings, httpJsonCallSettings, clientContext);
   }

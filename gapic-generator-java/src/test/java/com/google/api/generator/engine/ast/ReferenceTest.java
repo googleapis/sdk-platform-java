@@ -20,11 +20,11 @@ import static org.junit.Assert.assertFalse;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ReferenceTest {
+class ReferenceTest {
   @Test
-  public void nestedGenerics_concreteReferenceOuter() {
+  void nestedGenerics_concreteReferenceOuter() {
     Reference mapReference =
         VaporReference.builder()
             .setName("HashMap")
@@ -50,7 +50,7 @@ public class ReferenceTest {
   }
 
   @Test
-  public void nestedGenerics_vaporReferenceOuter() {
+  void nestedGenerics_vaporReferenceOuter() {
     Reference mapReference =
         ConcreteReference.builder()
             .setClazz(HashMap.class)
@@ -77,7 +77,7 @@ public class ReferenceTest {
   }
 
   @Test
-  public void mixedConcreteVaporReferenceEquals() {
+  void mixedConcreteVaporReferenceEquals() {
     Reference mapReferenceVaporOuter =
         ConcreteReference.builder()
             .setClazz(HashMap.class)

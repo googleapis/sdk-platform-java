@@ -31,6 +31,7 @@ package com.google.api.gax.rpc;
 
 import static com.google.api.gax.rpc.testing.FakeBatchableApi.SQUARER_BATCHING_DESC;
 import static com.google.api.gax.rpc.testing.FakeBatchableApi.callLabeledIntSquarer;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.batching.BatchingSettings;
@@ -48,22 +49,17 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.threeten.bp.Duration;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class BatchingTest {
+class BatchingTest {
 
   private ScheduledExecutorService batchingExecutor;
   private ClientContext clientContext;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     batchingExecutor = new ScheduledThreadPoolExecutor(1);
     clientContext =
         ClientContext.newBuilder()
@@ -73,16 +69,16 @@ public class BatchingTest {
             .build();
   }
 
-  @After
-  public void teardown() {
+  @AfterEach
+  void teardown() {
     batchingExecutor.shutdownNow();
   }
 
   @Test
-  public void batching() throws Exception {
+  void batching() throws Exception {
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(1))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(2L)
             .build();
     BatchingCallSettings<LabeledIntList, List<Integer>> batchingCallSettings =
@@ -99,10 +95,10 @@ public class BatchingTest {
   }
 
   @Test
-  public void batchingWithFlowControl() throws Exception {
+  void batchingWithFlowControl() throws Exception {
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(1))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(4L)
             .setRequestByteThreshold(null)
             .setFlowControlSettings(
@@ -160,7 +156,7 @@ public class BatchingTest {
   }
 
   @Test
-  public void batchingDisabled() throws Exception {
+  void batchingDisabled() throws Exception {
     BatchingSettings batchingSettings = BatchingSettings.newBuilder().setIsEnabled(false).build();
 
     BatchingCallSettings<LabeledIntList, List<Integer>> batchingCallSettings =
@@ -177,10 +173,10 @@ public class BatchingTest {
   }
 
   @Test
-  public void batchingWithBlockingCallThreshold() throws Exception {
+  void batchingWithBlockingCallThreshold() throws Exception {
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(1))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(2L)
             .build();
     BatchingCallSettings<LabeledIntList, List<Integer>> batchingCallSettings =
@@ -206,10 +202,10 @@ public class BatchingTest {
       };
 
   @Test
-  public void batchingException() throws Exception {
+  void batchingException() throws Exception {
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(1))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(2L)
             .build();
     BatchingCallSettings<LabeledIntList, List<Integer>> batchingCallSettings =
@@ -221,17 +217,7 @@ public class BatchingTest {
             callLabeledIntExceptionThrower, batchingCallSettings, clientContext);
     ApiFuture<List<Integer>> f1 = callable.futureCall(new LabeledIntList("one", 1, 2));
     ApiFuture<List<Integer>> f2 = callable.futureCall(new LabeledIntList("one", 3, 4));
-    try {
-      f1.get();
-      Assert.fail("Expected exception from batching call");
-    } catch (ExecutionException e) {
-      // expected
-    }
-    try {
-      f2.get();
-      Assert.fail("Expected exception from batching call");
-    } catch (ExecutionException e) {
-      // expected
-    }
+    assertThrows(ExecutionException.class, f1::get);
+    assertThrows(ExecutionException.class, f2::get);
   }
 }

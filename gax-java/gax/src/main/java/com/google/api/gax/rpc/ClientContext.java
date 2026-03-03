@@ -29,19 +29,28 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 import com.google.api.client.util.Strings;
 import com.google.api.core.ApiClock;
 import com.google.api.core.BetaApi;
 import com.google.api.core.NanoClock;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.ExecutorAsBackgroundResource;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
+import com.google.api.gax.tracing.SpanTracerFactory;
+import com.google.auth.ApiKeyCredentials;
+import com.google.auth.CredentialTypeForMetrics;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GdchCredentials;
 import com.google.auto.value.AutoValue;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
@@ -56,7 +65,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * Encapsulates client state, including executor, credentials, and transport channel.
@@ -97,8 +105,15 @@ public abstract class ClientContext {
   @Nullable
   public abstract Watchdog getStreamWatchdog();
 
+  /** This method is obsolete. Use {@link #getStreamWatchdogCheckIntervalDuration()} instead. */
   @Nonnull
-  public abstract Duration getStreamWatchdogCheckInterval();
+  @ObsoleteApi("Use getStreamWatchdogCheckIntervalDuration() instead")
+  public final org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
+    return toThreetenDuration(getStreamWatchdogCheckIntervalDuration());
+  }
+
+  @Nonnull
+  public abstract java.time.Duration getStreamWatchdogCheckIntervalDuration();
 
   @Nullable
   public abstract String getUniverseDomain();
@@ -133,7 +148,7 @@ public abstract class ClientContext {
         .setInternalHeaders(Collections.<String, String>emptyMap())
         .setClock(NanoClock.getDefaultClock())
         .setStreamWatchdog(null)
-        .setStreamWatchdogCheckInterval(Duration.ZERO)
+        .setStreamWatchdogCheckIntervalDuration(java.time.Duration.ZERO)
         .setTracerFactory(BaseApiTracerFactory.getInstance())
         .setQuotaProjectId(null)
         .setGdchApiAudience(null)
@@ -165,9 +180,9 @@ public abstract class ClientContext {
     // A valid EndpointContext should have been created in the StubSettings
     EndpointContext endpointContext = settings.getEndpointContext();
     String endpoint = endpointContext.resolvedEndpoint();
-
+    Credentials credentials = getCredentials(settings);
+    // check if need to adjust credentials/endpoint/endpointContext for GDC-H
     String settingsGdchApiAudience = settings.getGdchApiAudience();
-    Credentials credentials = settings.getCredentialsProvider().getCredentials();
     boolean usingGDCH = credentials instanceof GdchCredentials;
     if (usingGDCH) {
       // Can only determine if the GDC-H is being used via the Credentials. The Credentials object
@@ -177,22 +192,7 @@ public abstract class ClientContext {
       // Resolve the new endpoint with the GDC-H flow
       endpoint = endpointContext.resolvedEndpoint();
       // We recompute the GdchCredentials with the audience
-      String audienceString;
-      if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
-        audienceString = settingsGdchApiAudience;
-      } else if (!Strings.isNullOrEmpty(endpoint)) {
-        audienceString = endpoint;
-      } else {
-        throw new IllegalArgumentException("Could not infer GDCH api audience from settings");
-      }
-
-      URI gdchAudienceUri;
-      try {
-        gdchAudienceUri = URI.create(audienceString);
-      } catch (IllegalArgumentException ex) { // thrown when passing a malformed uri string
-        throw new IllegalArgumentException("The GDC-H API audience string is not a valid URI", ex);
-      }
-      credentials = ((GdchCredentials) credentials).createWithGdchAudience(gdchAudienceUri);
+      credentials = getGdchCredentials(settingsGdchApiAudience, endpoint, credentials);
     } else if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
       throw new IllegalArgumentException(
           "GDC-H API audience can only be set when using GdchCredentials");
@@ -211,9 +211,14 @@ public abstract class ClientContext {
     // executor can only be set from TransportChannelProvider#withExecutor directly, and a provider
     // will have a default executor if it needs one.
     if (transportChannelProvider.needsExecutor() && settings.getExecutorProvider() != null) {
-      transportChannelProvider = transportChannelProvider.withExecutor(backgroundExecutor);
+      transportChannelProvider =
+          transportChannelProvider.withExecutor(settings.getExecutorProvider().getExecutor());
     }
-    Map<String, String> headers = getHeadersFromSettings(settings);
+    if (transportChannelProvider.needsBackgroundExecutor()) {
+      transportChannelProvider =
+          transportChannelProvider.withBackgroundExecutor(backgroundExecutor);
+    }
+    Map<String, String> headers = getHeaders(settings, credentials);
     if (transportChannelProvider.needsHeaders()) {
       transportChannelProvider = transportChannelProvider.withHeaders(headers);
     }
@@ -222,6 +227,11 @@ public abstract class ClientContext {
     }
     if (transportChannelProvider.needsEndpoint()) {
       transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
+    }
+    transportChannelProvider = transportChannelProvider.withUseS2A(endpointContext.useS2A());
+    if (transportChannelProvider.needsMtlsEndpoint() && endpointContext.mtlsEndpoint() != null) {
+      transportChannelProvider =
+          transportChannelProvider.withMtlsEndpoint(endpointContext.mtlsEndpoint());
     }
     TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
 
@@ -238,7 +248,8 @@ public abstract class ClientContext {
     if (watchdogProvider != null) {
       if (watchdogProvider.needsCheckInterval()) {
         watchdogProvider =
-            watchdogProvider.withCheckInterval(settings.getStreamWatchdogCheckInterval());
+            watchdogProvider.withCheckIntervalDuration(
+                settings.getStreamWatchdogCheckIntervalDuration());
       }
       if (watchdogProvider.needsClock()) {
         watchdogProvider = watchdogProvider.withClock(clock);
@@ -260,6 +271,15 @@ public abstract class ClientContext {
     if (watchdogProvider != null && watchdogProvider.shouldAutoClose()) {
       backgroundResources.add(watchdog);
     }
+    ApiTracerContext apiTracerContext =
+        ApiTracerContext.newBuilder()
+            .setServerAddress(endpointContext.resolvedServerAddress())
+            .setLibraryMetadata(settings.getLibraryMetadata())
+            .build();
+    ApiTracerFactory apiTracerFactory = settings.getTracerFactory();
+    if (apiTracerFactory instanceof SpanTracerFactory) {
+      apiTracerFactory = apiTracerFactory.withContext(apiTracerContext);
+    }
 
     return newBuilder()
         .setBackgroundResources(backgroundResources.build())
@@ -274,17 +294,57 @@ public abstract class ClientContext {
         .setEndpoint(settings.getEndpoint())
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
-        .setStreamWatchdogCheckInterval(settings.getStreamWatchdogCheckInterval())
-        .setTracerFactory(settings.getTracerFactory())
+        .setStreamWatchdogCheckIntervalDuration(settings.getStreamWatchdogCheckIntervalDuration())
+        .setTracerFactory(apiTracerFactory)
         .setEndpointContext(endpointContext)
         .build();
+  }
+
+  /** Determines which credentials to use. API key overrides credentials provided by provider. */
+  private static Credentials getCredentials(StubSettings settings) throws IOException {
+    Credentials credentials;
+    if (settings.getApiKey() != null) {
+      // if API key exists it becomes the default credential
+      credentials = ApiKeyCredentials.create(settings.getApiKey());
+    } else {
+      credentials = settings.getCredentialsProvider().getCredentials();
+    }
+    return credentials;
+  }
+
+  /**
+   * Constructs a new {@link com.google.auth.Credentials} object based on credentials provided with
+   * a GDC-H audience
+   */
+  @VisibleForTesting
+  static GdchCredentials getGdchCredentials(
+      String settingsGdchApiAudience, String endpoint, Credentials credentials) throws IOException {
+    String audienceString;
+    if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
+      audienceString = settingsGdchApiAudience;
+    } else if (!Strings.isNullOrEmpty(endpoint)) {
+      audienceString = endpoint;
+    } else {
+      throw new IllegalArgumentException("Could not infer GDCH api audience from settings");
+    }
+
+    URI gdchAudienceUri;
+    try {
+      gdchAudienceUri = URI.create(audienceString);
+    } catch (IllegalArgumentException ex) { // thrown when passing a malformed uri string
+      throw new IllegalArgumentException("The GDC-H API audience string is not a valid URI", ex);
+    }
+    return ((GdchCredentials) credentials).createWithGdchAudience(gdchAudienceUri);
   }
 
   /**
    * Getting a header map from HeaderProvider and InternalHeaderProvider from settings with Quota
    * Project Id.
+   *
+   * <p>Then if credentials is present and its type for metrics is not {@code
+   * CredentialTypeForMetrics.DO_NOT_SEND}, append this type info to x-goog-api-client header.
    */
-  private static Map<String, String> getHeadersFromSettings(StubSettings settings) {
+  private static Map<String, String> getHeaders(StubSettings settings, Credentials credentials) {
     // Resolve conflicts when merging headers from multiple sources
     Map<String, String> userHeaders = settings.getHeaderProvider().getHeaders();
     Map<String, String> internalHeaders = settings.getInternalHeaderProvider().getHeaders();
@@ -311,6 +371,20 @@ public abstract class ClientContext {
     effectiveHeaders.putAll(userHeaders);
     effectiveHeaders.putAll(conflictResolution);
 
+    return appendCredentialTypeToHeaderIfPresent(effectiveHeaders, credentials);
+  }
+
+  private static Map<String, String> appendCredentialTypeToHeaderIfPresent(
+      Map<String, String> effectiveHeaders, Credentials credentials) {
+    CredentialTypeForMetrics credentialTypeForMetrics =
+        credentials == null
+            ? CredentialTypeForMetrics.DO_NOT_SEND
+            : credentials.getMetricsCredentialType();
+    if (credentialTypeForMetrics != CredentialTypeForMetrics.DO_NOT_SEND) {
+      effectiveHeaders.computeIfPresent(
+          ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+          (key, value) -> value + " cred-type/" + credentialTypeForMetrics.getLabel());
+    }
     return ImmutableMap.copyOf(effectiveHeaders);
   }
 
@@ -345,7 +419,16 @@ public abstract class ClientContext {
 
     public abstract Builder setStreamWatchdog(Watchdog watchdog);
 
-    public abstract Builder setStreamWatchdogCheckInterval(Duration duration);
+    /**
+     * This method is obsolete. Use {@link
+     * #setStreamWatchdogCheckIntervalDuration(java.time.Duration)} instead.
+     */
+    @ObsoleteApi("Use setStreamWatchdogCheckIntervalDuration(java.time.Duration) instead")
+    public final Builder setStreamWatchdogCheckInterval(org.threeten.bp.Duration duration) {
+      return setStreamWatchdogCheckIntervalDuration(toJavaTimeDuration(duration));
+    }
+
+    public abstract Builder setStreamWatchdogCheckIntervalDuration(java.time.Duration duration);
 
     /**
      * Set the {@link ApiTracerFactory} that will be used to generate traces for operations.

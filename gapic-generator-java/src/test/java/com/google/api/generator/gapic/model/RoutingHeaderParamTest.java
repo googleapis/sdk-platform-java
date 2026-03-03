@@ -18,12 +18,12 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.generator.gapic.model.RoutingHeaderRule.RoutingHeaderParam;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class RoutingHeaderParamTest {
+class RoutingHeaderParamTest {
 
   @Test
-  public void getDescendantFieldNames_shouldSplitFieldNameByDot() {
+  void getDescendantFieldNames_shouldSplitFieldNameByDot() {
     RoutingHeaderParam routingHeaderParam =
         RoutingHeaderParam.create("table.name", "name", "/abc/dec");
     List<String> descendantFieldNames = routingHeaderParam.getDescendantFieldNames();

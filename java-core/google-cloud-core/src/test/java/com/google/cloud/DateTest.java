@@ -18,23 +18,20 @@ package com.google.cloud;
 
 import static com.google.common.testing.SerializableTester.reserializeAndAssert;
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.common.testing.EqualsTester;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
 /** Unit tests for {@link Date}. */
-@RunWith(JUnit4.class)
-public class DateTest {
+class DateTest {
 
   private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
   @Test
-  public void parseDate() {
+  void parseDate() {
     verifyDate("2016-09-18", 2016, 9, 18);
     verifyDate("2000-01-01", 2000, 1, 1);
     verifyDate("9999-12-31", 9999, 12, 31);
@@ -53,7 +50,7 @@ public class DateTest {
   }
 
   @Test
-  public void parseInvalidDates() {
+  void parseInvalidDates() {
     parseInvalidDate("2016/09/18");
     parseInvalidDate("2016 09 18");
     parseInvalidDate("2016-9-18");
@@ -112,7 +109,7 @@ public class DateTest {
   }
 
   @Test
-  public void testToString() {
+  void testToString() {
     Date date = Date.fromYearMonthDay(10, 9, 5);
     assertThat(date.toString()).isEqualTo("0010-09-05");
     date = Date.fromYearMonthDay(2016, 12, 31);
@@ -122,7 +119,7 @@ public class DateTest {
   }
 
   @Test
-  public void equalAndHashCode() {
+  void equalAndHashCode() {
     Date d1 = Date.fromYearMonthDay(2016, 9, 18);
     Date d2 = Date.fromYearMonthDay(2016, 9, 18);
     Date d3 = Date.fromYearMonthDay(2016, 9, 19);
@@ -130,7 +127,7 @@ public class DateTest {
   }
 
   @Test
-  public void validOrdering() {
+  void validOrdering() {
     Date d1 = Date.fromYearMonthDay(2016, 9, 18);
     Date d2 = Date.fromYearMonthDay(2016, 9, 19);
     Date d3 = Date.fromYearMonthDay(2016, 9, 20);
@@ -140,12 +137,12 @@ public class DateTest {
   }
 
   @Test
-  public void serialization() {
+  void serialization() {
     reserializeAndAssert(Date.fromYearMonthDay(2017, 4, 20));
   }
 
   @Test
-  public void testToJavaUtilDate() throws ParseException {
+  void testToJavaUtilDate() throws ParseException {
     Date gcDate = Date.parseDate("2016-09-18");
     java.util.Date juDate1 = SIMPLE_DATE_FORMAT.parse("2016-09-18");
     java.util.Date juDate2 = Date.toJavaUtilDate(gcDate);
@@ -153,7 +150,7 @@ public class DateTest {
   }
 
   @Test
-  public void testFromJavaUtilDate() throws ParseException {
+  void testFromJavaUtilDate() throws ParseException {
     java.util.Date juDate = SIMPLE_DATE_FORMAT.parse("2016-09-18");
     Date gcDate = Date.fromJavaUtilDate(juDate);
     assertThat(gcDate.getYear()).isEqualTo(2016);

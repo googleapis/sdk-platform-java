@@ -19,11 +19,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class PrimitiveValueTest {
+class PrimitiveValueTest {
   @Test
-  public void createPrimitiveValue_basic() {
+  void createPrimitiveValue_basic() {
     assertValidValue(TypeKind.INT, "3");
     assertValidValue(TypeKind.BOOLEAN, "false");
     assertValidValue(TypeKind.LONG, "123");
@@ -32,7 +32,7 @@ public class PrimitiveValueTest {
   }
 
   @Test
-  public void createPrimitiveValue_invalid() {
+  void createPrimitiveValue_invalid() {
     assertInvalidValue(TypeKind.INT, "123.f");
     assertInvalidValue(TypeKind.INT, "false");
     assertInvalidValue(TypeKind.BOOLEAN, "False");
@@ -40,7 +40,7 @@ public class PrimitiveValueTest {
   }
 
   @Test
-  public void createPrimitiveValue_unsupported() {
+  void createPrimitiveValue_unsupported() {
     assertInvalidValue(TypeKind.BYTE, "0x2");
     assertInvalidValue(TypeKind.SHORT, "1");
     assertInvalidValue(TypeKind.CHAR, "a");

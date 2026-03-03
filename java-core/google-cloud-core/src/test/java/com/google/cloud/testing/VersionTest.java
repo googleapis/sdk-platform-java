@@ -16,18 +16,16 @@
 
 package com.google.cloud.testing;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class VersionTest {
+class VersionTest {
 
   @Test
-  public void testFromString() {
+  void testFromString() {
     Version version = Version.fromString("2016.01.13");
     assertEquals(2016, version.getMajor());
     assertEquals(1, version.getMinor());
@@ -39,57 +37,32 @@ public class VersionTest {
   }
 
   @Test
-  public void testFromStringWithAlphas() {
-    try {
-      Version.fromString("2016.01.hello");
-      Assert.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+  void testFromStringWithAlphas() {
+    assertThrows(IllegalArgumentException.class, () -> Version.fromString("2016.01.hello"));
   }
 
   @Test
-  public void testFromStringMissingPatch() {
-    try {
-      Version.fromString("2016.01");
-      Assert.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+  void testFromStringMissingPatch() {
+    assertThrows(IllegalArgumentException.class, () -> Version.fromString("2016.01"));
   }
 
   @Test
-  public void testFromStringMissingMinor() {
-    try {
-      Version.fromString("2016");
-      Assert.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+  void testFromStringMissingMinor() {
+    assertThrows(IllegalArgumentException.class, () -> Version.fromString("2016"));
   }
 
   @Test
-  public void testFromStringEmpty() {
-    try {
-      Version.fromString("");
-      Assert.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+  void testFromStringEmpty() {
+    assertThrows(IllegalArgumentException.class, () -> Version.fromString(""));
   }
 
   @Test
-  public void testFromStringNull() {
-    try {
-      Version.fromString(null);
-      Assert.fail();
-    } catch (NullPointerException ex) {
-      assertNull(ex.getMessage());
-    }
+  void testFromStringNull() {
+    assertThrows(NullPointerException.class, () -> Version.fromString(null));
   }
 
   @Test
-  public void testCompare() {
+  void testCompare() {
     Version version = Version.fromString("2016.01.13");
     Version sameVersion = Version.fromString("2016.01.13");
     Version olderVersion = Version.fromString("2015.12.01");

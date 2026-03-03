@@ -19,11 +19,11 @@ import static org.junit.Assert.assertThrows;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class VariableExprTest {
+class VariableExprTest {
   @Test
-  public void validVariableExpr_basic() {
+  void validVariableExpr_basic() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
     assertThat(variableExpr.variable()).isEqualTo(variable);
@@ -35,7 +35,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void validVariableExpr_staticReference() {
+  void validVariableExpr_staticReference() {
     VariableExpr.builder()
         .setVariable(Variable.builder().setType(TypeNode.INT).setName("MAX_VALUE").build())
         .setStaticReferenceType(TypeNode.INT_OBJECT)
@@ -43,7 +43,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void validVariableExpr_classFieldOnStaticReference() {
+  void validVariableExpr_classFieldOnStaticReference() {
     VariableExpr.builder()
         .setVariable(
             Variable.builder()
@@ -55,7 +55,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void validVariableExpr_classFieldOnExprReference() {
+  void validVariableExpr_classFieldOnExprReference() {
     VariableExpr.builder()
         .setVariable(
             Variable.builder()
@@ -71,7 +71,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void validVariableExpr_withFields() {
+  void validVariableExpr_withFields() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr =
         VariableExpr.builder()
@@ -89,7 +89,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void validVariableExpr_declaration() {
+  void validVariableExpr_declaration() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
@@ -99,7 +99,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void validVariableExpr_volatileDeclaration() {
+  void validVariableExpr_volatileDeclaration() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
     VariableExpr variableExpr =
         VariableExpr.builder()
@@ -118,7 +118,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void validVariableExpr_reference() {
+  void validVariableExpr_reference() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
@@ -128,7 +128,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void validVariableExpr_referenceWithModifiersSet() {
+  void validVariableExpr_referenceWithModifiersSet() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
@@ -144,7 +144,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void validVariableExpr_templatedArgInMethod() {
+  void validVariableExpr_templatedArgInMethod() {
     Variable variable =
         Variable.builder()
             .setName("x")
@@ -158,7 +158,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void validVariableExpr_templatedArgNameAndTypeInMethod() {
+  void validVariableExpr_templatedArgNameAndTypeInMethod() {
     Variable variable =
         Variable.builder()
             .setName("x")
@@ -174,7 +174,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void validVariableExpr_declarationWithAnnotations() {
+  void validVariableExpr_declarationWithAnnotations() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
     VariableExpr variableExpr =
         VariableExpr.builder()
@@ -194,7 +194,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void invalidVariableExpr_templatedArgInMethodHasNonStringNonTypeNodeObject() {
+  void invalidVariableExpr_templatedArgInMethodHasNonStringNonTypeNodeObject() {
     Variable variable =
         Variable.builder()
             .setName("x")
@@ -210,7 +210,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void invalidVariableExpr_badTemplateName() {
+  void invalidVariableExpr_badTemplateName() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
     assertThrows(
         IdentifierNode.InvalidIdentifierException.class,
@@ -222,7 +222,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void invalidVariableExpr_referencePrimitiveType() {
+  void invalidVariableExpr_referencePrimitiveType() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
@@ -237,7 +237,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void invalidVariableExpr_referenceAndDecl() {
+  void invalidVariableExpr_referenceAndDecl() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
@@ -253,7 +253,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void invalidVariableExpr_exprAndStaticReference() {
+  void invalidVariableExpr_exprAndStaticReference() {
     Variable refVariable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
     assertThrows(
         IllegalStateException.class,
@@ -266,7 +266,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void invalidVariableExpr_primitiveStaticReference() {
+  void invalidVariableExpr_primitiveStaticReference() {
     assertThrows(
         IllegalStateException.class,
         () ->
@@ -277,7 +277,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void invalidVariableExpr_standaloneClassField() {
+  void invalidVariableExpr_standaloneClassField() {
     assertThrows(
         IllegalStateException.class,
         () ->
@@ -291,7 +291,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void invalidVariableExpr_classFieldOnPrimitiveType() {
+  void invalidVariableExpr_classFieldOnPrimitiveType() {
     assertThrows(
         IllegalStateException.class,
         () ->
@@ -310,7 +310,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void invalidVariableExpr_annotationNoDeclaration() {
+  void invalidVariableExpr_annotationNoDeclaration() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
     VariableExpr.Builder variableExprBuilder =
         VariableExpr.builder()

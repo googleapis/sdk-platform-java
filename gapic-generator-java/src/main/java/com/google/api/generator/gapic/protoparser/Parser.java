@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.protoparser;
 
+import com.google.api.ClientLibrarySettings;
 import com.google.api.ClientProto;
 import com.google.api.DocumentationRule;
 import com.google.api.FieldBehavior;
@@ -24,6 +25,7 @@ import com.google.api.HttpRule;
 import com.google.api.MethodSettings;
 import com.google.api.ResourceDescriptor;
 import com.google.api.ResourceProto;
+import com.google.api.SelectiveGapicGeneration;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
@@ -79,14 +81,27 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Parser {
+  enum SelectiveGapicType {
+    // Methods will be generated and exposed externally as usual.
+    PUBLIC,
+    // Methods will not be generated.
+    HIDDEN,
+    // Methods will be generated and tagged @InternalApi (internal use) during generation.
+    INTERNAL
+  }
+
+  private static final Logger LOGGER = Logger.getLogger(Parser.class.getName());
   private static final String COMMA = ",";
   private static final String COLON = ":";
   private static final String DEFAULT_PORT = "443";
@@ -105,6 +120,16 @@ public class Parser {
   // These must be kept in sync with the above protos' java_package options.
   private static final Set<String> MIXIN_JAVA_PACKAGE_ALLOWLIST =
       ImmutableSet.of("com.google.iam.v1", "com.google.longrunning", "com.google.cloud.location");
+
+  // List of BigQuery methods that can use max_result field as an alternative to page_size for
+  // pagination.
+  private static final ImmutableSet<String> BIGQUERY_LEGACY_PAGINATION_ALLOWLIST =
+      ImmutableSet.of(
+          "google.cloud.bigquery.v2.JobService.ListJobs",
+          "google.cloud.bigquery.v2.RoutineService.ListRoutines",
+          "google.cloud.bigquery.v2.DatasetService.ListDatasets",
+          "google.cloud.bigquery.v2.ModelService.ListModels",
+          "google.cloud.bigquery.v2.TableService.ListTables");
 
   // Allow other parsers to access this.
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
@@ -125,6 +150,8 @@ public class Parser {
     Optional<GapicLanguageSettings> languageSettingsOpt =
         GapicLanguageSettingsParser.parse(gapicYamlConfigPathOpt);
     Optional<String> transportOpt = PluginArgumentParser.parseTransport(request);
+    Optional<String> repoOpt = PluginArgumentParser.parseRepo(request);
+    Optional<String> artifactOpt = PluginArgumentParser.parseArtifact(request);
 
     boolean willGenerateMetadata = PluginArgumentParser.hasMetadataFlag(request);
     boolean willGenerateNumericEnum = PluginArgumentParser.hasNumericEnumFlag(request);
@@ -156,11 +183,11 @@ public class Parser {
     messages = updateResourceNamesInMessages(messages, resourceNames.values());
 
     // Contains only resource names that are actually used. Usage refers to the presence of a
-    // request message's field in an RPC's method_signature annotation. That is,  resource name
-    // definitions
-    // or references that are simply defined, but not used in such a manner, will not have
-    // corresponding Java helper
-    // classes generated.
+    // request message's field in an RPC's method_signature annotation. That is, resource name
+    // definitions or references that are simply defined, but not used in such a manner,
+    // will not have corresponding Java helper classes generated.
+    // If selective api generation is configured via service yaml, Java helper classes are only
+    // generated if resource names are actually used by methods selected to generate.
     Set<ResourceName> outputArgResourceNames = new HashSet<>();
     List<Service> mixinServices = new ArrayList<>();
     Transport transport = Transport.parse(transportOpt.orElse(Transport.GRPC.toString()));
@@ -175,7 +202,10 @@ public class Parser {
             mixinServices,
             transport);
 
-    Preconditions.checkState(!services.isEmpty(), "No services found to generate");
+    if (services.isEmpty()) {
+      LOGGER.warning("No services found to generate. This will cause a no-op (no files generated)");
+      return GapicContext.EMPTY;
+    }
 
     // TODO(vam-google): Figure out whether we should keep this allowlist or bring
     // back the unused resource names for all APIs.
@@ -225,6 +255,8 @@ public class Parser {
         .setServiceYamlProto(serviceYamlProtoOpt.orElse(null))
         .setTransport(transport)
         .setRestNumericEnumsEnabled(willGenerateNumericEnum)
+        .setRepo(repoOpt.orElse(null))
+        .setArtifact(artifactOpt.orElse(null))
         .build();
   }
 
@@ -418,6 +450,81 @@ public class Parser {
         Transport.GRPC);
   }
 
+  static SelectiveGapicType getMethodSelectiveGapicType(
+      MethodDescriptor method,
+      Optional<com.google.api.Service> serviceYamlProtoOpt,
+      String protoPackage) {
+    // default to include all when no service yaml or no library setting section.
+    if (!serviceYamlProtoOpt.isPresent()
+        || serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsCount() == 0) {
+      return SelectiveGapicType.PUBLIC;
+    }
+    List<ClientLibrarySettings> librarySettingsList =
+        serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsList();
+    // Validate for logging purpose, this should be validated upstream.
+    // If library_settings.version does not match with proto package name
+    // Give warnings and disregard this config. default to include all.
+    if (!librarySettingsList.get(0).getVersion().isEmpty()
+        && !protoPackage.equals(librarySettingsList.get(0).getVersion())) {
+      if (LOGGER.isLoggable(Level.WARNING)) {
+        LOGGER.warning(
+            String.format(
+                "Service yaml config is misconfigured. Version in "
+                    + "publishing.library_settings (%s) does not match proto package (%s)."
+                    + "Disregarding selective generation settings.",
+                librarySettingsList.get(0).getVersion(), protoPackage));
+      }
+      return SelectiveGapicType.PUBLIC;
+    }
+    // librarySettingsList is technically a list, but is processed upstream and
+    // only leave with 1 element. Otherwise, it is a misconfiguration and
+    // should be caught upstream.
+    SelectiveGapicGeneration selectiveGapicGenerationConfig =
+        librarySettingsList.get(0).getJavaSettings().getCommon().getSelectiveGapicGeneration();
+
+    List<String> includeMethodsList = selectiveGapicGenerationConfig.getMethodsList();
+
+    Boolean generateOmittedAsInternal =
+        selectiveGapicGenerationConfig.getGenerateOmittedAsInternal();
+
+    // Set method to PUBLIC if no SelectiveGapicGeneration Configuration is configured and
+    // GenerateOmittedAsInternal is false.
+    if (includeMethodsList.isEmpty() && generateOmittedAsInternal == false) {
+      return SelectiveGapicType.PUBLIC;
+    }
+
+    // Set method to PUBLIC if the method is in the allow list.
+    if (includeMethodsList.contains(method.getFullName())) {
+      return SelectiveGapicType.PUBLIC;
+    }
+    // Otherwise, generate this method as INTERNAL or HIDDEN based on GenerateOmittedAsInternal
+    // flag.
+
+    return generateOmittedAsInternal ? SelectiveGapicType.INTERNAL : SelectiveGapicType.HIDDEN;
+  }
+
+  // A service is considered empty if it contains no methods, or only methods marked as HIDDEN.
+  private static boolean isEmptyService(
+      ServiceDescriptor serviceDescriptor,
+      Optional<com.google.api.Service> serviceYamlProtoOpt,
+      String protoPackage) {
+    List<MethodDescriptor> methodsList = serviceDescriptor.getMethods();
+    List<MethodDescriptor> methodListNotHidden =
+        methodsList.stream()
+            .filter(
+                method ->
+                    getMethodSelectiveGapicType(method, serviceYamlProtoOpt, protoPackage)
+                        != SelectiveGapicType.HIDDEN)
+            .collect(Collectors.toList());
+    if (methodListNotHidden.isEmpty()) {
+      LOGGER.log(
+          Level.WARNING,
+          "Service {0} has no public or internal RPC methods and will not be generated",
+          serviceDescriptor.getName());
+    }
+    return methodListNotHidden.isEmpty();
+  }
+
   public static List<Service> parseService(
       FileDescriptor fileDescriptor,
       Map<String, Message> messageTypes,
@@ -426,8 +533,11 @@ public class Parser {
       Optional<GapicServiceConfig> serviceConfigOpt,
       Set<ResourceName> outputArgResourceNames,
       Transport transport) {
-
+    String protoPackage = fileDescriptor.getPackage();
     return fileDescriptor.getServices().stream()
+        .filter(
+            serviceDescriptor ->
+                !isEmptyService(serviceDescriptor, serviceYamlProtoOpt, protoPackage))
         .map(
             s -> {
               // Workaround for a missing default_host and oauth_scopes annotation from a service
@@ -480,6 +590,8 @@ public class Parser {
               String pakkage = TypeParser.getPackage(fileDescriptor);
               String originalJavaPackage = pakkage;
               // Override Java package with that specified in gapic.yaml.
+              // this override is deprecated and legacy support only
+              // see go/client-user-guide#configure-long-running-operation-polling-timeouts-optional
               if (serviceConfigOpt.isPresent()
                   && serviceConfigOpt.get().getLanguageSettingsOpt().isPresent()) {
                 GapicLanguageSettings languageSettings =
@@ -500,6 +612,7 @@ public class Parser {
                   .setMethods(
                       parseMethods(
                           s,
+                          protoPackage,
                           pakkage,
                           messageTypes,
                           resourceNames,
@@ -691,6 +804,7 @@ public class Parser {
   @VisibleForTesting
   static List<Method> parseMethods(
       ServiceDescriptor serviceDescriptor,
+      String protoPackage,
       String servicePackage,
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
@@ -703,8 +817,13 @@ public class Parser {
     // Parse the serviceYaml for autopopulated methods and fields once and put into a map
     Map<String, List<String>> autoPopulatedMethodsWithFields =
         parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt);
-
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
+      SelectiveGapicType methodSelectiveGapicType =
+          getMethodSelectiveGapicType(protoMethod, serviceYamlProtoOpt, protoPackage);
+      // Skip generation for methods marked as HIDDEN
+      if (methodSelectiveGapicType == SelectiveGapicType.HIDDEN) {
+        continue;
+      }
       // Parse the method.
       TypeNode inputType = TypeParser.parseType(protoMethod.getInputType());
       Method.Builder methodBuilder = Method.builder();
@@ -755,6 +874,7 @@ public class Parser {
               .setName(protoMethod.getName())
               .setInputType(inputType)
               .setOutputType(TypeParser.parseType(protoMethod.getOutputType()))
+              .setIsInternalApi(methodSelectiveGapicType == SelectiveGapicType.INTERNAL)
               .setStream(
                   Method.toStream(protoMethod.isClientStreaming(), protoMethod.isServerStreaming()))
               .setLro(parseLro(servicePackage, protoMethod, messageTypes))
@@ -923,7 +1043,8 @@ public class Parser {
       // page_size gets priority over max_results if both are present
       List<String> fieldNames = new ArrayList<>();
       fieldNames.add("page_size");
-      if (transport == Transport.REST) {
+      if ((transport == Transport.REST)
+          || (BIGQUERY_LEGACY_PAGINATION_ALLOWLIST.contains(methodDescriptor.getFullName()))) {
         fieldNames.add("max_results");
       }
       for (String fieldName : fieldNames) {
@@ -1063,12 +1184,10 @@ public class Parser {
         .setType(TypeParser.parseType(fieldDescriptor))
         .setIsMessage(fieldDescriptor.getJavaType() == FieldDescriptor.JavaType.MESSAGE)
         .setIsEnum(fieldDescriptor.getJavaType() == FieldDescriptor.JavaType.ENUM)
-        .setIsContainedInOneof(
-            fieldDescriptor.getContainingOneof() != null
-                && !fieldDescriptor.getContainingOneof().isSynthetic())
+        .setIsContainedInOneof(fieldDescriptor.getRealContainingOneof() != null)
         .setIsProto3Optional(
             fieldDescriptor.getContainingOneof() != null
-                && fieldDescriptor.getContainingOneof().isSynthetic())
+                && fieldDescriptor.getRealContainingOneof() == null)
         .setIsRepeated(fieldDescriptor.isRepeated())
         .setIsRequired(isRequired)
         .setFieldInfoFormat(fieldInfoFormat)
@@ -1104,7 +1223,8 @@ public class Parser {
     return fileDescriptors;
   }
 
-  private static String parseServiceJavaPackage(CodeGeneratorRequest request) {
+  @VisibleForTesting
+  static String parseServiceJavaPackage(CodeGeneratorRequest request) {
     Map<String, Integer> javaPackageCount = new HashMap<>();
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     for (String fileToGenerate : request.getFileToGenerateList()) {
@@ -1137,13 +1257,12 @@ public class Parser {
       processedJavaPackageCount = javaPackageCount;
     }
 
-    String finalJavaPackage =
-        processedJavaPackageCount.entrySet().stream()
-            .max(Map.Entry.comparingByValue())
-            .get()
-            .getKey();
-    Preconditions.checkState(
-        !Strings.isNullOrEmpty(finalJavaPackage), "No service Java package found");
+    String finalJavaPackage = "";
+    Optional<Entry<String, Integer>> finalPackageEntry =
+        processedJavaPackageCount.entrySet().stream().max(Map.Entry.comparingByValue());
+    if (finalPackageEntry.isPresent()) {
+      finalJavaPackage = finalPackageEntry.get().getKey();
+    }
     return finalJavaPackage;
   }
 

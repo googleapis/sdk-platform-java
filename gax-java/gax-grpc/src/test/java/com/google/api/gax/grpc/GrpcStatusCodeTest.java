@@ -32,14 +32,11 @@ package com.google.api.gax.grpc;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.common.truth.Truth;
 import io.grpc.Status;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class GrpcStatusCodeTest {
+class GrpcStatusCodeTest {
   @Test
-  public void testGrpcCodeToStatusCode() {
+  void testGrpcCodeToStatusCode() {
     testCodes(StatusCode.Code.OK, Status.Code.OK);
     testCodes(StatusCode.Code.CANCELLED, Status.Code.CANCELLED);
     testCodes(StatusCode.Code.UNKNOWN, Status.Code.UNKNOWN);

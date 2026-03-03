@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.rpc;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.StatusCode.Code;
@@ -46,18 +46,15 @@ import com.google.common.truth.Truth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class StreamingCallableTest {
+class StreamingCallableTest {
   private ClientContext clientContext;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     clientContext =
         ClientContext.newBuilder()
             .setDefaultCallContext(FakeCallContext.createDefault())
@@ -97,7 +94,7 @@ public class StreamingCallableTest {
   }
 
   @Test
-  public void clientStreaming() {
+  void clientStreaming() {
     ClientStreamingStashCallable<Integer, Integer> callIntList =
         new ClientStreamingStashCallable<>(100);
 
@@ -122,7 +119,7 @@ public class StreamingCallableTest {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void testClientStreamingCall() {
+  void testClientStreamingCall() {
     ApiCallContext defaultCallContext = FakeCallContext.createDefault();
     ClientStreamingStashCallable<Integer, Integer> stashCallable =
         new ClientStreamingStashCallable<>();
@@ -136,7 +133,7 @@ public class StreamingCallableTest {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void testClientStreamingCallWithContext() {
+  void testClientStreamingCallWithContext() {
     FakeChannel channel = new FakeChannel();
     Credentials credentials = Mockito.mock(Credentials.class);
     RetrySettings retrySettings = Mockito.mock(RetrySettings.class);

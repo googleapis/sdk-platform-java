@@ -17,18 +17,18 @@ package com.google.api.generator.engine.ast;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ThrowExprTest {
+class ThrowExprTest {
   @Test
-  public void createThrowExpr_basic() {
+  void createThrowExpr_basic() {
     TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
     ThrowExpr.builder().setType(npeType).build();
     // No exception thrown, we're good.
   }
 
   @Test
-  public void createThrowExpr_basicExpr() {
+  void createThrowExpr_basicExpr() {
     TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
     VariableExpr throwVarExpr =
         VariableExpr.builder()
@@ -46,14 +46,14 @@ public class ThrowExprTest {
   }
 
   @Test
-  public void createThrowExpr_basicWithStringMessage() {
+  void createThrowExpr_basicWithStringMessage() {
     TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
     ThrowExpr.builder().setType(npeType).setMessageExpr("Some message").build();
     // No exception thrown, we're good.
   }
 
   @Test
-  public void createThrowExpr_messageExpr() {
+  void createThrowExpr_messageExpr() {
     TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
     Expr messageExpr =
         MethodInvocationExpr.builder()
@@ -65,14 +65,14 @@ public class ThrowExprTest {
   }
 
   @Test
-  public void createThrowExpr_badExceptionType() {
+  void createThrowExpr_badExceptionType() {
     TypeNode nonExceptionType = TypeNode.STRING;
     assertThrows(
         IllegalStateException.class, () -> ThrowExpr.builder().setType(nonExceptionType).build());
   }
 
   @Test
-  public void createThrowExpr_badMessageExpr() {
+  void createThrowExpr_badMessageExpr() {
     TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
     Expr messageExpr =
         MethodInvocationExpr.builder().setMethodName("foobar").setReturnType(TypeNode.INT).build();
@@ -82,7 +82,7 @@ public class ThrowExprTest {
   }
 
   @Test
-  public void createThrowExpr_causeExpr() {
+  void createThrowExpr_causeExpr() {
     TypeNode npeType =
         TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
     ThrowExpr.builder()
@@ -96,7 +96,7 @@ public class ThrowExprTest {
   }
 
   @Test
-  public void createThrowExpr_causeExpr_throwableSubtype() {
+  void createThrowExpr_causeExpr_throwableSubtype() {
     TypeNode npeType =
         TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
     ThrowExpr.builder()
@@ -110,7 +110,7 @@ public class ThrowExprTest {
   }
 
   @Test
-  public void createThrowExpr_causeExpr_onThrowableSubtype() {
+  void createThrowExpr_causeExpr_onThrowableSubtype() {
     TypeNode npeType =
         TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
     assertThrows(
@@ -123,7 +123,7 @@ public class ThrowExprTest {
   }
 
   @Test
-  public void createThrowExpr_messageAndCauseExpr() {
+  void createThrowExpr_messageAndCauseExpr() {
     TypeNode npeType =
         TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
     Expr messageExpr =
@@ -143,7 +143,7 @@ public class ThrowExprTest {
   }
 
   @Test
-  public void createThrowExpr_cannotThrowVariableDeclaration() {
+  void createThrowExpr_cannotThrowVariableDeclaration() {
     VariableExpr throwVarExpr =
         VariableExpr.builder()
             .setVariable(
@@ -161,7 +161,7 @@ public class ThrowExprTest {
   }
 
   @Test
-  public void createThrowExpr_cannotThrowNonExceptionTypedExpr() {
+  void createThrowExpr_cannotThrowNonExceptionTypedExpr() {
     VariableExpr throwVarExpr =
         VariableExpr.builder()
             .setVariable(Variable.builder().setName("str").setType(TypeNode.STRING).build())
@@ -171,7 +171,7 @@ public class ThrowExprTest {
   }
 
   @Test
-  public void createThrowExpr_cannotHaveThrowVariableAndMessageExprPresent() {
+  void createThrowExpr_cannotHaveThrowVariableAndMessageExprPresent() {
     Expr messageExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
@@ -191,7 +191,7 @@ public class ThrowExprTest {
   }
 
   @Test
-  public void createThrowExpr_cannotHaveThrowVariableAndCauseExprPresent() {
+  void createThrowExpr_cannotHaveThrowVariableAndCauseExprPresent() {
     VariableExpr throwVarExpr =
         VariableExpr.builder()
             .setVariable(

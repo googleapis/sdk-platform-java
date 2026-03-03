@@ -31,11 +31,11 @@ package com.google.api.gax.paging;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class PagesTest {
+class PagesTest {
   @Test
-  public void testEmpty() {
+  void testEmpty() {
     assertThat(Pages.<Integer>empty().iterateAll()).isEmpty();
   }
 }

@@ -20,10 +20,10 @@ import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.gax.grpc.GrpcStatusCode;
 import com.google.api.gax.rpc.InternalException;
@@ -33,16 +33,16 @@ import io.grpc.Status.Code;
 import java.io.IOException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class BaseGrpcServiceExceptionTest {
+class BaseGrpcServiceExceptionTest {
 
   private static final String MESSAGE = "some message";
   private static final boolean NOT_RETRYABLE = false;
   private static final boolean IDEMPOTENT = true;
 
   @Test
-  public void testBaseServiceException() {
+  void testBaseServiceException() {
     BaseGrpcServiceException serviceException = null;
 
     IOException exception = new SocketTimeoutException();
@@ -86,7 +86,7 @@ public class BaseGrpcServiceExceptionTest {
   }
 
   @Test
-  public void testTranslateAndThrow() throws Exception {
+  void testTranslateAndThrow() throws Exception {
     IOException exception = new SocketTimeoutException();
     BaseGrpcServiceException cause = new BaseGrpcServiceException(exception, IDEMPOTENT);
     RetryHelper.RetryHelperException exceptionMock =

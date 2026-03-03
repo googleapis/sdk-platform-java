@@ -18,12 +18,12 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.test.utils.TestExprBuilder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ArrayExprTest {
+class ArrayExprTest {
 
   @Test
-  public void validAnonymousArray_sametype() {
+  void validAnonymousArray_sametype() {
     ArrayExpr.Builder exprBuilder =
         ArrayExpr.builder()
             .setType(TypeNode.createArrayTypeOf(TypeNode.STRING))
@@ -41,7 +41,7 @@ public class ArrayExprTest {
   }
 
   @Test
-  public void validAnonymousArray_unsetTypeThrows() {
+  void validAnonymousArray_unsetTypeThrows() {
     ArrayExpr.Builder exprBuilder = ArrayExpr.builder();
     IllegalStateException thrown =
         assertThrows(IllegalStateException.class, () -> exprBuilder.build());
@@ -49,7 +49,7 @@ public class ArrayExprTest {
   }
 
   @Test
-  public void validAnonymousArray_onlyVariableAndValueExprs() {
+  void validAnonymousArray_onlyVariableAndValueExprs() {
     ArrayExpr.Builder exprBuilder =
         ArrayExpr.builder().setType(TypeNode.createArrayTypeOf(TypeNode.INT));
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();

@@ -31,21 +31,21 @@ import com.google.testgapic.v1beta1.LockerProto;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ResourceNameParserTest {
+class ResourceNameParserTest {
   private static final String MAIN_PACKAGE = "com.google.testgapic.v1beta1";
 
   private FileDescriptor lockerServiceFileDescriptor;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     lockerServiceFileDescriptor = LockerProto.getDescriptor();
   }
 
   @Test
-  public void parseResourceNames_basicOnePattern() {
+  void parseResourceNames_basicOnePattern() {
     Map<String, ResourceName> typeStringsToResourceNames =
         ResourceNameParser.parseResourceNamesFromFile(lockerServiceFileDescriptor);
     assertEquals(4, typeStringsToResourceNames.size());
@@ -63,7 +63,7 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void parseResourceNames_basicTwoPatterns() {
+  void parseResourceNames_basicTwoPatterns() {
     Map<String, ResourceName> typeStringsToResourceNames =
         ResourceNameParser.parseResourceNamesFromFile(lockerServiceFileDescriptor);
     assertEquals(4, typeStringsToResourceNames.size());
@@ -81,7 +81,7 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void parseResourceNames_wildcard() {
+  void parseResourceNames_wildcard() {
     Map<String, ResourceName> typeStringsToResourceNames =
         ResourceNameParser.parseResourceNamesFromFile(lockerServiceFileDescriptor);
     assertEquals(4, typeStringsToResourceNames.size());
@@ -101,7 +101,7 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void parseResourceNames_deletedTopic() {
+  void parseResourceNames_deletedTopic() {
     Map<String, ResourceName> typeStringsToResourceNames =
         ResourceNameParser.parseResourceNamesFromFile(lockerServiceFileDescriptor);
     assertEquals(4, typeStringsToResourceNames.size());
@@ -117,7 +117,7 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void parseResourceNames_messageResourceDefinition() {
+  void parseResourceNames_messageResourceDefinition() {
     String pakkage = TypeParser.getPackage(lockerServiceFileDescriptor);
     List<Descriptor> messageDescriptors = lockerServiceFileDescriptor.getMessageTypes();
     Map<String, ResourceName> typeStringsToResourceNames =
@@ -137,7 +137,7 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void parseResourceNames_badMessageResourceNameDefinitionMissingNameField() {
+  void parseResourceNames_badMessageResourceNameDefinitionMissingNameField() {
     FileDescriptor protoFileDescriptor = BadMessageResnameDefProto.getDescriptor();
     List<Descriptor> messageDescriptors = protoFileDescriptor.getMessageTypes();
     Descriptor messageDescriptor = messageDescriptors.get(0);
@@ -149,7 +149,7 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void parseResourceNameFromMessage_basicResourceDefinition() {
+  void parseResourceNameFromMessage_basicResourceDefinition() {
     String pakkage = TypeParser.getPackage(lockerServiceFileDescriptor);
     List<Descriptor> messageDescriptors = lockerServiceFileDescriptor.getMessageTypes();
     Descriptor documentMessageDescriptor = messageDescriptors.get(0);
@@ -161,7 +161,7 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void parseResourceNamesFromMessage_noResourceDefinition() {
+  void parseResourceNamesFromMessage_noResourceDefinition() {
     String pakkage = TypeParser.getPackage(lockerServiceFileDescriptor);
     List<Descriptor> messageDescriptors = lockerServiceFileDescriptor.getMessageTypes();
     Descriptor folderMessageDescriptor = messageDescriptors.get(1);
@@ -172,7 +172,7 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void parseResourceNameFromMessage_nonNameResourceReferenceField() {
+  void parseResourceNameFromMessage_nonNameResourceReferenceField() {
     String pakkage = TypeParser.getPackage(lockerServiceFileDescriptor);
     List<Descriptor> messageDescriptors = lockerServiceFileDescriptor.getMessageTypes();
     Descriptor binderMessageDescriptor = messageDescriptors.get(2);
@@ -184,7 +184,7 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void parseResourceNamesFromMessage_noNameOrResourceReferenceField() {
+  void parseResourceNamesFromMessage_noNameOrResourceReferenceField() {
     FileDescriptor protoFileDescriptor = BadMessageResnameDefProto.getDescriptor();
     String pakkage = TypeParser.getPackage(protoFileDescriptor);
     List<Descriptor> messageDescriptors = protoFileDescriptor.getMessageTypes();
@@ -197,14 +197,14 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void getVariableName_basicPattern() {
+  void getVariableName_basicPattern() {
     Optional<String> nameOpt = ResourceNameParser.getVariableNameFromPattern("projects/{project}");
     assertTrue(nameOpt.isPresent());
     assertEquals("project", nameOpt.get());
   }
 
   @Test
-  public void getVariableName_basicPatternLonger() {
+  void getVariableName_basicPatternLonger() {
     Optional<String> nameOpt =
         ResourceNameParser.getVariableNameFromPattern(
             "projects/{project}/billingAccounts/{billing_account}");
@@ -213,7 +213,7 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void getVariableName_differentCasedName() {
+  void getVariableName_differentCasedName() {
     Optional<String> nameOpt =
         ResourceNameParser.getVariableNameFromPattern(
             "projects/{project}/billingAccounts/{billingAccOunt}");
@@ -222,7 +222,7 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void getVariableName_singletonEnding() {
+  void getVariableName_singletonEnding() {
     Optional<String> nameOpt =
         ResourceNameParser.getVariableNameFromPattern("projects/{project}/cmekSettings");
     assertTrue(nameOpt.isPresent());
@@ -230,7 +230,7 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void getVariableName_onlyLiterals() {
+  void getVariableName_onlyLiterals() {
     Optional<String> nameOpt =
         ResourceNameParser.getVariableNameFromPattern("projects/project/locations/location");
     assertTrue(nameOpt.isPresent());
@@ -238,7 +238,7 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void getVariableName_deletedTopic() {
+  void getVariableName_deletedTopic() {
     Optional<String> nameOpt =
         ResourceNameParser.getVariableNameFromPattern(ResourceNameConstants.DELETED_TOPIC_LITERAL);
     assertTrue(nameOpt.isPresent());
@@ -246,7 +246,7 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void getVariableName_wildcard() {
+  void getVariableName_wildcard() {
     Optional<String> nameOpt =
         ResourceNameParser.getVariableNameFromPattern(ResourceNameConstants.WILDCARD_PATTERN);
     assertFalse(nameOpt.isPresent());

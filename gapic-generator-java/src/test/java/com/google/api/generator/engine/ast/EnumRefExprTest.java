@@ -16,25 +16,25 @@ package com.google.api.generator.engine.ast;
 
 import static org.junit.Assert.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class EnumRefExprTest {
+class EnumRefExprTest {
   @Test
-  public void validEnumRefExpr_basic() {
+  void validEnumRefExpr_basic() {
     TypeNode enumType =
         TypeNode.withReference(ConcreteReference.withClazz(TypeNode.TypeKind.class));
     EnumRefExpr.builder().setName("VOID").setType(enumType).build();
   }
 
   @Test
-  public void invalidEnumRefExpr_primitiveType() {
+  void invalidEnumRefExpr_primitiveType() {
     assertThrows(
         IllegalStateException.class,
         () -> EnumRefExpr.builder().setName("VOID").setType(TypeNode.INT).build());
   }
 
   @Test
-  public void invalidEnumRefExpr_nullType() {
+  void invalidEnumRefExpr_nullType() {
     assertThrows(
         IllegalStateException.class,
         () -> EnumRefExpr.builder().setName("VOID").setType(TypeNode.NULL).build());

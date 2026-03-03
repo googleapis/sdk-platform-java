@@ -35,27 +35,23 @@ import com.google.common.truth.Truth;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class ServerStreamTest {
+class ServerStreamTest {
   private ServerStream<Integer> stream;
   private MockStreamController<Integer> controller;
   private ExecutorService executor;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     stream = new ServerStream<>();
     controller = new MockStreamController<>(stream.observer());
 
@@ -63,47 +59,37 @@ public class ServerStreamTest {
     executor = Executors.newCachedThreadPool();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     executor.shutdownNow();
   }
 
   @Test
-  public void testEmptyStream() {
+  void testEmptyStream() {
     stream.observer().onComplete();
 
     Truth.assertThat(Lists.newArrayList(stream)).isEmpty();
   }
 
   @Test
-  public void testMultipleItemStream() throws Exception {
+  void testMultipleItemStream() throws Exception {
     Future<Void> producerFuture =
         executor.submit(
-            new Callable<Void>() {
-              @Override
-              public Void call() {
-                for (int i = 0; i < 5; i++) {
-                  int requestCount = controller.popLastPull();
+            () -> {
+              for (int i = 0; i < 5; i++) {
+                int requestCount = controller.popLastPull();
 
-                  Truth.assertWithMessage("ServerStream should request one item at a time")
-                      .that(requestCount)
-                      .isEqualTo(1);
+                Truth.assertWithMessage("ServerStream should request one item at a time")
+                    .that(requestCount)
+                    .isEqualTo(1);
 
-                  stream.observer().onResponse(i);
-                }
-                stream.observer().onComplete();
-                return null;
+                stream.observer().onResponse(i);
               }
+              stream.observer().onComplete();
+              return null;
             });
 
-    Future<List<Integer>> consumerFuture =
-        executor.submit(
-            new Callable<List<Integer>>() {
-              @Override
-              public List<Integer> call() {
-                return Lists.newArrayList(stream);
-              }
-            });
+    Future<List<Integer>> consumerFuture = executor.submit(() -> Lists.newArrayList(stream));
 
     producerFuture.get(60, TimeUnit.SECONDS);
     List<Integer> results = consumerFuture.get();
@@ -111,7 +97,7 @@ public class ServerStreamTest {
   }
 
   @Test
-  public void testMultipleItemStreamMethod() throws Exception {
+  void testMultipleItemStreamMethod() throws Exception {
     Future<Void> producerFuture =
         executor.submit(
             () -> {
@@ -136,20 +122,17 @@ public class ServerStreamTest {
   }
 
   @Test
-  public void testEarlyTermination() throws Exception {
+  void testEarlyTermination() throws Exception {
     Future<Void> taskFuture =
         executor.submit(
-            new Callable<Void>() {
-              @Override
-              public Void call() {
-                int i = 0;
-                while (controller.popLastPull() > 0) {
-                  stream.observer().onResponse(i++);
-                }
-                controller.waitForCancel();
-                stream.observer().onError(new CancellationException("cancelled"));
-                return null;
+            () -> {
+              int i = 0;
+              while (controller.popLastPull() > 0) {
+                stream.observer().onResponse(i++);
               }
+              controller.waitForCancel();
+              stream.observer().onError(new CancellationException("cancelled"));
+              return null;
             });
 
     List<Integer> results = Lists.newArrayList();
@@ -167,7 +150,7 @@ public class ServerStreamTest {
   }
 
   @Test
-  public void testErrorPropagation() {
+  void testErrorPropagation() {
     ClassCastException e = new ClassCastException("fake error");
 
     stream.observer().onError(e);
@@ -184,7 +167,7 @@ public class ServerStreamTest {
   }
 
   @Test
-  public void testNoErrorsBetweenHasNextAndNext() {
+  void testNoErrorsBetweenHasNextAndNext() {
     Iterator<Integer> it = stream.iterator();
 
     controller.popLastPull();
@@ -206,7 +189,7 @@ public class ServerStreamTest {
   }
 
   @Test
-  public void testReady() {
+  void testReady() {
     Iterator<Integer> it = stream.iterator();
     Truth.assertThat(stream.isReceiveReady()).isFalse();
 
@@ -219,7 +202,7 @@ public class ServerStreamTest {
   }
 
   @Test
-  public void testNextAfterEOF() {
+  void testNextAfterEOF() {
     Iterator<Integer> it = stream.iterator();
     stream.observer().onComplete();
 
@@ -236,7 +219,7 @@ public class ServerStreamTest {
   }
 
   @Test
-  public void testAfterError() {
+  void testAfterError() {
     Iterator<Integer> it = stream.iterator();
 
     RuntimeException expectError = new RuntimeException("my upstream error");

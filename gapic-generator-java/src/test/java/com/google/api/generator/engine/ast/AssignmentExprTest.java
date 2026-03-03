@@ -19,11 +19,11 @@ import static org.junit.Assert.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class AssignmentExprTest {
+class AssignmentExprTest {
   @Test
-  public void assignMatchingValue() {
+  void assignMatchingValue() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
@@ -35,7 +35,7 @@ public class AssignmentExprTest {
   }
 
   @Test
-  public void assignMismatchedValue() {
+  void assignMismatchedValue() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
@@ -47,7 +47,7 @@ public class AssignmentExprTest {
   }
 
   @Test
-  public void assignSubtypeValue() {
+  void assignSubtypeValue() {
     Variable variable =
         Variable.builder()
             .setName("x")
@@ -66,7 +66,7 @@ public class AssignmentExprTest {
   }
 
   @Test
-  public void assignMatchingVariable() {
+  void assignMatchingVariable() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
@@ -78,7 +78,7 @@ public class AssignmentExprTest {
   }
 
   @Test
-  public void assignNullObjectValue() {
+  void assignNullObjectValue() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
@@ -90,7 +90,7 @@ public class AssignmentExprTest {
   }
 
   @Test
-  public void writeAssignmentExpr_nullObjectValuePrimitiveType() {
+  void writeAssignmentExpr_nullObjectValuePrimitiveType() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
@@ -102,7 +102,7 @@ public class AssignmentExprTest {
   }
 
   @Test
-  public void writeAssignmentExpr_primitiveToBoxedType() {
+  void writeAssignmentExpr_primitiveToBoxedType() {
     // [Constructing] `Boolean x = (boolean) true`
     Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN_OBJECT).build();
     VariableExpr variableExpr =
@@ -114,7 +114,7 @@ public class AssignmentExprTest {
   }
 
   @Test
-  public void writeAssignmentExpr_boxedToPrimitiveType() {
+  void writeAssignmentExpr_boxedToPrimitiveType() {
     // [Constructing] `double x = (Double) y`
     Variable lVariable = Variable.builder().setName("x").setType(TypeNode.DOUBLE).build();
     VariableExpr lVariableExpr =
@@ -126,7 +126,7 @@ public class AssignmentExprTest {
   }
 
   @Test
-  public void writeAssignmentExpr_invalidBoxedPrimitiveType() {
+  void writeAssignmentExpr_invalidBoxedPrimitiveType() {
     // [Constructing] `double x = (Integer) y`
     Variable lVariable = Variable.builder().setName("x").setType(TypeNode.DOUBLE).build();
     VariableExpr lVariableExpr =
@@ -138,7 +138,7 @@ public class AssignmentExprTest {
   }
 
   @Test
-  public void writeAssignmentExpr_validIsDeclFinalVariableExpr() {
+  void writeAssignmentExpr_validIsDeclFinalVariableExpr() {
     Variable lVariable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr lVariableExpr =
         VariableExpr.builder().setVariable(lVariable).setIsDecl(true).setIsFinal(true).build();
@@ -149,7 +149,7 @@ public class AssignmentExprTest {
   }
 
   @Test
-  public void writeAssignmentExpr_invalidIsNotDeclFinalVariableExpr() {
+  void writeAssignmentExpr_invalidIsNotDeclFinalVariableExpr() {
     Variable lVariable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr lVariableExpr =
         VariableExpr.builder().setVariable(lVariable).setIsDecl(false).setIsFinal(true).build();

@@ -18,12 +18,12 @@ import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.test.utils.LineFormatter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class SampleBodyJavaFormatterTest {
+class SampleBodyJavaFormatterTest {
 
   @Test
-  public void validFormatSampleCode_tryCatchStatement() {
+  void validFormatSampleCode_tryCatchStatement() {
     String samplecode = LineFormatter.lines("try(boolean condition = false){", "int x = 3;", "}");
     String result = SampleBodyJavaFormatter.format(samplecode);
     String expected =
@@ -32,7 +32,7 @@ public class SampleBodyJavaFormatterTest {
   }
 
   @Test
-  public void validFormatSampleCode_longLineStatement() {
+  void validFormatSampleCode_longLineStatement() {
     String sampleCode =
         "SubscriptionAdminSettings subscriptionAdminSettings = "
             + "SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();";
@@ -45,7 +45,7 @@ public class SampleBodyJavaFormatterTest {
   }
 
   @Test
-  public void validFormatSampleCode_longChainMethod() {
+  void validFormatSampleCode_longChainMethod() {
     String sampleCode =
         "echoSettingsBuilder.echoSettings().setRetrySettings("
             + "echoSettingsBuilder.echoSettings().getRetrySettings().toBuilder()"
@@ -66,7 +66,7 @@ public class SampleBodyJavaFormatterTest {
   }
 
   @Test
-  public void invalidFormatSampleCode_nonStatement() {
+  void invalidFormatSampleCode_nonStatement() {
     assertThrows(
         SampleBodyJavaFormatter.FormatException.class,
         () -> {

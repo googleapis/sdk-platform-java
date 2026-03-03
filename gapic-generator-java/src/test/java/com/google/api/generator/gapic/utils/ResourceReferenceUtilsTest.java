@@ -19,47 +19,47 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Optional;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ResourceReferenceUtilsTest {
+class ResourceReferenceUtilsTest {
 
   @Test
-  public void parseParentPattern_basic() {
+  void parseParentPattern_basic() {
     String parentPattern = "projects/{project}";
     String pattern = String.format("%s/folders/{folder}", parentPattern);
     assertEquals(parentPattern, ResourceReferenceUtils.parseParentPattern(pattern).get());
   }
 
   @Test
-  public void parseParentPattern_wildcard() {
+  void parseParentPattern_wildcard() {
     Optional<String> parentPatternOpt =
         ResourceReferenceUtils.parseParentPattern(ResourceNameConstants.WILDCARD_PATTERN);
     assertFalse(parentPatternOpt.isPresent());
   }
 
   @Test
-  public void parseParentPattern_deletedTopicLiteral() {
+  void parseParentPattern_deletedTopicLiteral() {
     Optional<String> parentPatternOpt =
         ResourceReferenceUtils.parseParentPattern(ResourceNameConstants.DELETED_TOPIC_LITERAL);
     assertFalse(parentPatternOpt.isPresent());
   }
 
   @Test
-  public void parseParentPattern_noParents() {
+  void parseParentPattern_noParents() {
     Optional<String> parentPatternOpt =
         ResourceReferenceUtils.parseParentPattern("projects/{project}");
     assertFalse(parentPatternOpt.isPresent());
   }
 
   @Test
-  public void parseParentPattern_insufficientPathComponents() {
+  void parseParentPattern_insufficientPathComponents() {
     Optional<String> parentPatternOpt =
         ResourceReferenceUtils.parseParentPattern("projects/foobars/{foobar}");
     assertFalse(parentPatternOpt.isPresent());
   }
 
   @Test
-  public void parseParentPattern_lastComponentIsNotAVariable() {
+  void parseParentPattern_lastComponentIsNotAVariable() {
     Optional<String> parentPatternOpt =
         ResourceReferenceUtils.parseParentPattern("projects/{project}/foobars");
     assertTrue(parentPatternOpt.isPresent());

@@ -19,30 +19,22 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.protoloader.GrpcTestProtoLoader;
-import java.util.Arrays;
-import java.util.Collection;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
-public class MockServiceImplClassComposerTest {
-  @Parameterized.Parameters
-  public static Collection<Object[]> data() {
-    return Arrays.asList(
-        new Object[][] {
-          {"MockEchoImpl", GrpcTestProtoLoader.instance().parseShowcaseEcho()},
-          {"MockDeprecatedServiceImpl", GrpcTestProtoLoader.instance().parseDeprecatedService()}
-        });
+class MockServiceImplClassComposerTest {
+  static Stream<Arguments> data() {
+    return Stream.of(
+        Arguments.of("MockEchoImpl", GrpcTestProtoLoader.instance().parseShowcaseEcho()),
+        Arguments.of(
+            "MockDeprecatedServiceImpl", GrpcTestProtoLoader.instance().parseDeprecatedService()));
   }
 
-  @Parameterized.Parameter public String name;
-
-  @Parameterized.Parameter(1)
-  public GapicContext context;
-
-  @Test
-  public void generateMockServiceImplClasses() {
+  @ParameterizedTest
+  @MethodSource("data")
+  void generateMockServiceImplClasses(String name, GapicContext context) {
     Service service = context.services().get(0);
     GapicClass clazz = MockServiceImplClassComposer.instance().generate(context, service);
 

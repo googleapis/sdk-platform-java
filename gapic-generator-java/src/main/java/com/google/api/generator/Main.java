@@ -14,6 +14,8 @@
 
 package com.google.api.generator;
 
+import static com.google.api.generator.gapic.protowriter.Writer.EMPTY_RESPONSE;
+
 import com.google.api.generator.gapic.Generator;
 import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
@@ -26,6 +28,8 @@ public class Main {
     ProtoRegistry.registerAllExtensions(registry);
     CodeGeneratorRequest request = CodeGeneratorRequest.parseFrom(System.in, registry);
     CodeGeneratorResponse response = Generator.generateGapic(request);
-    response.writeTo(System.out);
+    if (response != EMPTY_RESPONSE) {
+      response.writeTo(System.out);
+    }
   }
 }

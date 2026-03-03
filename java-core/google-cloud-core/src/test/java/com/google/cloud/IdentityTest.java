@@ -16,12 +16,13 @@
 
 package com.google.cloud;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class IdentityTest {
+class IdentityTest {
 
   private static final Identity ALL_USERS = Identity.allUsers();
   private static final Identity ALL_AUTH_USERS = Identity.allAuthenticatedUsers();
@@ -35,96 +36,96 @@ public class IdentityTest {
   private static final Identity PROJECT_VIEWER = Identity.projectViewer("my-sample-project");
 
   @Test
-  public void testAllUsers() {
+  void testAllUsers() {
     assertEquals(Identity.Type.ALL_USERS, ALL_USERS.getType());
     assertNull(ALL_USERS.getValue());
   }
 
   @Test
-  public void testAllAuthenticatedUsers() {
+  void testAllAuthenticatedUsers() {
     assertEquals(Identity.Type.ALL_AUTHENTICATED_USERS, ALL_AUTH_USERS.getType());
     assertNull(ALL_AUTH_USERS.getValue());
   }
 
   @Test
-  public void testUser() {
+  void testUser() {
     assertEquals(Identity.Type.USER, USER.getType());
     assertEquals("abc@gmail.com", USER.getValue());
   }
 
-  @Test(expected = NullPointerException.class)
-  public void testUserNullEmail() {
-    Identity.user(null);
+  @Test
+  void testUserNullEmail() {
+    assertThrows(NullPointerException.class, () -> Identity.user(null));
   }
 
   @Test
-  public void testServiceAccount() {
+  void testServiceAccount() {
     assertEquals(Identity.Type.SERVICE_ACCOUNT, SERVICE_ACCOUNT.getType());
     assertEquals("service-account@gmail.com", SERVICE_ACCOUNT.getValue());
   }
 
-  @Test(expected = NullPointerException.class)
-  public void testServiceAccountNullEmail() {
-    Identity.serviceAccount(null);
+  @Test
+  void testServiceAccountNullEmail() {
+    assertThrows(NullPointerException.class, () -> Identity.serviceAccount(null));
   }
 
   @Test
-  public void testGroup() {
+  void testGroup() {
     assertEquals(Identity.Type.GROUP, GROUP.getType());
     assertEquals("group@gmail.com", GROUP.getValue());
   }
 
-  @Test(expected = NullPointerException.class)
-  public void testGroupNullEmail() {
-    Identity.group(null);
+  @Test
+  void testGroupNullEmail() {
+    assertThrows(NullPointerException.class, () -> Identity.group(null));
   }
 
   @Test
-  public void testDomain() {
+  void testDomain() {
     assertEquals(Identity.Type.DOMAIN, DOMAIN.getType());
     assertEquals("google.com", DOMAIN.getValue());
   }
 
-  @Test(expected = NullPointerException.class)
-  public void testDomainNullId() {
-    Identity.domain(null);
+  @Test
+  void testDomainNullId() {
+    assertThrows(NullPointerException.class, () -> Identity.domain(null));
   }
 
   @Test
-  public void testProjectOwner() {
+  void testProjectOwner() {
     assertEquals(Identity.Type.PROJECT_OWNER, PROJECT_OWNER.getType());
     assertEquals("my-sample-project", PROJECT_OWNER.getValue());
   }
 
-  @Test(expected = NullPointerException.class)
-  public void testProjectOwnerNullId() {
-    Identity.projectOwner(null);
+  @Test
+  void testProjectOwnerNullId() {
+    assertThrows(NullPointerException.class, () -> Identity.projectOwner(null));
   }
 
   @Test
-  public void testProjectEditor() {
+  void testProjectEditor() {
     assertEquals(Identity.Type.PROJECT_EDITOR, PROJECT_EDITOR.getType());
     assertEquals("my-sample-project", PROJECT_EDITOR.getValue());
   }
 
-  @Test(expected = NullPointerException.class)
-  public void testProjectEditorNullId() {
-    Identity.projectEditor(null);
+  @Test
+  void testProjectEditorNullId() {
+    assertThrows(NullPointerException.class, () -> Identity.projectEditor(null));
   }
 
   @Test
-  public void testProjectViewer() {
+  void testProjectViewer() {
     assertEquals(Identity.Type.PROJECT_VIEWER, PROJECT_VIEWER.getType());
     assertEquals("my-sample-project", PROJECT_VIEWER.getValue());
   }
 
-  @Test(expected = NullPointerException.class)
-  public void testProjectViewerNullId() {
-    Identity.projectViewer(null);
+  @Test
+  void testProjectViewerNullId() {
+    assertThrows(NullPointerException.class, () -> Identity.projectViewer(null));
   }
 
   @Test
-  public void testIdentityToAndFromPb() {
+  void testIdentityToAndFromPb() {
     compareIdentities(ALL_USERS, Identity.valueOf(ALL_USERS.strValue()));
     compareIdentities(ALL_AUTH_USERS, Identity.valueOf(ALL_AUTH_USERS.strValue()));
     compareIdentities(USER, Identity.valueOf(USER.strValue()));
@@ -136,18 +137,18 @@ public class IdentityTest {
     compareIdentities(PROJECT_VIEWER, Identity.valueOf(PROJECT_VIEWER.strValue()));
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testValueOfEmpty() {
-    Identity.valueOf("");
+  @Test
+  void testValueOfEmpty() {
+    assertThrows(IllegalArgumentException.class, () -> Identity.valueOf(""));
   }
 
   @Test
-  public void testUnrecognizedToString() {
+  void testUnrecognizedToString() {
     assertEquals("a:b", Identity.valueOf("a:b").strValue());
   }
 
   @Test
-  public void testValueOfThreePart() {
+  void testValueOfThreePart() {
     Identity identity = Identity.valueOf("a:b:c");
     assertEquals("A", identity.getType().name());
     assertEquals("b:c", identity.getValue());

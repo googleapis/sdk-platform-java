@@ -21,14 +21,14 @@ import com.google.api.generator.gapic.model.GapicLanguageSettings;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class GapicLanguageSettingsParserTest {
+class GapicLanguageSettingsParserTest {
 
   private static final String YAML_DIRECTORY = "src/test/resources/";
 
   @Test
-  public void parseLanguageSettings_onlyInterfacePresent() {
+  void parseLanguageSettings_onlyInterfacePresent() {
     String filename = "datastore_gapic.yaml";
     Path path = Paths.get(YAML_DIRECTORY, filename);
     Optional<GapicLanguageSettings> settingsOpt =
@@ -40,7 +40,7 @@ public class GapicLanguageSettingsParserTest {
   }
 
   @Test
-  public void parseLanguageSettings_methodNameOverridesPresent() {
+  void parseLanguageSettings_methodNameOverridesPresent() {
     String filename = "logging_gapic.yaml";
     Path path = Paths.get(YAML_DIRECTORY, filename);
     Optional<GapicLanguageSettings> settingsOpt =

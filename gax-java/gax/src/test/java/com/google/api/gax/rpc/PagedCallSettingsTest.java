@@ -34,17 +34,13 @@ import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.common.collect.Sets;
 import com.google.common.truth.Truth;
 import java.util.Set;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class PagedCallSettingsTest {
+class PagedCallSettingsTest {
 
   @Test
-  public void testEmptyBuilder() {
+  void testEmptyBuilder() {
     @SuppressWarnings("unchecked")
     PagedListResponseFactory<Integer, String, Long> pagedListResponseFactory =
         Mockito.mock(PagedListResponseFactory.class);
@@ -65,7 +61,7 @@ public class PagedCallSettingsTest {
   }
 
   @Test
-  public void testBuilder() {
+  void testBuilder() {
     @SuppressWarnings("unchecked")
     PagedListResponseFactory<Integer, String, Long> pagedListResponseFactory =
         Mockito.mock(PagedListResponseFactory.class);
@@ -75,11 +71,11 @@ public class PagedCallSettingsTest {
     Set<StatusCode.Code> retryCodes = Sets.newHashSet(Code.UNAVAILABLE);
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(5))
-            .setMaxRetryDelay(Duration.ofSeconds(1))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(5))
+            .setMaxRetryDelayDuration(java.time.Duration.ofSeconds(1))
             .setRetryDelayMultiplier(2)
-            .setInitialRpcTimeout(Duration.ofMillis(100))
-            .setMaxRpcTimeout(Duration.ofMillis(200))
+            .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(100))
+            .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(200))
             .setRpcTimeoutMultiplier(1.1)
             .setJittered(true)
             .setMaxAttempts(10)
@@ -98,7 +94,7 @@ public class PagedCallSettingsTest {
   }
 
   @Test
-  public void testBuilderFromSettings() throws Exception {
+  void testBuilderFromSettings() throws Exception {
     @SuppressWarnings("unchecked")
     PagedListResponseFactory<Integer, String, Long> pagedListResponseFactory =
         Mockito.mock(PagedListResponseFactory.class);
@@ -108,11 +104,11 @@ public class PagedCallSettingsTest {
     Set<StatusCode.Code> retryCodes = Sets.newHashSet(Code.UNAVAILABLE);
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(5))
-            .setMaxRetryDelay(Duration.ofSeconds(1))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(5))
+            .setMaxRetryDelayDuration(java.time.Duration.ofSeconds(1))
             .setRetryDelayMultiplier(2)
-            .setInitialRpcTimeout(Duration.ofMillis(100))
-            .setMaxRpcTimeout(Duration.ofMillis(200))
+            .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(100))
+            .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(200))
             .setRpcTimeoutMultiplier(1.1)
             .setJittered(true)
             .setMaxAttempts(10)

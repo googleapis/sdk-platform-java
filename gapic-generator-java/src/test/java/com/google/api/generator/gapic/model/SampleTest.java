@@ -22,9 +22,9 @@ import com.google.common.collect.ImmutableList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class SampleTest {
+class SampleTest {
   private final RegionTag regionTag =
       RegionTag.builder().setServiceName("serviceName").setRpcName("rpcName").build();
   private final List<Statement> sampleBody =
@@ -33,14 +33,14 @@ public class SampleTest {
       Arrays.asList(CommentStatement.withComment(BlockComment.withComment("apache license")));
 
   @Test
-  public void sampleNoRegionTag() {
+  void sampleNoRegionTag() {
     Assert.assertThrows(
         IllegalStateException.class,
         () -> Sample.builder().setBody(sampleBody).setFileHeader(header).build());
   }
 
   @Test
-  public void sampleValidMissingFields() {
+  void sampleValidMissingFields() {
     Sample sample = Sample.builder().setRegionTag(regionTag).build();
 
     Assert.assertEquals(ImmutableList.of(), sample.fileHeader());
@@ -50,7 +50,7 @@ public class SampleTest {
   }
 
   @Test
-  public void sampleWithHeader() {
+  void sampleWithHeader() {
     Sample sample = Sample.builder().setRegionTag(regionTag).setBody(sampleBody).build();
     Assert.assertEquals(ImmutableList.of(), sample.fileHeader());
 
@@ -59,7 +59,7 @@ public class SampleTest {
   }
 
   @Test
-  public void sampleNameWithRegionTag() {
+  void sampleNameWithRegionTag() {
     Sample sample = Sample.builder().setRegionTag(regionTag).build();
     Assert.assertEquals("SyncRpcName", sample.name());
 
@@ -73,7 +73,7 @@ public class SampleTest {
   }
 
   @Test
-  public void sampleNameWithRegionTagCanonical() {
+  void sampleNameWithRegionTagCanonical() {
     String disambig = "Disambiguation";
     Sample sample =
         Sample.builder().setRegionTag(regionTag.withOverloadDisambiguation(disambig)).build();
@@ -86,7 +86,7 @@ public class SampleTest {
   }
 
   @Test
-  public void sampleCanonicalOverload() {
+  void sampleCanonicalOverload() {
     String disambig = "Disambiguation";
     Sample sample =
         Sample.builder().setRegionTag(regionTag.withOverloadDisambiguation(disambig)).build();

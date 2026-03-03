@@ -36,12 +36,9 @@ import com.google.common.truth.Truth;
 import com.google.protobuf.Any;
 import com.google.rpc.ErrorInfo;
 import java.util.Collections;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class ApiExceptionTest {
+class ApiExceptionTest {
 
   private static final ErrorDetails ERROR_DETAILS_WITH_NO_ERROR_INFO =
       ErrorDetails.builder().setRawErrorMessages(Collections.emptyList()).build();
@@ -65,49 +62,49 @@ public class ApiExceptionTest {
   private ApiException apiException;
 
   @Test
-  public void getReason_shouldReturnNullIfErrorDetailsIsNull() {
+  void getReason_shouldReturnNullIfErrorDetailsIsNull() {
     apiException = new ApiException(null, STATUS_CODE, false, null);
 
     Truth.assertThat(apiException.getReason()).isNull();
   }
 
   @Test
-  public void getReason_shouldReturnNullIfErrorInfoIsNull() {
+  void getReason_shouldReturnNullIfErrorInfoIsNull() {
     apiException = new ApiException(null, STATUS_CODE, false, ERROR_DETAILS_WITH_NO_ERROR_INFO);
 
     Truth.assertThat(apiException.getReason()).isNull();
   }
 
   @Test
-  public void getReason_shouldReturnReasonIfAvailable() {
+  void getReason_shouldReturnReasonIfAvailable() {
     apiException = new ApiException(null, STATUS_CODE, false, ERROR_DETAILS_WITH_ERROR_INFO);
 
     Truth.assertThat(apiException.getReason()).isEqualTo(REASON);
   }
 
   @Test
-  public void getDomain_shouldReturnNullIfErrorInfoIsNull() {
+  void getDomain_shouldReturnNullIfErrorInfoIsNull() {
     apiException = new ApiException(null, STATUS_CODE, false, ERROR_DETAILS_WITH_NO_ERROR_INFO);
 
     Truth.assertThat(apiException.getDomain()).isNull();
   }
 
   @Test
-  public void getDomain_shouldReturnDomainIfAvailable() {
+  void getDomain_shouldReturnDomainIfAvailable() {
     apiException = new ApiException(null, STATUS_CODE, false, ERROR_DETAILS_WITH_ERROR_INFO);
 
     Truth.assertThat(apiException.getDomain()).isEqualTo(DOMAIN);
   }
 
   @Test
-  public void getMetadata_shouldReturnNullIfErrorInfoIsNull() {
+  void getMetadata_shouldReturnNullIfErrorInfoIsNull() {
     apiException = new ApiException(null, STATUS_CODE, false, ERROR_DETAILS_WITH_NO_ERROR_INFO);
 
     Truth.assertThat(apiException.getMetadata()).isNull();
   }
 
   @Test
-  public void getMetadata_shouldReturnMetadataIfAvailable() {
+  void getMetadata_shouldReturnMetadataIfAvailable() {
     apiException = new ApiException(null, STATUS_CODE, false, ERROR_DETAILS_WITH_ERROR_INFO);
 
     Truth.assertThat(apiException.getMetadata()).containsExactly(METADATA_KEY, METADATA_VALUE);

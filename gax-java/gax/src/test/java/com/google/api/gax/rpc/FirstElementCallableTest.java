@@ -36,24 +36,21 @@ import com.google.common.truth.Truth;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class FirstElementCallableTest {
+class FirstElementCallableTest {
   private MockServerStreamingCallable<String, String> upstream;
   private FirstElementCallable<String, String> callable;
 
-  @Before
-  public void setup() {
+  @BeforeEach
+  void setup() {
     upstream = new MockServerStreamingCallable<>();
     callable = new FirstElementCallable<>(upstream);
   }
 
   @Test
-  public void testHappyPath() throws InterruptedException, ExecutionException {
+  void testHappyPath() throws InterruptedException, ExecutionException {
     ApiFuture<String> result = callable.futureCall("request");
     MockServerStreamingCall<String, String> call = upstream.popLastCall();
 
@@ -67,7 +64,7 @@ public class FirstElementCallableTest {
   }
 
   @Test
-  public void testEarlyTermination() throws Exception {
+  void testEarlyTermination() throws Exception {
     ApiFuture<String> result = callable.futureCall("request");
     MockServerStreamingCall<String, String> call = upstream.popLastCall();
 
@@ -99,7 +96,7 @@ public class FirstElementCallableTest {
   }
 
   @Test
-  public void testNoResults() throws Exception {
+  void testNoResults() throws Exception {
     ApiFuture<String> result = callable.futureCall("request");
     MockServerStreamingCall<String, String> call = upstream.popLastCall();
 
@@ -110,7 +107,7 @@ public class FirstElementCallableTest {
   }
 
   @Test
-  public void testErrorAfterResultIsIgnored() throws Exception {
+  void testErrorAfterResultIsIgnored() throws Exception {
     ApiFuture<String> result = callable.futureCall("request");
     MockServerStreamingCall<String, String> call = upstream.popLastCall();
 

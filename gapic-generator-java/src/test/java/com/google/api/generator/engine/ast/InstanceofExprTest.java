@@ -17,11 +17,11 @@ package com.google.api.generator.engine.ast;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class InstanceofExprTest {
+class InstanceofExprTest {
   @Test
-  public void validInstanceofExpr_basicExprPrimitiveType() {
+  void validInstanceofExpr_basicExprPrimitiveType() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
     InstanceofExpr expr =
@@ -32,7 +32,7 @@ public class InstanceofExprTest {
   }
 
   @Test
-  public void validInstanceofExpr_basicExprObjectType() {
+  void validInstanceofExpr_basicExprObjectType() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
     InstanceofExpr.builder().setCheckType(TypeNode.STRING).setExpr(variableExpr).build();
@@ -40,7 +40,7 @@ public class InstanceofExprTest {
   }
 
   @Test
-  public void invalidInstanceofExpr_primitiveObjectType() {
+  void invalidInstanceofExpr_primitiveObjectType() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
     assertThrows(

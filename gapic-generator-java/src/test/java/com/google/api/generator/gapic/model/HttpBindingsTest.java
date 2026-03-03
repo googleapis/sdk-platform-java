@@ -17,28 +17,28 @@ package com.google.api.generator.gapic.model;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.common.truth.Truth;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class HttpBindingsTest {
+class HttpBindingsTest {
 
-  public Field.Builder fieldBuilder;
-  public HttpBinding.Builder httpBindingBuilder;
+  private Field.Builder fieldBuilder;
+  private HttpBinding.Builder httpBindingBuilder;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeEach
+  void setUp() throws Exception {
     fieldBuilder = Field.builder().setName("doesNotMatter").setType(TypeNode.OBJECT);
     httpBindingBuilder = HttpBinding.builder().setName("doesNotMatter");
   }
 
   @Test
-  public void isOptional_shouldReturnFalseIfFieldIsNull() {
+  void isOptional_shouldReturnFalseIfFieldIsNull() {
     HttpBinding httpBinding = httpBindingBuilder.build();
     Truth.assertThat(httpBinding.isOptional()).isFalse();
   }
 
   @Test
-  public void isOptional_shouldReturnFalseIfFieldExistsAndIsOptionalIsFalse() {
+  void isOptional_shouldReturnFalseIfFieldExistsAndIsOptionalIsFalse() {
     HttpBinding httpBinding =
         httpBindingBuilder.setField(fieldBuilder.setIsProto3Optional(false).build()).build();
 
@@ -46,7 +46,7 @@ public class HttpBindingsTest {
   }
 
   @Test
-  public void isOptional_shouldReturnTrueIfFieldExistsAndIsOptionalIsTue() {
+  void isOptional_shouldReturnTrueIfFieldExistsAndIsOptionalIsTue() {
     HttpBinding httpBinding =
         httpBindingBuilder.setField(fieldBuilder.setIsProto3Optional(true).build()).build();
 
@@ -54,13 +54,13 @@ public class HttpBindingsTest {
   }
 
   @Test
-  public void isRepeated_shouldReturnFalseIfFieldIsNull() {
+  void isRepeated_shouldReturnFalseIfFieldIsNull() {
     HttpBinding httpBinding = httpBindingBuilder.build();
     Truth.assertThat(httpBinding.isRepeated()).isFalse();
   }
 
   @Test
-  public void isRepeated_shouldReturnFalseIfFieldExistsAndIsRepeatedIsFalse() {
+  void isRepeated_shouldReturnFalseIfFieldExistsAndIsRepeatedIsFalse() {
     HttpBinding httpBinding =
         httpBindingBuilder.setField(fieldBuilder.setIsRepeated(false).build()).build();
 
@@ -68,7 +68,7 @@ public class HttpBindingsTest {
   }
 
   @Test
-  public void isRepeated_shouldReturnTrueIfFieldExistsAndIsRepeatedIsTue() {
+  void isRepeated_shouldReturnTrueIfFieldExistsAndIsRepeatedIsTue() {
     HttpBinding httpBinding =
         httpBindingBuilder.setField(fieldBuilder.setIsRepeated(true).build()).build();
 
@@ -76,13 +76,13 @@ public class HttpBindingsTest {
   }
 
   @Test
-  public void isEnum_shouldReturnFalseIfFieldIsNull() {
+  void isEnum_shouldReturnFalseIfFieldIsNull() {
     HttpBinding httpBinding = httpBindingBuilder.build();
     Truth.assertThat(httpBinding.isEnum()).isFalse();
   }
 
   @Test
-  public void isEnum_shouldReturnFalseIfFieldExistsAndIsEnumIsFalse() {
+  void isEnum_shouldReturnFalseIfFieldExistsAndIsEnumIsFalse() {
     HttpBinding httpBinding =
         httpBindingBuilder.setField(fieldBuilder.setIsEnum(false).build()).build();
 
@@ -90,7 +90,7 @@ public class HttpBindingsTest {
   }
 
   @Test
-  public void isEnum_shouldReturnTrueIfFieldExistsAndIsEnumIsTue() {
+  void isEnum_shouldReturnTrueIfFieldExistsAndIsEnumIsTue() {
     HttpBinding httpBinding =
         httpBindingBuilder.setField(fieldBuilder.setIsEnum(true).build()).build();
 

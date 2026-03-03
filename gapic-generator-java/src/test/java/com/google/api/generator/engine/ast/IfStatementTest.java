@@ -18,11 +18,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class IfStatementTest {
+class IfStatementTest {
   @Test
-  public void validIfStatement_simple() {
+  void validIfStatement_simple() {
     IfStatement ifStatement =
         IfStatement.builder()
             .setConditionExpr(createConditionExpr("condition"))
@@ -32,7 +32,7 @@ public class IfStatementTest {
   }
 
   @Test
-  public void validIfStatement_booleanObjectCondition() {
+  void validIfStatement_booleanObjectCondition() {
     // The condition expression type can be boolean or its boxed type.
     VariableExpr condExpr =
         VariableExpr.withVariable(
@@ -47,7 +47,7 @@ public class IfStatementTest {
   }
 
   @Test
-  public void validIfStatement_elseIfsAndElse() {
+  void validIfStatement_elseIfsAndElse() {
     VariableExpr condExpr = createConditionExpr("condition");
     VariableExpr secondCondExpr = createConditionExpr("secondCondExpr");
     VariableExpr thirdCondExpr = createConditionExpr("thirdCondExpr");
@@ -64,7 +64,7 @@ public class IfStatementTest {
   }
 
   @Test
-  public void validIfStatement_nested() {
+  void validIfStatement_nested() {
     VariableExpr condExpr = createConditionExpr("condition");
     VariableExpr nestedCondExpr = createConditionExpr("nestedCondition");
     IfStatement nestedIfStatement =

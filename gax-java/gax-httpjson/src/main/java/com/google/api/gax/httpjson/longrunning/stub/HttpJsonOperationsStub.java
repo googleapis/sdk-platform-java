@@ -347,75 +347,81 @@ public class HttpJsonOperationsStub extends OperationsStub {
       Map<String, HttpRule> customOperationHttpBindings) {
     if (customOperationHttpBindings.containsKey(LRO_LIST_OPERATIONS)) {
       listOperationsMethodDescriptor =
-          listOperationsMethodDescriptor
-              .toBuilder()
+          listOperationsMethodDescriptor.toBuilder()
               .setRequestFormatter(
                   ((ProtoMessageRequestFormatter<ListOperationsRequest>)
                           listOperationsMethodDescriptor.getRequestFormatter())
                       .toBuilder()
-                      .updateRawPath(customOperationHttpBindings.get(LRO_LIST_OPERATIONS).getGet())
-                      .setAdditionalPaths(
-                          customOperationHttpBindings.get(LRO_LIST_OPERATIONS)
-                              .getAdditionalBindingsList().stream()
-                              .map(this::getValueBasedOnPatternCase)
-                              .toArray(String[]::new))
-                      .build())
+                          .updateRawPath(
+                              customOperationHttpBindings.get(LRO_LIST_OPERATIONS).getGet())
+                          .setAdditionalPaths(
+                              customOperationHttpBindings
+                                  .get(LRO_LIST_OPERATIONS)
+                                  .getAdditionalBindingsList()
+                                  .stream()
+                                  .map(this::getValueBasedOnPatternCase)
+                                  .toArray(String[]::new))
+                          .build())
               .build();
     }
 
     if (customOperationHttpBindings.containsKey(LRO_GET_OPERATION)) {
       getOperationMethodDescriptor =
-          getOperationMethodDescriptor
-              .toBuilder()
+          getOperationMethodDescriptor.toBuilder()
               .setRequestFormatter(
                   ((ProtoMessageRequestFormatter<GetOperationRequest>)
                           getOperationMethodDescriptor.getRequestFormatter())
                       .toBuilder()
-                      .updateRawPath(customOperationHttpBindings.get(LRO_GET_OPERATION).getGet())
-                      .setAdditionalPaths(
-                          customOperationHttpBindings.get(LRO_GET_OPERATION)
-                              .getAdditionalBindingsList().stream()
-                              .map(this::getValueBasedOnPatternCase)
-                              .toArray(String[]::new))
-                      .build())
+                          .updateRawPath(
+                              customOperationHttpBindings.get(LRO_GET_OPERATION).getGet())
+                          .setAdditionalPaths(
+                              customOperationHttpBindings
+                                  .get(LRO_GET_OPERATION)
+                                  .getAdditionalBindingsList()
+                                  .stream()
+                                  .map(this::getValueBasedOnPatternCase)
+                                  .toArray(String[]::new))
+                          .build())
               .build();
     }
 
     if (customOperationHttpBindings.containsKey(LRO_DELETE_OPERATION)) {
       deleteOperationMethodDescriptor =
-          deleteOperationMethodDescriptor
-              .toBuilder()
+          deleteOperationMethodDescriptor.toBuilder()
               .setRequestFormatter(
                   ((ProtoMessageRequestFormatter<DeleteOperationRequest>)
                           deleteOperationMethodDescriptor.getRequestFormatter())
                       .toBuilder()
-                      .updateRawPath(
-                          customOperationHttpBindings.get(LRO_DELETE_OPERATION).getDelete())
-                      .setAdditionalPaths(
-                          customOperationHttpBindings.get(LRO_DELETE_OPERATION)
-                              .getAdditionalBindingsList().stream()
-                              .map(this::getValueBasedOnPatternCase)
-                              .toArray(String[]::new))
-                      .build())
+                          .updateRawPath(
+                              customOperationHttpBindings.get(LRO_DELETE_OPERATION).getDelete())
+                          .setAdditionalPaths(
+                              customOperationHttpBindings
+                                  .get(LRO_DELETE_OPERATION)
+                                  .getAdditionalBindingsList()
+                                  .stream()
+                                  .map(this::getValueBasedOnPatternCase)
+                                  .toArray(String[]::new))
+                          .build())
               .build();
     }
 
     if (customOperationHttpBindings.containsKey(LRO_CANCEL_OPERATION)) {
       cancelOperationMethodDescriptor =
-          cancelOperationMethodDescriptor
-              .toBuilder()
+          cancelOperationMethodDescriptor.toBuilder()
               .setRequestFormatter(
                   ((ProtoMessageRequestFormatter<CancelOperationRequest>)
                           cancelOperationMethodDescriptor.getRequestFormatter())
                       .toBuilder()
-                      .updateRawPath(
-                          customOperationHttpBindings.get(LRO_CANCEL_OPERATION).getPost())
-                      .setAdditionalPaths(
-                          customOperationHttpBindings.get(LRO_CANCEL_OPERATION)
-                              .getAdditionalBindingsList().stream()
-                              .map(this::getValueBasedOnPatternCase)
-                              .toArray(String[]::new))
-                      .build())
+                          .updateRawPath(
+                              customOperationHttpBindings.get(LRO_CANCEL_OPERATION).getPost())
+                          .setAdditionalPaths(
+                              customOperationHttpBindings
+                                  .get(LRO_CANCEL_OPERATION)
+                                  .getAdditionalBindingsList()
+                                  .stream()
+                                  .map(this::getValueBasedOnPatternCase)
+                                  .toArray(String[]::new))
+                          .build())
               .build();
     }
   }

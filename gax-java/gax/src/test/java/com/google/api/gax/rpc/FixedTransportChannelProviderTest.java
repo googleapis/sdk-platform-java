@@ -35,14 +35,11 @@ import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.common.truth.Truth;
 import java.util.Collections;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class FixedTransportChannelProviderTest {
+class FixedTransportChannelProviderTest {
   @Test
-  public void testBasic() throws Exception {
+  void testBasic() throws Exception {
     TransportChannel transportChannel = FakeTransportChannel.create(new FakeChannel());
     FixedTransportChannelProvider provider = FixedTransportChannelProvider.create(transportChannel);
 

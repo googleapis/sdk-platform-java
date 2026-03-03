@@ -18,9 +18,9 @@ import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.test.utils.LineFormatter;
 import java.util.Arrays;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class RegionTagTest {
+class RegionTagTest {
   private final String serviceName = "serviceName";
   private final String apiVersion = "v1";
   private final String apiShortName = "shortName";
@@ -28,7 +28,7 @@ public class RegionTagTest {
   private final String disambiguation = "disambiguation";
 
   @Test
-  public void regionTagNoRpcName() {
+  void regionTagNoRpcName() {
     Assert.assertThrows(
         IllegalStateException.class,
         () ->
@@ -42,7 +42,7 @@ public class RegionTagTest {
   }
 
   @Test
-  public void regionTagNoServiceName() {
+  void regionTagNoServiceName() {
     Assert.assertThrows(
         IllegalStateException.class,
         () ->
@@ -56,7 +56,7 @@ public class RegionTagTest {
   }
 
   @Test
-  public void regionTagValidMissingFields() {
+  void regionTagValidMissingFields() {
     RegionTag regionTag =
         RegionTag.builder().setServiceName(serviceName).setRpcName(rpcName).build();
 
@@ -67,7 +67,7 @@ public class RegionTagTest {
   }
 
   @Test
-  public void regionTagSanitizeAttributes() {
+  void regionTagSanitizeAttributes() {
     String apiVersion = "1.4.0-<version!>";
     String serviceName = "service_Na@m*.e!<String>{}";
     String rpcName = "rpc _Nam^#,e   [String]10";
@@ -84,7 +84,7 @@ public class RegionTagTest {
   }
 
   @Test
-  public void generateRegionTagsMissingRequiredFields() {
+  void generateRegionTagsMissingRequiredFields() {
     RegionTag rtMissingShortName =
         RegionTag.builder()
             .setApiVersion(apiVersion)
@@ -95,7 +95,7 @@ public class RegionTagTest {
   }
 
   @Test
-  public void generateRegionTagsValidMissingFields() {
+  void generateRegionTagsValidMissingFields() {
     RegionTag regionTag =
         RegionTag.builder()
             .setApiShortName(apiShortName)
@@ -109,7 +109,7 @@ public class RegionTagTest {
   }
 
   @Test
-  public void generateRegionTagsAllFields() {
+  void generateRegionTagsAllFields() {
     RegionTag regionTag =
         RegionTag.builder()
             .setApiShortName(apiShortName)
@@ -126,7 +126,7 @@ public class RegionTagTest {
   }
 
   @Test
-  public void generateRegionTagTag() {
+  void generateRegionTagTag() {
     RegionTag regionTag =
         RegionTag.builder()
             .setApiShortName(apiShortName)

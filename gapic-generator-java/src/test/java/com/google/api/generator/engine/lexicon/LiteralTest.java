@@ -16,17 +16,17 @@ package com.google.api.generator.engine.lexicon;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class LiteralTest {
+class LiteralTest {
   @Test
-  public void booleanDetected() {
+  void booleanDetected() {
     assertThat(Literal.isBooleanLiteral("True")).isFalse();
     assertThat(Literal.isBooleanLiteral("true")).isTrue();
   }
 
   @Test
-  public void nullLDetected() {
+  void nullLDetected() {
     assertThat(Literal.isNullLiteral("NULL")).isFalse();
     assertThat(Literal.isNullLiteral("null")).isTrue();
     assertThat(Literal.isNullLiteral("null_asdf")).isFalse();
@@ -34,7 +34,7 @@ public class LiteralTest {
   }
 
   @Test
-  public void integerDetected() {
+  void integerDetected() {
     assertThat(Literal.isIntegerLiteral("a123")).isFalse();
     assertThat(Literal.isIntegerLiteral("123")).isTrue();
     assertThat(Literal.isIntegerLiteral("-123")).isTrue();
@@ -44,7 +44,7 @@ public class LiteralTest {
   }
 
   @Test
-  public void longDetected() {
+  void longDetected() {
     assertThat(Literal.isLongLiteral("123")).isTrue();
     assertThat(Literal.isLongLiteral("123L")).isTrue();
     assertThat(Literal.isLongLiteral("123l")).isTrue();
@@ -53,7 +53,7 @@ public class LiteralTest {
   }
 
   @Test
-  public void floatDetected() {
+  void floatDetected() {
     assertThat(Literal.isFloatLiteral("123")).isTrue();
     assertThat(Literal.isFloatLiteral("123f")).isTrue();
     assertThat(Literal.isFloatLiteral("123.")).isFalse();
@@ -68,7 +68,7 @@ public class LiteralTest {
   }
 
   @Test
-  public void doubleDetected() {
+  void doubleDetected() {
     assertThat(Literal.isDoubleLiteral("123")).isTrue();
     assertThat(Literal.isDoubleLiteral("0.01")).isTrue();
     assertThat(Literal.isDoubleLiteral(".01")).isTrue();
@@ -86,7 +86,7 @@ public class LiteralTest {
   }
 
   @Test
-  public void literalDetected() {
+  void literalDetected() {
     assertThat(Literal.isLiteral("False")).isFalse();
     assertThat(Literal.isLiteral("asdf")).isFalse();
     assertThat(Literal.isLiteral("asdf12345")).isFalse();

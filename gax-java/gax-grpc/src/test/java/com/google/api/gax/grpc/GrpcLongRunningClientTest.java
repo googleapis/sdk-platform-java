@@ -44,15 +44,12 @@ import com.google.longrunning.GetOperationRequest;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.OperationsStub;
 import com.google.protobuf.Empty;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class GrpcLongRunningClientTest {
+class GrpcLongRunningClientTest {
 
   @Test
-  public void get() {
+  void get() {
     OperationsStub operationsStub = mock(OperationsStub.class);
     when(operationsStub.getOperationCallable())
         .thenReturn(
@@ -75,7 +72,7 @@ public class GrpcLongRunningClientTest {
   }
 
   @Test
-  public void cancel() {
+  void cancel() {
     OperationsStub operationsStub = mock(OperationsStub.class);
     when(operationsStub.cancelOperationCallable())
         .thenReturn(
@@ -96,7 +93,7 @@ public class GrpcLongRunningClientTest {
   }
 
   @Test
-  public void delete() {
+  void delete() {
     OperationsStub operationsStub = mock(OperationsStub.class);
     when(operationsStub.deleteOperationCallable())
         .thenReturn(

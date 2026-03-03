@@ -20,63 +20,62 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.protoloader.GrpcTestProtoLoader;
 import java.util.*;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
-public class ServiceClientClassComposerTest {
-  @Parameterized.Parameters
-  public static Collection<Object[]> data() {
-    return Arrays.asList(
-        new Object[][] {
-          {
+class ServiceClientClassComposerTest {
+
+  private static Stream<Arguments> data() {
+    return Stream.of(
+        Arguments.of(
             "EchoClient",
             GrpcTestProtoLoader.instance().parseShowcaseEcho(),
             "localhost:7469",
-            "v1beta1"
-          },
-          {
+            "v1beta1",
+            0),
+        Arguments.of(
             "DeprecatedServiceClient",
             GrpcTestProtoLoader.instance().parseDeprecatedService(),
             "localhost:7469",
-            "v1"
-          },
-          {
+            "v1",
+            0),
+        Arguments.of(
             "IdentityClient",
             GrpcTestProtoLoader.instance().parseShowcaseIdentity(),
             "localhost:7469",
-            "v1beta1"
-          },
-          {
+            "v1beta1",
+            0),
+        Arguments.of(
             "BookshopClient",
             GrpcTestProtoLoader.instance().parseBookshopService(),
             "localhost:2665",
-            "v1beta1"
-          },
-          {
+            "v1beta1",
+            0),
+        Arguments.of(
             "MessagingClient",
             GrpcTestProtoLoader.instance().parseShowcaseMessaging(),
             "localhost:7469",
-            "v1beta1"
-          },
-        });
+            "v1beta1",
+            0),
+        Arguments.of(
+            "EchoServiceSelectiveGapicClient",
+            GrpcTestProtoLoader.instance().parseSelectiveGenerationTesting(),
+            "localhost:7469",
+            "v1beta1",
+            1));
   }
 
-  @Parameterized.Parameter public String name;
-
-  @Parameterized.Parameter(1)
-  public GapicContext context;
-
-  @Parameterized.Parameter(2)
-  public String apiShortNameExpected;
-
-  @Parameterized.Parameter(3)
-  public String packageVersionExpected;
-
-  @Test
-  public void generateServiceClientClasses() {
-    Service service = context.services().get(0);
+  @ParameterizedTest
+  @MethodSource("data")
+  void generateServiceClientClasses(
+      String name,
+      GapicContext context,
+      String apiShortNameExpected,
+      String packageVersionExpected,
+      int serviceIndex) {
+    Service service = context.services().get(serviceIndex);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(context, service);
 
     Assert.assertGoldenClass(this.getClass(), clazz, name + ".golden");

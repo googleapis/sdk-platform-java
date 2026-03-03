@@ -31,19 +31,16 @@
 package com.google.api.pathtemplate;
 
 import com.google.common.truth.Truth;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link TemplatedResourceName}. As resource names are mostly a wrapper around path
  * templates, not much needs to be done here.
  */
-@RunWith(JUnit4.class)
-public class TemplatedResourceNameTest {
+class TemplatedResourceNameTest {
 
   @Test
-  public void resourceNameMethods() {
+  void resourceNameMethods() {
     PathTemplate template = PathTemplate.create("buckets/*/objects/**");
     TemplatedResourceName name = TemplatedResourceName.create(template, "buckets/b/objects/1/2");
     Truth.assertThat(name.toString()).isEqualTo("buckets/b/objects/1/2");

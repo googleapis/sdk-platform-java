@@ -16,37 +16,40 @@
 
 package com.google.cloud;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.google.api.gax.retrying.RetrySettings;
-import org.junit.Test;
-import org.threeten.bp.Duration;
+import java.time.Duration;
+import org.junit.jupiter.api.Test;
 
-public class RetryOptionTest {
+class RetryOptionTest {
+  private static final long TOTAL_TIMEOUT_MILLIS = 420l;
+  private static final long INITIAL_RETRY_DELAY_MILLIS = 42l;
+  private static final long MAX_RETRY_DELAY_MILLIS = 100l;
 
   private static final RetryOption TOTAL_TIMEOUT =
-      RetryOption.totalTimeout(Duration.ofMillis(420L));
+      RetryOption.totalTimeoutDuration(Duration.ofMillis(TOTAL_TIMEOUT_MILLIS));
   private static final RetryOption INITIAL_RETRY_DELAY =
-      RetryOption.initialRetryDelay(Duration.ofMillis(42L));
+      RetryOption.initialRetryDelayDuration(Duration.ofMillis(INITIAL_RETRY_DELAY_MILLIS));
   private static final RetryOption RETRY_DELAY_MULTIPLIER = RetryOption.retryDelayMultiplier(1.5);
   private static final RetryOption MAX_RETRY_DELAY =
-      RetryOption.maxRetryDelay(Duration.ofMillis(100));
+      RetryOption.maxRetryDelayDuration(Duration.ofMillis(MAX_RETRY_DELAY_MILLIS));
   private static final RetryOption MAX_ATTEMPTS = RetryOption.maxAttempts(100);
   private static final RetryOption JITTERED = RetryOption.jittered(false);
 
   private static final RetrySettings retrySettings =
       RetrySettings.newBuilder()
-          .setTotalTimeout(Duration.ofMillis(420L))
-          .setInitialRetryDelay(Duration.ofMillis(42L))
+          .setTotalTimeoutDuration(Duration.ofMillis(420L))
+          .setInitialRetryDelayDuration(Duration.ofMillis(42L))
           .setRetryDelayMultiplier(1.5)
-          .setMaxRetryDelay(Duration.ofMillis(100))
+          .setMaxRetryDelayDuration(Duration.ofMillis(100))
           .setMaxAttempts(100)
           .setJittered(false)
           .build();
 
   @Test
-  public void testEqualsAndHashCode() {
+  void testEqualsAndHashCode() {
     assertEquals(TOTAL_TIMEOUT, TOTAL_TIMEOUT);
     assertEquals(INITIAL_RETRY_DELAY, INITIAL_RETRY_DELAY);
     assertEquals(RETRY_DELAY_MULTIPLIER, RETRY_DELAY_MULTIPLIER);
@@ -61,10 +64,10 @@ public class RetryOptionTest {
     assertNotEquals(MAX_ATTEMPTS, MAX_RETRY_DELAY);
     assertNotEquals(JITTERED, MAX_ATTEMPTS);
 
-    RetryOption totalTimeout = RetryOption.totalTimeout(Duration.ofMillis(420L));
-    RetryOption initialRetryDelay = RetryOption.initialRetryDelay(Duration.ofMillis(42L));
+    RetryOption totalTimeout = RetryOption.totalTimeoutDuration(Duration.ofMillis(420L));
+    RetryOption initialRetryDelay = RetryOption.initialRetryDelayDuration(Duration.ofMillis(42L));
     RetryOption retryDelayMultiplier = RetryOption.retryDelayMultiplier(1.5);
-    RetryOption maxRetryDelay = RetryOption.maxRetryDelay(Duration.ofMillis(100));
+    RetryOption maxRetryDelay = RetryOption.maxRetryDelayDuration(Duration.ofMillis(100));
     RetryOption maxAttempts = RetryOption.maxAttempts(100);
     RetryOption jittered = RetryOption.jittered(false);
 
@@ -84,7 +87,7 @@ public class RetryOptionTest {
   }
 
   @Test
-  public void testMergeToSettings() {
+  void testMergeToSettings() {
     RetrySettings defRetrySettings = RetrySettings.newBuilder().build();
 
     assertEquals(defRetrySettings, RetryOption.mergeToSettings(defRetrySettings));
@@ -101,17 +104,17 @@ public class RetryOptionTest {
     assertEquals(retrySettings, mergedRetrySettings);
 
     defRetrySettings =
-        defRetrySettings.toBuilder().setTotalTimeout(Duration.ofMillis(420L)).build();
+        defRetrySettings.toBuilder().setTotalTimeoutDuration(Duration.ofMillis(420L)).build();
     mergedRetrySettings = RetryOption.mergeToSettings(defRetrySettings, TOTAL_TIMEOUT);
     assertEquals(defRetrySettings, mergedRetrySettings);
 
     defRetrySettings =
-        defRetrySettings.toBuilder().setMaxRetryDelay(Duration.ofMillis(100)).build();
+        defRetrySettings.toBuilder().setMaxRetryDelayDuration(Duration.ofMillis(100)).build();
     mergedRetrySettings = RetryOption.mergeToSettings(defRetrySettings, MAX_RETRY_DELAY);
     assertEquals(defRetrySettings, mergedRetrySettings);
 
     defRetrySettings =
-        defRetrySettings.toBuilder().setInitialRetryDelay(Duration.ofMillis(42L)).build();
+        defRetrySettings.toBuilder().setInitialRetryDelayDuration(Duration.ofMillis(42L)).build();
     mergedRetrySettings = RetryOption.mergeToSettings(defRetrySettings, INITIAL_RETRY_DELAY);
     assertEquals(defRetrySettings, mergedRetrySettings);
 
@@ -126,5 +129,21 @@ public class RetryOptionTest {
     defRetrySettings = defRetrySettings.toBuilder().setJittered(false).build();
     mergedRetrySettings = RetryOption.mergeToSettings(defRetrySettings, JITTERED);
     assertEquals(defRetrySettings, mergedRetrySettings);
+  }
+
+  @Test
+  public void threetenMethods_producesEquivalentJavaTimeRetryOptions() {
+
+    final RetryOption totalTimeoutThreeten =
+        RetryOption.totalTimeout(org.threeten.bp.Duration.ofMillis(TOTAL_TIMEOUT_MILLIS));
+    final RetryOption initialRetryDelayThreeten =
+        RetryOption.initialRetryDelay(
+            org.threeten.bp.Duration.ofMillis(INITIAL_RETRY_DELAY_MILLIS));
+    final RetryOption maxRetryDelayThreeten =
+        RetryOption.maxRetryDelay(org.threeten.bp.Duration.ofMillis(MAX_RETRY_DELAY_MILLIS));
+
+    assertEquals(TOTAL_TIMEOUT, totalTimeoutThreeten);
+    assertEquals(INITIAL_RETRY_DELAY, initialRetryDelayThreeten);
+    assertEquals(MAX_RETRY_DELAY, maxRetryDelayThreeten);
   }
 }

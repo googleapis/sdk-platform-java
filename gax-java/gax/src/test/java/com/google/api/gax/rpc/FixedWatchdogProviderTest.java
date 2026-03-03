@@ -30,29 +30,26 @@
 package com.google.api.gax.rpc;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.core.ApiClock;
 import java.util.concurrent.ScheduledExecutorService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class FixedWatchdogProviderTest {
+class FixedWatchdogProviderTest {
   @Test
-  public void testNull() {
+  void testNull() {
     WatchdogProvider provider = FixedWatchdogProvider.create(null);
     assertThat(provider.getWatchdog()).isNull();
   }
 
   @Test
-  public void testSameInstance() {
+  void testSameInstance() {
     Watchdog watchdog =
-        Watchdog.create(
+        Watchdog.createDuration(
             Mockito.mock(ApiClock.class),
-            Duration.ZERO,
+            java.time.Duration.ZERO,
             Mockito.mock(ScheduledExecutorService.class));
 
     WatchdogProvider provider = FixedWatchdogProvider.create(watchdog);
@@ -60,11 +57,11 @@ public class FixedWatchdogProviderTest {
   }
 
   @Test
-  public void testNoModifications() {
+  void testNoModifications() {
     Watchdog watchdog =
-        Watchdog.create(
+        Watchdog.createDuration(
             Mockito.mock(ApiClock.class),
-            Duration.ZERO,
+            java.time.Duration.ZERO,
             Mockito.mock(ScheduledExecutorService.class));
     WatchdogProvider provider = FixedWatchdogProvider.create(watchdog);
 
@@ -75,7 +72,7 @@ public class FixedWatchdogProviderTest {
 
     Throwable actualError = null;
     try {
-      provider.withCheckInterval(Duration.ofSeconds(10));
+      provider.withCheckIntervalDuration(java.time.Duration.ofSeconds(10));
     } catch (Throwable t) {
       actualError = t;
     }
@@ -96,5 +93,19 @@ public class FixedWatchdogProviderTest {
       actualError = t;
     }
     assertThat(actualError).isInstanceOf(UnsupportedOperationException.class);
+  }
+
+  @Test
+  public void testWithCheckInterval_backportMethodsBehaveTheSame() {
+    assertThrows(
+        UnsupportedOperationException.class,
+        () ->
+            FixedWatchdogProvider.create(null)
+                .withCheckIntervalDuration(java.time.Duration.ofMillis(123l)));
+    assertThrows(
+        UnsupportedOperationException.class,
+        () ->
+            FixedWatchdogProvider.create(null)
+                .withCheckInterval(org.threeten.bp.Duration.ofMillis(123l)));
   }
 }

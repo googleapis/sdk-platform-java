@@ -30,16 +30,16 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ServiceClientMethodSampleComposerTest {
+class ServiceClientMethodSampleComposerTest {
   private static final String SHOWCASE_PACKAGE_NAME = "com.google.showcase.v1beta1";
   private static final String LRO_PACKAGE_NAME = "com.google.longrunning";
   private static final String PROTO_PACKAGE_NAME = "com.google.protobuf";
   private static final String PAGINATED_FIELD_NAME = "page_size";
 
   @Test
-  public void valid_composeDefaultSample_isPagedMethod() {
+  void valid_composeDefaultSample_isPagedMethod() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -101,7 +101,7 @@ public class ServiceClientMethodSampleComposerTest {
   }
 
   @Test
-  public void invalid_composeDefaultSample_isPagedMethod() {
+  void invalid_composeDefaultSample_isPagedMethod() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -150,7 +150,7 @@ public class ServiceClientMethodSampleComposerTest {
   }
 
   @Test
-  public void valid_composeDefaultSample_hasLroMethodWithReturnResponse() {
+  void valid_composeDefaultSample_hasLroMethodWithReturnResponse() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -216,7 +216,7 @@ public class ServiceClientMethodSampleComposerTest {
   }
 
   @Test
-  public void valid_composeDefaultSample_hasLroMethodWithReturnVoid() {
+  void valid_composeDefaultSample_hasLroMethodWithReturnVoid() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -285,7 +285,7 @@ public class ServiceClientMethodSampleComposerTest {
   }
 
   @Test
-  public void valid_composeDefaultSample_pureUnaryReturnVoid() {
+  void valid_composeDefaultSample_pureUnaryReturnVoid() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -344,7 +344,7 @@ public class ServiceClientMethodSampleComposerTest {
   }
 
   @Test
-  public void valid_composeDefaultSample_pureUnaryReturnResponse() {
+  void valid_composeDefaultSample_pureUnaryReturnResponse() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);

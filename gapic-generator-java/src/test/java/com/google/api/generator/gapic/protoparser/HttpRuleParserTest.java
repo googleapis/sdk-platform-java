@@ -31,12 +31,12 @@ import com.google.showcase.v1beta1.TestingOuterClass;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
-public class HttpRuleParserTest {
+class HttpRuleParserTest {
   @Test
-  public void parseHttpAnnotation_basic() {
+  void parseHttpAnnotation_basic() {
     FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
     assertEquals("Testing", testingService.getName());
@@ -61,7 +61,7 @@ public class HttpRuleParserTest {
   }
 
   @Test
-  public void parseHttpAnnotation_multipleBindings() {
+  void parseHttpAnnotation_multipleBindings() {
     FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
     assertEquals("Testing", testingService.getName());
@@ -81,7 +81,7 @@ public class HttpRuleParserTest {
   }
 
   @Test
-  public void parseHttpAnnotation_missingFieldFromMessage() {
+  void parseHttpAnnotation_missingFieldFromMessage() {
     FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
     assertEquals("Testing", testingService.getName());
@@ -97,8 +97,7 @@ public class HttpRuleParserTest {
   }
 
   @Test
-  public void
-      parseHttpAnnotation_shouldPutAllFieldsIntoQueryParamsIfPathParamAndBodyAreNotConfigured() {
+  void parseHttpAnnotation_shouldPutAllFieldsIntoQueryParamsIfPathParamAndBodyAreNotConfigured() {
     FileDescriptor fileDescriptor = HttpRuleParserTestingOuterClass.getDescriptor();
     ServiceDescriptor serviceDescriptor = fileDescriptor.getServices().get(0);
     assertEquals("HttpRuleParserTesting", serviceDescriptor.getName());
@@ -124,7 +123,7 @@ public class HttpRuleParserTest {
     Truth.assertThat(new HashSet<>(actual.queryParameters())).containsExactly(expected1, expected2);
   }
 
-  @Ignore
+  @Disabled
   @Test
   //               request
   //             /         \
@@ -138,7 +137,7 @@ public class HttpRuleParserTest {
   // We need to either traverse all the leaf level fields and exclude field in the generator or pass
   // the excluded fields to gax-java. Re-enable this test once
   // https://github.com/googleapis/sdk-platform-java/issues/1041 is fixed
-  public void parseHttpAnnotation_shouldExcludeFieldsFromQueryParamsIfPathParamsAreConfigured() {
+  void parseHttpAnnotation_shouldExcludeFieldsFromQueryParamsIfPathParamsAreConfigured() {
     FileDescriptor fileDescriptor = HttpRuleParserTestingOuterClass.getDescriptor();
     ServiceDescriptor serviceDescriptor = fileDescriptor.getServices().get(0);
     assertEquals("HttpRuleParserTesting", serviceDescriptor.getName());

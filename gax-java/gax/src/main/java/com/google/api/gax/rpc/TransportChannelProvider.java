@@ -73,9 +73,24 @@ public interface TransportChannelProvider {
   /** Sets the executor to use when constructing a new {@link TransportChannel}. */
   TransportChannelProvider withExecutor(Executor executor);
 
-  /** @deprecated Please use {@link #withExecutor(Executor)}. */
+  /**
+   * @deprecated Please use {@link #withExecutor(Executor)}.
+   */
   @Deprecated
   TransportChannelProvider withExecutor(ScheduledExecutorService executor);
+
+  /**
+   * True if the TransportProvider needs a background executor. The background executor can be used
+   * for refreshing channels, resizing the channel pool etc.
+   */
+  default boolean needsBackgroundExecutor() {
+    return false;
+  }
+
+  /** Sets the background executor when constructing a new {@link TransportChannel}. */
+  default TransportChannelProvider withBackgroundExecutor(ScheduledExecutorService executor) {
+    return this;
+  }
 
   /** True if the TransportProvider has no headers provided. */
   boolean needsHeaders();
@@ -96,6 +111,27 @@ public interface TransportChannelProvider {
    * <p>This method should only be called if {@link #needsEndpoint()} returns true.
    */
   TransportChannelProvider withEndpoint(String endpoint);
+
+  /** True for gRPC transport provider which has no mtlsEndpoint set. */
+  default boolean needsMtlsEndpoint() {
+    return false;
+  }
+
+  /**
+   * Sets the mTLS endpoint to use when constructing a new {@link TransportChannel} using S2A.
+   *
+   * <p>This method should only be called if {@link #needsMtlsEndpoint()} returns true.
+   */
+  default TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
+    return this;
+  }
+
+  /** Sets whether to use S2A when constructing a new {@link TransportChannel}. */
+  @BetaApi(
+      "The S2A feature is not stable yet and may change in the future. https://github.com/grpc/grpc-java/issues/11533.")
+  default TransportChannelProvider withUseS2A(boolean useS2A) {
+    return this;
+  }
 
   /**
    * Reports whether this provider allows pool size customization.

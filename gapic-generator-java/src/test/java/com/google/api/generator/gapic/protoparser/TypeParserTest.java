@@ -31,9 +31,9 @@ import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.test.collisions.CollisionsOuterClass;
 import com.google.testgapic.v1beta1.NestedMessageProto;
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TypeParserTest {
+class TypeParserTest {
   // TODO(miraleung): Backfill with more tests (e.g. field, message, methods) for Parser.java.
 
   private static final FileDescriptor COLLISIONS_FILE_DESCRIPTOR =
@@ -46,7 +46,7 @@ public class TypeParserTest {
       COLLISIONS_FILE_DESCRIPTOR.getServices().get(0);
 
   @Test
-  public void parseMessageType_basic() {
+  void parseMessageType_basic() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     ServiceDescriptor echoService = echoFileDescriptor.getServices().get(0);
     assertEquals("Echo", echoService.getName());
@@ -57,7 +57,7 @@ public class TypeParserTest {
   }
 
   @Test
-  public void parseMessageType_nested() {
+  void parseMessageType_nested() {
     FileDescriptor fileDescriptor = NestedMessageProto.getDescriptor();
     Descriptor messageDescriptor = fileDescriptor.getMessageTypes().get(0);
     assertEquals("Outer", messageDescriptor.getName());
@@ -71,7 +71,7 @@ public class TypeParserTest {
   }
 
   @Test
-  public void parseLroResponseMetadataType_shortName_shouldMatchSamePackage() {
+  void parseLroResponseMetadataType_shortName_shouldMatchSamePackage() {
     Map<String, Message> messageTypes = Parser.parseMessages(COLLISIONS_FILE_DESCRIPTOR);
     messageTypes.putAll(Parser.parseMessages(DESCRIPTOR_PROTOS_FILE_DESCRIPTOR));
     messageTypes.putAll(Parser.parseMessages(LOCATION_PROTO_FILE_DESCRIPTOR));
@@ -97,7 +97,7 @@ public class TypeParserTest {
   }
 
   @Test
-  public void parseLroResponseMetadataType_shortName_shouldNotMatch() {
+  void parseLroResponseMetadataType_shortName_shouldNotMatch() {
     Map<String, Message> messageTypes = Parser.parseMessages(COLLISIONS_FILE_DESCRIPTOR);
     messageTypes.putAll(Parser.parseMessages(DESCRIPTOR_PROTOS_FILE_DESCRIPTOR));
     MethodDescriptor shortNameMatchShouldThrowLro = COLLISIONS_SERVICE.getMethods().get(1);
@@ -116,7 +116,7 @@ public class TypeParserTest {
   }
 
   @Test
-  public void parseLroResponseMetadataType_shortName_withFullyQualifiedCollision() {
+  void parseLroResponseMetadataType_shortName_withFullyQualifiedCollision() {
     Map<String, Message> messageTypes = Parser.parseMessages(COLLISIONS_FILE_DESCRIPTOR);
     messageTypes.putAll(Parser.parseMessages(DESCRIPTOR_PROTOS_FILE_DESCRIPTOR));
     messageTypes.putAll(Parser.parseMessages(LOCATION_PROTO_FILE_DESCRIPTOR));

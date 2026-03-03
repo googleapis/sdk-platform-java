@@ -17,13 +17,13 @@ package com.google.api.generator.engine.ast;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class NullObjectValueTest {
+class NullObjectValueTest {
   private static final String NULL_VALUE = "null";
 
   @Test
-  public void createNullObjectValue_valid() {
+  void createNullObjectValue_valid() {
     NullObjectValue nullValue = NullObjectValue.create();
     assertEquals(NULL_VALUE, nullValue.value());
     assertThat(nullValue.type()).isEqualTo(TypeNode.NULL);

@@ -16,12 +16,12 @@ package com.google.api.generator.engine.lexicon;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class OperatorTest {
+class OperatorTest {
 
   @Test
-  public void operatorsDetected() {
+  void operatorsDetected() {
     assertThat(Operator.containsOperator("foo")).isFalse();
 
     assertThat(Operator.containsOperator("foo+foo")).isTrue();

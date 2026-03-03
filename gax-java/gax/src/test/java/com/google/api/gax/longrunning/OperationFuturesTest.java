@@ -31,7 +31,8 @@ package com.google.api.gax.longrunning;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.util.concurrent.MoreExecutors.directExecutor;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.api.core.AbstractApiFuture;
 import com.google.api.core.ApiFunction;
@@ -48,21 +49,24 @@ import com.google.api.gax.rpc.testing.FakeStatusCode;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class OperationFuturesTest {
-  @Test(expected = IllegalArgumentException.class)
-  public void testNotDone() {
-    OperationFutures.immediateOperationFuture(
-        FakeOperationSnapshot.newBuilder()
-            .setName("required")
-            .setDone(false)
-            .setErrorCode(FakeStatusCode.of(StatusCode.Code.OK))
-            .build());
+class OperationFuturesTest {
+  @Test
+  void testNotDone() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () ->
+            OperationFutures.immediateOperationFuture(
+                FakeOperationSnapshot.newBuilder()
+                    .setName("required")
+                    .setDone(false)
+                    .setErrorCode(FakeStatusCode.of(Code.OK))
+                    .build()));
   }
 
   @Test
-  public void testCompleted() throws Exception {
+  void testCompleted() throws Exception {
     OperationFuture<String, Integer> future =
         OperationFutures.<String, Integer>immediateOperationFuture(
             FakeOperationSnapshot.newBuilder()
@@ -78,7 +82,7 @@ public class OperationFuturesTest {
   }
 
   @Test
-  public void testFailed() throws Exception {
+  void testFailed() throws Exception {
     OperationFuture<String, Integer> future =
         OperationFutures.<String, Integer>immediateOperationFuture(
             FakeOperationSnapshot.newBuilder()
@@ -98,7 +102,7 @@ public class OperationFuturesTest {
   }
 
   @Test
-  public void testTransform() throws Exception {
+  void testTransform() throws Exception {
     // Test dependencies.
     MockRetryingFuture<OperationSnapshot> pollingFuture = new MockRetryingFuture<>();
     SettableApiFuture<OperationSnapshot> initialFuture = SettableApiFuture.create();

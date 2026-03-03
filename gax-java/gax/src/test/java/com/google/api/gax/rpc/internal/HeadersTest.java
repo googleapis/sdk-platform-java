@@ -36,15 +36,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class HeadersTest {
+class HeadersTest {
 
   @Test
-  public void testMergeHeaders() {
+  void testMergeHeaders() {
     Map<String, List<String>> headers1 = createHeaders("key1", "value1", "key1", "value2");
     Map<String, List<String>> headers2 = createHeaders("key1", "value2", "key2", "value2");
     Map<String, List<String>> mergedHeaders = Headers.mergeHeaders(headers1, headers2);
@@ -54,7 +51,7 @@ public class HeadersTest {
   }
 
   @Test
-  public void testMergeHeadersEmpty() {
+  void testMergeHeadersEmpty() {
     Map<String, List<String>> headers1 = createHeaders();
     Map<String, List<String>> headers2 = createHeaders("key1", "value1", "key2", "value2");
     Map<String, List<String>> mergedHeaders = Headers.mergeHeaders(headers1, headers2);

@@ -34,16 +34,13 @@ import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.retrying.TimedRetryAlgorithm;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.common.truth.Truth;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class OperationCallSettingsTest {
+class OperationCallSettingsTest {
 
   @Test
-  public void testEmptyBuilder() {
+  void testEmptyBuilder() {
     OperationCallSettings.Builder builder = OperationCallSettings.newBuilder();
 
     Truth.assertThat(builder.getResponseTransformer()).isNull();
@@ -53,7 +50,7 @@ public class OperationCallSettingsTest {
   }
 
   @Test
-  public void testBuilder() {
+  void testBuilder() {
     OperationCallSettings.Builder<Integer, String, Long> builder =
         OperationCallSettings.newBuilder();
 
@@ -82,7 +79,7 @@ public class OperationCallSettingsTest {
   }
 
   @Test
-  public void testBuilderFromSettings() throws Exception {
+  void testBuilderFromSettings() throws Exception {
     OperationCallSettings.Builder<Integer, String, Long> builder =
         OperationCallSettings.newBuilder();
 

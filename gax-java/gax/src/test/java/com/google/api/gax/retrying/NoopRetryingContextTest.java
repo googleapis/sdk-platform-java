@@ -29,31 +29,28 @@
  */
 package com.google.api.gax.retrying;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import com.google.api.gax.tracing.BaseApiTracer;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class NoopRetryingContextTest {
+class NoopRetryingContextTest {
 
   @Test
-  public void testGetTracer() {
+  void testGetTracer() {
     RetryingContext context = NoopRetryingContext.create();
     assertSame(BaseApiTracer.getInstance(), context.getTracer());
   }
 
   @Test
-  public void testGetRetrySettings() {
+  void testGetRetrySettings() {
     RetryingContext context = NoopRetryingContext.create();
     assertNull(context.getRetrySettings());
   }
 
   @Test
-  public void testGetRetryableCodes() {
+  void testGetRetryableCodes() {
     RetryingContext context = NoopRetryingContext.create();
     assertNull(context.getRetryableCodes());
   }

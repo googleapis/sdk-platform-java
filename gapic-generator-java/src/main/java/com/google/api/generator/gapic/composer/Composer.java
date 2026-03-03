@@ -53,6 +53,9 @@ public class Composer {
   }
 
   public static GapicPackageInfo composePackageInfo(GapicContext context) {
+    if (!context.containsServices()) {
+      return null;
+    }
     return addApacheLicense(ClientLibraryPackageInfoComposer.generatePackageInfo(context));
   }
 
@@ -229,9 +232,7 @@ public class Composer {
         .map(
             gapicClass -> {
               ClassDefinition classWithHeader =
-                  gapicClass
-                      .classDefinition()
-                      .toBuilder()
+                  gapicClass.classDefinition().toBuilder()
                       .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
                       .build();
               return GapicClass.create(gapicClass.kind(), classWithHeader, gapicClass.samples());
@@ -241,9 +242,7 @@ public class Composer {
 
   private static GapicPackageInfo addApacheLicense(GapicPackageInfo gapicPackageInfo) {
     return GapicPackageInfo.with(
-        gapicPackageInfo
-            .packageInfo()
-            .toBuilder()
+        gapicPackageInfo.packageInfo().toBuilder()
             .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
             .build());
   }

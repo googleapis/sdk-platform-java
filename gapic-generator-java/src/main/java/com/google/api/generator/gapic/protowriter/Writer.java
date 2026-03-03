@@ -36,29 +36,29 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
 
 public class Writer {
-  static class GapicWriterException extends RuntimeException {
-    public GapicWriterException(String errorMessage) {
-      super(errorMessage);
-    }
 
+  static class GapicWriterException extends RuntimeException {
     public GapicWriterException(String errorMessage, Throwable cause) {
       super(errorMessage, cause);
     }
   }
 
-  public static CodeGeneratorResponse write(
+  public static final CodeGeneratorResponse EMPTY_RESPONSE = null;
+
+  @VisibleForTesting
+  protected static CodeGeneratorResponse write(
       GapicContext context,
       List<GapicClass> clazzes,
       GapicPackageInfo gapicPackageInfo,
       List<ReflectConfig> reflectConfigInfo,
-      String outputFilePath) {
-    ByteString.Output output = ByteString.newOutput();
+      String outputFilePath,
+      JarOutputStream jos,
+      ByteString.Output output)
+      throws IOException {
     JavaWriterVisitor codeWriter = new JavaWriterVisitor();
-    JarOutputStream jos;
-    try {
-      jos = new JarOutputStream(output);
-    } catch (IOException e) {
-      throw new GapicWriterException(e.getMessage(), e);
+
+    if (!context.containsServices()) {
+      return EMPTY_RESPONSE;
     }
 
     for (GapicClass gapicClazz : clazzes) {
@@ -72,12 +72,8 @@ public class Writer {
     writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
     writeReflectConfigFile(gapicPackageInfo.packageInfo().pakkage(), reflectConfigInfo, jos);
 
-    try {
-      jos.finish();
-      jos.flush();
-    } catch (IOException e) {
-      throw new GapicWriterException(e.getMessage(), e);
-    }
+    jos.finish();
+    jos.flush();
 
     CodeGeneratorResponse.Builder response = CodeGeneratorResponse.newBuilder();
     response
@@ -86,6 +82,23 @@ public class Writer {
         .setName(outputFilePath)
         .setContentBytes(output.toByteString());
     return response.build();
+  }
+
+  public static CodeGeneratorResponse write(
+      GapicContext context,
+      List<GapicClass> clazzes,
+      GapicPackageInfo gapicPackageInfo,
+      List<ReflectConfig> reflectConfigInfo,
+      String outputFilePath) {
+    ByteString.Output output = ByteString.newOutput();
+    CodeGeneratorResponse response;
+    try (JarOutputStream jos = new JarOutputStream(output)) {
+      response =
+          write(context, clazzes, gapicPackageInfo, reflectConfigInfo, outputFilePath, jos, output);
+    } catch (IOException e) {
+      throw new GapicWriterException(e.getMessage(), e);
+    }
+    return response;
   }
 
   @VisibleForTesting
@@ -167,7 +180,8 @@ public class Writer {
     }
   }
 
-  private static String writePackageInfo(
+  @VisibleForTesting
+  static String writePackageInfo(
       GapicPackageInfo gapicPackageInfo, JavaWriterVisitor codeWriter, JarOutputStream jos) {
     PackageInfoDefinition packageInfo = gapicPackageInfo.packageInfo();
     packageInfo.accept(codeWriter);

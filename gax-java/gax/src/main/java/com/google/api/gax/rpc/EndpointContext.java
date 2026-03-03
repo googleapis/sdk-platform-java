@@ -30,12 +30,20 @@
 package com.google.api.gax.rpc;
 
 import com.google.api.core.InternalApi;
-import com.google.api.gax.rpc.mtls.MtlsProvider;
+import com.google.api.gax.rpc.internal.EnvironmentProvider;
+import com.google.api.gax.rpc.mtls.CertificateBasedAccess;
 import com.google.auth.Credentials;
+import com.google.auth.mtls.CertificateSourceUnavailableException;
+import com.google.auth.mtls.DefaultMtlsProviderFactory;
+import com.google.auth.mtls.MtlsProvider;
+import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
+import com.google.common.net.HostAndPort;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nullable;
 
 /**
@@ -47,6 +55,8 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
+
+  @VisibleForTesting static final Logger LOG = Logger.getLogger(EndpointContext.class.getName());
 
   private static final EndpointContext INSTANCE;
 
@@ -64,6 +74,9 @@ public abstract class EndpointContext {
       "The configured universe domain (%s) does not match the universe domain found in the credentials (%s). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.";
   public static final String UNABLE_TO_RETRIEVE_CREDENTIALS_ERROR_MESSAGE =
       "Unable to retrieve the Universe Domain from the Credentials.";
+  // This environment variable is a temporary measure. It will be removed when the feature is
+  // non-experimental.
+  static final String S2A_ENV_ENABLE_USE_S2A = "EXPERIMENTAL_GOOGLE_API_USE_S2A_JAVA";
 
   public static EndpointContext getDefaultInstance() {
     return INSTANCE;
@@ -99,6 +112,11 @@ public abstract class EndpointContext {
   @Nullable
   public abstract String transportChannelProviderEndpoint();
 
+  abstract boolean useS2A();
+
+  @Nullable
+  abstract EnvironmentProvider envProvider();
+
   @Nullable
   public abstract String mtlsEndpoint();
 
@@ -107,18 +125,24 @@ public abstract class EndpointContext {
   @Nullable
   public abstract MtlsProvider mtlsProvider();
 
+  @Nullable
+  abstract CertificateBasedAccess certificateBasedAccess();
+
   public abstract boolean usingGDCH();
 
   abstract String resolvedUniverseDomain();
 
   public abstract String resolvedEndpoint();
 
+  public abstract String resolvedServerAddress();
+
   public abstract Builder toBuilder();
 
   public static Builder newBuilder() {
     return new AutoValue_EndpointContext.Builder()
         .setSwitchToMtlsEndpointAllowed(false)
-        .setUsingGDCH(false);
+        .setUsingGDCH(false)
+        .setEnvProvider(System::getenv);
   }
 
   /** Configure the existing EndpointContext to be using GDC-H */
@@ -143,6 +167,11 @@ public abstract class EndpointContext {
       Credentials credentials, StatusCode invalidUniverseDomainStatusCode) throws IOException {
     if (usingGDCH()) {
       // GDC-H has no universe domain, return
+      return;
+    }
+    // (TODO: b/349488459) - Disable automatic requests to MDS until 01/2025
+    // If MDS is required for Universe Domain, do not do any validation
+    if (credentials instanceof ComputeEngineCredentials) {
       return;
     }
     String credentialsUniverseDomain = Credentials.GOOGLE_DEFAULT_UNIVERSE;
@@ -196,11 +225,19 @@ public abstract class EndpointContext {
 
     public abstract Builder setMtlsProvider(MtlsProvider mtlsProvider);
 
+    abstract Builder setCertificateBasedAccess(CertificateBasedAccess certificateBasedAccess);
+
     public abstract Builder setUsingGDCH(boolean usingGDCH);
 
     public abstract Builder setResolvedEndpoint(String resolvedEndpoint);
 
+    public abstract Builder setResolvedServerAddress(String serverAddress);
+
     public abstract Builder setResolvedUniverseDomain(String resolvedUniverseDomain);
+
+    abstract Builder setUseS2A(boolean useS2A);
+
+    abstract Builder setEnvProvider(EnvironmentProvider envProvider);
 
     abstract String serviceName();
 
@@ -210,11 +247,18 @@ public abstract class EndpointContext {
 
     abstract String transportChannelProviderEndpoint();
 
+    abstract boolean useS2A();
+
+    abstract EnvironmentProvider envProvider();
+
     abstract String mtlsEndpoint();
 
     abstract boolean switchToMtlsEndpointAllowed();
 
+    @Nullable
     abstract MtlsProvider mtlsProvider();
+
+    abstract CertificateBasedAccess certificateBasedAccess();
 
     abstract boolean usingGDCH();
 
@@ -248,7 +292,30 @@ public abstract class EndpointContext {
 
     /** Determines the fully resolved endpoint and universe domain values */
     private String determineEndpoint() throws IOException {
-      MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
+      CertificateBasedAccess certificateBasedAccess =
+          certificateBasedAccess() == null
+              ? CertificateBasedAccess.createWithSystemEnv()
+              : certificateBasedAccess();
+      MtlsProvider mtlsProvider = mtlsProvider();
+
+      // Only attempt to create a default MtlsProvider if client certificate usage is enabled.
+      if (certificateBasedAccess.useMtlsClientCertificate()) {
+        if (mtlsProvider == null) {
+          try {
+            mtlsProvider = DefaultMtlsProviderFactory.create();
+          } catch (CertificateSourceUnavailableException e) {
+            // This is okay. Leave mtlsProvider as null;
+          } catch (IOException e) {
+            LOG.log(
+                Level.WARNING,
+                "DefaultMtlsProviderFactory encountered unexpected IOException: " + e.getMessage());
+            LOG.log(
+                Level.WARNING,
+                "mTLS configuration was detected on the device, but mTLS failed to initialize. Falling back to non-mTLS channel.");
+          }
+        }
+      }
+
       // TransportChannelProvider's endpoint will override the ClientSettings' endpoint
       String customEndpoint =
           transportChannelProviderEndpoint() == null
@@ -270,7 +337,11 @@ public abstract class EndpointContext {
 
       String endpoint =
           mtlsEndpointResolver(
-              customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider);
+              customEndpoint,
+              mtlsEndpoint(),
+              switchToMtlsEndpointAllowed(),
+              mtlsProvider,
+              certificateBasedAccess);
 
       // Check if mTLS is configured with non-GDU
       if (endpoint.equals(mtlsEndpoint())
@@ -280,6 +351,57 @@ public abstract class EndpointContext {
       }
 
       return endpoint;
+    }
+
+    /** Determine if S2A can be used */
+    @VisibleForTesting
+    boolean shouldUseS2A() {
+      // If mTLS endpoint is not available, skip S2A
+      if (Strings.isNullOrEmpty(mtlsEndpoint())) {
+        return false;
+      }
+
+      // If EXPERIMENTAL_GOOGLE_API_USE_S2A_JAVA is not set to true, skip S2A.
+      String s2AEnv = envProvider().getenv(S2A_ENV_ENABLE_USE_S2A);
+      boolean s2AEnabled = Boolean.parseBoolean(s2AEnv);
+      if (!s2AEnabled) {
+        return false;
+      }
+
+      // Skip S2A when using GDC-H
+      if (usingGDCH()) {
+        return false;
+      }
+
+      // If a custom endpoint is being used, skip S2A.
+      if ((!Strings.isNullOrEmpty(clientSettingsEndpoint())
+              && !buildEndpointTemplate(serviceName(), resolvedUniverseDomain())
+                  .contains(clientSettingsEndpoint()))
+          || (!Strings.isNullOrEmpty(transportChannelProviderEndpoint())
+              && !buildEndpointTemplate(serviceName(), resolvedUniverseDomain())
+                  .contains(transportChannelProviderEndpoint()))) {
+        return false;
+      }
+
+      // mTLS via S2A is not supported in any universe other than googleapis.com.
+      return mtlsEndpoint().contains(Credentials.GOOGLE_DEFAULT_UNIVERSE);
+    }
+
+    private String parseServerAddress(String endpoint) {
+      if (Strings.isNullOrEmpty(endpoint)) {
+        return endpoint;
+      }
+      String hostPort = endpoint;
+      if (hostPort.contains("://")) {
+        // Strip the scheme if present. HostAndPort doesn't support schemes.
+        hostPort = hostPort.substring(hostPort.indexOf("://") + 3);
+      }
+      try {
+        return HostAndPort.fromString(hostPort).getHost();
+      } catch (IllegalArgumentException e) {
+        // Fallback for cases HostAndPort can't handle.
+        return hostPort;
+      }
     }
 
     // Default to port 443 for HTTPS. Using HTTP requires explicitly setting the endpoint
@@ -293,16 +415,18 @@ public abstract class EndpointContext {
         String endpoint,
         String mtlsEndpoint,
         boolean switchToMtlsEndpointAllowed,
-        MtlsProvider mtlsProvider)
+        MtlsProvider mtlsProvider,
+        CertificateBasedAccess certificateBasedAccess)
         throws IOException {
-      if (switchToMtlsEndpointAllowed && mtlsProvider != null) {
-        switch (mtlsProvider.getMtlsEndpointUsagePolicy()) {
+      if (switchToMtlsEndpointAllowed && certificateBasedAccess != null && mtlsProvider != null) {
+        switch (certificateBasedAccess.getMtlsEndpointUsagePolicy()) {
           case ALWAYS:
             return mtlsEndpoint;
           case NEVER:
             return endpoint;
           default:
-            if (mtlsProvider.useMtlsClientCertificate() && mtlsProvider.getKeyStore() != null) {
+            if (certificateBasedAccess.useMtlsClientCertificate()
+                && mtlsProvider.getKeyStore() != null) {
               return mtlsEndpoint;
             }
             return endpoint;
@@ -314,7 +438,10 @@ public abstract class EndpointContext {
     public EndpointContext build() throws IOException {
       // The Universe Domain is used to resolve the Endpoint. It should be resolved first
       setResolvedUniverseDomain(determineUniverseDomain());
-      setResolvedEndpoint(determineEndpoint());
+      String endpoint = determineEndpoint();
+      setResolvedEndpoint(endpoint);
+      setResolvedServerAddress(parseServerAddress(endpoint));
+      setUseS2A(shouldUseS2A());
       return autoBuild();
     }
   }

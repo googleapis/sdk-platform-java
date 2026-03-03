@@ -38,15 +38,12 @@ import com.google.common.truth.Truth;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class PagedCallableTest {
+class PagedCallableTest {
 
   @Test
-  public void futureCall() {
+  void futureCall() {
     List<List<Integer>> results =
         Arrays.asList(
             Arrays.asList(0, 1, 2), Arrays.asList(3, 4), Collections.<Integer>emptyList());
@@ -62,7 +59,7 @@ public class PagedCallableTest {
   }
 
   @Test
-  public void testToString() {
+  void testToString() {
     PagedStashCallable stash = new PagedStashCallable(null);
     PagedCallable<Integer, List<Integer>, ListIntegersPagedResponse> pagedCallable =
         new PagedCallable<>(stash, new ListIntegersPagedResponseFactory());

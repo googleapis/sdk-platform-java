@@ -29,6 +29,9 @@
  */
 package com.google.longrunning;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.testing.LocalChannelProvider;
 import com.google.api.gax.grpc.testing.MockGrpcService;
@@ -44,20 +47,19 @@ import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class OperationsClientTest {
+class OperationsClientTest {
   private static MockOperations mockOperations;
   private static MockServiceHelper serviceHelper;
   private OperationsClient client;
   private LocalChannelProvider channelProvider;
 
-  @BeforeClass
+  @BeforeAll
   public static void startStaticServer() {
     mockOperations = new MockOperations();
     serviceHelper =
@@ -65,13 +67,13 @@ public class OperationsClientTest {
     serviceHelper.start();
   }
 
-  @AfterClass
+  @AfterAll
   public static void stopServer() {
     serviceHelper.stop();
   }
 
-  @Before
-  public void setUp() throws IOException {
+  @BeforeEach
+  void setUp() throws IOException {
     serviceHelper.reset();
     channelProvider = serviceHelper.createChannelProvider();
     OperationsSettings settings =
@@ -82,14 +84,14 @@ public class OperationsClientTest {
     client = OperationsClient.create(settings);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     client.close();
   }
 
   @Test
   @SuppressWarnings("all")
-  public void getOperationTest() {
+  void getOperationTest() {
     String name2 = "name2-1052831874";
     boolean done = true;
     Operation expectedResponse = Operation.newBuilder().setName(name2).setDone(done).build();
@@ -98,34 +100,32 @@ public class OperationsClientTest {
     String name = "name3373707";
 
     Operation actualResponse = client.getOperation(name);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockOperations.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    assertEquals(1, actualRequests.size());
     GetOperationRequest actualRequest = (GetOperationRequest) actualRequests.get(0);
 
-    Assert.assertEquals(name, actualRequest.getName());
+    assertEquals(name, actualRequest.getName());
   }
 
   @Test
   @SuppressWarnings("all")
-  public void getOperationExceptionTest() throws Exception {
+  void getOperationExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(Status.INVALID_ARGUMENT);
     mockOperations.addException(exception);
 
-    try {
-      String name = "name3373707";
-
-      client.getOperation(name);
-      Assert.fail("No exception raised");
-    } catch (InvalidArgumentException e) {
-      // Expected exception
-    }
+    String name = "name3373707";
+    assertThrows(
+        InvalidArgumentException.class,
+        () -> {
+          client.getOperation(name);
+        });
   }
 
   @Test
   @SuppressWarnings("all")
-  public void listOperationsTest() {
+  void listOperationsTest() {
     String nextPageToken = "";
     Operation operationsElement = Operation.newBuilder().build();
     List<Operation> operations = Arrays.asList(operationsElement);
@@ -142,37 +142,35 @@ public class OperationsClientTest {
     ListOperationsPagedResponse pagedListResponse = client.listOperations(name, filter);
 
     List<Operation> resources = Lists.newArrayList(pagedListResponse.iterateAll());
-    Assert.assertEquals(1, resources.size());
-    Assert.assertEquals(expectedResponse.getOperationsList().get(0), resources.get(0));
+    assertEquals(1, resources.size());
+    assertEquals(expectedResponse.getOperationsList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockOperations.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    assertEquals(1, actualRequests.size());
     ListOperationsRequest actualRequest = (ListOperationsRequest) actualRequests.get(0);
 
-    Assert.assertEquals(name, actualRequest.getName());
-    Assert.assertEquals(filter, actualRequest.getFilter());
+    assertEquals(name, actualRequest.getName());
+    assertEquals(filter, actualRequest.getFilter());
   }
 
   @Test
   @SuppressWarnings("all")
-  public void listOperationsExceptionTest() throws Exception {
+  void listOperationsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(Status.INVALID_ARGUMENT);
     mockOperations.addException(exception);
 
-    try {
-      String name = "name3373707";
-      String filter = "filter-1274492040";
-
-      client.listOperations(name, filter);
-      Assert.fail("No exception raised");
-    } catch (InvalidArgumentException e) {
-      // Expected exception
-    }
+    String name = "name3373707";
+    String filter = "filter-1274492040";
+    assertThrows(
+        InvalidArgumentException.class,
+        () -> {
+          client.listOperations(name, filter);
+        });
   }
 
   @Test
   @SuppressWarnings("all")
-  public void cancelOperationTest() {
+  void cancelOperationTest() {
     Empty expectedResponse = Empty.newBuilder().build();
     mockOperations.addResponse(expectedResponse);
 
@@ -181,31 +179,29 @@ public class OperationsClientTest {
     client.cancelOperation(name);
 
     List<AbstractMessage> actualRequests = mockOperations.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    assertEquals(1, actualRequests.size());
     CancelOperationRequest actualRequest = (CancelOperationRequest) actualRequests.get(0);
 
-    Assert.assertEquals(name, actualRequest.getName());
+    assertEquals(name, actualRequest.getName());
   }
 
   @Test
   @SuppressWarnings("all")
-  public void cancelOperationExceptionTest() throws Exception {
+  void cancelOperationExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(Status.INVALID_ARGUMENT);
     mockOperations.addException(exception);
 
-    try {
-      String name = "name3373707";
-
-      client.cancelOperation(name);
-      Assert.fail("No exception raised");
-    } catch (InvalidArgumentException e) {
-      // Expected exception
-    }
+    String name = "name3373707";
+    assertThrows(
+        InvalidArgumentException.class,
+        () -> {
+          client.cancelOperation(name);
+        });
   }
 
   @Test
   @SuppressWarnings("all")
-  public void deleteOperationTest() {
+  void deleteOperationTest() {
     Empty expectedResponse = Empty.newBuilder().build();
     mockOperations.addResponse(expectedResponse);
 
@@ -214,31 +210,29 @@ public class OperationsClientTest {
     client.deleteOperation(name);
 
     List<AbstractMessage> actualRequests = mockOperations.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    assertEquals(1, actualRequests.size());
     DeleteOperationRequest actualRequest = (DeleteOperationRequest) actualRequests.get(0);
 
-    Assert.assertEquals(name, actualRequest.getName());
+    assertEquals(name, actualRequest.getName());
   }
 
   @Test
   @SuppressWarnings("all")
-  public void deleteOperationExceptionTest() throws Exception {
+  void deleteOperationExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(Status.INVALID_ARGUMENT);
     mockOperations.addException(exception);
 
-    try {
-      String name = "name3373707";
-
-      client.deleteOperation(name);
-      Assert.fail("No exception raised");
-    } catch (InvalidArgumentException e) {
-      // Expected exception
-    }
+    String name = "name3373707";
+    assertThrows(
+        InvalidArgumentException.class,
+        () -> {
+          client.deleteOperation(name);
+        });
   }
 
   @Test
   @SuppressWarnings("all")
-  public void waitOperationTest() {
+  void waitOperationTest() {
     String name2 = "name2-1052831874";
     boolean done = true;
     Operation expectedResponse = Operation.newBuilder().setName(name2).setDone(done).build();
@@ -250,31 +244,29 @@ public class OperationsClientTest {
         WaitOperationRequest.newBuilder().setName(name).setTimeout(timeout).build();
 
     Operation actualResponse = client.waitOperation(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockOperations.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    assertEquals(1, actualRequests.size());
     WaitOperationRequest actualRequest = (WaitOperationRequest) actualRequests.get(0);
 
-    Assert.assertEquals(name, actualRequest.getName());
+    assertEquals(name, actualRequest.getName());
   }
 
   @Test
   @SuppressWarnings("all")
-  public void waitOperationExceptionTest() throws Exception {
+  void waitOperationExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(Status.INVALID_ARGUMENT);
     mockOperations.addException(exception);
 
-    try {
-      String name = "name3373707";
-      Duration timeout = Duration.newBuilder().setSeconds(5).build();
-      WaitOperationRequest request =
-          WaitOperationRequest.newBuilder().setName(name).setTimeout(timeout).build();
-
-      client.waitOperation(request);
-      Assert.fail("No exception raised");
-    } catch (InvalidArgumentException e) {
-      // Expected exception
-    }
+    String name = "name3373707";
+    Duration timeout = Duration.newBuilder().setSeconds(5).build();
+    WaitOperationRequest request =
+        WaitOperationRequest.newBuilder().setName(name).setTimeout(timeout).build();
+    assertThrows(
+        InvalidArgumentException.class,
+        () -> {
+          client.waitOperation(request);
+        });
   }
 }

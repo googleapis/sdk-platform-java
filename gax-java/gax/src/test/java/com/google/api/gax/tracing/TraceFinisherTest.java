@@ -35,22 +35,17 @@ import static org.mockito.Mockito.verify;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.common.util.concurrent.MoreExecutors;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.mockito.quality.Strictness;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(JUnit4.class)
-public class TraceFinisherTest {
-  @Rule public MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
+@ExtendWith(MockitoExtension.class)
+class TraceFinisherTest {
   @Mock private ApiTracer mockTracer;
 
   @Test
-  public void testSuccess() {
+  void testSuccess() {
     ApiFuture<String> future = ApiFutures.immediateFuture("result");
     ApiFutures.addCallback(
         future, new TraceFinisher<String>(mockTracer), MoreExecutors.directExecutor());
@@ -59,7 +54,7 @@ public class TraceFinisherTest {
   }
 
   @Test
-  public void testCancellation() {
+  void testCancellation() {
     ApiFuture<String> future = ApiFutures.immediateCancelledFuture();
     ApiFutures.addCallback(
         future, new TraceFinisher<String>(mockTracer), MoreExecutors.directExecutor());
@@ -68,7 +63,7 @@ public class TraceFinisherTest {
   }
 
   @Test
-  public void testFailure() {
+  void testFailure() {
     RuntimeException expectedError = new RuntimeException("fake");
     ApiFuture<String> future = ApiFutures.immediateFailedFuture(expectedError);
     ApiFutures.addCallback(

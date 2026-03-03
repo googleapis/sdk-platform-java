@@ -20,11 +20,11 @@ import static org.junit.Assert.assertTrue;
 
 import com.google.common.base.Function;
 import java.util.Arrays;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class AnonymousClassExprTest {
+class AnonymousClassExprTest {
   @Test
-  public void validAnonymousClass_basic() {
+  void validAnonymousClass_basic() {
     ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);
     AssignmentExpr assignmentExpr = createAssignmentExpr("foobar", "false", TypeNode.BOOLEAN);
@@ -45,7 +45,7 @@ public class AnonymousClassExprTest {
   }
 
   @Test
-  public void validAnonymousClass_genericAndVariableExpr() {
+  void validAnonymousClass_genericAndVariableExpr() {
     // [Constructing] new Function<String, String>()
     ConcreteReference ref =
         ConcreteReference.builder()
@@ -100,14 +100,14 @@ public class AnonymousClassExprTest {
   }
 
   @Test
-  public void invalidAnonymousClass_primitiveType() {
+  void invalidAnonymousClass_primitiveType() {
     assertThrows(
         IllegalStateException.class,
         () -> AnonymousClassExpr.builder().setType(TypeNode.INT).build());
   }
 
   @Test
-  public void invalidAnonymousClass_staticMethod() {
+  void invalidAnonymousClass_staticMethod() {
     ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);
     MethodDefinition method =
@@ -127,7 +127,7 @@ public class AnonymousClassExprTest {
   }
 
   @Test
-  public void invalidAnonymousClass_explicitConstructor() {
+  void invalidAnonymousClass_explicitConstructor() {
     TypeNode type = TypeNode.withReference(ConcreteReference.withClazz(Runnable.class));
     TypeNode returnType =
         TypeNode.withReference(
@@ -143,7 +143,7 @@ public class AnonymousClassExprTest {
   }
 
   @Test
-  public void invalidAnonymousClass_staticVariableExpr() {
+  void invalidAnonymousClass_staticVariableExpr() {
     ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);
     Variable variable = createVariable("s", TypeNode.STRING);

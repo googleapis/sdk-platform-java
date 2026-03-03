@@ -16,8 +16,8 @@
 package com.google.cloud;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -27,12 +27,9 @@ import com.google.protobuf.Struct;
 import com.google.protobuf.Value;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
 public class StructsTest {
 
   private static final Double NUMBER = 42.0;
@@ -75,8 +72,8 @@ public class StructsTest {
   private static final Struct STRUCT = Struct.newBuilder().putAllFields(VALUE_MAP).build();
   private static final ImmutableMap<String, Object> EMPTY_MAP = ImmutableMap.of();
 
-  @BeforeClass
-  public static void beforeClass() {
+  @BeforeAll
+  static void beforeClass() {
     INNER_MAP.put("null", null);
     INNER_MAP.put("number", NUMBER);
     INNER_MAP.put("string", STRING);
@@ -101,7 +98,7 @@ public class StructsTest {
   }
 
   @Test
-  public void testAsMap() {
+  void testAsMap() {
     Map<String, Object> map = Structs.asMap(STRUCT);
     checkMapField(map, "null", null);
     checkMapField(map, "number", NUMBER);
@@ -113,7 +110,7 @@ public class StructsTest {
   }
 
   @Test
-  public void testAsMapPut() {
+  void testAsMapPut() {
     Map<String, Object> map = Structs.asMap(STRUCT);
     try {
       map.put("key", "value");
@@ -124,7 +121,7 @@ public class StructsTest {
   }
 
   @Test
-  public void testAsMapRemove() {
+  void testAsMapRemove() {
     Map<String, Object> map = Structs.asMap(STRUCT);
     try {
       map.remove("null");
@@ -135,14 +132,14 @@ public class StructsTest {
   }
 
   @Test
-  public void testAsMapEmpty() {
+  void testAsMapEmpty() {
     Map<String, Object> map = Structs.asMap(Struct.getDefaultInstance());
     assertThat(map).isEmpty();
     assertEquals(EMPTY_MAP, map);
   }
 
   @Test
-  public void testAsMapNull() {
+  void testAsMapNull() {
     try {
       Structs.asMap(null);
       fail();
@@ -151,7 +148,7 @@ public class StructsTest {
   }
 
   @Test
-  public void testNewStruct() {
+  void testNewStruct() {
     Struct struct = Structs.newStruct(MAP);
     checkStructField(struct, "null", NULL_VALUE);
     checkStructField(struct, "number", NUMBER_VALUE);
@@ -163,13 +160,13 @@ public class StructsTest {
   }
 
   @Test
-  public void testNewStructEmpty() {
+  void testNewStructEmpty() {
     Struct struct = Structs.newStruct(EMPTY_MAP);
     assertThat(struct.getFieldsMap()).isEmpty();
   }
 
   @Test
-  public void testNewStructNull() {
+  void testNewStructNull() {
     try {
       Structs.newStruct(null);
       fail();
@@ -178,7 +175,7 @@ public class StructsTest {
   }
 
   @Test
-  public void testNumbers() {
+  void testNumbers() {
     int intNumber = Integer.MIN_VALUE;
     long longNumber = Long.MAX_VALUE;
     float floatNumber = Float.MIN_VALUE;

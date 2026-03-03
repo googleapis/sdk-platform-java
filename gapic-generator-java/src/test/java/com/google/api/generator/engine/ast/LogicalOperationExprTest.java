@@ -16,12 +16,12 @@ package com.google.api.generator.engine.ast;
 
 import static org.junit.Assert.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class LogicalOperationExprTest {
+class LogicalOperationExprTest {
   /** =============================== Logic And Operation Expr =============================== */
   @Test
-  public void logicalAnd_validBasic() {
+  void logicalAnd_validBasic() {
     VariableExpr lhsExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(TypeNode.BOOLEAN).setName("isGood").build());
@@ -33,7 +33,7 @@ public class LogicalOperationExprTest {
   }
 
   @Test
-  public void logicalAnd_validBoxedBoolean() {
+  void logicalAnd_validBoxedBoolean() {
     VariableExpr lhsExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(TypeNode.BOOLEAN).setName("isGood").build());
@@ -45,7 +45,7 @@ public class LogicalOperationExprTest {
   }
 
   @Test
-  public void logicalAnd_invalidNumericType() {
+  void logicalAnd_invalidNumericType() {
     VariableExpr lhsExpr =
         VariableExpr.withVariable(Variable.builder().setType(TypeNode.INT).setName("x").build());
     VariableExpr rhsExpr =
@@ -57,7 +57,7 @@ public class LogicalOperationExprTest {
   }
 
   @Test
-  public void logicalAnd_invalidStringType() {
+  void logicalAnd_invalidStringType() {
     VariableExpr lhsExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(TypeNode.BOOLEAN_OBJECT).setName("x").build());
@@ -71,7 +71,7 @@ public class LogicalOperationExprTest {
 
   /** =============================== Logic Or Operation Expr =============================== */
   @Test
-  public void logicalOr_validBoxedBoolean() {
+  void logicalOr_validBoxedBoolean() {
     VariableExpr lhsExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(TypeNode.BOOLEAN_OBJECT).setName("isGood").build());
@@ -83,7 +83,7 @@ public class LogicalOperationExprTest {
   }
 
   @Test
-  public void logicalOr_invalidVoidType() {
+  void logicalOr_invalidVoidType() {
     VariableExpr lhsExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(TypeNode.BOOLEAN).setName("x").build());
@@ -95,7 +95,7 @@ public class LogicalOperationExprTest {
   }
 
   @Test
-  public void logicalOr_invalidNullType() {
+  void logicalOr_invalidNullType() {
     VariableExpr lhsExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(TypeNode.BOOLEAN).setName("x").build());

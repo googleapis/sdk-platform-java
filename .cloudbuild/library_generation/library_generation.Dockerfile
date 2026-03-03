@@ -12,49 +12,68 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# build from the root of this repo:
-FROM gcr.io/cloud-devrel-public-resources/python
+# install gapic-generator-java in a separate layer so we don't overload the image
+# with the transferred source code and jars
 
-ARG SYNTHTOOL_COMMITTISH=63cc541da2c45fcfca2136c43e638da1fbae174d
-ARG OWLBOT_CLI_COMMITTISH=ac84fa5c423a0069bbce3d2d869c9730c8fdf550
+
+FROM docker.io/library/maven:3.9.9-eclipse-temurin-17-alpine@sha256:969014ee8852c9910ff5ef09de17541c2587819364b79d7dc044634dfb8a3388 AS ggj-build
+
+WORKDIR /sdk-platform-java
+COPY . .
+# {x-version-update-start:gapic-generator-java:current}
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.67.1-SNAPSHOT"
+# {x-version-update-end}
+
+# Download the java formatter
+RUN mvn -pl gapic-generator-java-pom-parent help:evaluate -Dexpression='google-java-format.version' -q -DforceStdout > /java-formatter-version
+RUN cat /java-formatter-version
+RUN V=$(cat /java-formatter-version) && curl -o "/google-java-format.jar" "https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${V}/google-java-format-${V}-all-deps.jar"
+
+# Compile and install packages
+RUN mvn install -B -ntp -T 1.5C -DskipTests -Dcheckstyle.skip -Dclirr.skip -Denforcer.skip -Dfmt.skip
+RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
+  "./gapic-generator-java.jar"
+
+FROM docker.io/library/python:3.13.2-slim@sha256:6b3223eb4d93718828223966ad316909c39813dee3ee9395204940500792b740 as final
+
+ARG OWLBOT_CLI_COMMITTISH=3a68a9c0de318784b3aefadcc502a6521b3f1bc5
+ARG PROTOC_VERSION=33.2
+ARG GRPC_VERSION=1.76.3
 ENV HOME=/home
+ENV OS_ARCHITECTURE="linux-x86_64"
 
 # install OS tools
-RUN apt-get update && apt-get install -y \
-	unzip openjdk-17-jdk rsync maven jq \
-	&& apt-get clean
+RUN apt update && apt install -y curl unzip rsync jq nodejs npm git openjdk-17-jdk
 
-# use python 3.11 (the base image has several python versions; here we define the default one)
-RUN rm $(which python3)
-RUN ln -s $(which python3.11) /usr/local/bin/python
-RUN ln -s $(which python3.11) /usr/local/bin/python3
-RUN python -m pip install --upgrade pip
+SHELL [ "/bin/bash", "-c" ]
 
 # copy source code
-COPY library_generation /src
+COPY hermetic_build/common /src/common
+COPY hermetic_build/library_generation /src/library_generation
 
-# install scripts as a python package
-WORKDIR /src
-RUN python -m pip install -r requirements.txt
-RUN python -m pip install .
+# install protoc
+WORKDIR /protoc
+RUN source /src/library_generation/utils/utilities.sh \
+	&& download_protoc "${PROTOC_VERSION}" "${OS_ARCHITECTURE}"
+# we indicate protoc is available in the container via env vars
+ENV DOCKER_PROTOC_LOCATION=/protoc/bin
+ENV DOCKER_PROTOC_VERSION="${PROTOC_VERSION}"
 
-# install synthtool
-WORKDIR /tools
-RUN git clone https://github.com/googleapis/synthtool
-WORKDIR /tools/synthtool
-RUN git checkout "${SYNTHTOOL_COMMITTISH}"
-RUN python3 -m pip install --no-deps -e .
-RUN python3 -m pip install -r requirements.in
+# install grpc
+WORKDIR /grpc
+RUN source /src/library_generation/utils/utilities.sh \
+	&& download_grpc_plugin "${GRPC_VERSION}" "${OS_ARCHITECTURE}"
+# similar to protoc, we indicate grpc is available in the container via env vars
+ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java.exe"
 
-# Install nvm with node and npm
-ENV NODE_VERSION 20.12.0
-WORKDIR /home
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-RUN chmod o+rx /home/.nvm
-ENV NODE_PATH=/home/.nvm/versions/node/v${NODE_VERSION}/bin
-ENV PATH=${PATH}:${NODE_PATH}
-RUN node --version
-RUN npm --version
+RUN python -m pip install --upgrade pip
+
+# install main scripts as a python package
+WORKDIR /
+RUN python -m pip install --require-hashes -r src/common/requirements.txt
+RUN python -m pip install src/common
+RUN python -m pip install --require-hashes -r src/library_generation/requirements.txt
+RUN python -m pip install src/library_generation
 
 # install the owl-bot CLI
 WORKDIR /tools
@@ -63,8 +82,20 @@ WORKDIR /tools/repo-automation-bots/packages/owl-bot
 RUN git checkout "${OWLBOT_CLI_COMMITTISH}"
 RUN npm i && npm run compile && npm link
 RUN owl-bot copy-code --version
-RUN chmod -R o+rx ${NODE_PATH}
-RUN ln -sf ${NODE_PATH}/* /usr/local/bin
+RUN chmod o+rx $(which owl-bot)
+
+# copy the Java formatter
+COPY --from=ggj-build "/google-java-format.jar" "${HOME}"/.library_generation/google-java-format.jar
+RUN chmod 755 "${HOME}"/.library_generation/google-java-format.jar
+ENV JAVA_FORMATTER_LOCATION="${HOME}/.library_generation/google-java-format.jar"
+
+# Here we transfer gapic-generator-java from the previous stage.
+# Note that the destination is a well-known location that will be assumed at runtime
+# We hard-code the location string to avoid making it configurable (via ARG) as
+# well as to avoid it making it overridable at runtime (via ENV).
+COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
+RUN chmod 755 "${HOME}/.library_generation/gapic-generator-java.jar"
+ENV GAPIC_GENERATOR_LOCATION="${HOME}/.library_generation/gapic-generator-java.jar"
 
 # allow users to access the script folders
 RUN chmod -R o+rx /src
@@ -76,7 +107,6 @@ RUN git config --system user.name "Cloud Java Bot"
 
 # allow read-write for /home and execution for binaries in /home/.nvm
 RUN chmod -R a+rw /home
-RUN chmod -R a+rx /home/.nvm
 
 WORKDIR /workspace
-ENTRYPOINT [ "python", "/src/cli/entry_point.py", "generate" ]
+ENTRYPOINT [ "python", "/src/library_generation/cli/entry_point.py", "generate" ]

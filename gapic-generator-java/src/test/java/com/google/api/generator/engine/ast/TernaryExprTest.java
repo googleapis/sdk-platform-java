@@ -17,11 +17,11 @@ package com.google.api.generator.engine.ast;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TernaryExprTest {
+class TernaryExprTest {
   @Test
-  public void validTernaryExpr_primitiveType() {
+  void validTernaryExpr_primitiveType() {
     Variable conditionVariable =
         Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
     VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
@@ -43,7 +43,7 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void validTernaryExpr_objectType() {
+  void validTernaryExpr_objectType() {
     Variable conditionVariable =
         Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
     VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
@@ -65,7 +65,7 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void validTernaryExpr_primitiveAndBoxedType() {
+  void validTernaryExpr_primitiveAndBoxedType() {
     // [Constructing] `condition ? intValue : integerValue`
     // The type of whole expression should be Integer.
     Variable conditionVariable =
@@ -88,7 +88,7 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void validTernaryExpr_boxedAndPrimitiveType() {
+  void validTernaryExpr_boxedAndPrimitiveType() {
     // [Constructing] `condition ? doubleObjectVariable : doubleVariable`
     // The type of whole expression should be Double.
     Variable conditionVariable =
@@ -112,7 +112,7 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void validTernaryExpr_objectAndNull() {
+  void validTernaryExpr_objectAndNull() {
     TernaryExpr ternaryExpr =
         TernaryExpr.builder()
             .setConditionExpr(
@@ -126,7 +126,7 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void validTernaryExpr_nullAndObject() {
+  void validTernaryExpr_nullAndObject() {
     TernaryExpr ternaryExpr =
         TernaryExpr.builder()
             .setConditionExpr(
@@ -140,7 +140,7 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void validTernaryExpr_superAndSubtype() {
+  void validTernaryExpr_superAndSubtype() {
     TernaryExpr ternaryExpr =
         TernaryExpr.builder()
             .setConditionExpr(
@@ -156,7 +156,7 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void validTernaryExpr_subAndSupertype() {
+  void validTernaryExpr_subAndSupertype() {
     TernaryExpr ternaryExpr =
         TernaryExpr.builder()
             .setConditionExpr(
@@ -172,7 +172,7 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void invalidTernaryExpr_mismatchedPrimitiveTypes() {
+  void invalidTernaryExpr_mismatchedPrimitiveTypes() {
     Variable conditionVariable =
         Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
     VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
@@ -193,7 +193,7 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void invalidTernaryExpr_mismatchedBoxedAndPrimitiveTypes() {
+  void invalidTernaryExpr_mismatchedBoxedAndPrimitiveTypes() {
     Variable conditionVariable =
         Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
     VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
@@ -216,7 +216,7 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void invalidTernaryExpr_incompatibleThenElsePrimitiveTypes() {
+  void invalidTernaryExpr_incompatibleThenElsePrimitiveTypes() {
     assertThrows(
         IllegalStateException.class,
         () ->
@@ -238,7 +238,7 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void invalidTernaryExpr_incompatibleThenElseObjectTypes() {
+  void invalidTernaryExpr_incompatibleThenElseObjectTypes() {
     assertThrows(
         IllegalStateException.class,
         () ->

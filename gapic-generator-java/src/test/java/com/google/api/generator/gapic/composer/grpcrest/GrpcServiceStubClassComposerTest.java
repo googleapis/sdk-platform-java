@@ -24,11 +24,11 @@ import com.google.api.generator.test.framework.GoldenFileWriter;
 import com.google.api.generator.test.protoloader.GrpcRestTestProtoLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class GrpcServiceStubClassComposerTest {
+class GrpcServiceStubClassComposerTest {
   @Test
-  public void generateServiceClasses() {
+  void generateServiceClasses() {
     GapicContext context = GrpcRestTestProtoLoader.instance().parseShowcaseEcho();
     Service echoProtoService = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, echoProtoService);
@@ -42,7 +42,7 @@ public class GrpcServiceStubClassComposerTest {
   }
 
   @Test
-  public void generateServiceClassesWicked() {
+  void generateServiceClassesWicked() {
     GapicContext context = GrpcRestTestProtoLoader.instance().parseShowcaseWicked();
     Service wickedProtoService = context.services().get(0);
     GapicClass clazz =

@@ -29,6 +29,8 @@
  */
 package com.google.api.gax.rpc;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.google.api.core.ApiFutures;
 import com.google.api.gax.paging.FixedSizeCollection;
 import com.google.api.gax.paging.Page;
@@ -44,19 +46,16 @@ import com.google.common.truth.Truth;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class PagingTest {
+class PagingTest {
   private ClientContext clientContext;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     clientContext =
         ClientContext.newBuilder()
             .setDefaultCallContext(FakeCallContext.createDefault())
@@ -68,7 +67,7 @@ public class PagingTest {
   UnaryCallable<Integer, List<Integer>> callIntList = Mockito.mock(UnaryCallable.class);
 
   @Test
-  public void nonPaged() {
+  void nonPaged() {
     ArgumentCaptor<Integer> requestCapture = ArgumentCaptor.forClass(Integer.class);
     Mockito.when(callIntList.futureCall(requestCapture.capture(), (ApiCallContext) Mockito.any()))
         .thenReturn(ApiFutures.immediateFuture(Arrays.asList(0, 1, 2)))
@@ -86,7 +85,7 @@ public class PagingTest {
   }
 
   @Test
-  public void paged() {
+  void paged() {
     ArgumentCaptor<Integer> requestCapture = ArgumentCaptor.forClass(Integer.class);
     Mockito.when(callIntList.futureCall(requestCapture.capture(), (ApiCallContext) Mockito.any()))
         .thenReturn(ApiFutures.immediateFuture(Arrays.asList(0, 1, 2)))
@@ -104,7 +103,7 @@ public class PagingTest {
   }
 
   @Test
-  public void pagedByPage() {
+  void pagedByPage() {
     ArgumentCaptor<Integer> requestCapture = ArgumentCaptor.forClass(Integer.class);
     Mockito.when(callIntList.futureCall(requestCapture.capture(), (ApiCallContext) Mockito.any()))
         .thenReturn(ApiFutures.immediateFuture(Arrays.asList(0, 1, 2)))
@@ -134,7 +133,7 @@ public class PagingTest {
   }
 
   @Test
-  public void streamValues_streamIsCorrectPerPage() {
+  void streamValues_streamIsCorrectPerPage() {
     ArgumentCaptor<Integer> requestCapture = ArgumentCaptor.forClass(Integer.class);
     Mockito.when(callIntList.futureCall(requestCapture.capture(), Mockito.any()))
         .thenReturn(ApiFutures.immediateFuture(Arrays.asList(0, 1, 2)))
@@ -163,7 +162,7 @@ public class PagingTest {
   }
 
   @Test
-  public void streamAll_streamIsCorrectInAllPages() {
+  void streamAll_streamIsCorrectInAllPages() {
     ArgumentCaptor<Integer> requestCapture = ArgumentCaptor.forClass(Integer.class);
     Mockito.when(callIntList.futureCall(requestCapture.capture(), Mockito.any()))
         .thenReturn(ApiFutures.immediateFuture(Arrays.asList(0, 1, 2)))
@@ -182,7 +181,7 @@ public class PagingTest {
   }
 
   @Test
-  public void pagedByFixedSizeCollection() {
+  void pagedByFixedSizeCollection() {
     ArgumentCaptor<Integer> requestCapture = ArgumentCaptor.forClass(Integer.class);
     Mockito.when(callIntList.futureCall(requestCapture.capture(), (ApiCallContext) Mockito.any()))
         .thenReturn(ApiFutures.immediateFuture(Arrays.asList(0, 1, 2)))
@@ -204,32 +203,38 @@ public class PagingTest {
     Truth.assertThat(requestCapture.getAllValues()).containsExactly(0, 2, 4, 7).inOrder();
   }
 
-  @Test(expected = ValidationException.class)
-  public void pagedFixedSizeCollectionTooManyElements() {
+  @Test
+  void pagedFixedSizeCollectionTooManyElements() {
     Mockito.when(callIntList.futureCall((Integer) Mockito.any(), (ApiCallContext) Mockito.any()))
         .thenReturn(ApiFutures.immediateFuture(Arrays.asList(0, 1, 2)))
         .thenReturn(ApiFutures.immediateFuture(Arrays.asList(3, 4)))
         .thenReturn(ApiFutures.immediateFuture(Collections.<Integer>emptyList()));
 
-    FakeCallableFactory.createPagedCallable(
-            callIntList,
-            PagedCallSettings.newBuilder(new ListIntegersPagedResponseFactory()).build(),
-            clientContext)
-        .call(0)
-        .expandToFixedSizeCollection(4);
+    assertThrows(
+        ValidationException.class,
+        () ->
+            FakeCallableFactory.createPagedCallable(
+                    callIntList,
+                    PagedCallSettings.newBuilder(new ListIntegersPagedResponseFactory()).build(),
+                    clientContext)
+                .call(0)
+                .expandToFixedSizeCollection(4));
   }
 
-  @Test(expected = ValidationException.class)
-  public void pagedFixedSizeCollectionTooSmallCollectionSize() {
+  @Test
+  void pagedFixedSizeCollectionTooSmallCollectionSize() {
     Mockito.when(callIntList.futureCall((Integer) Mockito.any(), (ApiCallContext) Mockito.any()))
         .thenReturn(ApiFutures.immediateFuture(Arrays.asList(0, 1)))
         .thenReturn(ApiFutures.immediateFuture(Collections.<Integer>emptyList()));
 
-    FakeCallableFactory.createPagedCallable(
-            callIntList,
-            PagedCallSettings.newBuilder(new ListIntegersPagedResponseFactory()).build(),
-            clientContext)
-        .call(0)
-        .expandToFixedSizeCollection(2);
+    assertThrows(
+        ValidationException.class,
+        () ->
+            FakeCallableFactory.createPagedCallable(
+                    callIntList,
+                    PagedCallSettings.newBuilder(new ListIntegersPagedResponseFactory()).build(),
+                    clientContext)
+                .call(0)
+                .expandToFixedSizeCollection(2));
   }
 }

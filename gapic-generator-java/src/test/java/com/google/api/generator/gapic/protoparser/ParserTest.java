@@ -15,35 +15,45 @@
 package com.google.api.generator.gapic.protoparser;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.google.api.ClientLibrarySettings;
+import com.google.api.CommonLanguageSettings;
 import com.google.api.FieldInfo.Format;
+import com.google.api.JavaSettings;
 import com.google.api.MethodSettings;
 import com.google.api.Publishing;
+import com.google.api.PythonSettings;
+import com.google.api.SelectiveGapicGeneration;
 import com.google.api.Service;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Transport;
+import com.google.api.generator.gapic.protoparser.Parser.SelectiveGapicType;
 import com.google.api.version.test.ApiVersionTestingOuterClass;
 import com.google.auto.populate.field.AutoPopulateFieldTestingOuterClass;
 import com.google.bookshop.v1beta1.BookshopProto;
+import com.google.cloud.bigquery.v2.JobProto;
 import com.google.common.collect.ImmutableList;
 import com.google.common.truth.Truth;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
+import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
+import com.google.selective.generate.v1beta1.SelectiveApiGenerationOuterClass;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
@@ -56,10 +66,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import org.junit.Before;
-import org.junit.Test;
+import java.util.stream.Collectors;
+import org.junit.Assert;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ParserTest {
+class ParserTest {
   private static final String ECHO_PACKAGE = "com.google.showcase.v1beta1";
   // TODO(miraleung): Backfill with more tests (e.g. field, message, methods) for Parser.java.
   private ServiceDescriptor echoService;
@@ -69,8 +81,8 @@ public class ParserTest {
 
   private Optional<com.google.api.Service> serviceYamlProtoOpt;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     echoFileDescriptor = EchoOuterClass.getDescriptor();
     echoService = echoFileDescriptor.getServices().get(0);
     String yamlFilename = "echo_v1beta1.yaml";
@@ -80,7 +92,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseMessages_basic() {
+  void parseMessages_basic() {
     // TODO(miraleung): Add more tests for oneofs and other message-parsing edge cases.
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
 
@@ -116,7 +128,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseMessages_fieldNameConflicts() {
+  void parseMessages_fieldNameConflicts() {
     FileDescriptor bookshopFileDescriptor = BookshopProto.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(bookshopFileDescriptor);
     Message requestMessage = messageTypes.get("com.google.bookshop.v1beta1.GetBookRequest");
@@ -127,13 +139,14 @@ public class ParserTest {
   }
 
   @Test
-  public void parseMethods_basic() {
+  void parseMethods_basic() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Method> methods =
         Parser.parseMethods(
             echoService,
+            ECHO_PACKAGE,
             ECHO_PACKAGE,
             messageTypes,
             resourceNames,
@@ -142,7 +155,7 @@ public class ParserTest {
             outputResourceNames,
             Transport.GRPC);
 
-    assertEquals(10, methods.size());
+    assertEquals(11, methods.size());
 
     // Methods should appear in the same order as in the protobuf file.
     Method echoMethod = methods.get(0);
@@ -190,13 +203,14 @@ public class ParserTest {
   }
 
   @Test
-  public void parseMethods_basicLro() {
+  void parseMethods_basicLro() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Method> methods =
         Parser.parseMethods(
             echoService,
+            ECHO_PACKAGE,
             ECHO_PACKAGE,
             messageTypes,
             resourceNames,
@@ -205,7 +219,7 @@ public class ParserTest {
             outputResourceNames,
             Transport.GRPC);
 
-    assertEquals(10, methods.size());
+    assertEquals(11, methods.size());
 
     // Methods should appear in the same order as in the protobuf file.
     Method waitMethod = methods.get(7);
@@ -218,7 +232,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseLro_missingResponseType() {
+  void parseLro_missingResponseType() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     MethodDescriptor waitMethodDescriptor = echoService.getMethods().get(7);
     assertEquals("Wait", waitMethodDescriptor.getName());
@@ -228,7 +242,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseLro_missingMetadataType() {
+  void parseLro_missingMetadataType() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     MethodDescriptor waitMethodDescriptor = echoService.getMethods().get(7);
     assertEquals("Wait", waitMethodDescriptor.getName());
@@ -238,7 +252,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseMethodSignatures_empty() {
+  void parseMethodSignatures_empty() {
     // TODO(miraleung): Move this to MethodSignatureParserTest.
     MethodDescriptor methodDescriptor = echoService.getMethods().get(5);
     assertEquals("PagedExpand", methodDescriptor.getName());
@@ -259,7 +273,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseMethodSignatures_validArgstAndEmptyString() {
+  void parseMethodSignatures_validArgstAndEmptyString() {
     // TODO(miraleung): Move this to MethodSignatureParserTest.
     MethodDescriptor methodDescriptor = echoService.getMethods().get(0);
     assertEquals("Echo", methodDescriptor.getName());
@@ -282,7 +296,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseMethodSignatures_basic() {
+  void parseMethodSignatures_basic() {
     MethodDescriptor echoMethodDescriptor = echoService.getMethods().get(0);
     TypeNode inputType = TypeParser.parseType(echoMethodDescriptor.getInputType());
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -361,7 +375,51 @@ public class ParserTest {
   }
 
   @Test
-  public void parseMessagesAndResourceNames_update() {
+  void parsePageSizeFieldName_basic() {
+    MethodDescriptor methodDescriptor = echoService.getMethods().get(5);
+    assertEquals("PagedExpand", methodDescriptor.getName());
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    String pageSizeFieldName =
+        Parser.parsePageSizeFieldName(methodDescriptor, messageTypes, Transport.GRPC);
+    assertEquals("page_size", pageSizeFieldName);
+  }
+
+  @Test
+  void parsePageSizeFieldName_grpcLegacy() {
+    MethodDescriptor methodDescriptor = echoService.getMethods().get(10);
+    assertEquals("PagedExpandLegacy", methodDescriptor.getName());
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    String pageSizeFieldName =
+        Parser.parsePageSizeFieldName(methodDescriptor, messageTypes, Transport.GRPC);
+    assertNull(pageSizeFieldName);
+  }
+
+  @Test
+  void parsePageSizeFieldName_restLegacy() {
+    MethodDescriptor methodDescriptor = echoService.getMethods().get(10);
+    assertEquals("PagedExpandLegacy", methodDescriptor.getName());
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    String pageSizeFieldName =
+        Parser.parsePageSizeFieldName(methodDescriptor, messageTypes, Transport.REST);
+    assertEquals("max_results", pageSizeFieldName);
+  }
+
+  @Test
+  void parsePageSizeFieldName_bigqueryLegacy() {
+    FileDescriptor bqJobFileDescriptor = JobProto.getDescriptor();
+    ServiceDescriptor jobService = bqJobFileDescriptor.getServices().get(0);
+    MethodDescriptor deleteJobMethodDescriptor = jobService.getMethods().get(0);
+    assertEquals("DeleteJob", deleteJobMethodDescriptor.getName());
+    MethodDescriptor listJobsMethodDescriptor = jobService.getMethods().get(1);
+    assertEquals("ListJobs", listJobsMethodDescriptor.getName());
+    Map<String, Message> messageTypes = Parser.parseMessages(bqJobFileDescriptor);
+    String pageSizeFieldName =
+        Parser.parsePageSizeFieldName(listJobsMethodDescriptor, messageTypes, Transport.GRPC);
+    assertEquals("max_results", pageSizeFieldName);
+  }
+
+  @Test
+  void parseMessagesAndResourceNames_update() {
     FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(lockerServiceFileDescriptor);
 
@@ -381,7 +439,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseMessages_fieldsHaveResourceReferences() {
+  void parseMessages_fieldsHaveResourceReferences() {
     FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(lockerServiceFileDescriptor);
 
@@ -423,7 +481,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseFields_mapType() {
+  void parseFields_mapType() {
     FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
     assertEquals(testingService.getName(), "Testing");
@@ -442,7 +500,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseFields_autoPopulated() {
+  void parseFields_autoPopulated() {
     Map<String, Message> messageTypes =
         Parser.parseMessages(AutoPopulateFieldTestingOuterClass.getDescriptor());
     Message message =
@@ -474,7 +532,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseAutoPopulatedMethodsAndFields_exists() {
+  void parseAutoPopulatedMethodsAndFields_exists() {
     String yamlFilename = "auto_populate_field_testing.yaml";
     Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
     Map<String, List<String>> autoPopulatedMethodsWithFields =
@@ -496,7 +554,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseAutoPopulatedMethodsAndFields_doesNotExist() {
+  void parseAutoPopulatedMethodsAndFields_doesNotExist() {
     String yamlFilename = "logging.yaml";
     Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
     Optional<Service> serviceYamlProtoOpt_Null = ServiceYamlParser.parse(yamlPath.toString());
@@ -507,12 +565,12 @@ public class ParserTest {
   }
 
   @Test
-  public void parseAutoPopulatedMethodsAndFields_returnsEmptyMapIfServiceYamlIsNull() {
+  void parseAutoPopulatedMethodsAndFields_returnsEmptyMapIfServiceYamlIsNull() {
     assertEquals(true, Parser.parseAutoPopulatedMethodsAndFields(Optional.empty()).isEmpty());
   }
 
   @Test
-  public void parseAutoPopulatedMethodsAndFields_returnsMapOfMethodsAndAutoPopulatedFields() {
+  void parseAutoPopulatedMethodsAndFields_returnsMapOfMethodsAndAutoPopulatedFields() {
     MethodSettings testMethodSettings =
         MethodSettings.newBuilder()
             .setSelector("test_method")
@@ -546,17 +604,17 @@ public class ParserTest {
   }
 
   @Test
-  public void hasMethodSettings_shouldReturnFalseIfServiceYamlDoesNotExist() {
+  void hasMethodSettings_shouldReturnFalseIfServiceYamlDoesNotExist() {
     assertEquals(false, Parser.hasMethodSettings(Optional.empty()));
   }
 
   @Test
-  public void hasMethodSettings_shouldReturnFalseIfServiceYamlDoesNotHavePublishing() {
+  void hasMethodSettings_shouldReturnFalseIfServiceYamlDoesNotHavePublishing() {
     assertEquals(false, Parser.hasMethodSettings(Optional.of(Service.newBuilder().build())));
   }
 
   @Test
-  public void hasMethodSettings_shouldReturnTrueIfServiceYamlHasNonEmptyMethodSettings() {
+  void hasMethodSettings_shouldReturnTrueIfServiceYamlHasNonEmptyMethodSettings() {
     MethodSettings testMethodSettings =
         MethodSettings.newBuilder().setSelector("test_method").build();
     Publishing testPublishing =
@@ -568,7 +626,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseResourceNames_inputTypeHasReferenceNotInMethodSignature() {
+  void parseResourceNames_inputTypeHasReferenceNotInMethodSignature() {
     FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
     assertEquals(testingService.getName(), "Testing");
@@ -589,7 +647,7 @@ public class ParserTest {
   }
 
   @Test
-  public void sanitizeDefaultHost_basic() {
+  void sanitizeDefaultHost_basic() {
     String defaultHost = "localhost:1234";
     assertEquals(defaultHost, Parser.sanitizeDefaultHost(defaultHost));
 
@@ -598,7 +656,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseNestedProtoTypeName() {
+  void parseNestedProtoTypeName() {
     assertEquals("MutateJobMetadata", Parser.parseNestedProtoTypeName("MutateJobMetadata"));
     assertEquals(
         "MutateJob.MutateJobMetadata",
@@ -610,7 +668,18 @@ public class ParserTest {
   }
 
   @Test
-  public void parseServiceApiVersionTest() {
+  void testParse_noServices_returnsEmptyGapicContext() {
+    GapicContext result = Parser.parse(CodeGeneratorRequest.newBuilder().build());
+    assertEquals(GapicContext.EMPTY, result);
+  }
+
+  @Test
+  void testParseServiceJavaPackage_emptyRequest_noop() {
+    assertThat(Parser.parseServiceJavaPackage(CodeGeneratorRequest.newBuilder().build())).isEmpty();
+  }
+
+  @Test
+  void parseServiceApiVersionTest() {
     FileDescriptor apiVersionFileDescriptor = ApiVersionTestingOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(apiVersionFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(apiVersionFileDescriptor);
@@ -629,7 +698,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseServiceWithoutApiVersionTest() {
+  void parseServiceWithoutApiVersionTest() {
     FileDescriptor apiVersionFileDescriptor = ApiVersionTestingOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(apiVersionFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(apiVersionFileDescriptor);
@@ -648,7 +717,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseServiceWithEmptyApiVersionTest() {
+  void parseServiceWithEmptyApiVersionTest() {
     FileDescriptor apiVersionFileDescriptor = ApiVersionTestingOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(apiVersionFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(apiVersionFileDescriptor);
@@ -668,7 +737,7 @@ public class ParserTest {
   }
 
   @Test
-  public void testServiceWithoutApiVersionParsed() {
+  void testServiceWithoutApiVersionParsed() {
     FileDescriptor bookshopFileDescriptor = BookshopProto.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(bookshopFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(bookshopFileDescriptor);
@@ -677,6 +746,244 @@ public class ParserTest {
             bookshopFileDescriptor, messageTypes, resourceNames, Optional.empty(), new HashSet<>());
     com.google.api.generator.gapic.model.Service parsedBookshopService = services.get(0);
     assertNull(parsedBookshopService.apiVersion());
+  }
+
+  @Test
+  void parseServiceWithNoMethodsTest() {
+    FileDescriptor fileDescriptor =
+        com.google.api.service.without.methods.test.ServiceWithNoMethodsOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, Optional.empty(), new HashSet<>());
+    assertEquals(1, services.size());
+    assertEquals("EchoWithMethods", services.get(0).overriddenName());
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldExcludeUnusedResourceNames() {
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+
+    String serviceYamlFilename = "selective_api_generation_v1beta1.yaml";
+    String testFilesDirectory = "src/test/resources/";
+    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    Assert.assertTrue(serviceYamlOpt.isPresent());
+
+    Set<ResourceName> helperResourceNames = new HashSet<>();
+    Parser.parseService(
+        fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, helperResourceNames);
+    // resource Name Foobarbaz is not present
+    assertEquals(2, helperResourceNames.size());
+    assertTrue(
+        helperResourceNames.stream()
+            .map(ResourceName::variableName)
+            .collect(Collectors.toSet())
+            .containsAll(ImmutableList.of("foobar", "anythingGoes")));
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldGenerateOnlySelectiveMethodsWithGenerateOmittedFalse() {
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+
+    // test with service yaml file to show usage of this feature, test itself
+    // can be done without this file and build a Service object from code.
+    String serviceYamlFilename = "selective_api_generation_v1beta1.yaml";
+    String testFilesDirectory = "src/test/resources/";
+    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    Assert.assertTrue(serviceYamlOpt.isPresent());
+
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, new HashSet<>());
+    assertEquals(1, services.size());
+    assertEquals("EchoServiceShouldGeneratePartialUsual", services.get(0).overriddenName());
+    assertEquals(3, services.get(0).methods().size());
+    for (Method method : services.get(0).methods()) {
+      assertTrue(method.name().contains("ShouldGenerate"));
+      assertFalse(method.isInternalApi());
+    }
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldGenerateOmittedAsInternalWithGenerateOmittedTrue() {
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+
+    // test with service yaml file to show usage of this feature, test itself
+    // can be done without this file and build a Service object from code.
+    String serviceYamlFilename = "selective_api_generation_generate_omitted_v1beta1.yaml";
+    String testFilesDirectory = "src/test/resources/";
+    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    Assert.assertTrue(serviceYamlOpt.isPresent());
+
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, new HashSet<>());
+
+    assertEquals(3, services.size());
+    // Tests a service with public methods only.
+    assertEquals("EchoServiceShouldGenerateAllAsUsual", services.get(0).overriddenName());
+    assertEquals(3, services.get(0).methods().size());
+    for (Method method : services.get(0).methods()) {
+      assertFalse(method.isInternalApi());
+    }
+
+    // Tests a service with partial public methods and partial internal methods.
+    assertEquals("EchoServiceShouldGeneratePartialUsual", services.get(1).overriddenName());
+    assertEquals(5, services.get(1).methods().size());
+    for (Method method : services.get(1).methods()) {
+      if (method.name().contains("ShouldGenerateAsUsual")) {
+        assertFalse(method.isInternalApi());
+      } else {
+        assertTrue(method.isInternalApi());
+      }
+    }
+    // Tests a service with internal methods only.
+    assertEquals("EchoServiceShouldGenerateAllInternal", services.get(2).overriddenName());
+    assertEquals(2, services.get(2).methods().size());
+    for (Method method : services.get(2).methods()) {
+      assertTrue(method.isInternalApi());
+    }
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldGenerateAsPublicIfNoPublishingSectionInServiceYaml() {
+    Service service =
+        Service.newBuilder()
+            .setTitle("Selective generation testing with no publishing section")
+            .build();
+    Publishing publishing = service.getPublishing();
+    Assert.assertEquals(0, publishing.getLibrarySettingsCount());
+
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    List<MethodDescriptor> methods = fileDescriptor.getServices().get(0).getMethods();
+    String protoPackage = "google.selective.generate.v1beta1";
+
+    assertEquals(
+        Parser.getMethodSelectiveGapicType(methods.get(0), Optional.of(service), protoPackage),
+        SelectiveGapicType.PUBLIC);
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldGenerateAsPublicWhenProtoPackageMismatch() {
+    String protoPackage = "google.selective.generate.v1beta1";
+
+    // situation where service yaml has different version stated
+    ClientLibrarySettings clientLibrarySettings =
+        ClientLibrarySettings.newBuilder().setVersion("google.selective.generate.v1").build();
+    Publishing publishing =
+        Publishing.newBuilder().addLibrarySettings(clientLibrarySettings).build();
+    Service service =
+        Service.newBuilder()
+            .setTitle(
+                "Selective generation test when proto package "
+                    + "does not match library_settings version from service yaml")
+            .setPublishing(publishing)
+            .build();
+
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    List<MethodDescriptor> methods = fileDescriptor.getServices().get(0).getMethods();
+
+    assertEquals(
+        Parser.getMethodSelectiveGapicType(methods.get(0), Optional.of(service), protoPackage),
+        SelectiveGapicType.PUBLIC);
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldGenerateAsPublicIfNoJavaSectionInServiceYaml() {
+    String protoPackage = "google.selective.generate.v1beta1";
+
+    // situation where service yaml has other language settings but no
+    // java settings in library_settings.
+    ClientLibrarySettings clientLibrarySettings =
+        ClientLibrarySettings.newBuilder()
+            .setVersion(protoPackage)
+            .setPythonSettings(PythonSettings.newBuilder().build())
+            .build();
+    Publishing publishing =
+        Publishing.newBuilder().addLibrarySettings(clientLibrarySettings).build();
+    Service service =
+        Service.newBuilder()
+            .setTitle(
+                "Selective generation test when no java section in "
+                    + "library_settings from service yaml")
+            .setPublishing(publishing)
+            .build();
+
+    Assert.assertEquals(1, publishing.getLibrarySettingsCount());
+
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    List<MethodDescriptor> methods = fileDescriptor.getServices().get(0).getMethods();
+
+    assertEquals(
+        Parser.getMethodSelectiveGapicType(methods.get(0), Optional.of(service), protoPackage),
+        SelectiveGapicType.PUBLIC);
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldGenerateAsPublicIfMethodInList() {
+    String protoPackage = "google.selective.generate.v1beta1";
+    String methodsAllowList =
+        "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsual.EchoShouldGenerateAsUsual";
+    Service service =
+        createServiceWithSelectiveGapicConfiguration(protoPackage, methodsAllowList, true);
+
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    // methodToGenerate from fileDescriptor:
+    // google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsual.EchoShouldGenerateAsUsual
+    MethodDescriptor methodToGenerate = fileDescriptor.getServices().get(1).getMethods().get(0);
+
+    assertEquals(
+        Parser.getMethodSelectiveGapicType(methodToGenerate, Optional.of(service), protoPackage),
+        SelectiveGapicType.PUBLIC);
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldGenerateAsInternalIfMethodNotInListWithGenerateOmittedTrue() {
+    String protoPackage = "google.selective.generate.v1beta1";
+    String methodsAllowList =
+        "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsual.EchoShouldGenerateAsUsual";
+    Service service =
+        createServiceWithSelectiveGapicConfiguration(protoPackage, methodsAllowList, true);
+
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    // methodToGenerate from fileDescriptor:
+    // google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsual.ChatShouldGenerateAsInternal
+    MethodDescriptor methodToGenerate = fileDescriptor.getServices().get(1).getMethods().get(3);
+
+    assertEquals(
+        Parser.getMethodSelectiveGapicType(methodToGenerate, Optional.of(service), protoPackage),
+        SelectiveGapicType.INTERNAL);
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldGenerateAsHiddenIfMethodNotInListWithGenerateOmittedFalse() {
+    String protoPackage = "google.selective.generate.v1beta1";
+    String methodsAllowList =
+        "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsual.EchoShouldGenerateAsUsual";
+    Service service =
+        createServiceWithSelectiveGapicConfiguration(protoPackage, methodsAllowList, false);
+
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    // methodToGenerate from fileDescriptor:
+    // google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsual.ChatShouldGenerateAsInternal
+    MethodDescriptor methodToGenerate = fileDescriptor.getServices().get(1).getMethods().get(3);
+
+    assertEquals(
+        Parser.getMethodSelectiveGapicType(methodToGenerate, Optional.of(service), protoPackage),
+        SelectiveGapicType.HIDDEN);
   }
 
   private void assertMethodArgumentEquals(
@@ -688,5 +995,34 @@ public class ParserTest {
 
   private static Reference createStatusReference() {
     return VaporReference.builder().setName("Status").setPakkage("com.google.rpc").build();
+  }
+
+  private static Service createServiceWithSelectiveGapicConfiguration(
+      String protoPackage, String methodsAllowList, boolean generateOmittedAsInternal) {
+    // Create a service with method allow-list and generateOmittedAsInternal flag.
+    JavaSettings java_settings =
+        JavaSettings.newBuilder()
+            .setLibraryPackage("com.google.foobar.v1")
+            .putServiceClassNames("com.google.foo.v1.BarService", "BazService")
+            .setCommon(
+                CommonLanguageSettings.newBuilder()
+                    .setSelectiveGapicGeneration(
+                        SelectiveGapicGeneration.newBuilder()
+                            .addMethods(methodsAllowList)
+                            .setGenerateOmittedAsInternal(generateOmittedAsInternal)))
+            .build();
+    ClientLibrarySettings clientLibrarySettings =
+        ClientLibrarySettings.newBuilder()
+            .setVersion(protoPackage)
+            .setJavaSettings(java_settings)
+            .build();
+    Publishing publishing =
+        Publishing.newBuilder().addLibrarySettings(clientLibrarySettings).build();
+    Service service =
+        Service.newBuilder()
+            .setTitle("Selective generation test")
+            .setPublishing(publishing)
+            .build();
+    return service;
   }
 }

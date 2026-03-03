@@ -18,16 +18,17 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import java.util.Arrays;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ServiceTest {
+class ServiceTest {
   private static final String SHOWCASE_PACKAGE_NAME = "com.google.showcase.v1beta1";
   private Service.Builder testServiceBuilder;
 
@@ -46,8 +47,8 @@ public class ServiceTest {
           .setIsAsteriskBody(false)
           .setHttpVerb(HttpBindings.HttpVerb.GET);
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     testServiceBuilder =
         Service.builder()
             .setName("Echo")
@@ -60,49 +61,49 @@ public class ServiceTest {
   }
 
   @Test
-  public void apiShortName_shouldReturnApiShortNameIfHostContainsRegionalEndpoint() {
+  void apiShortName_shouldReturnApiShortNameIfHostContainsRegionalEndpoint() {
     String defaultHost = "us-east1-pubsub.googleapis.com";
     Service testService = testServiceBuilder.setDefaultHost(defaultHost).build();
     assertEquals("pubsub", testService.apiShortName());
   }
 
   @Test
-  public void apiShortName_shouldReturnApiShortName() {
+  void apiShortName_shouldReturnApiShortName() {
     String defaultHost = "logging.googleapis.com";
     Service testService = testServiceBuilder.setDefaultHost(defaultHost).build();
     assertEquals("logging", testService.apiShortName());
   }
 
   @Test
-  public void apiShortName_shouldReturnApiShortNameForIam() {
+  void apiShortName_shouldReturnApiShortNameForIam() {
     String defaultHost = "iam-meta-api.googleapis.com";
     Service testService = testServiceBuilder.setDefaultHost(defaultHost).build();
     assertEquals("iam", testService.apiShortName());
   }
 
   @Test
-  public void apiShortName_shouldReturnHostIfNoPeriods() {
+  void apiShortName_shouldReturnHostIfNoPeriods() {
     String defaultHost = "logging:7469";
     Service testService = testServiceBuilder.setDefaultHost(defaultHost).build();
     assertEquals("logging:7469", testService.apiShortName());
   }
 
   @Test
-  public void packageVersion_shouldReturnVersionIfMatch() {
+  void packageVersion_shouldReturnVersionIfMatch() {
     String protoPackage = "com.google.showcase.v1";
     Service testService = testServiceBuilder.setProtoPakkage(protoPackage).build();
     assertEquals("v1", testService.packageVersion());
   }
 
   @Test
-  public void packageVersion_shouldReturnEmptyIfNoMatch() {
+  void packageVersion_shouldReturnEmptyIfNoMatch() {
     String protoPackage = "com.google.showcase";
     Service testService = testServiceBuilder.setProtoPakkage(protoPackage).build();
     assertEquals("", testService.packageVersion());
   }
 
   @Test
-  public void apiVersion_shouldReturnApiVersion() {
+  void apiVersion_shouldReturnApiVersion() {
     String apiVersion = "v1_20230601";
     Service testService = testServiceBuilder.setApiVersion(apiVersion).build();
     assertTrue(testService.hasApiVersion());
@@ -110,14 +111,14 @@ public class ServiceTest {
   }
 
   @Test
-  public void apiVersion_shouldReturnNoApiVersionWhenNull() {
+  void apiVersion_shouldReturnNoApiVersionWhenNull() {
     Service testService = testServiceBuilder.build();
     assertNull(testService.apiVersion());
     assertFalse(testService.hasApiVersion());
   }
 
   @Test
-  public void apiVersion_shouldReturnNoApiVersionWhenEmpty() {
+  void apiVersion_shouldReturnNoApiVersionWhenEmpty() {
     String apiVersion = "";
     Service testService = testServiceBuilder.setApiVersion(apiVersion).build();
     assertEquals("", testService.apiVersion());
@@ -125,16 +126,14 @@ public class ServiceTest {
   }
 
   @Test
-  public void
-      hasAnyEnabledMethodsForTransport_shouldReturnFalseForEmptyMethodListForBothTransports() {
+  void hasAnyEnabledMethodsForTransport_shouldReturnFalseForEmptyMethodListForBothTransports() {
     Service testService = testServiceBuilder.setMethods(ImmutableList.of()).build();
     assertThat(testService.hasAnyEnabledMethodsForTransport(Transport.GRPC)).isFalse();
     assertThat(testService.hasAnyEnabledMethodsForTransport(Transport.REST)).isFalse();
   }
 
   @Test
-  public void
-      hasAnyEnabledMethodsForTransport_shouldReturnTrueForAnyNonEmptyMethodListGRPCTransport() {
+  void hasAnyEnabledMethodsForTransport_shouldReturnTrueForAnyNonEmptyMethodListGRPCTransport() {
     Method testMethod1 =
         testMethodBuilder
             .setStream(Method.Stream.NONE)
@@ -157,7 +156,7 @@ public class ServiceTest {
   }
 
   @Test
-  public void
+  void
       hasAnyEnabledMethodsForTransport_shouldReturnTrueForAnyNonEmptyAndValidMethodListRESTTransport() {
     Method testMethod1 =
         testMethodBuilder
@@ -181,7 +180,7 @@ public class ServiceTest {
   }
 
   @Test
-  public void
+  void
       hasAnyEnabledMethodsForTransport_shouldReturnFalseForAnyNonEmptyButInvalidMethodListRESTTransport() {
     Method testMethod1 =
         testMethodBuilder
@@ -204,20 +203,22 @@ public class ServiceTest {
     assertThat(testService3.hasAnyEnabledMethodsForTransport(Transport.REST)).isFalse();
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void hasAnyEnabledMethodsForTransport_shouldThrowExceptionForGRPCRESTTransport() {
+  @Test
+  void hasAnyEnabledMethodsForTransport_shouldThrowExceptionForGRPCRESTTransport() {
     Service testService = testServiceBuilder.build();
-    testService.hasAnyEnabledMethodsForTransport(Transport.GRPC_REST);
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> testService.hasAnyEnabledMethodsForTransport(Transport.GRPC_REST));
   }
 
   @Test
-  public void hostServiceName_googleApisDefaultHost() {
+  void hostServiceName_googleApisDefaultHost() {
     Service service = testServiceBuilder.setDefaultHost("test.googleapis.com").build();
     assertThat(service.hostServiceName()).isEqualTo("test");
   }
 
   @Test
-  public void hostServiceName_nonGoogleApisDefaultHost() {
+  void hostServiceName_nonGoogleApisDefaultHost() {
     // Default Host is localhost:7469
     Service service = testServiceBuilder.build();
     assertThat(service.hostServiceName()).isEqualTo("");

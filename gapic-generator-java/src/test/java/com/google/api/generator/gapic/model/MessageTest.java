@@ -21,14 +21,14 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class MessageTest {
+class MessageTest {
 
   private static final String SUB_FIELD_NAME = "table";
   private static final String LEAF_FIELD_NAME = "size";
   private static final String SUB_FIELD_TYPE = "TableFieldType";
-  public static final VaporReference FIELD_TYPE =
+  private static final VaporReference FIELD_TYPE =
       VaporReference.builder().setPakkage("com.google").setName(SUB_FIELD_TYPE).build();
   private static final String MESSAGE_NAME = "TestMessage";
   private static final Message.Builder testMessageBuilder =
@@ -38,7 +38,7 @@ public class MessageTest {
           .setType(TypeNode.OBJECT);
 
   @Test
-  public void validateField_shouldThrowExceptionIfFieldNameIsEmpty() {
+  void validateField_shouldThrowExceptionIfFieldNameIsEmpty() {
     Message message = testMessageBuilder.build();
     IllegalStateException illegalStateException =
         assertThrows(
@@ -50,7 +50,7 @@ public class MessageTest {
   }
 
   @Test
-  public void validateField_shouldThrowExceptionIfFieldDoesNotExist() {
+  void validateField_shouldThrowExceptionIfFieldDoesNotExist() {
     Message message = testMessageBuilder.build();
     String fieldName = "doesNotExist";
     NullPointerException nullPointerException =
@@ -65,7 +65,7 @@ public class MessageTest {
   }
 
   @Test
-  public void validateField_shouldThrowExceptionIfMessageDoesNotExist() {
+  void validateField_shouldThrowExceptionIfMessageDoesNotExist() {
     Field subField =
         Field.builder()
             .setName(SUB_FIELD_NAME)
@@ -92,7 +92,7 @@ public class MessageTest {
   }
 
   @Test
-  public void validateField_shouldThrowExceptionIfFieldIsRepeated() {
+  void validateField_shouldThrowExceptionIfFieldIsRepeated() {
     Field leafField =
         Field.builder()
             .setType(TypeNode.STRING)
@@ -103,7 +103,7 @@ public class MessageTest {
   }
 
   @Test
-  public void validateField_shouldThrowExceptionIfFieldIsOfWrongType() {
+  void validateField_shouldThrowExceptionIfFieldIsOfWrongType() {
     Field leafField = Field.builder().setType(TypeNode.BOOLEAN).setName(LEAF_FIELD_NAME).build();
     testLeafField(leafField);
   }
@@ -126,7 +126,7 @@ public class MessageTest {
   }
 
   @Test
-  public void validateField_shouldNotThrowExceptionIfFieldExist() {
+  void validateField_shouldNotThrowExceptionIfFieldExist() {
     Field leafField = Field.builder().setType(TypeNode.STRING).setName(LEAF_FIELD_NAME).build();
     Message subMessage = createSubMessage(leafField);
     Map<String, Message> messageTypes = ImmutableMap.of(FIELD_TYPE.fullName(), subMessage);

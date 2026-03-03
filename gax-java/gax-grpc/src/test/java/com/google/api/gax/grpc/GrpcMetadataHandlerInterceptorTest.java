@@ -29,8 +29,8 @@
  */
 package com.google.api.gax.grpc;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -44,18 +44,15 @@ import io.grpc.ClientInterceptors;
 import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
 import io.grpc.Status;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 /** Tests for {@link GrpcHeaderInterceptor}. */
-@RunWith(JUnit4.class)
-public class GrpcMetadataHandlerInterceptorTest {
+class GrpcMetadataHandlerInterceptorTest {
 
   private static class MutableBoolean {
     private volatile boolean value = false;
@@ -67,15 +64,15 @@ public class GrpcMetadataHandlerInterceptorTest {
   private static final MethodDescriptor<String, Integer> method = FakeMethodDescriptor.create();
 
   /** Sets up mocks. */
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     MockitoAnnotations.initMocks(this);
     when(channel.newCall(Mockito.<MethodDescriptor<String, Integer>>any(), any(CallOptions.class)))
         .thenReturn(call);
   }
 
   @Test
-  public void testInterceptor() {
+  void testInterceptor() {
     final MutableBoolean metadataHandlerCalled = new MutableBoolean();
     final MutableBoolean trailingMetadataHandlerCalled = new MutableBoolean();
 

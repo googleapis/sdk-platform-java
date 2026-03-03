@@ -46,49 +46,45 @@ import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class CancellationTest {
+class CancellationTest {
 
   @SuppressWarnings("unchecked")
   private UnaryCallable<Integer, Integer> callInt = Mockito.mock(UnaryCallable.class);
 
   private static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(Duration.ofMillis(2L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(2L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(Duration.ofMillis(2L))
-          .setInitialRpcTimeout(Duration.ofMillis(2L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(2L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(2L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(Duration.ofMillis(2L))
-          .setTotalTimeout(Duration.ofMillis(20L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(2L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(20L))
           .build();
 
   private static final RetrySettings SLOW_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(Duration.ofMillis(3000L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(3000L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(Duration.ofMillis(3000L))
-          .setInitialRpcTimeout(Duration.ofMillis(3000L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(3000L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(3000L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(Duration.ofMillis(3000L))
-          .setTotalTimeout(Duration.ofMillis(3000L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(3000L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(3000L))
           .build();
 
   private FakeApiClock fakeClock;
   private RecordingScheduler executor;
   private ClientContext clientContext;
 
-  @Before
-  public void resetClock() {
+  @BeforeEach
+  void resetClock() {
     fakeClock = new FakeApiClock(System.nanoTime());
     executor = RecordingScheduler.create(fakeClock);
     clientContext =
@@ -100,13 +96,13 @@ public class CancellationTest {
             .build();
   }
 
-  @After
-  public void teardown() {
+  @AfterEach
+  void teardown() {
     executor.shutdownNow();
   }
 
   @Test
-  public void cancellationBeforeGetOnRetryingCallable() throws Exception {
+  void cancellationBeforeGetOnRetryingCallable() throws Exception {
     try {
       Mockito.when(callInt.futureCall((Integer) Mockito.any(), (ApiCallContext) Mockito.any()))
           .thenReturn(SettableApiFuture.<Integer>create());
@@ -119,7 +115,7 @@ public class CancellationTest {
       ApiFuture<Integer> resultFuture = callable.futureCall(0);
       resultFuture.cancel(true);
       resultFuture.get();
-      Assert.fail("Callable should have thrown an exception");
+      Assertions.fail("Callable should have thrown an exception");
     } catch (CancellationException expected) {
       Truth.assertThat(expected).hasMessageThat().contains("Task was cancelled");
     }
@@ -169,7 +165,7 @@ public class CancellationTest {
   }
 
   @Test
-  public void cancellationDuringFirstCall() throws Exception {
+  void cancellationDuringFirstCall() throws Exception {
     CancellationTrackingFuture<Integer> innerFuture = CancellationTrackingFuture.<Integer>create();
     CountDownLatch callIssuedLatch = new CountDownLatch(1);
     UnaryCallable<Integer, Integer> innerCallable =
@@ -196,7 +192,7 @@ public class CancellationTest {
   }
 
   @Test
-  public void cancellationDuringRetryDelay() throws Exception {
+  void cancellationDuringRetryDelay() throws Exception {
     Throwable throwable =
         new UnavailableException(null, FakeStatusCode.of(StatusCode.Code.UNAVAILABLE), true);
     CancellationTrackingFuture<Integer> innerFuture = CancellationTrackingFuture.create();
@@ -229,7 +225,7 @@ public class CancellationTest {
   }
 
   @Test
-  public void cancellationDuringSecondCall() throws Exception {
+  void cancellationDuringSecondCall() throws Exception {
     Throwable throwable =
         new UnavailableException(null, FakeStatusCode.of(StatusCode.Code.UNAVAILABLE), true);
     ApiFuture<Integer> failingFuture = RetryingTest.immediateFailedFuture(throwable);

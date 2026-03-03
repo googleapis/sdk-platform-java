@@ -33,17 +33,6 @@ considered stable.
 
 Apache 2.0 - See [LICENSE][license] for more information.
 
-## CI Status
-
-Java Version | Status
------------- | ------
-Java 7 | [![Kokoro CI](https://storage.googleapis.com/cloud-devrel-public/java/badges/java-core/java7.svg)](https://storage.googleapis.com/cloud-devrel-public/java/badges/java-core/java7.html)
-Java 8 | [![Kokoro CI](https://storage.googleapis.com/cloud-devrel-public/java/badges/java-core/java8.svg)](https://storage.googleapis.com/cloud-devrel-public/java/badges/java-core/java8.html)
-Java 8 OSX | [![Kokoro CI](https://storage.googleapis.com/cloud-devrel-public/java/badges/java-core/java8-osx.svg)](https://storage.googleapis.com/cloud-devrel-public/java/badges/java-core/java8-osx.html)
-Java 8 Windows | [![Kokoro CI](https://storage.googleapis.com/cloud-devrel-public/java/badges/java-core/java8-win.svg)](https://storage.googleapis.com/cloud-devrel-public/java/badges/java-core/java8-win.html)
-Java 11 | [![Kokoro CI](https://storage.googleapis.com/cloud-devrel-public/java/badges/java-core/java11.svg)](https://storage.googleapis.com/cloud-devrel-public/java/badges/java-core/java11.html)
-
-
 [contributing]: https://github.com/googleapis/java-core/blob/main/CONTRIBUTING.md
 [code-of-conduct]: https://github.com/googleapis/java-core/blob/main/CODE_OF_CONDUCT.md
 [license]: https://github.com/googleapis/java-core/blob/main/LICENSE

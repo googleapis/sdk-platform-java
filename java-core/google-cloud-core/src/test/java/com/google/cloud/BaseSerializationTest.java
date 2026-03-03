@@ -34,6 +34,10 @@ import org.junit.Test;
  * {@code restorableObjects()} method to return all restorable objects whose state must be tested
  * for proper serialization. Both methods can return {@code null} if no such object needs to be
  * tested.
+ *
+ * <p>This class has not migrated to Junit 5 because downstream libraries, e.g., java-logging, are
+ * extending this class and these libraries still use Junit 4. Migrating this class to Junit 5 will
+ * cause test failures in downstream libraries.
  */
 public abstract class BaseSerializationTest {
 

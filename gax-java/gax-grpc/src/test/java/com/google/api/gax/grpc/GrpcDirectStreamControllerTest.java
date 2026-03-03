@@ -54,17 +54,15 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.threeten.bp.Duration;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
-@RunWith(JUnit4.class)
-public class GrpcDirectStreamControllerTest {
+class GrpcDirectStreamControllerTest {
   private static final int DEFAULT_AWAIT_TERMINATION_SEC = 10;
 
-  @Test(timeout = 180_000) // ms
-  public void testRetryNoRaceCondition() throws Exception {
+  @Test
+  @Timeout(180)
+  void testRetryNoRaceCondition() throws Exception {
     Server server = ServerBuilder.forPort(1234).addService(new FakeService()).build().start();
     ManagedChannel channel =
         ManagedChannelBuilder.forAddress("localhost", 1234).usePlaintext().build();
@@ -101,11 +99,11 @@ public class GrpcDirectStreamControllerTest {
             .setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED)
             .setRetrySettings(
                 RetrySettings.newBuilder()
-                    .setTotalTimeout(Duration.ofMinutes(1))
-                    .setInitialRpcTimeout(Duration.ofMillis(1))
-                    .setMaxRpcTimeout(Duration.ofMillis(1))
-                    .setInitialRetryDelay(Duration.ofMillis(1))
-                    .setMaxRetryDelay(Duration.ofMillis(1))
+                    .setTotalTimeoutDuration(java.time.Duration.ofMinutes(1))
+                    .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(1))
+                    .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(1))
+                    .setInitialRetryDelayDuration(java.time.Duration.ofMillis(1))
+                    .setMaxRetryDelayDuration(java.time.Duration.ofMillis(1))
                     .build())
             .build();
     // Store a list of resources to manually close at the end of the test

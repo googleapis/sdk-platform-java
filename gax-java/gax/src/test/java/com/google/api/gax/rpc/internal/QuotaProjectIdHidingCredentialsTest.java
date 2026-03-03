@@ -29,6 +29,10 @@
  */
 package com.google.api.gax.rpc.internal;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
@@ -36,20 +40,16 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class QuotaProjectIdHidingCredentialsTest {
+class QuotaProjectIdHidingCredentialsTest {
   private static final String QUOTA_PROJECT_ID_KEY = "x-goog-user-project";
   private static final String QUOTA_PROJECT_ID_FROM_CREDENTIALS_VALUE =
       "quota_project_id_from_credentials";
 
   @Test
-  public void quotaProjectIdHidingCredentials_getRequestMetadata() throws IOException {
+  void quotaProjectIdHidingCredentials_getRequestMetadata() throws IOException {
     // Credentials with quota project id
     Map<String, List<String>> metaDataWithQuota =
         ImmutableMap.of(
@@ -65,9 +65,9 @@ public class QuotaProjectIdHidingCredentialsTest {
     Map<String, List<String>> metaDataHidingQuota =
         quotaProjectIdHidingCredentials.getRequestMetadata();
 
-    Assert.assertTrue(metaDataWithQuota.containsKey(QUOTA_PROJECT_ID_KEY));
-    Assert.assertFalse(metaDataHidingQuota.containsKey(QUOTA_PROJECT_ID_KEY));
-    Assert.assertEquals(metaDataWithQuota.size() - 1, metaDataHidingQuota.size());
+    assertTrue(metaDataWithQuota.containsKey(QUOTA_PROJECT_ID_KEY));
+    assertFalse(metaDataHidingQuota.containsKey(QUOTA_PROJECT_ID_KEY));
+    assertEquals(metaDataWithQuota.size() - 1, metaDataHidingQuota.size());
 
     // Credentials without quota project id
     Map<String, List<String>> metaDataWithoutQuota =
@@ -80,12 +80,11 @@ public class QuotaProjectIdHidingCredentialsTest {
     Map<String, List<String>> metaDataHidingQuotaWithout =
         quotaProjectIdHidingCredentials.getRequestMetadata();
 
-    Assert.assertEquals(
-        quotaProjectIdHidingCredentialsWithout.getRequestMetadata(), metaDataWithoutQuota);
+    assertEquals(quotaProjectIdHidingCredentialsWithout.getRequestMetadata(), metaDataWithoutQuota);
   }
 
   @Test
-  public void quotaProjectIdHidingCredentials_getAuthenticationType() throws IOException {
+  void quotaProjectIdHidingCredentials_getAuthenticationType() throws IOException {
     final String mockType = "mock_type";
     Credentials credentials = Mockito.mock(GoogleCredentials.class);
     Mockito.when(credentials.getAuthenticationType()).thenReturn(mockType);
@@ -96,10 +95,21 @@ public class QuotaProjectIdHidingCredentialsTest {
         new QuotaProjectIdHidingCredentials(credentials);
     quotaProjectIdHidingCredentials.refresh();
 
-    Assert.assertEquals(quotaProjectIdHidingCredentials.getAuthenticationType(), mockType);
-    Assert.assertTrue(quotaProjectIdHidingCredentials.hasRequestMetadata());
-    Assert.assertFalse(quotaProjectIdHidingCredentials.hasRequestMetadataOnly());
+    assertEquals(quotaProjectIdHidingCredentials.getAuthenticationType(), mockType);
+    assertTrue(quotaProjectIdHidingCredentials.hasRequestMetadata());
+    assertFalse(quotaProjectIdHidingCredentials.hasRequestMetadataOnly());
 
     Mockito.verify(credentials, Mockito.atLeastOnce()).refresh();
+  }
+
+  @Test
+  void quotaProjectIdHidingCredentials_getUniverseDomain() throws IOException {
+    Credentials credentials = Mockito.mock(GoogleCredentials.class);
+    Mockito.when(credentials.getUniverseDomain()).thenReturn("example.com");
+
+    QuotaProjectIdHidingCredentials quotaProjectIdHidingCredentials =
+        new QuotaProjectIdHidingCredentials(credentials);
+
+    assertEquals(quotaProjectIdHidingCredentials.getUniverseDomain(), "example.com");
   }
 }

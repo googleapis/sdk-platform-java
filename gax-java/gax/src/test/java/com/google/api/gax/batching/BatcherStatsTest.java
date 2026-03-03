@@ -36,21 +36,18 @@ import com.google.api.gax.rpc.ApiExceptionFactory;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
 import com.google.common.collect.ImmutableList;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class BatcherStatsTest {
+class BatcherStatsTest {
 
   @Test
-  public void testWhenNoException() {
+  void testWhenNoException() {
     BatcherStats batcherStats = new BatcherStats();
     assertThat(batcherStats.asException()).isNull();
   }
 
   @Test
-  public void testRequestFailuresOnly() {
+  void testRequestFailuresOnly() {
     BatcherStats batcherStats = new BatcherStats();
 
     batcherStats.recordBatchFailure(
@@ -75,7 +72,7 @@ public class BatcherStatsTest {
   }
 
   @Test
-  public void testEntryFailureOnly() {
+  void testEntryFailureOnly() {
     BatcherStats batcherStats = new BatcherStats();
 
     SettableApiFuture<Integer> batchOneResult = SettableApiFuture.create();
@@ -106,7 +103,7 @@ public class BatcherStatsTest {
   }
 
   @Test
-  public void testRequestAndEntryFailures() {
+  void testRequestAndEntryFailures() {
     BatcherStats batcherStats = new BatcherStats();
 
     batcherStats.recordBatchFailure(new RuntimeException("Batch failure"));

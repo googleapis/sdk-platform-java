@@ -103,9 +103,9 @@ public class Callables {
     if (areRetriesDisabled(settings.getRetryableCodes(), settings.getRetrySettings())) {
       // When retries are disabled, the total timeout can be treated as the rpc timeout.
       settings =
-          settings
-              .toBuilder()
-              .setSimpleTimeoutNoRetries(settings.getRetrySettings().getTotalTimeout())
+          settings.toBuilder()
+              .setSimpleTimeoutNoRetriesDuration(
+                  settings.getRetrySettings().getTotalTimeoutDuration())
               .build();
     }
 
@@ -127,9 +127,9 @@ public class Callables {
     if (areRetriesDisabled(settings.getRetryableCodes(), settings.getRetrySettings())) {
       // When retries are disabled, the total timeout can be treated as the rpc timeout.
       settings =
-          settings
-              .toBuilder()
-              .setSimpleTimeoutNoRetries(settings.getRetrySettings().getTotalTimeout())
+          settings.toBuilder()
+              .setSimpleTimeoutNoRetriesDuration(
+                  settings.getRetrySettings().getTotalTimeoutDuration())
               .build();
     }
 
@@ -156,8 +156,8 @@ public class Callables {
         callable.withDefaultCallContext(
             clientContext
                 .getDefaultCallContext()
-                .withStreamIdleTimeout(callSettings.getIdleTimeout())
-                .withStreamWaitTimeout(callSettings.getWaitTimeout()));
+                .withStreamIdleTimeoutDuration(callSettings.getIdleTimeoutDuration())
+                .withStreamWaitTimeoutDuration(callSettings.getWaitTimeoutDuration()));
 
     return callable;
   }
@@ -272,6 +272,7 @@ public class Callables {
       Collection<StatusCode.Code> retryableCodes, RetrySettings retrySettings) {
     return retrySettings.getMaxAttempts() == 1
         || retryableCodes.isEmpty()
-        || (retrySettings.getMaxAttempts() == 0 && retrySettings.getTotalTimeout().isZero());
+        || (retrySettings.getMaxAttempts() == 0
+            && retrySettings.getTotalTimeoutDuration().isZero());
   }
 }

@@ -37,12 +37,12 @@ import com.google.protobuf.Option;
 import com.google.protobuf.util.JsonFormat;
 import java.io.IOException;
 import java.io.StringReader;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ProtoMessageJsonStreamIteratorTest {
+class ProtoMessageJsonStreamIteratorTest {
 
   @Test
-  public void testEmpty() throws IOException {
+  void testEmpty() throws IOException {
     String jsonData = "[]";
     ProtoMessageJsonStreamIterator streamIter =
         new ProtoMessageJsonStreamIterator(new StringReader(jsonData));
@@ -52,7 +52,7 @@ public class ProtoMessageJsonStreamIteratorTest {
   }
 
   @Test
-  public void testSingleElement() throws IOException {
+  void testSingleElement() throws IOException {
     Field[] expectedData =
         new Field[] {
           Field.newBuilder()
@@ -92,7 +92,7 @@ public class ProtoMessageJsonStreamIteratorTest {
   }
 
   @Test
-  public void testProtobufWrapperObjects() throws IOException {
+  void testProtobufWrapperObjects() throws IOException {
     Int64Value[] expectedData =
         new Int64Value[] {
           Int64Value.newBuilder().setValue(1234567889999977L).build(),
@@ -126,7 +126,7 @@ public class ProtoMessageJsonStreamIteratorTest {
   }
 
   @Test
-  public void testMultipleElements() throws IOException {
+  void testMultipleElements() throws IOException {
     Field[] expectedData =
         new Field[] {
           Field.newBuilder()
@@ -202,7 +202,7 @@ public class ProtoMessageJsonStreamIteratorTest {
   }
 
   @Test
-  public void testEscapedString() throws IOException {
+  void testEscapedString() throws IOException {
     Field expectedData =
         Field.newBuilder()
             .setName(

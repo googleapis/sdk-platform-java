@@ -150,6 +150,21 @@ final class GrpcNettyFeature implements Feature {
           "consumerIndex");
       registerForUnsafeFieldAccess(
           access,
+          NETTY_SHADED_PACKAGE
+              + "org.jctools.queues.unpadded.MpscUnpaddedArrayQueueProducerIndexField",
+          "producerIndex");
+      registerForUnsafeFieldAccess(
+          access,
+          NETTY_SHADED_PACKAGE
+              + "org.jctools.queues.unpadded.MpscUnpaddedArrayQueueProducerLimitField",
+          "producerLimit");
+      registerForUnsafeFieldAccess(
+          access,
+          NETTY_SHADED_PACKAGE
+              + "org.jctools.queues.unpadded.MpscUnpaddedArrayQueueConsumerIndexField",
+          "consumerIndex");
+      registerForUnsafeFieldAccess(
+          access,
           NETTY_SHADED_PACKAGE + "org.jctools.queues.BaseMpscLinkedArrayQueueProducerFields",
           "producerIndex");
       registerForUnsafeFieldAccess(
@@ -160,6 +175,21 @@ final class GrpcNettyFeature implements Feature {
           access,
           NETTY_SHADED_PACKAGE + "org.jctools.queues.BaseMpscLinkedArrayQueueConsumerFields",
           "consumerIndex");
+      registerForUnsafeFieldAccess(
+          access,
+          NETTY_SHADED_PACKAGE
+              + "org.jctools.queues.unpadded.BaseMpscLinkedUnpaddedArrayQueueProducerFields",
+          "producerIndex");
+      registerForUnsafeFieldAccess(
+          access,
+          NETTY_SHADED_PACKAGE
+              + "org.jctools.queues.unpadded.BaseMpscLinkedUnpaddedArrayQueueColdProducerFields",
+          "producerLimit");
+      registerForUnsafeFieldAccess(
+          access,
+          NETTY_SHADED_PACKAGE
+              + "org.jctools.queues.unpadded.BaseMpscLinkedUnpaddedArrayQueueConsumerFields",
+          "consumerIndex");
     }
   }
 
@@ -167,7 +197,7 @@ final class GrpcNettyFeature implements Feature {
   private static void loadMiscClasses(BeforeAnalysisAccess access) {
     registerClassHierarchyForReflection(access, "com.google.protobuf.DescriptorProtos");
     registerClassForReflection(access, "com.google.api.FieldBehavior");
-
+    registerClassForReflection(access, "java.time.Instant");
     registerForUnsafeFieldAccess(access, "javax.net.ssl.SSLContext", "contextSpi");
   }
 }

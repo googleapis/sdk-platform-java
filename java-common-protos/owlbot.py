@@ -44,6 +44,7 @@ java.common_templates(monorepo=True, excludes=[
     "SECURITY.md",
     "java.header",
     "license-checks.xml",
+    "README.md",
     "renovate.json",
     ".gitignore"
 ])

@@ -114,6 +114,12 @@ public class ServiceClientCommentComposer {
       classHeaderJavadocBuilder = classHeaderJavadocBuilder.addUnescapedComment(descriptionComment);
     }
 
+    // Include google.api.api_version breadcrumb comment.
+    if (service.hasApiVersion()) {
+      classHeaderJavadocBuilder.addParagraph(
+          String.format("This client uses %s version %s.", service.name(), service.apiVersion()));
+    }
+
     // Service introduction.
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_INTRO_STRING);
     classHeaderJavadocBuilder.addSampleCode(classMethodSampleCode);
@@ -200,6 +206,10 @@ public class ServiceClientCommentComposer {
 
     if (method.isDeprecated()) {
       methodJavadocBuilder.setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING);
+    }
+
+    if (method.isInternalApi()) {
+      methodJavadocBuilder.setInternalOnly(CommentComposer.INTERNAL_ONLY_METHOD_STRING);
     }
 
     List<CommentStatement> comments = new ArrayList<>();
@@ -343,6 +353,10 @@ public class ServiceClientCommentComposer {
 
     if (method.isDeprecated()) {
       methodJavadocBuilder.setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING);
+    }
+
+    if (method.isInternalApi()) {
+      methodJavadocBuilder.setInternalOnly(CommentComposer.INTERNAL_ONLY_METHOD_STRING);
     }
 
     return Arrays.asList(

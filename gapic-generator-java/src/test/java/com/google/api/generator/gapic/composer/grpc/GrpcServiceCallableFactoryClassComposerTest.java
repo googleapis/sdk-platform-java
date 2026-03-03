@@ -19,11 +19,11 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.protoloader.GrpcTestProtoLoader;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class GrpcServiceCallableFactoryClassComposerTest {
+class GrpcServiceCallableFactoryClassComposerTest {
   @Test
-  public void generateServiceClasses() {
+  void generateServiceClasses() {
     GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseEcho();
     Service echoProtoService = context.services().get(0);
     GapicClass clazz =
@@ -34,7 +34,7 @@ public class GrpcServiceCallableFactoryClassComposerTest {
   }
 
   @Test
-  public void generateServiceClasses_deprecated() {
+  void generateServiceClasses_deprecated() {
     GapicContext context = GrpcTestProtoLoader.instance().parseDeprecatedService();
     Service protoService = context.services().get(0);
     GapicClass clazz =

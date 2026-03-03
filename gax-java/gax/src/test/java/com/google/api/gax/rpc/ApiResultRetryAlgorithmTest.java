@@ -29,8 +29,8 @@
  */
 package com.google.api.gax.rpc;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -38,19 +38,16 @@ import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
 import com.google.common.collect.Sets;
 import java.util.Collections;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class ApiResultRetryAlgorithmTest {
+class ApiResultRetryAlgorithmTest {
 
   @Test
-  public void testShouldRetryNoContext() {
+  void testShouldRetryNoContext() {
     ApiException nonRetryable =
-        new ApiException(null, new FakeStatusCode(Code.INTERNAL), /* retryable = */ false);
+        new ApiException(null, new FakeStatusCode(Code.INTERNAL), /* retryable= */ false);
     ApiException retryable =
-        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable = */ true);
+        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable= */ true);
 
     ApiResultRetryAlgorithm<String> algorithm = new ApiResultRetryAlgorithm<>();
     assertFalse(algorithm.shouldRetry(nonRetryable, null));
@@ -58,16 +55,16 @@ public class ApiResultRetryAlgorithmTest {
   }
 
   @Test
-  public void testShouldRetryWithContextWithoutRetryableCodes() {
+  void testShouldRetryWithContextWithoutRetryableCodes() {
     ApiCallContext context = mock(ApiCallContext.class);
     // No retryable codes in the call context, means that the retry algorithm should fall back to
     // its default implementation.
     when(context.getRetryableCodes()).thenReturn(null);
 
     ApiException nonRetryable =
-        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable = */ false);
+        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable= */ false);
     ApiException retryable =
-        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable = */ true);
+        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable= */ true);
 
     ApiResultRetryAlgorithm<String> algorithm = new ApiResultRetryAlgorithm<>();
     assertFalse(algorithm.shouldRetry(context, nonRetryable, null));
@@ -75,7 +72,7 @@ public class ApiResultRetryAlgorithmTest {
   }
 
   @Test
-  public void testShouldRetryWithContextWithRetryableCodes() {
+  void testShouldRetryWithContextWithRetryableCodes() {
     ApiCallContext context = mock(ApiCallContext.class);
     when(context.getRetryableCodes())
         .thenReturn(
@@ -89,9 +86,9 @@ public class ApiResultRetryAlgorithmTest {
     // The return value of isRetryable() will be ignored, as UNAVAILABLE has been added as a
     // retryable code to the call context.
     ApiException unavailableException =
-        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable = */ false);
+        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable= */ false);
     ApiException dataLossException =
-        new ApiException(null, new FakeStatusCode(Code.DATA_LOSS), /* retryable = */ true);
+        new ApiException(null, new FakeStatusCode(Code.DATA_LOSS), /* retryable= */ true);
 
     ApiResultRetryAlgorithm<String> algorithm = new ApiResultRetryAlgorithm<>();
     assertTrue(algorithm.shouldRetry(context, unavailableException, null));
@@ -99,13 +96,13 @@ public class ApiResultRetryAlgorithmTest {
   }
 
   @Test
-  public void testShouldRetryWithContextWithEmptyRetryableCodes() {
+  void testShouldRetryWithContextWithEmptyRetryableCodes() {
     ApiCallContext context = mock(ApiCallContext.class);
     // This will effectively make the RPC non-retryable.
     when(context.getRetryableCodes()).thenReturn(Collections.<Code>emptySet());
 
     ApiException unavailableException =
-        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable = */ true);
+        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable= */ true);
 
     ApiResultRetryAlgorithm<String> algorithm = new ApiResultRetryAlgorithm<>();
     assertFalse(algorithm.shouldRetry(context, unavailableException, null));

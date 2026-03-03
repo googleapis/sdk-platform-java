@@ -17,12 +17,12 @@ package com.google.api.generator.engine.ast;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ExprStatementTest {
+class ExprStatementTest {
 
   @Test
-  public void validExprStatement_method() {
+  void validExprStatement_method() {
     TypeNode someType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -39,13 +39,13 @@ public class ExprStatementTest {
   }
 
   @Test
-  public void validExprStatement_variable() {
+  void validExprStatement_variable() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     assertValidExprStatement(VariableExpr.builder().setVariable(variable).setIsDecl(true).build());
   }
 
   @Test
-  public void validExprStatement_assignment() {
+  void validExprStatement_assignment() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
@@ -59,20 +59,20 @@ public class ExprStatementTest {
   }
 
   @Test
-  public void validExprStatement_throw() {
+  void validExprStatement_throw() {
     TypeNode npeType =
         TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
     assertValidExprStatement(ThrowExpr.builder().setType(npeType).build());
   }
 
   @Test
-  public void validExprStatement_return() {
+  void validExprStatement_return() {
     assertValidExprStatement(
         ReturnExpr.withExpr(ValueExpr.withValue(StringObjectValue.withValue("asdf"))));
   }
 
   @Test
-  public void validExprStatement_unaryOperation() {
+  void validExprStatement_unaryOperation() {
     assertValidExprStatement(
         UnaryOperationExpr.postfixIncrementWithExpr(
             VariableExpr.withVariable(
@@ -80,7 +80,7 @@ public class ExprStatementTest {
   }
 
   @Test
-  public void validExprStatement_assignmentOperationExpr() {
+  void validExprStatement_assignmentOperationExpr() {
     VariableExpr lhsExpr =
         VariableExpr.withVariable(Variable.builder().setName("i").setType(TypeNode.INT).build());
     ValueExpr rhsExpr =
@@ -89,21 +89,21 @@ public class ExprStatementTest {
   }
 
   @Test
-  public void invalidExprStatement_variable() {
+  void invalidExprStatement_variable() {
     Variable variable = Variable.builder().setType(TypeNode.INT).setName("libraryClient").build();
     VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
     assertInvalidExprStatement(varExpr);
   }
 
   @Test
-  public void invalidExprStatement_value() {
+  void invalidExprStatement_value() {
     Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
     ValueExpr valueExpr = ValueExpr.builder().setValue(value).build();
     assertInvalidExprStatement(valueExpr);
   }
 
   @Test
-  public void invalidExprStatement_logicalNotUnaryOperator() {
+  void invalidExprStatement_logicalNotUnaryOperator() {
     Expr logicalNotExpr =
         UnaryOperationExpr.logicalNotWithExpr(
             VariableExpr.withVariable(

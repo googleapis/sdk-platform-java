@@ -30,10 +30,10 @@
 package com.google.api.gax.rpc;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.testing.FakeCallContext;
@@ -42,17 +42,14 @@ import com.google.api.gax.rpc.testing.FakeSimpleApi.StashCallable;
 import com.google.auth.Credentials;
 import com.google.common.collect.ImmutableSet;
 import java.util.Set;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 /** Tests for {@link UnaryCallable}. */
-@RunWith(JUnit4.class)
-public class UnaryCallableTest {
+class UnaryCallableTest {
 
   @Test
-  public void simpleCall() throws Exception {
+  void simpleCall() throws Exception {
     StashCallable<Integer, Integer> stashCallable = new StashCallable<>(1);
 
     Integer response = stashCallable.call(2, FakeCallContext.createDefault());
@@ -63,7 +60,7 @@ public class UnaryCallableTest {
   }
 
   @Test
-  public void call() throws Exception {
+  void call() throws Exception {
     ApiCallContext defaultCallContext = FakeCallContext.createDefault();
     StashCallable<Integer, Integer> stashCallable = new StashCallable<>(1);
     UnaryCallable<Integer, Integer> callable =
@@ -76,7 +73,7 @@ public class UnaryCallableTest {
   }
 
   @Test
-  public void callWithContext() throws Exception {
+  void callWithContext() throws Exception {
     FakeChannel channel = new FakeChannel();
     Credentials credentials = Mockito.mock(Credentials.class);
     RetrySettings retrySettings = Mockito.mock(RetrySettings.class);

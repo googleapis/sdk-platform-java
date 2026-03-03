@@ -21,11 +21,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class MethodDefinitionTest {
+class MethodDefinitionTest {
   @Test
-  public void validMethodDefinition_basicWithComments() {
+  void validMethodDefinition_basicWithComments() {
     MethodDefinition.builder()
         .setHeaderCommentStatements(createCommentStatements())
         .setName("close")
@@ -37,7 +37,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void validMethodDefinition_emptyBody() {
+  void validMethodDefinition_emptyBody() {
     MethodDefinition.builder()
         .setHeaderCommentStatements(createCommentStatements())
         .setName("close")
@@ -47,7 +47,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void validMethodDefinition_repeatedAnnotations() {
+  void validMethodDefinition_repeatedAnnotations() {
     MethodDefinition method =
         MethodDefinition.builder()
             .setName("close")
@@ -65,7 +65,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void validMethodDefinition_basicWithReturnType() {
+  void validMethodDefinition_basicWithReturnType() {
     MethodDefinition.builder()
         .setName("close")
         .setScope(ScopeNode.PUBLIC)
@@ -81,7 +81,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void validMethodDefinition_throwInsteadOfReturnType() {
+  void validMethodDefinition_throwInsteadOfReturnType() {
     MethodDefinition.builder()
         .setName("foobar")
         .setScope(ScopeNode.PUBLIC)
@@ -99,7 +99,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void validMethodDefinition_voidThrowInsteadOfReturnType() {
+  void validMethodDefinition_voidThrowInsteadOfReturnType() {
     MethodDefinition.builder()
         .setName("foobar")
         .setScope(ScopeNode.PUBLIC)
@@ -117,7 +117,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void validMethodDefinition_subtyping() {
+  void validMethodDefinition_subtyping() {
     Reference stringRef = ConcreteReference.withClazz(String.class);
     TypeNode returnType =
         TypeNode.withReference(
@@ -149,7 +149,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void validMethodDefinition_basicAbstract() {
+  void validMethodDefinition_basicAbstract() {
     MethodDefinition.builder()
         .setName("close")
         .setIsAbstract(true)
@@ -160,7 +160,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void validMethodDefinition_constructor() {
+  void validMethodDefinition_constructor() {
     TypeNode returnType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -174,7 +174,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void validMethodDefinition_withArgumentsAndReturnExpr() {
+  void validMethodDefinition_withArgumentsAndReturnExpr() {
     ValueExpr returnExpr =
         ValueExpr.builder()
             .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build())
@@ -201,7 +201,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void validMethodDefinition_nonRuntimeException() {
+  void validMethodDefinition_nonRuntimeException() {
     MethodDefinition.builder()
         .setName("close")
         .setScope(ScopeNode.PUBLIC)
@@ -213,7 +213,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void validMethodDefinition_templateBasic() {
+  void validMethodDefinition_templateBasic() {
     TypeNode returnType = TypeNode.withReference(ConcreteReference.withClazz(Map.class));
     MethodDefinition.builder()
         .setName("close")
@@ -231,7 +231,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void validMethodDefinition_templateOnArguments() {
+  void validMethodDefinition_templateOnArguments() {
     Reference listRef = ConcreteReference.withClazz(List.class);
     List<VariableExpr> arguments =
         Arrays.asList(
@@ -263,7 +263,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void validMethodDefinition_primitiveReturnTypeWithoutTemplates() {
+  void validMethodDefinition_primitiveReturnTypeWithoutTemplates() {
     // Not valid Java. Please change this test if you are trying to prevent this case.
     MethodDefinition.builder()
         .setName("close")
@@ -275,7 +275,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void validMethodDefinition_boxedReturnType() {
+  void validMethodDefinition_boxedReturnType() {
     MethodDefinition.builder()
         .setName("foobar")
         .setScope(ScopeNode.PUBLIC)
@@ -288,7 +288,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void validMethodDefinition_setReturnExprUsingReturnExpr() {
+  void validMethodDefinition_setReturnExprUsingReturnExpr() {
     ReturnExpr returnExpr =
         ReturnExpr.withExpr(
             ValueExpr.withValue(
@@ -303,7 +303,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_badTemplateName() {
+  void invalidMethodDefinition_badTemplateName() {
     assertThrows(
         IdentifierNode.InvalidIdentifierException.class,
         () ->
@@ -317,7 +317,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_primitiveReturnType() {
+  void invalidMethodDefinition_primitiveReturnType() {
     assertThrows(
         IllegalStateException.class,
         () ->
@@ -332,7 +332,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_emptyTemplatesOnMethod() {
+  void invalidMethodDefinition_emptyTemplatesOnMethod() {
     assertThrows(
         IllegalStateException.class,
         () ->
@@ -348,7 +348,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_returnTemplatesNotPresent() {
+  void invalidMethodDefinition_returnTemplatesNotPresent() {
     assertThrows(
         IllegalStateException.class,
         () ->
@@ -365,7 +365,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_noName() {
+  void invalidMethodDefinition_noName() {
     assertThrows(
         NullPointerException.class,
         () -> {
@@ -378,7 +378,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_runtimeException() {
+  void invalidMethodDefinition_runtimeException() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -394,7 +394,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_abstractStatic() {
+  void invalidMethodDefinition_abstractStatic() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -409,7 +409,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_localScope() {
+  void invalidMethodDefinition_localScope() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -422,7 +422,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_constructorOverride() {
+  void invalidMethodDefinition_constructorOverride() {
     TypeNode returnType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -441,7 +441,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_constructorFinalOrStatic() {
+  void invalidMethodDefinition_constructorFinalOrStatic() {
     TypeNode returnType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -469,7 +469,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_constructorHasReturnExpr() {
+  void invalidMethodDefinition_constructorHasReturnExpr() {
     TypeNode returnType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -492,7 +492,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_objectPrimitiveTypeMismatch() {
+  void invalidMethodDefinition_objectPrimitiveTypeMismatch() {
     Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
     ValueExpr valueExpr = ValueExpr.builder().setValue(value).build();
 
@@ -510,7 +510,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_mismatchedTypes() {
+  void invalidMethodDefinition_mismatchedTypes() {
     Reference stringRef = ConcreteReference.withClazz(String.class);
     TypeNode returnType =
         TypeNode.withReference(
@@ -539,7 +539,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_abstractFinal() {
+  void invalidMethodDefinition_abstractFinal() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -554,7 +554,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_abstractPrivate() {
+  void invalidMethodDefinition_abstractPrivate() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -568,7 +568,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_invalidException() {
+  void invalidMethodDefinition_invalidException() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -583,7 +583,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_missingNonVoidReturnType() {
+  void invalidMethodDefinition_missingNonVoidReturnType() {
     assertThrows(
         NullPointerException.class,
         () -> {
@@ -597,7 +597,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_mismatchedPrimitiveReturnType() {
+  void invalidMethodDefinition_mismatchedPrimitiveReturnType() {
     ValueExpr booleanValueExpr =
         ValueExpr.builder()
             .setValue(PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build())
@@ -616,7 +616,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_mismatchedObjectReturnType() {
+  void invalidMethodDefinition_mismatchedObjectReturnType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -635,7 +635,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_mismatchedPrimitiveToObjectReturnType() {
+  void invalidMethodDefinition_mismatchedPrimitiveToObjectReturnType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -654,7 +654,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_repeatedArgumentName() {
+  void invalidMethodDefinition_repeatedArgumentName() {
     ValueExpr returnValueExpr =
         ValueExpr.builder()
             .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build())
@@ -678,7 +678,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_nonDeclArguments() {
+  void invalidMethodDefinition_nonDeclArguments() {
     ValueExpr returnValueExpr =
         ValueExpr.builder()
             .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build())
@@ -702,7 +702,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_argumentsWithModifiers() {
+  void invalidMethodDefinition_argumentsWithModifiers() {
     ValueExpr returnValueExpr =
         ValueExpr.builder()
             .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build())
@@ -729,7 +729,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_argumentsWithScope() {
+  void invalidMethodDefinition_argumentsWithScope() {
     ValueExpr returnValueExpr =
         ValueExpr.builder()
             .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build())
@@ -755,7 +755,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_nullReturnType() {
+  void invalidMethodDefinition_nullReturnType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -768,7 +768,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_missingReturnType() {
+  void invalidMethodDefinition_missingReturnType() {
     assertThrows(
         NullPointerException.class,
         () -> {

@@ -51,19 +51,19 @@ import com.google.api.generator.test.utils.LineFormatter;
 import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class AbstractTransportServiceStubClassComposerTest {
+class AbstractTransportServiceStubClassComposerTest {
   private JavaWriterVisitor writerVisitor;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     writerVisitor = new JavaWriterVisitor();
   }
 
   @Test
-  public void shouldGenerateRequestMutator_fieldConfiguredCorrectly() {
+  void shouldGenerateRequestMutator_fieldConfiguredCorrectly() {
     String ECHO_PACKAGE = "com.google.showcase.v1beta1";
     List<String> autoPopulatedFieldList = new ArrayList<>();
     autoPopulatedFieldList.add("TestField");
@@ -105,7 +105,7 @@ public class AbstractTransportServiceStubClassComposerTest {
   }
 
   @Test
-  public void shouldNotGenerateRequestMutator_fieldConfiguredIncorrectly() {
+  void shouldNotGenerateRequestMutator_fieldConfiguredIncorrectly() {
     String ECHO_PACKAGE = "com.google.showcase.v1beta1";
     List<String> autoPopulatedFieldList = new ArrayList<>();
     autoPopulatedFieldList.add("TestField");
@@ -148,7 +148,7 @@ public class AbstractTransportServiceStubClassComposerTest {
 
   // TODO: add unit tests where the field is not found in the messageTypes map
   @Test
-  public void createAutoPopulatedRequestStatement_sampleField() {
+  void createAutoPopulatedRequestStatement_sampleField() {
     Reference RequestBuilderRef =
         VaporReference.builder()
             .setName("EchoRequest")
@@ -194,7 +194,7 @@ public class AbstractTransportServiceStubClassComposerTest {
   }
 
   @Test
-  public void createRequestMutatorBody_TestField() {
+  void createRequestMutatorBody_TestField() {
     List<Statement> bodyStatements = new ArrayList<>();
     String ECHO_PACKAGE = "com.google.showcase.v1beta1";
     List<String> autoPopulatedFieldList = new ArrayList<>();
@@ -266,7 +266,7 @@ public class AbstractTransportServiceStubClassComposerTest {
   }
 
   @Test
-  public void createRequestMutatorBody_TestFieldNotString_shouldReturnNull() {
+  void createRequestMutatorBody_TestFieldNotString_shouldReturnNull() {
     List<Statement> bodyStatements = new ArrayList<>();
 
     String ECHO_PACKAGE = "com.google.showcase.v1beta1";
@@ -335,7 +335,7 @@ public class AbstractTransportServiceStubClassComposerTest {
   }
 
   @Test
-  public void createRequestMutatorBody_TestFieldFormatNotUUID_shouldReturnNull() {
+  void createRequestMutatorBody_TestFieldFormatNotUUID_shouldReturnNull() {
     List<Statement> bodyStatements = new ArrayList<>();
     String ECHO_PACKAGE = "com.google.showcase.v1beta1";
     List<String> autoPopulatedFieldList = new ArrayList<>();
@@ -403,7 +403,7 @@ public class AbstractTransportServiceStubClassComposerTest {
   }
 
   @Test
-  public void createRequestMutatorBody_TestFieldIncorrectName_shouldReturnNull() {
+  void createRequestMutatorBody_TestFieldIncorrectName_shouldReturnNull() {
     List<Statement> bodyStatements = new ArrayList<>();
     String ECHO_PACKAGE = "com.google.showcase.v1beta1";
     List<String> autoPopulatedFieldList = new ArrayList<>();
@@ -471,7 +471,7 @@ public class AbstractTransportServiceStubClassComposerTest {
   }
 
   @Test
-  public void createRequestMutator_TestField() {
+  void createRequestMutator_TestField() {
     String ECHO_PACKAGE = "com.google.showcase.v1beta1";
     List<String> autoPopulatedFieldList = new ArrayList<>();
     autoPopulatedFieldList.add("TestField");

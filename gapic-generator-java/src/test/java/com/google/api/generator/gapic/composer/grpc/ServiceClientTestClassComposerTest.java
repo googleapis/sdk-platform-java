@@ -19,40 +19,29 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.protoloader.GrpcTestProtoLoader;
-import java.util.Arrays;
-import java.util.Collection;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
-public class ServiceClientTestClassComposerTest {
-  @Parameterized.Parameters
-  public static Collection<Object[]> data() {
-    return Arrays.asList(
-        new Object[][] {
-          {"EchoClientTest", GrpcTestProtoLoader.instance().parseShowcaseEcho(), 0},
-          {
+class ServiceClientTestClassComposerTest {
+
+  static Stream<Arguments> data() {
+    return Stream.of(
+        Arguments.of("EchoClientTest", GrpcTestProtoLoader.instance().parseShowcaseEcho(), 0),
+        Arguments.of(
             "DeprecatedServiceClientTest",
             GrpcTestProtoLoader.instance().parseDeprecatedService(),
-            0
-          },
-          {"TestingClientTest", GrpcTestProtoLoader.instance().parseShowcaseTesting(), 0},
-          {"SubscriberClientTest", GrpcTestProtoLoader.instance().parsePubSubPublisher(), 1},
-          {"LoggingClientTest", GrpcTestProtoLoader.instance().parseLogging(), 0},
-        });
+            0),
+        Arguments.of("TestingClientTest", GrpcTestProtoLoader.instance().parseShowcaseTesting(), 0),
+        Arguments.of(
+            "SubscriberClientTest", GrpcTestProtoLoader.instance().parsePubSubPublisher(), 1),
+        Arguments.of("LoggingClientTest", GrpcTestProtoLoader.instance().parseLogging(), 0));
   }
 
-  @Parameterized.Parameter public String name;
-
-  @Parameterized.Parameter(1)
-  public GapicContext context;
-
-  @Parameterized.Parameter(2)
-  public int serviceIndex;
-
-  @Test
-  public void generateServiceClientTestClasses() {
+  @ParameterizedTest
+  @MethodSource("data")
+  void generateServiceClientTestClasses(String name, GapicContext context, int serviceIndex) {
     Service echoProtoService = context.services().get(serviceIndex);
     GapicClass clazz =
         ServiceClientTestClassComposer.instance().generate(context, echoProtoService);

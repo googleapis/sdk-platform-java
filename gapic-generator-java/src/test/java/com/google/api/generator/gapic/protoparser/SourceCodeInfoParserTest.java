@@ -32,10 +32,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class SourceCodeInfoParserTest {
+class SourceCodeInfoParserTest {
 
   private static final String BASIC_PROTO = "basic.proto";
   private static final String PROTO_DESCRIPTOR_SET = "test-proto.descriptorset";
@@ -43,14 +43,14 @@ public class SourceCodeInfoParserTest {
   private SourceCodeInfoParser parser;
   private FileDescriptor protoFile;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeEach
+  void setUp() throws Exception {
     parser = new SourceCodeInfoParser();
     protoFile = buildFileDescriptor();
   }
 
   @Test
-  public void getServiceInfo() {
+  void getServiceInfo() {
     SourceCodeInfoLocation location = parser.getLocation(protoFile.findServiceByName("FooService"));
     assertEquals(
         "This is a service description.\n It takes up multiple lines, like so.",
@@ -61,7 +61,7 @@ public class SourceCodeInfoParserTest {
   }
 
   @Test
-  public void getMethodInfo() {
+  void getMethodInfo() {
     ServiceDescriptor service = protoFile.findServiceByName("FooService");
     SourceCodeInfoLocation location = parser.getLocation(service.findMethodByName("FooMethod"));
     assertEquals(
@@ -74,7 +74,7 @@ public class SourceCodeInfoParserTest {
   }
 
   @Test
-  public void getOuterMessageInfo() {
+  void getOuterMessageInfo() {
     Descriptor message = protoFile.findMessageTypeByName("FooMessage");
     SourceCodeInfoLocation location = parser.getLocation(message);
     assertEquals(
@@ -95,7 +95,7 @@ public class SourceCodeInfoParserTest {
   }
 
   @Test
-  public void getInnerMessageInfo() {
+  void getInnerMessageInfo() {
     Descriptor message = protoFile.findMessageTypeByName("FooMessage");
     assertThat(message).isNotNull();
     message = message.findNestedTypeByName("BarMessage");
@@ -113,7 +113,7 @@ public class SourceCodeInfoParserTest {
   }
 
   @Test
-  public void getOuterEnumInfo() {
+  void getOuterEnumInfo() {
     EnumDescriptor protoEnum = protoFile.findEnumTypeByName("OuterEnum");
     SourceCodeInfoLocation location = parser.getLocation(protoEnum);
     assertEquals("This is an outer enum.", location.getLeadingComments());
@@ -124,7 +124,7 @@ public class SourceCodeInfoParserTest {
   }
 
   @Test
-  public void getInnerEnumInfo() {
+  void getInnerEnumInfo() {
     Descriptor message = protoFile.findMessageTypeByName("FooMessage");
     EnumDescriptor protoEnum = message.findEnumTypeByName("FoodEnum");
     SourceCodeInfoLocation location = parser.getLocation(protoEnum);
@@ -138,7 +138,7 @@ public class SourceCodeInfoParserTest {
   }
 
   @Test
-  public void getOnoeofInfo() {
+  void getOnoeofInfo() {
     Descriptor message = protoFile.findMessageTypeByName("FooMessage");
     OneofDescriptor protoOneof = message.getOneofs().get(0);
     SourceCodeInfoLocation location = parser.getLocation(protoOneof);

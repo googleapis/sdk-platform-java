@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.api</groupId>
   <artifactId>gapic-generator-java</artifactId>
-  <version>2.40.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+  <version>2.67.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
   <name>GAPIC Generator Java</name>
   <description>GAPIC generator Java</description>
 
@@ -14,15 +14,16 @@
     <clirr.skip>true</clirr.skip>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Should be in sync with repositories.bzl -->
-    <googleapis.commit>44d6bef0ca6db8bba3fb324c8186e694bcc4829c</googleapis.commit>
+    <googleapis.commit>9fcfbea0aa5b50fa22e190faceb073d74504172b</googleapis.commit>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <currentYearOverride>2025</currentYearOverride>
   </properties>
 
   <parent>
     <groupId>com.google.api</groupId>
     <artifactId>gapic-generator-java-pom-parent</artifactId>
-    <version>2.40.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+    <version>2.67.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
     <relativePath>../gapic-generator-java-pom-parent</relativePath>
   </parent>
 
@@ -31,7 +32,7 @@
       <dependency>
         <groupId>com.google.api</groupId>
         <artifactId>gapic-generator-java-bom</artifactId>
-        <version>2.40.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+        <version>2.67.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -64,7 +65,7 @@
             <!-- The root project runs nexus-staging:release task -->
             <groupId>org.sonatype.plugins</groupId>
             <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.13</version>
+            <version>1.7.0</version>
             <extensions>true</extensions>
             <configuration>
               <serverId>sonatype-nexus-staging</serverId>
@@ -121,9 +122,8 @@
       </plugin>
 
       <plugin>
-        <groupId>com.coveo</groupId>
+        <groupId>com.spotify.fmt</groupId>
         <artifactId>fmt-maven-plugin</artifactId>
-        <version>2.9.1</version>
       </plugin>
 
       <plugin>
@@ -317,13 +317,17 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.2.5</version>
+        <version>3.5.2</version>
         <configuration>
           <additionalClasspathElements>
             <additionalClasspathElement>
               target/generated-test-resources/protobuf/descriptor-sets
             </additionalClasspathElement>
           </additionalClasspathElements>
+          <!-- Set CURRENT_YEAR_OVERRIDE to a fixed year so the unit test result is consistent -->
+          <environmentVariables>
+            <CURRENT_YEAR_OVERRIDE>${currentYearOverride}</CURRENT_YEAR_OVERRIDE>
+          </environmentVariables>
         </configuration>
       </plugin>
 
@@ -331,7 +335,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.12</version>
+        <version>0.8.13</version>
         <executions>
           <execution>
             <goals>
@@ -351,7 +355,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.5.3</version>
+        <version>3.6.0</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -436,7 +440,7 @@
     <dependency>
       <groupId>org.yaml</groupId>
       <artifactId>snakeyaml</artifactId>
-      <version>2.2</version>
+      <version>2.3</version>
     </dependency>
     <dependency>
       <groupId>com.google.googlejavaformat</groupId>
@@ -467,13 +471,25 @@
     <dependency>
       <groupId>com.google.truth</groupId>
       <artifactId>truth</artifactId>
-      <version>1.4.2</version>
+      <version>1.4.4</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>io.github.java-diff-utils</groupId>
       <artifactId>java-diff-utils</artifactId>
-      <version>4.12</version>
+      <version>4.15</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

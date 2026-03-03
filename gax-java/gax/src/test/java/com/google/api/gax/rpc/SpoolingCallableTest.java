@@ -36,25 +36,22 @@ import com.google.common.truth.Truth;
 import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class SpoolingCallableTest {
+class SpoolingCallableTest {
   private MockServerStreamingCallable<String, String> upstream;
   private SpoolingCallable<String, String> callable;
 
-  @Before
-  public void setup() {
+  @BeforeEach
+  void setup() {
     upstream = new MockServerStreamingCallable<>();
     callable = new SpoolingCallable<>(upstream);
   }
 
   @Test
-  public void testHappyPath() throws InterruptedException, ExecutionException {
+  void testHappyPath() throws InterruptedException, ExecutionException {
     ApiFuture<List<String>> result = callable.futureCall("request");
     MockServerStreamingCall<String, String> call = upstream.popLastCall();
 
@@ -68,7 +65,7 @@ public class SpoolingCallableTest {
   }
 
   @Test
-  public void testEarlyTermination() throws Exception {
+  void testEarlyTermination() throws Exception {
     ApiFuture<List<String>> result = callable.futureCall("request");
     MockServerStreamingCall<String, String> call = upstream.popLastCall();
 
@@ -88,14 +85,14 @@ public class SpoolingCallableTest {
     // However the inner cancellation exception will be masked by an outer CancellationException
     try {
       result.get();
-      Assert.fail("Callable should have thrown an exception");
+      Assertions.fail("Callable should have thrown an exception");
     } catch (CancellationException expected) {
       Truth.assertThat(expected).hasMessageThat().contains("Task was cancelled.");
     }
   }
 
   @Test
-  public void testNoResults() throws Exception {
+  void testNoResults() throws Exception {
     ApiFuture<List<String>> result = callable.futureCall("request");
     MockServerStreamingCall<String, String> call = upstream.popLastCall();
 

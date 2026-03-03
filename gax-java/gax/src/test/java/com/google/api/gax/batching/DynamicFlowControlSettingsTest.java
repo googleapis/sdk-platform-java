@@ -30,20 +30,17 @@
 package com.google.api.gax.batching;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class DynamicFlowControlSettingsTest {
+class DynamicFlowControlSettingsTest {
 
   @Test
-  public void testEmptyBuilder() {
+  void testEmptyBuilder() {
     DynamicFlowControlSettings.Builder builder = DynamicFlowControlSettings.newBuilder();
     DynamicFlowControlSettings settings = builder.build();
     assertNull(settings.getInitialOutstandingElementCount());
@@ -56,7 +53,7 @@ public class DynamicFlowControlSettingsTest {
   }
 
   @Test
-  public void testPartialSettingsIgnored() {
+  void testPartialSettingsIgnored() {
     // If behavior is ignore, build shouldn't throw exceptions even when only one of the bytes or
     // element limits is set
     DynamicFlowControlSettings.Builder builder =
@@ -72,7 +69,7 @@ public class DynamicFlowControlSettingsTest {
   }
 
   @Test
-  public void testBuilder() {
+  void testBuilder() {
     DynamicFlowControlSettings.Builder builder =
         DynamicFlowControlSettings.newBuilder()
             .setInitialOutstandingElementCount(5L)
@@ -91,7 +88,7 @@ public class DynamicFlowControlSettingsTest {
   }
 
   @Test
-  public void testValidElementCountSettings() {
+  void testValidElementCountSettings() {
     DynamicFlowControlSettings.Builder builder =
         DynamicFlowControlSettings.newBuilder()
             .setInitialOutstandingElementCount(5L)
@@ -104,7 +101,7 @@ public class DynamicFlowControlSettingsTest {
   }
 
   @Test
-  public void testValidRequestByteSettings() {
+  void testValidRequestByteSettings() {
     DynamicFlowControlSettings.Builder builder =
         DynamicFlowControlSettings.newBuilder()
             .setInitialOutstandingRequestBytes(500L)
@@ -117,7 +114,7 @@ public class DynamicFlowControlSettingsTest {
   }
 
   @Test
-  public void testInvalidPartialSettings() {
+  void testInvalidPartialSettings() {
     DynamicFlowControlSettings.Builder builder =
         DynamicFlowControlSettings.newBuilder().setInitialOutstandingElementCount(1L);
     try {
@@ -136,7 +133,7 @@ public class DynamicFlowControlSettingsTest {
   }
 
   @Test
-  public void testInvalidArguments() {
+  void testInvalidArguments() {
     testInvalidElementCount(-1, -5, 10);
     testInvalidElementCount(5, -1, 10);
     testInvalidElementCount(5, 0, 10);

@@ -52,17 +52,17 @@ import com.google.protobuf.TypeRegistry;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-public class OperationsClientTest {
+class OperationsClientTest {
   private static MockHttpService mockService;
   private static OperationsClient client;
 
-  @BeforeClass
+  @BeforeAll
   public static void startStaticServer() throws IOException {
     HttpJsonOperationsStub httpJsonOperationsStub =
         HttpJsonOperationsStub.create(
@@ -87,18 +87,18 @@ public class OperationsClientTest {
     client = OperationsClient.create(settings);
   }
 
-  @AfterClass
+  @AfterAll
   public static void stopServer() {
     client.close();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     mockService.reset();
   }
 
   @Test
-  public void listOperationsTest() {
+  void listOperationsTest() {
     Operation responsesElement = Operation.newBuilder().build();
     ListOperationsResponse expectedResponse =
         ListOperationsResponse.newBuilder()
@@ -114,11 +114,11 @@ public class OperationsClientTest {
 
     List<Operation> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assert.assertEquals(1, resources.size());
-    Assert.assertEquals(expectedResponse.getOperationsList().get(0), resources.get(0));
+    Assertions.assertEquals(1, resources.size());
+    Assertions.assertEquals(expectedResponse.getOperationsList().get(0), resources.get(0));
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -126,14 +126,14 @@ public class OperationsClientTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void listOperationsExceptionTest() {
+  void listOperationsExceptionTest() {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -143,14 +143,14 @@ public class OperationsClientTest {
       String name = "operations";
       String filter = "filter-1274492040";
       client.listOperations(name, filter);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void getOperationTest() {
+  void getOperationTest() {
     Operation expectedResponse =
         Operation.newBuilder()
             .setName("operations/hey1")
@@ -162,10 +162,10 @@ public class OperationsClientTest {
     String name = "operations/3373707";
 
     Operation actualResponse = client.getOperation(name);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -173,14 +173,14 @@ public class OperationsClientTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void getOperationExceptionTest() {
+  void getOperationExceptionTest() {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -189,14 +189,14 @@ public class OperationsClientTest {
     try {
       String name = "operations/3373707";
       client.getOperation(name);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void deleteOperationTest() {
+  void deleteOperationTest() {
     Empty expectedResponse = Empty.newBuilder().build();
     mockService.addResponse(expectedResponse);
 
@@ -205,7 +205,7 @@ public class OperationsClientTest {
     client.deleteOperation(name);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -213,14 +213,14 @@ public class OperationsClientTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void deleteOperationExceptionTest() {
+  void deleteOperationExceptionTest() {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -229,14 +229,14 @@ public class OperationsClientTest {
     try {
       String name = "operations/3373707";
       client.deleteOperation(name);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void cancelOperationTest() {
+  void cancelOperationTest() {
     Empty expectedResponse = Empty.newBuilder().build();
     mockService.addResponse(expectedResponse);
 
@@ -245,7 +245,7 @@ public class OperationsClientTest {
     client.cancelOperation(name);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -253,14 +253,14 @@ public class OperationsClientTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void cancelOperationExceptionTest() {
+  void cancelOperationExceptionTest() {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -269,7 +269,7 @@ public class OperationsClientTest {
     try {
       String name = "operations/3373707";
       client.cancelOperation(name);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }

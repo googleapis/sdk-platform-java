@@ -23,10 +23,10 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
-public class Differ {
+class Differ {
   private static final String LINE_SPLITTER = "\\r?\\n";
 
-  public static List<String> diff(Path goldenFilePath, String codegen) {
+  static List<String> diff(Path goldenFilePath, String codegen) {
     List<String> revised = Arrays.asList(codegen.split(LINE_SPLITTER));
     List<String> original = null;
     try {
@@ -38,7 +38,7 @@ public class Differ {
     return diffTwoStringLists(original, revised);
   }
 
-  public static List<String> diff(String expectedStr, String actualStr) {
+  static List<String> diff(String expectedStr, String actualStr) {
     List<String> revised = Arrays.asList(actualStr.split(LINE_SPLITTER));
     List<String> original = Arrays.asList(expectedStr.split(LINE_SPLITTER));
     return diffTwoStringLists(original, revised);
@@ -60,7 +60,7 @@ public class Differ {
 
     private static final long serialVersionUID = 7423787084310530945L;
 
-    public GoldenFileReadException(String errorMessage, Throwable cause) {
+    GoldenFileReadException(String errorMessage, Throwable cause) {
       super(errorMessage, cause);
     }
   }
@@ -69,7 +69,7 @@ public class Differ {
 
     private static final long serialVersionUID = -7480557222244987342L;
 
-    public ComputeDiffException(String errorMessage, Throwable cause) {
+    ComputeDiffException(String errorMessage, Throwable cause) {
       super(errorMessage, cause);
     }
   }

@@ -21,10 +21,10 @@ import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.client.googleapis.json.GoogleJsonError;
 import com.google.cloud.BaseServiceException;
@@ -35,9 +35,9 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.Collections;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class BaseHttpServiceExceptionTest {
+class BaseHttpServiceExceptionTest {
 
   private static final int CODE = 1;
   private static final int CODE_NO_REASON = 2;
@@ -53,7 +53,7 @@ public class BaseHttpServiceExceptionTest {
 
     private static final long serialVersionUID = -195251309124875103L;
 
-    public CustomServiceException(int code, String message, String reason, boolean idempotent) {
+    CustomServiceException(int code, String message, String reason, boolean idempotent) {
       super(code, message, reason, idempotent, RETRYABLE_ERRORS);
     }
 
@@ -63,7 +63,7 @@ public class BaseHttpServiceExceptionTest {
   }
 
   @Test
-  public void testBaseServiceException() {
+  void testBaseServiceException() {
     BaseServiceException serviceException =
         new BaseHttpServiceException(CODE, MESSAGE, REASON, IDEMPOTENT, EMPTY_RETRYABLE_ERRORS);
     assertEquals(CODE, serviceException.getCode());
@@ -145,7 +145,7 @@ public class BaseHttpServiceExceptionTest {
   }
 
   @Test
-  public void testTranslateAndThrow() throws Exception {
+  void testTranslateAndThrow() throws Exception {
     BaseServiceException cause =
         new BaseHttpServiceException(CODE, MESSAGE, REASON, IDEMPOTENT, EMPTY_RETRYABLE_ERRORS);
     RetryHelper.RetryHelperException exceptionMock =

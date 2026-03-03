@@ -32,19 +32,16 @@ package com.google.api.gax.rpc.internal;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.gax.rpc.ApiCallContext;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class ApiCallContextOptionsTest {
+class ApiCallContextOptionsTest {
 
   private static final ApiCallContext.Key<Integer> INTEGER_KEY = ApiCallContext.Key.create("key1");
   private static final ApiCallContext.Key<String> STRING_KEY = ApiCallContext.Key.create("key2");
   private static final ApiCallContext.Key<Double> DOUBLE_KEY = ApiCallContext.Key.create("key3");
 
   @Test
-  public void testWithOption() {
+  void testWithOption() {
     ApiCallContextOptions options =
         ApiCallContextOptions.getDefaultOptions()
             .withOption(INTEGER_KEY, 1)
@@ -61,7 +58,7 @@ public class ApiCallContextOptionsTest {
   }
 
   @Test
-  public void testMergeEmpty() {
+  void testMergeEmpty() {
     ApiCallContextOptions options =
         ApiCallContextOptions.getDefaultOptions()
             .withOption(INTEGER_KEY, 1)
@@ -79,7 +76,7 @@ public class ApiCallContextOptionsTest {
   }
 
   @Test
-  public void testMergeDifferentKeys() {
+  void testMergeDifferentKeys() {
     ApiCallContextOptions options1 =
         ApiCallContextOptions.getDefaultOptions()
             .withOption(INTEGER_KEY, 1)
@@ -93,7 +90,7 @@ public class ApiCallContextOptionsTest {
   }
 
   @Test
-  public void testMergeDuplicateKeys() {
+  void testMergeDuplicateKeys() {
     ApiCallContextOptions options1 =
         ApiCallContextOptions.getDefaultOptions()
             .withOption(INTEGER_KEY, 1)

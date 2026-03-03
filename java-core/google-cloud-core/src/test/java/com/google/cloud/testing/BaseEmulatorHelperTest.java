@@ -28,14 +28,14 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 import org.easymock.EasyMock;
-import org.junit.Test;
-import org.threeten.bp.Duration;
+import org.junit.jupiter.api.Test;
 
-public class BaseEmulatorHelperTest {
+class BaseEmulatorHelperTest {
 
   private static final String BLOCK_UNTIL = "Block until";
 
@@ -71,8 +71,16 @@ public class BaseEmulatorHelperTest {
     }
 
     @Override
-    public void stop(Duration timeout) throws IOException, InterruptedException, TimeoutException {
+    public void stop(org.threeten.bp.Duration timeout)
+        throws IOException, InterruptedException, TimeoutException {
+      // we call the threeten method directly to confirm behavior
       waitForProcess(timeout);
+    }
+
+    @Override
+    public void stopDuration(Duration timeout)
+        throws IOException, InterruptedException, TimeoutException {
+      super.stopDuration(timeout);
     }
 
     @Override
@@ -82,7 +90,7 @@ public class BaseEmulatorHelperTest {
   }
 
   @Test
-  public void testEmulatorHelper() throws IOException, InterruptedException, TimeoutException {
+  void testEmulatorHelper() throws IOException, InterruptedException, TimeoutException {
     Process process = EasyMock.createStrictMock(Process.class);
     InputStream stream = new ByteArrayInputStream(BLOCK_UNTIL.getBytes(Charsets.UTF_8));
     EmulatorRunner emulatorRunner = EasyMock.createStrictMock(EmulatorRunner.class);
@@ -91,18 +99,38 @@ public class BaseEmulatorHelperTest {
     emulatorRunner.start();
     EasyMock.expectLastCall();
     EasyMock.expect(emulatorRunner.getProcess()).andReturn(process);
-    emulatorRunner.waitFor(Duration.ofMinutes(1));
+    emulatorRunner.waitForDuration(Duration.ofMinutes(1));
     EasyMock.expectLastCall().andReturn(0);
     EasyMock.replay(process, emulatorRunner);
     TestEmulatorHelper helper =
         new TestEmulatorHelper(ImmutableList.of(emulatorRunner), BLOCK_UNTIL);
     helper.start();
-    helper.stop(Duration.ofMinutes(1));
+    helper.stopDuration(Duration.ofMinutes(1));
     EasyMock.verify();
   }
 
   @Test
-  public void testEmulatorHelperDownloadWithRetries()
+  void testEmulatorHelperThreeten() throws IOException, InterruptedException, TimeoutException {
+    Process process = EasyMock.createStrictMock(Process.class);
+    InputStream stream = new ByteArrayInputStream(BLOCK_UNTIL.getBytes(Charsets.UTF_8));
+    EmulatorRunner emulatorRunner = EasyMock.createStrictMock(EmulatorRunner.class);
+    EasyMock.expect(process.getInputStream()).andReturn(stream);
+    EasyMock.expect(emulatorRunner.isAvailable()).andReturn(true);
+    emulatorRunner.start();
+    EasyMock.expectLastCall();
+    EasyMock.expect(emulatorRunner.getProcess()).andReturn(process);
+    emulatorRunner.waitForDuration(java.time.Duration.ofMinutes(1));
+    EasyMock.expectLastCall().andReturn(0);
+    EasyMock.replay(process, emulatorRunner);
+    TestEmulatorHelper helper =
+        new TestEmulatorHelper(ImmutableList.of(emulatorRunner), BLOCK_UNTIL);
+    helper.start();
+    helper.stop(org.threeten.bp.Duration.ofMinutes(1));
+    EasyMock.verify();
+  }
+
+  @Test
+  void testEmulatorHelperDownloadWithRetries()
       throws IOException, InterruptedException, TimeoutException {
     String mockExternalForm = "mockExternalForm";
     String mockInputStream = "mockInputStream";
@@ -145,7 +173,7 @@ public class BaseEmulatorHelperTest {
   }
 
   @Test
-  public void testEmulatorHelperMultipleRunners()
+  void testEmulatorHelperMultipleRunners()
       throws IOException, InterruptedException, TimeoutException {
     Process process = EasyMock.createStrictMock(Process.class);
     InputStream stream = new ByteArrayInputStream(BLOCK_UNTIL.getBytes(Charsets.UTF_8));
@@ -157,13 +185,13 @@ public class BaseEmulatorHelperTest {
     secondRunner.start();
     EasyMock.expectLastCall();
     EasyMock.expect(secondRunner.getProcess()).andReturn(process);
-    secondRunner.waitFor(Duration.ofMinutes(1));
+    secondRunner.waitForDuration(Duration.ofMinutes(1));
     EasyMock.expectLastCall().andReturn(0);
     EasyMock.replay(process, secondRunner);
     TestEmulatorHelper helper =
         new TestEmulatorHelper(ImmutableList.of(firstRunner, secondRunner), BLOCK_UNTIL);
     helper.start();
-    helper.stop(Duration.ofMinutes(1));
+    helper.stopDuration(Duration.ofMinutes(1));
     EasyMock.verify();
   }
 

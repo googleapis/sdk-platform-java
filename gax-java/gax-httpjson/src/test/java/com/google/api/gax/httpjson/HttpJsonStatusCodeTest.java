@@ -30,17 +30,17 @@
 package com.google.api.gax.httpjson;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.api.gax.rpc.StatusCode.Code;
 import java.util.HashSet;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class HttpJsonStatusCodeTest {
+class HttpJsonStatusCodeTest {
 
   @Test
-  public void rpcCodeToStatusCodeTest() {
+  void rpcCodeToStatusCodeTest() {
     Set<Code> allCodes = new HashSet<>();
     for (com.google.rpc.Code rpcCode : com.google.rpc.Code.values()) {
       Code statusCode;
@@ -61,7 +61,7 @@ public class HttpJsonStatusCodeTest {
   }
 
   @Test
-  public void httpStatusToStatusCodeTest() {
+  void httpStatusToStatusCodeTest() {
     assertThat(HttpJsonStatusCode.httpStatusToStatusCode(200)).isEqualTo(Code.OK);
     assertThat(HttpJsonStatusCode.httpStatusToStatusCode(201)).isEqualTo(Code.OK);
 

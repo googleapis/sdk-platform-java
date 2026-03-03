@@ -32,6 +32,7 @@ public class GrpcDeprecatedServiceStub extends DeprecatedServiceStub {
           .setFullMethodName("google.testdata.v1.DeprecatedService/FastFibonacci")
           .setRequestMarshaller(ProtoUtils.marshaller(FibonacciRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<FibonacciRequest, Empty> slowFibonacciMethodDescriptor =
@@ -40,6 +41,7 @@ public class GrpcDeprecatedServiceStub extends DeprecatedServiceStub {
           .setFullMethodName("google.testdata.v1.DeprecatedService/SlowFibonacci")
           .setRequestMarshaller(ProtoUtils.marshaller(FibonacciRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private final UnaryCallable<FibonacciRequest, Empty> fastFibonacciCallable;

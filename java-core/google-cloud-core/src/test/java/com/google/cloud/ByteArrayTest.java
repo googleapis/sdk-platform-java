@@ -16,8 +16,8 @@
 
 package com.google.cloud;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.common.io.ByteStreams;
 import com.google.protobuf.ByteString;
@@ -26,10 +26,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-public class ByteArrayTest {
+class ByteArrayTest {
 
   private static final String STRING_CONTENT = "Hello, ByteArray!";
   private static final byte[] BYTES_CONTENT = STRING_CONTENT.getBytes(StandardCharsets.UTF_8);
@@ -42,14 +42,14 @@ public class ByteArrayTest {
 
   private static ByteArray streamArray;
 
-  @BeforeClass
-  public static void beforeClass() throws IOException {
+  @BeforeAll
+  static void beforeClass() throws IOException {
     streamArray = ByteArray.copyFrom(STREAM_CONTENT);
     BYTE_BUFFER_CONTENT.flip();
   }
 
   @Test
-  public void testCopyFromString() throws IOException {
+  void testCopyFromString() throws IOException {
     assertEquals(STRING_CONTENT, STRING_ARRAY.toStringUtf8());
     assertArrayEquals(BYTES_CONTENT, STRING_ARRAY.toByteArray());
     assertEquals(BYTE_BUFFER_CONTENT.asReadOnlyBuffer(), STRING_ARRAY.asReadOnlyByteBuffer());
@@ -57,7 +57,7 @@ public class ByteArrayTest {
   }
 
   @Test
-  public void testCopyFromByteArray() throws IOException {
+  void testCopyFromByteArray() throws IOException {
     assertEquals(STRING_CONTENT, BYTES_ARRAY.toStringUtf8());
     assertArrayEquals(BYTES_CONTENT, BYTES_ARRAY.toByteArray());
     assertEquals(BYTE_BUFFER_CONTENT.asReadOnlyBuffer(), BYTES_ARRAY.asReadOnlyByteBuffer());
@@ -65,7 +65,7 @@ public class ByteArrayTest {
   }
 
   @Test
-  public void testCopyFromByteBuffer() throws IOException {
+  void testCopyFromByteBuffer() throws IOException {
     assertEquals(STRING_CONTENT, BYTE_BUFFER_ARRAY.toStringUtf8());
     assertArrayEquals(BYTES_CONTENT, BYTE_BUFFER_ARRAY.toByteArray());
     assertEquals(BYTE_BUFFER_CONTENT.asReadOnlyBuffer(), BYTE_BUFFER_ARRAY.asReadOnlyByteBuffer());
@@ -73,7 +73,7 @@ public class ByteArrayTest {
   }
 
   @Test
-  public void testCopyFromStream() throws IOException {
+  void testCopyFromStream() throws IOException {
     assertEquals(STRING_CONTENT, streamArray.toStringUtf8());
     assertArrayEquals(BYTES_CONTENT, streamArray.toByteArray());
     assertEquals(BYTE_BUFFER_CONTENT.asReadOnlyBuffer(), streamArray.asReadOnlyByteBuffer());
@@ -81,32 +81,32 @@ public class ByteArrayTest {
   }
 
   @Test
-  public void testLength() {
+  void testLength() {
     assertEquals(BYTES_CONTENT.length, ARRAY.length());
   }
 
   @Test
-  public void testToStringUtf8() {
+  void testToStringUtf8() {
     assertEquals(STRING_CONTENT, ARRAY.toStringUtf8());
   }
 
   @Test
-  public void testToByteArray() {
+  void testToByteArray() {
     assertArrayEquals(BYTES_CONTENT, ARRAY.toByteArray());
   }
 
   @Test
-  public void testAsReadOnlyByteBuffer() {
+  void testAsReadOnlyByteBuffer() {
     assertEquals(BYTE_BUFFER_CONTENT.asReadOnlyBuffer(), ARRAY.asReadOnlyByteBuffer());
   }
 
   @Test
-  public void testAsInputStream() throws IOException {
+  void testAsInputStream() throws IOException {
     assertArrayEquals(BYTES_CONTENT, ByteStreams.toByteArray(ARRAY.asInputStream()));
   }
 
   @Test
-  public void testHashCode() {
+  void testHashCode() {
     assertEquals(STRING_ARRAY.hashCode(), BYTES_ARRAY.hashCode());
     assertEquals(BYTES_ARRAY.hashCode(), BYTE_BUFFER_ARRAY.hashCode());
     assertEquals(BYTE_BUFFER_ARRAY.hashCode(), streamArray.hashCode());

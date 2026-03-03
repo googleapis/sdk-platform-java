@@ -30,14 +30,16 @@
 package com.google.api.gax.core;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 import java.util.Collections;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class DistributionTest {
+class DistributionTest {
+
   @Test
-  public void testPercentile() {
+  void testPercentile() {
     // These tests come from examples in
     // https://en.wikipedia.org/wiki/Percentile#The_nearest-rank_method
     Distribution dist;
@@ -62,18 +64,18 @@ public class DistributionTest {
     assertThat(dist.getPercentile(100)).isEqualTo(20);
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testZeroMaxValue() {
-    new Distribution(0);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testNegativeMaxValue() {
-    new Distribution(-1);
+  @Test
+  void testZeroMaxValue() {
+    assertThrows(IllegalArgumentException.class, () -> new Distribution(0));
   }
 
   @Test
-  public void testOverflowMaxValue() {
+  void testNegativeMaxValue() {
+    assertThrows(IllegalArgumentException.class, () -> new Distribution(-1));
+  }
+
+  @Test
+  void testOverflowMaxValue() {
     // Record value greater than maxValue-1 is OK. We record maxValue-1 instead.
     Distribution dist = new Distribution(10);
     dist.record(10);

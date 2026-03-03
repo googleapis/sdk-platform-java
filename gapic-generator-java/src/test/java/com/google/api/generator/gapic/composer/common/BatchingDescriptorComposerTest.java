@@ -48,19 +48,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class BatchingDescriptorComposerTest {
+class BatchingDescriptorComposerTest {
   private JavaWriterVisitor writerVisitor;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     writerVisitor = new JavaWriterVisitor();
   }
 
   @Test
-  public void batchingDescriptor_hasSubresponseField() {
+  void batchingDescriptor_hasSubresponseField() {
     FileDescriptor serviceFileDescriptor = PubsubProto.getDescriptor();
     FileDescriptor commonResourcesFileDescriptor = CommonResources.getDescriptor();
     ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
@@ -115,7 +115,7 @@ public class BatchingDescriptorComposerTest {
   }
 
   @Test
-  public void batchingDescriptor_noSubresponseField() {
+  void batchingDescriptor_noSubresponseField() {
     FileDescriptor serviceFileDescriptor = LoggingProto.getDescriptor();
     ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
     assertEquals(serviceDescriptor.getName(), "LoggingServiceV2");

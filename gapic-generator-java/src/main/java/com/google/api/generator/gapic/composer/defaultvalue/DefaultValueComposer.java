@@ -387,7 +387,7 @@ public class DefaultValueComposer {
                 field.resourceReference().isChildType(),
                 resourceNames.values().stream().collect(Collectors.toList()),
                 message.name(),
-                /* allowAnonResourceNameClass = */ false,
+                /* allowAnonResourceNameClass= */ false,
                 bindings);
         defaultExpr =
             MethodInvocationExpr.builder()

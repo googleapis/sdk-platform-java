@@ -21,11 +21,11 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.test.utils.LineFormatter;
 import java.util.Optional;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class SettingsSampleComposerTest {
+class SettingsSampleComposerTest {
   @Test
-  public void composeSettingsSample_noMethods() {
+  void composeSettingsSample_noMethods() {
     TypeNode classType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -40,7 +40,7 @@ public class SettingsSampleComposerTest {
   }
 
   @Test
-  public void composeSettingsSample_serviceSettingsClass() {
+  void composeSettingsSample_serviceSettingsClass() {
     TypeNode classType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -61,14 +61,21 @@ public class SettingsSampleComposerTest {
             "            .echoSettings()\n",
             "            .getRetrySettings()\n",
             "            .toBuilder()\n",
-            "            .setTotalTimeout(Duration.ofSeconds(30))\n",
+            "            .setInitialRetryDelayDuration(Duration.ofSeconds(1))\n",
+            "            .setInitialRpcTimeoutDuration(Duration.ofSeconds(5))\n",
+            "            .setMaxAttempts(5)\n",
+            "            .setMaxRetryDelayDuration(Duration.ofSeconds(30))\n",
+            "            .setMaxRpcTimeoutDuration(Duration.ofSeconds(60))\n",
+            "            .setRetryDelayMultiplier(1.3)\n",
+            "            .setRpcTimeoutMultiplier(1.5)\n",
+            "            .setTotalTimeoutDuration(Duration.ofSeconds(300))\n",
             "            .build());\n",
             "EchoSettings echoSettings = echoSettingsBuilder.build();");
     assertEquals(results.get(), expected);
   }
 
   @Test
-  public void composeSettingsSample_serviceStubClass() {
+  void composeSettingsSample_serviceStubClass() {
     TypeNode classType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -89,9 +96,76 @@ public class SettingsSampleComposerTest {
             "            .echoSettings()\n",
             "            .getRetrySettings()\n",
             "            .toBuilder()\n",
-            "            .setTotalTimeout(Duration.ofSeconds(30))\n",
+            "            .setInitialRetryDelayDuration(Duration.ofSeconds(1))\n",
+            "            .setInitialRpcTimeoutDuration(Duration.ofSeconds(5))\n",
+            "            .setMaxAttempts(5)\n",
+            "            .setMaxRetryDelayDuration(Duration.ofSeconds(30))\n",
+            "            .setMaxRpcTimeoutDuration(Duration.ofSeconds(60))\n",
+            "            .setRetryDelayMultiplier(1.3)\n",
+            "            .setRpcTimeoutMultiplier(1.5)\n",
+            "            .setTotalTimeoutDuration(Duration.ofSeconds(300))\n",
             "            .build());\n",
             "EchoStubSettings echoSettings = echoSettingsBuilder.build();");
+    assertEquals(results.get(), expected);
+  }
+
+  @Test
+  void composeSettingsSample_serviceSettingsClass_LroMethod() {
+    TypeNode classType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("WaitSettings")
+                .setPakkage("com.google.showcase.v1beta1")
+                .build());
+    Optional<String> results =
+        writeSample(
+            SettingsSampleComposer.composeLroSettingsSample(
+                Optional.of("Wait"), "WaitSettings", classType));
+    String expected =
+        LineFormatter.lines(
+            "WaitSettings.Builder waitSettingsBuilder = WaitSettings.newBuilder();\n",
+            "TimedRetryAlgorithm timedRetryAlgorithm =\n",
+            "    OperationalTimedPollAlgorithm.create(\n",
+            "        RetrySettings.newBuilder()\n",
+            "            .setInitialRetryDelayDuration(Duration.ofMillis(500))\n",
+            "            .setRetryDelayMultiplier(1.5)\n",
+            "            .setMaxRetryDelayDuration(Duration.ofMillis(5000))\n",
+            "            .setTotalTimeoutDuration(Duration.ofHours(24))\n",
+            "            .build());\n",
+            "waitSettingsBuilder\n",
+            "    .createClusterOperationSettings()\n",
+            "    .setPollingAlgorithm(timedRetryAlgorithm)\n",
+            "    .build();");
+    assertEquals(expected, results.get());
+  }
+
+  @Test
+  void composeSettingsSample_serviceStubClass_LroMethod() {
+    TypeNode classType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("WaitStubSettings")
+                .setPakkage("com.google.showcase.v1beta1")
+                .build());
+    Optional<String> results =
+        writeSample(
+            SettingsSampleComposer.composeLroSettingsSample(
+                Optional.of("Wait"), "WaitSettings", classType));
+    String expected =
+        LineFormatter.lines(
+            "WaitStubSettings.Builder waitSettingsBuilder = WaitStubSettings.newBuilder();\n",
+            "TimedRetryAlgorithm timedRetryAlgorithm =\n",
+            "    OperationalTimedPollAlgorithm.create(\n",
+            "        RetrySettings.newBuilder()\n",
+            "            .setInitialRetryDelayDuration(Duration.ofMillis(500))\n",
+            "            .setRetryDelayMultiplier(1.5)\n",
+            "            .setMaxRetryDelayDuration(Duration.ofMillis(5000))\n",
+            "            .setTotalTimeoutDuration(Duration.ofHours(24))\n",
+            "            .build());\n",
+            "waitSettingsBuilder\n",
+            "    .createClusterOperationSettings()\n",
+            "    .setPollingAlgorithm(timedRetryAlgorithm)\n",
+            "    .build();");
     assertEquals(results.get(), expected);
   }
 

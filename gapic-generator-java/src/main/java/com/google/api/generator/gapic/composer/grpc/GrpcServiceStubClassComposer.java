@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -140,6 +141,16 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
             .apply("setResponseMarshaller", protoUtilsMarshallerFn.apply(methodInvocationArg))
             .apply(methodDescriptorMaker);
 
+    // The sampledToLocalTracing flag is set to true for all gRPC MethodDescriptors in GAPICs
+    // This flag enables captures for specific method names to help provide more detailed metrics
+    methodDescriptorMaker =
+        methodMakerFn
+            .apply(
+                "setSampledToLocalTracing",
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build()))
+            .apply(methodDescriptorMaker);
+
     methodDescriptorMaker =
         MethodInvocationExpr.builder()
             .setMethodName("build")
@@ -150,8 +161,7 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
     return ExprStatement.withExpr(
         AssignmentExpr.builder()
             .setVariableExpr(
-                methodDescriptorVarExpr
-                    .toBuilder()
+                methodDescriptorVarExpr.toBuilder()
                     .setIsDecl(true)
                     .setScope(ScopeNode.PRIVATE)
                     .setIsStatic(true)
@@ -174,7 +184,7 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
         enumName = "BIDI_STREAMING";
         break;
       case NONE:
-        // Fall through.
+      // Fall through.
       default:
         enumName = "UNARY";
     }

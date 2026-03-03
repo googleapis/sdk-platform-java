@@ -29,19 +29,20 @@
  */
 package com.google.api.gax.grpc;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.common.collect.ImmutableMap;
 import io.grpc.CallOptions;
 import io.grpc.Metadata.Key;
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class CallOptionsUtilTest {
+class CallOptionsUtilTest {
   @Test
-  public void testPutAndGetDynamicHeaderOption() {
+  void testPutAndGetDynamicHeaderOption() {
     String encodedRequestParams = "param1=value&param2.param3=value23";
     CallOptions options =
         CallOptionsUtil.putRequestParamsDynamicHeaderOption(
@@ -54,7 +55,7 @@ public class CallOptionsUtilTest {
   }
 
   @Test
-  public void testPutAndGetDynamicHeaderOptionEmpty() {
+  void testPutAndGetDynamicHeaderOptionEmpty() {
     CallOptions options =
         CallOptionsUtil.putRequestParamsDynamicHeaderOption(CallOptions.DEFAULT, "");
     assertSame(CallOptions.DEFAULT, options);
@@ -62,8 +63,10 @@ public class CallOptionsUtilTest {
     assertTrue(headers.isEmpty());
   }
 
-  @Test(expected = NullPointerException.class)
-  public void testPutAndGetHeaderOptionNull() {
-    CallOptionsUtil.putRequestParamsDynamicHeaderOption(CallOptions.DEFAULT, null);
+  @Test
+  void testPutAndGetHeaderOptionNull() {
+    assertThrows(
+        NullPointerException.class,
+        () -> CallOptionsUtil.putRequestParamsDynamicHeaderOption(CallOptions.DEFAULT, null));
   }
 }

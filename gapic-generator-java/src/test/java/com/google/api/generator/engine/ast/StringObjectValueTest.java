@@ -16,19 +16,19 @@ package com.google.api.generator.engine.ast;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class StringObjectValueTest {
+class StringObjectValueTest {
 
   @Test
-  public void createStringObjectValue_basic() {
+  void createStringObjectValue_basic() {
     StringObjectValue s = StringObjectValue.builder().setValue("test").build();
     assertThat(s.value()).isEqualTo("\"test\"");
     assertThat(s.type()).isEqualTo(TypeNode.STRING);
   }
 
   @Test
-  public void createStringObjectValue_escapeCharacter() {
+  void createStringObjectValue_escapeCharacter() {
     StringObjectValue valueSpecialChar = StringObjectValue.withValue("\" \t \\ \b \r \f \n '");
     String expected = "\"\\\" \\t \\\\ \\b \\r \\f \\n '\"";
     assertThat(valueSpecialChar.value()).isEqualTo(expected);
@@ -36,7 +36,7 @@ public class StringObjectValueTest {
   }
 
   @Test
-  public void createStringObjectValue_specialCharacter() {
+  void createStringObjectValue_specialCharacter() {
     StringObjectValue valueSpecialChar = StringObjectValue.withValue("Tom said: \"Hi!\"; \n");
     String expected = "\"Tom said: \\\"Hi!\\\"; \\n\"";
     assertThat(valueSpecialChar.value()).isEqualTo(expected);
@@ -44,7 +44,7 @@ public class StringObjectValueTest {
   }
 
   @Test
-  public void createStringObjectValue_specialCharacterComment() {
+  void createStringObjectValue_specialCharacterComment() {
     StringObjectValue valueSpecialChar =
         StringObjectValue.withValue("Service comment may include special characters: <>&\"`'@");
     String expected = "\"Service comment may include special characters: <>&\\\"`'@\"";
@@ -53,7 +53,7 @@ public class StringObjectValueTest {
   }
 
   @Test
-  public void createStringObjectValue_usPunctuation() {
+  void createStringObjectValue_usPunctuation() {
     StringObjectValue valueSpecialChar =
         StringObjectValue.withValue("US Punctuation, one of !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~");
     String expected = "\"US Punctuation, one of !\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_`{|}~\"";
@@ -62,7 +62,7 @@ public class StringObjectValueTest {
   }
 
   @Test
-  public void createStringObjectValue_htmlCharacterComment() {
+  void createStringObjectValue_htmlCharacterComment() {
     StringObjectValue valueSpecialChar =
         StringObjectValue.withValue("&nbsp; &#40 &#91 &ndash; &gt;:&lt;");
     String expected = "\"&nbsp; &#40 &#91 &ndash; &gt;:&lt;\"";

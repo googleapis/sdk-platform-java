@@ -13,14 +13,17 @@ target/
 *.vim
 
 # Vscode Settings
-.vscode/settings.json
+.vscode
 
 # Python
 **/__pycache__/
 .venv
+.python-version
 
 # library generation
 **/googleapis
 **/*egg-info/
 **/build/
 **/dist/
+library_generation/**/*.jar
+**/google-java-format.jar

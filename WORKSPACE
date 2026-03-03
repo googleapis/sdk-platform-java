@@ -24,6 +24,15 @@ com_google_api_gax_java_repositories()
 
 _googleapis_commit = "7438480b2a1bc6371d748e974f7a3647f90c4e8d"
 
+# This is required for local testing on macOS. There is known incompatibility between old zlib and the latest macOS (Sequoia 15.7.3 as of writing)
+http_archive(
+    name = "zlib",
+    build_file = "@com_google_protobuf//:third_party/zlib.BUILD",
+    sha256 = "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23",
+    strip_prefix = "zlib-1.3.1",
+    urls = ["https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz"],
+)
+
 http_archive(
     name = "com_google_googleapis",
     strip_prefix = "googleapis-%s" % _googleapis_commit,
@@ -55,18 +64,17 @@ rules_jvm_external_setup()
 load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-maven_install(
-    artifacts = PROTOBUF_MAVEN_ARTIFACTS,
-    repositories = ["https://repo.maven.apache.org/maven2/"],
-)
+load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_ARTIFACTS")
+load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS")
 
-_gapic_generator_java_version = "2.40.1-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
+_gapic_generator_java_version = "2.67.1-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
 
 maven_install(
     artifacts = [
         "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
-    ],
+    ] + PROTOBUF_MAVEN_ARTIFACTS + IO_GRPC_GRPC_JAVA_ARTIFACTS,
     fail_on_missing_checksum = False,
+    override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
     repositories = [
         "m2Local",
         "https://repo.maven.apache.org/maven2/",
@@ -97,6 +105,17 @@ switched_rules_by_language(
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
 grpc_java_repositories()
+
+# gRPC-Java uses jar_jar for bazel: https://github.com/grpc/grpc-java/pull/12243
+# The following lines are from jar_jar's README: https://github.com/bazeltools/bazel_jar_jar?tab=readme-ov-file#how-to-add-to-bazel-via-workspace
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+git_repository(
+    name = "bazel_jar_jar",
+    commit = "4e7bf26da8bc8c955578fd8c8a2c763757d344df", # Latest commit SHA as of 2023/10/31
+    remote = "https://github.com/bazeltools/bazel_jar_jar.git",
+)
+load("@bazel_jar_jar//:jar_jar.bzl", "jar_jar_repositories")
+jar_jar_repositories()
 
 _disco_to_proto3_converter_commit = "ce8d8732120cdfb5bf4847c3238b5be8acde87e3"
 

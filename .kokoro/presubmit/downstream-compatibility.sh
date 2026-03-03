@@ -21,18 +21,15 @@ if [ -z "${REPOS_UNDER_TEST}" ]; then
   exit 1
 fi
 
+
 # Get the directory of the build script
 scriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
 cd "${scriptDir}/../.." # cd to the root of this repo
 source "$scriptDir/common.sh"
 
-echo "Setup maven mirror"
-mkdir -p "${HOME}/.m2"
-cp settings.xml "${HOME}/.m2"
+setup_maven_mirror
 
-echo "Installing this repo's modules to local maven."
-mvn -q -B -ntp install --projects '!gapic-generator-java' \
-  -Dcheckstyle.skip -Dfmt.skip -DskipTests -T 1C
+install_repo_modules '!gapic-generator-java'
 SHARED_DEPS_VERSION=$(parse_pom_version java-shared-dependencies)
 echo "Install complete. java-shared-dependencies = $SHARED_DEPS_VERSION"
 

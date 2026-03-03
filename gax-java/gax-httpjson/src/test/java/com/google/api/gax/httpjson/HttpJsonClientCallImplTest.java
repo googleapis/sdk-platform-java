@@ -35,18 +35,17 @@ import com.google.protobuf.TypeRegistry;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Reader;
-import java.time.Duration;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class HttpJsonClientCallImplTest {
+@ExtendWith(MockitoExtension.class)
+class HttpJsonClientCallImplTest {
   @Mock private ApiMethodDescriptor apiMethodDescriptor;
   @Mock private HttpResponseParser httpResponseParser;
   @Mock private HttpJsonCallOptions httpJsonCallOptions;
@@ -56,10 +55,10 @@ public class HttpJsonClientCallImplTest {
   @Mock private HttpJsonClientCall.Listener listener;
 
   @Test
-  public void responseReceived_noCancellationTask() {
+  void responseReceived_noCancellationTask() {
     ScheduledThreadPoolExecutor deadlineSchedulerExecutor = new ScheduledThreadPoolExecutor(1);
     // Null timeout means no timeout task created
-    Mockito.when(httpJsonCallOptions.getTimeout()).thenReturn(null);
+    Mockito.when(httpJsonCallOptions.getTimeoutDuration()).thenReturn(null);
 
     HttpJsonClientCallImpl httpJsonClientCall =
         new HttpJsonClientCallImpl<>(
@@ -86,15 +85,15 @@ public class HttpJsonClientCallImplTest {
   }
 
   @Test
-  public void responseReceived_cancellationTaskExists_isCancelledProperly()
-      throws InterruptedException {
+  void responseReceived_cancellationTaskExists_isCancelledProperly() throws InterruptedException {
     ScheduledThreadPoolExecutor deadlineSchedulerExecutor = new ScheduledThreadPoolExecutor(1);
     // SetRemoveOnCancelPolicy will immediately remove the task from the work queue
     // when the task is cancelled
     deadlineSchedulerExecutor.setRemoveOnCancelPolicy(true);
 
     // Setting a timeout for this call will enqueue a timeout task
-    Mockito.when(httpJsonCallOptions.getTimeout()).thenReturn(Duration.ofMinutes(10));
+    Mockito.when(httpJsonCallOptions.getTimeoutDuration())
+        .thenReturn(java.time.Duration.ofMinutes(10));
 
     String response = "Content";
     InputStream inputStream = new ByteArrayInputStream(response.getBytes());

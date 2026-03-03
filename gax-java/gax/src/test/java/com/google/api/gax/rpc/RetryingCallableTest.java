@@ -37,14 +37,14 @@ import com.google.api.gax.retrying.RetryingFuture;
 import com.google.api.gax.retrying.TimedAttemptSettings;
 import com.google.api.gax.rpc.testing.FakeCallContext;
 import java.util.concurrent.Callable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 import org.threeten.bp.temporal.ChronoUnit;
 
-public class RetryingCallableTest {
+class RetryingCallableTest {
   @Test
-  public void futureCall() {
+  void futureCall() {
     FakeCallContext fakeCallContext = FakeCallContext.createDefault();
     UnaryCallable innerCallable = Mockito.mock(UnaryCallable.class);
     RetryingExecutorWithContext executor = Mockito.mock(RetryingExecutorWithContext.class);

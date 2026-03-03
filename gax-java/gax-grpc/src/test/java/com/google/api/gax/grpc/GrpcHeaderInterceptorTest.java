@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.grpc;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.mock;
@@ -45,18 +45,15 @@ import io.grpc.ClientInterceptors;
 import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
 import java.util.Map;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 /** Tests for {@link GrpcHeaderInterceptor}. */
-@RunWith(JUnit4.class)
-public class GrpcHeaderInterceptorTest {
+class GrpcHeaderInterceptorTest {
 
   @Mock private Channel channel;
 
@@ -65,15 +62,15 @@ public class GrpcHeaderInterceptorTest {
   private static final MethodDescriptor<String, Integer> method = FakeMethodDescriptor.create();
 
   /** Sets up mocks. */
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     MockitoAnnotations.initMocks(this);
     when(channel.newCall(Mockito.<MethodDescriptor<String, Integer>>any(), any(CallOptions.class)))
         .thenReturn(call);
   }
 
   @Test
-  public void testInterceptor() {
+  void testInterceptor() {
     Map<String, String> data = ImmutableMap.of("x-goog-api-client", "abcd", "user-agent", "defg");
     GrpcHeaderInterceptor interceptor = new GrpcHeaderInterceptor(data);
     Channel intercepted = ClientInterceptors.intercept(channel, interceptor);

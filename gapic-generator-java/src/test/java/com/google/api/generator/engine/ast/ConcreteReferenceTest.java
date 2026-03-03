@@ -23,18 +23,18 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ConcreteReferenceTest {
+class ConcreteReferenceTest {
   @Test
-  public void basicConcreteReference() {
+  void basicConcreteReference() {
     Reference reference = ConcreteReference.builder().setClazz(Integer.class).build();
     assertEquals(Integer.class.getSimpleName(), reference.name());
     assertFalse(reference.isStaticImport());
   }
 
   @Test
-  public void basicConcreteReference_setIsStaticImport() {
+  void basicConcreteReference_setIsStaticImport() {
     Reference reference =
         ConcreteReference.builder().setClazz(Integer.class).setIsStaticImport(true).build();
     assertEquals(Integer.class.getSimpleName(), reference.name());
@@ -42,14 +42,14 @@ public class ConcreteReferenceTest {
   }
 
   @Test
-  public void basicConcreteReference_nested() {
+  void basicConcreteReference_nested() {
     Reference reference = ConcreteReference.builder().setClazz(Map.Entry.class).build();
     assertEquals("Map.Entry", reference.name());
     assertFalse(reference.isStaticImport());
   }
 
   @Test
-  public void basicConcreteReference_nestedAndStaticImport() {
+  void basicConcreteReference_nestedAndStaticImport() {
     Reference reference =
         ConcreteReference.builder().setClazz(Map.Entry.class).setIsStaticImport(true).build();
     assertEquals(Map.Entry.class.getSimpleName(), reference.name());
@@ -57,7 +57,7 @@ public class ConcreteReferenceTest {
   }
 
   @Test
-  public void parameterizedConcreteReference() {
+  void parameterizedConcreteReference() {
     Reference reference =
         ConcreteReference.builder()
             .setClazz(HashMap.class)
@@ -71,7 +71,7 @@ public class ConcreteReferenceTest {
   }
 
   @Test
-  public void nestedParameterizedConcreteReference() {
+  void nestedParameterizedConcreteReference() {
     Reference mapReference =
         ConcreteReference.builder()
             .setClazz(HashMap.class)
@@ -96,7 +96,7 @@ public class ConcreteReferenceTest {
   }
 
   @Test
-  public void isSupertype_basic() {
+  void isSupertype_basic() {
     assertTrue(TypeNode.STRING.isSupertypeOrEquals(TypeNode.STRING));
     assertFalse(TypeNode.INT.isSupertypeOrEquals(TypeNode.STRING));
     assertFalse(TypeNode.STRING.isSupertypeOrEquals(TypeNode.INT));
@@ -109,7 +109,7 @@ public class ConcreteReferenceTest {
   }
 
   @Test
-  public void isSupertype_nestedGenerics() {
+  void isSupertype_nestedGenerics() {
     Reference stringRef = ConcreteReference.withClazz(String.class);
     TypeNode typeOne =
         TypeNode.withReference(
@@ -142,7 +142,7 @@ public class ConcreteReferenceTest {
   }
 
   @Test
-  public void wildcards() {
+  void wildcards() {
     assertEquals(ConcreteReference.wildcard().name(), "?");
     assertEquals(
         "? extends String",
@@ -150,7 +150,7 @@ public class ConcreteReferenceTest {
   }
 
   @Test
-  public void isAssignableFrom_concreteRef() {
+  void isAssignableFrom_concreteRef() {
     assertFalse(
         ConcreteReference.withClazz(List.class)
             .isAssignableFrom(ConcreteReference.withClazz(Map.class)));
@@ -195,7 +195,7 @@ public class ConcreteReferenceTest {
   }
 
   @Test
-  public void isAssignableFrom_vaporRef() {
+  void isAssignableFrom_vaporRef() {
     assertFalse(
         ConcreteReference.withClazz(List.class)
             .isAssignableFrom(
@@ -207,7 +207,7 @@ public class ConcreteReferenceTest {
   }
 
   @Test
-  public void isAssignableFrom_vaporRefWithConcreteRefSupertype() {
+  void isAssignableFrom_vaporRefWithConcreteRefSupertype() {
     assertTrue(
         ConcreteReference.withClazz(List.class)
             .isAssignableFrom(

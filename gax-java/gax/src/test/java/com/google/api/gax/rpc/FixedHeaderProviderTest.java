@@ -30,29 +30,30 @@
 
 package com.google.api.gax.rpc;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class FixedHeaderProviderTest {
+class FixedHeaderProviderTest {
   @Test
-  public void testCreateSuccess() {
+  void testCreateSuccess() {
     Map<String, String> headers =
         ImmutableMap.of("User-Agent", "hello1", "Custom-Header", "hello2");
     FixedHeaderProvider headerProvider = FixedHeaderProvider.create(headers);
     assertEquals(headers, headerProvider.getHeaders());
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testCreateFail() {
+  @Test
+  void testCreateFail() {
     Map<String, String> headers = ImmutableMap.of("User-Agent", "hello1", "user-agent", "hello2");
-    FixedHeaderProvider.create(headers);
+    assertThrows(IllegalArgumentException.class, () -> FixedHeaderProvider.create(headers));
   }
 
   @Test
-  public void testCreateVarargSuccess() {
+  void testCreateVarargSuccess() {
     Map<String, String> headers =
         ImmutableMap.of("User-Agent", "hello1", "Custom-Header", "hello2");
     FixedHeaderProvider headerProvider =
@@ -60,13 +61,17 @@ public class FixedHeaderProviderTest {
     assertEquals(headers, headerProvider.getHeaders());
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testCreateVarargFail() {
-    FixedHeaderProvider.create("User-Agent", "hello1", "user-agent", "hello2");
+  @Test
+  void testCreateVarargFail() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> FixedHeaderProvider.create("User-Agent", "hello1", "user-agent", "hello2"));
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testCreateVarargOddNumberOfParamsFail() {
-    FixedHeaderProvider.create("User-Agent", "hello1", "Custom-Header");
+  @Test
+  void testCreateVarargOddNumberOfParamsFail() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> FixedHeaderProvider.create("User-Agent", "hello1", "Custom-Header"));
   }
 }

@@ -34,23 +34,20 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.pathtemplate.PathTemplate;
 import java.util.Map;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class RequestParamsBuilderTest {
+class RequestParamsBuilderTest {
 
   private RequestParamsBuilder requestParamsBuilder;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     requestParamsBuilder = RequestParamsBuilder.create();
   }
 
   @Test
-  public void add_happyPath() {
+  void add_happyPath() {
     Map<String, String> actual =
         getRoutingHeaders(
             "projects/**/{table_location=instances/*}",
@@ -59,14 +56,14 @@ public class RequestParamsBuilderTest {
   }
 
   @Test
-  public void add_twoParams_happyPath() {
+  void add_twoParams_happyPath() {
     requestParamsBuilder.add("table_location", "instances/living_room");
     Map<String, String> actual = requestParamsBuilder.build();
     assertThat(actual).containsExactly("table_location", "instances/living_room");
   }
 
   @Test
-  public void add_containsNonEncodedHeaderAndValue() {
+  void add_containsNonEncodedHeaderAndValue() {
     PathTemplate pathTemplate = PathTemplate.create("projects/**/{table$$_++location=instances/*}");
     requestParamsBuilder.add(
         "projects/my_cozy_home/instances/living_room", "table$$_++location", pathTemplate);
@@ -75,14 +72,14 @@ public class RequestParamsBuilderTest {
   }
 
   @Test
-  public void add_twoParams_containsNonEncodedHeaderAndValue() {
+  void add_twoParams_containsNonEncodedHeaderAndValue() {
     requestParamsBuilder.add("table$$_++location", "instances/living_room");
     Map<String, String> actual = requestParamsBuilder.build();
     assertThat(actual).containsExactly("table$$_++location", "instances/living_room");
   }
 
   @Test
-  public void build_shouldKeepLastEntryIfMultipleEntriesHaveTheSameKeyRatherThanErrorOut() {
+  void build_shouldKeepLastEntryIfMultipleEntriesHaveTheSameKeyRatherThanErrorOut() {
     requestParamsBuilder.add(
         "projects/my_cozy_home/instances/living_room",
         "table_location",
@@ -108,33 +105,33 @@ public class RequestParamsBuilderTest {
   }
 
   @Test
-  public void add_matchedValuesWithNoRoutingHeaderKey() {
+  void add_matchedValuesWithNoRoutingHeaderKey() {
     Map<String, String> actual = getRoutingHeaders("projects/**", "projects/my_cozy_home/");
     assertThat(actual).isEmpty();
   }
 
   @Test
-  public void add_emptyMatchedValues() {
+  void add_emptyMatchedValues() {
     Map<String, String> actual =
         getRoutingHeaders("projects/**/{table_location=instances/*}", "projects/does_not_matter");
     assertThat(actual).isEmpty();
   }
 
   @Test
-  public void add_nullFieldValue() {
+  void add_nullFieldValue() {
     Map<String, String> actual = getRoutingHeaders("projects/**", null);
     assertThat(actual).isEmpty();
   }
 
   @Test
-  public void addWithTwoParams_nullFieldValue() {
+  void addWithTwoParams_nullFieldValue() {
     requestParamsBuilder.add("test", null);
     Map<String, String> actual = requestParamsBuilder.build();
     assertThat(actual).isEmpty();
   }
 
   @Test
-  public void add_emptyString_noMatches() {
+  void add_emptyString_noMatches() {
     // protobuf's default value for string is empty string. The `**` pathtemplate would match
     // for empty string if it's not explicitly filtered out
     Map<String, String> actual = getRoutingHeaders("{table_location=**}", "");
@@ -142,7 +139,7 @@ public class RequestParamsBuilderTest {
   }
 
   @Test
-  public void addWithTwoParams_emptyString_noMatches() {
+  void addWithTwoParams_emptyString_noMatches() {
     // protobuf's default value for string is empty string. The `**` pathtemplate would match
     // for empty string if it's not explicitly filtered out
     Map<String, String> actual = getRoutingHeaders("{table_location=**}", "");
@@ -150,21 +147,21 @@ public class RequestParamsBuilderTest {
   }
 
   @Test
-  public void add_nullHeader_noMatches() {
+  void add_nullHeader_noMatches() {
     requestParamsBuilder.add(null, "projects/does_not_matter");
     Map<String, String> actual = requestParamsBuilder.build();
     assertThat(actual).isEmpty();
   }
 
   @Test
-  public void addWithTwoParams_nullHeader_noMatches() {
+  void addWithTwoParams_nullHeader_noMatches() {
     requestParamsBuilder.add(null, "hello");
     Map<String, String> actual = requestParamsBuilder.build();
     assertThat(actual).isEmpty();
   }
 
   @Test
-  public void addWithTwoParams_emptyHeader_noMatches() {
+  void addWithTwoParams_emptyHeader_noMatches() {
     requestParamsBuilder.add("", "hello");
     Map<String, String> actual = requestParamsBuilder.build();
     assertThat(actual).isEmpty();

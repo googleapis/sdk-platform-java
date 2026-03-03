@@ -47,20 +47,15 @@ import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CancellationException;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(JUnit4.class)
-public class TracedBidiCallableTest {
+@ExtendWith(MockitoExtension.class)
+class TracedBidiCallableTest {
   private static final SpanName SPAN_NAME = SpanName.of("fake-client", "fake-method");
-  public @Rule MockitoRule mockitoRule = MockitoJUnit.rule();
-
   private FakeBidiObserver outerObserver;
   private FakeCallContext outerCallContext;
 
@@ -73,8 +68,8 @@ public class TracedBidiCallableTest {
   private FakeBidiCallable innerCallable;
   private FakeStreamController innerController;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     outerObserver = new FakeBidiObserver();
     outerCallContext = FakeCallContext.createDefault();
 
@@ -87,14 +82,14 @@ public class TracedBidiCallableTest {
   }
 
   @Test
-  public void testTracerCreated() {
+  void testTracerCreated() {
     tracedCallable.call(outerObserver, outerCallContext);
 
     verify(tracerFactory, times(1)).newTracer(parentTracer, SPAN_NAME, OperationType.BidiStreaming);
   }
 
   @Test
-  public void testOperationCancelled() {
+  void testOperationCancelled() {
     tracedCallable.call(outerObserver, outerCallContext);
     outerObserver.clientStream.closeSendWithError(new CancellationException());
     innerCallable.responseObserver.onError(
@@ -105,7 +100,7 @@ public class TracedBidiCallableTest {
   }
 
   @Test
-  public void testOperationCancelled2() {
+  void testOperationCancelled2() {
     BidiStream<String, String> stream = tracedCallable.call(outerCallContext);
 
     stream.cancel();
@@ -116,7 +111,7 @@ public class TracedBidiCallableTest {
   }
 
   @Test
-  public void testOperationFinished() {
+  void testOperationFinished() {
     tracedCallable.call(outerObserver, outerCallContext);
     innerCallable.responseObserver.onComplete();
 
@@ -125,7 +120,7 @@ public class TracedBidiCallableTest {
   }
 
   @Test
-  public void testOperationFailed() {
+  void testOperationFailed() {
     RuntimeException expectedException = new RuntimeException("fake");
 
     tracedCallable.call(outerObserver, outerCallContext);
@@ -137,7 +132,7 @@ public class TracedBidiCallableTest {
   }
 
   @Test
-  public void testSyncError() {
+  void testSyncError() {
     RuntimeException expectedException = new RuntimeException("fake");
     innerCallable.syncError = expectedException;
 
@@ -151,7 +146,7 @@ public class TracedBidiCallableTest {
   }
 
   @Test
-  public void testRequestNotify() {
+  void testRequestNotify() {
     tracedCallable.call(outerObserver, outerCallContext);
     outerObserver.clientStream.send("request1");
     outerObserver.clientStream.send("request2");
@@ -161,7 +156,7 @@ public class TracedBidiCallableTest {
   }
 
   @Test
-  public void testRequestNotify2() {
+  void testRequestNotify2() {
     BidiStream<String, String> stream = tracedCallable.call(outerCallContext);
     stream.send("request1");
     stream.send("request2");
@@ -171,7 +166,7 @@ public class TracedBidiCallableTest {
   }
 
   @Test
-  public void testResponseNotify() {
+  void testResponseNotify() {
     tracedCallable.call(outerObserver, outerCallContext);
 
     innerCallable.responseObserver.onResponse("response1");

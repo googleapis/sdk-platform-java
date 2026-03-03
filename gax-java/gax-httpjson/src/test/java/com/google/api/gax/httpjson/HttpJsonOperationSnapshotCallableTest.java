@@ -41,19 +41,19 @@ import com.google.common.truth.Truth;
 import com.google.protobuf.Field;
 import com.google.protobuf.Option;
 import java.util.concurrent.ExecutionException;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class HttpJsonOperationSnapshotCallableTest {
+class HttpJsonOperationSnapshotCallableTest {
 
   UnaryCallable<Option, Field> innerCallable;
   OperationSnapshotFactory<Option, Field> operationSnapshotFactory;
   HttpJsonOperationSnapshotCallable<Option, Field> operationSnapCallable;
 
-  @Before
+  @BeforeEach
   @SuppressWarnings("unchecked")
-  public void init() {
+  void init() {
     innerCallable = (UnaryCallable<Option, Field>) mock(UnaryCallable.class);
     operationSnapshotFactory =
         (OperationSnapshotFactory<Option, Field>) mock(OperationSnapshotFactory.class);
@@ -64,7 +64,7 @@ public class HttpJsonOperationSnapshotCallableTest {
   }
 
   @Test
-  public void futureCallTest() throws ExecutionException, InterruptedException {
+  void futureCallTest() throws ExecutionException, InterruptedException {
     Option request = Option.newBuilder().setName("Arizona").build();
     Field field = Field.newBuilder().setName("Georgia").build();
     ApiCallContext context = mock(ApiCallContext.class);
@@ -89,7 +89,7 @@ public class HttpJsonOperationSnapshotCallableTest {
   }
 
   @Test
-  public void futureCallTestException() throws InterruptedException {
+  void futureCallTestException() throws InterruptedException {
     Option request = Option.newBuilder().setName("Arizona").build();
     Field field = Field.newBuilder().setName("Georgia").build();
     ApiCallContext context = mock(ApiCallContext.class);
@@ -110,7 +110,7 @@ public class HttpJsonOperationSnapshotCallableTest {
 
     try {
       operationSnapCallable.futureCall(request, context).get();
-      Assert.fail("Exception should have been thrown");
+      Assertions.fail("Exception should have been thrown");
     } catch (ExecutionException e) {
       Truth.assertThat(e).hasMessageThat().contains("Seattle");
     }

@@ -16,11 +16,11 @@ package com.google.api.generator.engine.ast;
 
 import static org.junit.Assert.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class SynchronizedStatementTest {
+class SynchronizedStatementTest {
   @Test
-  public void validSynchronizedStatement_basicThis() {
+  void validSynchronizedStatement_basicThis() {
     SynchronizedStatement.builder()
         .setLock(
             ThisObjectValue.withType(
@@ -31,7 +31,7 @@ public class SynchronizedStatementTest {
   }
 
   @Test
-  public void validSynchronizedStatement_basicVariableExpr() {
+  void validSynchronizedStatement_basicVariableExpr() {
     SynchronizedStatement.builder()
         .setLock(
             VariableExpr.withVariable(
@@ -42,7 +42,7 @@ public class SynchronizedStatementTest {
   }
 
   @Test
-  public void invalidSynchronizedStatement_primitiveLock() {
+  void invalidSynchronizedStatement_primitiveLock() {
     assertThrows(
         IllegalStateException.class,
         () ->
@@ -57,7 +57,7 @@ public class SynchronizedStatementTest {
   }
 
   @Test
-  public void invalidSynchronizedStatement_declaredVariableExpr() {
+  void invalidSynchronizedStatement_declaredVariableExpr() {
     VariableExpr strVarExpr =
         VariableExpr.builder()
             .setVariable(Variable.builder().setName("str").setType(TypeNode.STRING).build())

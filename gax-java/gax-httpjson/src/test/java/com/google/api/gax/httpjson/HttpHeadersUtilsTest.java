@@ -29,19 +29,19 @@
  */
 package com.google.api.gax.httpjson;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.google.api.client.http.HttpHeaders;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class HttpHeadersUtilsTest {
+class HttpHeadersUtilsTest {
 
   @Test
-  public void testSetHeader() {
+  void testSetHeader() {
     HttpHeaders headers = new HttpHeaders();
 
     assertEquals(headers, HttpHeadersUtils.setHeader(headers, "Custom-Header", "CustomHeader"));
@@ -105,7 +105,7 @@ public class HttpHeadersUtilsTest {
   }
 
   @Test
-  public void testSetHeaders() {
+  void testSetHeaders() {
     HttpHeaders headers = new HttpHeaders();
 
     Map<String, String> headersMap =
@@ -120,7 +120,7 @@ public class HttpHeadersUtilsTest {
   }
 
   @Test
-  public void testGetUserAgentValue() {
+  void testGetUserAgentValue() {
     Map<String, String> headersMap =
         ImmutableMap.of(
             "Custom-Header", "CustomHeader", "User-Agent", "this is me", "accept", "Accept");

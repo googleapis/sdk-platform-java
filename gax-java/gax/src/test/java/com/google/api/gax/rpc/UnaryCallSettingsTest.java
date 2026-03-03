@@ -29,35 +29,33 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.common.collect.ImmutableSet;
 import java.util.Set;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.threeten.bp.Duration;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class UnaryCallSettingsTest {
+class UnaryCallSettingsTest {
 
   @Test
-  public void testSetSimpleTimeoutNoRetries() {
+  void testSetSimpleTimeoutNoRetries() {
     UnaryCallSettings.Builder<?, ?> builder = new UnaryCallSettings.Builder<Object, Object>();
-    builder.setSimpleTimeoutNoRetries(Duration.ofSeconds(13));
+    builder.setSimpleTimeoutNoRetriesDuration(java.time.Duration.ofSeconds(13));
 
     assertThat(builder.getRetryableCodes().size()).isEqualTo(0);
     assertThat(builder.getRetrySettings().getMaxAttempts()).isEqualTo(1);
-    assertThat(builder.getRetrySettings().getTotalTimeout()).isEqualTo(Duration.ofSeconds(13));
+    assertThat(builder.getRetrySettings().getTotalTimeoutDuration())
+        .isEqualTo(java.time.Duration.ofSeconds(13));
   }
 
   @Test
-  public void testEquals() {
+  void testEquals() {
     UnaryCallSettings.Builder<?, ?> builder = new UnaryCallSettings.Builder<Object, Object>();
-    builder.setSimpleTimeoutNoRetries(Duration.ofSeconds(13));
+    builder.setSimpleTimeoutNoRetriesDuration(java.time.Duration.ofSeconds(13));
 
     UnaryCallSettings<?, ?> settings13 = builder.build();
     assertEquals(settings13, settings13);
@@ -66,7 +64,7 @@ public class UnaryCallSettingsTest {
     assertEquals(settings13.hashCode(), settings13.hashCode());
 
     UnaryCallSettings.Builder<?, ?> builder5 = new UnaryCallSettings.Builder<Object, Object>();
-    builder5.setSimpleTimeoutNoRetries(Duration.ofSeconds(5));
+    builder5.setSimpleTimeoutNoRetriesDuration(java.time.Duration.ofSeconds(5));
 
     UnaryCallSettings<?, ?> settings5 = builder5.build();
     assertNotEquals(settings13, settings5);
@@ -74,14 +72,14 @@ public class UnaryCallSettingsTest {
   }
 
   @Test
-  public void testEquals_retrySettings() {
+  void testEquals_retrySettings() {
     RetrySettings initialSettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(5))
-            .setMaxRetryDelay(Duration.ofSeconds(1))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(5))
+            .setMaxRetryDelayDuration(java.time.Duration.ofSeconds(1))
             .setRetryDelayMultiplier(2)
-            .setInitialRpcTimeout(Duration.ofMillis(100))
-            .setMaxRpcTimeout(Duration.ofMillis(200))
+            .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(100))
+            .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(200))
             .setRpcTimeoutMultiplier(1.1)
             .setJittered(true)
             .setMaxAttempts(10)
@@ -97,7 +95,7 @@ public class UnaryCallSettingsTest {
   }
 
   @Test
-  public void testEquals_retryableCodes() {
+  void testEquals_retryableCodes() {
     UnaryCallSettings.Builder<?, ?> builder = new UnaryCallSettings.Builder<Object, Object>();
     UnaryCallSettings<?, ?> settingsNoCodes = builder.build();
 
@@ -111,14 +109,14 @@ public class UnaryCallSettingsTest {
   }
 
   @Test
-  public void testRetrySettingsBuilder() {
+  void testRetrySettingsBuilder() {
     RetrySettings initialSettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(5))
-            .setMaxRetryDelay(Duration.ofSeconds(1))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(5))
+            .setMaxRetryDelayDuration(java.time.Duration.ofSeconds(1))
             .setRetryDelayMultiplier(2)
-            .setInitialRpcTimeout(Duration.ofMillis(100))
-            .setMaxRpcTimeout(Duration.ofMillis(200))
+            .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(100))
+            .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(200))
             .setRpcTimeoutMultiplier(1.1)
             .setJittered(true)
             .setMaxAttempts(10)
@@ -127,15 +125,16 @@ public class UnaryCallSettingsTest {
     UnaryCallSettings.Builder<Object, Object> builder =
         new UnaryCallSettings.Builder<Object, Object>().setRetrySettings(initialSettings);
 
-    builder.retrySettings().setMaxRetryDelay(Duration.ofMinutes(1));
+    builder.retrySettings().setMaxRetryDelayDuration(java.time.Duration.ofMinutes(1));
 
-    assertThat(builder.getRetrySettings().getMaxRetryDelay()).isEqualTo(Duration.ofMinutes(1));
-    assertThat(builder.build().getRetrySettings().getMaxRetryDelay())
-        .isEqualTo(Duration.ofMinutes(1));
+    assertThat(builder.getRetrySettings().getMaxRetryDelayDuration())
+        .isEqualTo(java.time.Duration.ofMinutes(1));
+    assertThat(builder.build().getRetrySettings().getMaxRetryDelayDuration())
+        .isEqualTo(java.time.Duration.ofMinutes(1));
   }
 
   @Test
-  public void testToString() {
+  void testToString() {
     RetrySettings retrySettings = RetrySettings.newBuilder().build();
     Set<StatusCode.Code> retryableCodes = ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED);
     UnaryCallSettings<?, ?> unaryCallSettings =
@@ -145,5 +144,18 @@ public class UnaryCallSettingsTest {
             .build();
     assertThat(unaryCallSettings.toString()).contains("retryableCodes=" + retryableCodes);
     assertThat(unaryCallSettings.toString()).contains("retrySettings=" + retrySettings);
+  }
+
+  @Test
+  public void testWatchDogCheckInterval_backportMethodsBehaveCorrectly() {
+    testDurationMethod(
+        123l,
+        jt ->
+            UnaryCallSettings.newUnaryCallSettingsBuilder()
+                .setSimpleTimeoutNoRetriesDuration(jt)
+                .build(),
+        tt -> UnaryCallSettings.newUnaryCallSettingsBuilder().setSimpleTimeoutNoRetries(tt).build(),
+        ucs -> ucs.getRetrySettings().getTotalTimeoutDuration(),
+        ucs -> ucs.getRetrySettings().getTotalTimeout());
   }
 }

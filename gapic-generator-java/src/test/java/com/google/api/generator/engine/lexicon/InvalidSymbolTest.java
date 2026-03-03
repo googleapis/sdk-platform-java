@@ -16,12 +16,12 @@ package com.google.api.generator.engine.lexicon;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class InvalidSymbolTest {
+class InvalidSymbolTest {
 
   @Test
-  public void invalidSymbolDetected() {
+  void invalidSymbolDetected() {
     assertThat(InvalidSymbol.containsInvalidSymbol("foo")).isFalse();
 
     assertThat(InvalidSymbol.containsInvalidSymbol("foo`foo")).isTrue();

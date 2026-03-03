@@ -28,12 +28,12 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class MethodSignatureParserTest {
+class MethodSignatureParserTest {
 
   @Test
-  public void flattenMethodSignatures_basic() {
+  void flattenMethodSignatures_basic() {
     String fooName = "fooName";
     TypeNode fooTypeOne =
         TypeNode.withReference(
@@ -70,7 +70,7 @@ public class MethodSignatureParserTest {
   }
 
   @Test
-  public void flattenMethodSignatures_oneToMany() {
+  void flattenMethodSignatures_oneToMany() {
     String fooName = "fooName";
     String anInt = "anInt";
 
@@ -110,7 +110,7 @@ public class MethodSignatureParserTest {
   }
 
   @Test
-  public void flattenMethodSignatures_manyToOne() {
+  void flattenMethodSignatures_manyToOne() {
     String fooName = "fooName";
     String anInt = "anInt";
 
@@ -150,7 +150,7 @@ public class MethodSignatureParserTest {
   }
 
   @Test
-  public void flattenMethodSignatures_manyToMany() {
+  void flattenMethodSignatures_manyToMany() {
     String fooName = "fooName";
     String barName = "barName";
     String anInt = "anInt";

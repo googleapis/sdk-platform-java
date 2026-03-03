@@ -30,15 +30,24 @@
 package com.google.api.gax.rpc.testing;
 
 import com.google.api.core.InternalApi;
+import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.StubSettings;
+import com.google.common.collect.ImmutableList;
 import java.io.IOException;
 
 @InternalApi("for testing")
 public class FakeStubSettings extends StubSettings {
 
+  private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
+      ImmutableList.<String>builder().build();
+
   private FakeStubSettings(Builder builder) throws IOException {
     super(builder);
+  }
+
+  public static Builder newBuilder() {
+    return Builder.createDefault();
   }
 
   @Override
@@ -68,6 +77,21 @@ public class FakeStubSettings extends StubSettings {
     @Override
     public com.google.api.gax.rpc.testing.FakeStubSettings build() throws IOException {
       return new com.google.api.gax.rpc.testing.FakeStubSettings(this);
+    }
+
+    /** Returns default settings values. */
+    public static Builder createDefault() {
+      Builder builder = new Builder(((ClientContext) null));
+      builder.setCredentialsProvider(defaultCredentialsProviderBuilder());
+      return builder;
+    }
+
+    /** Returns default credentials provider. */
+    public static GoogleCredentialsProvider defaultCredentialsProviderBuilder() {
+      return GoogleCredentialsProvider.newBuilder()
+          .setScopesToApply(DEFAULT_SERVICE_SCOPES)
+          .setUseJwtAccessWithScope(true)
+          .build();
     }
   }
 }

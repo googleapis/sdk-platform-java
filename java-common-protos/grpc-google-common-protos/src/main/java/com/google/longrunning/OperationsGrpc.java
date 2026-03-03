@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,17 +23,14 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * <pre>
  * Manages long-running operations with an API service.
  * When an API method normally takes long time to complete, it can be designed
- * to return [Operation][google.longrunning.Operation] to the client, and the client can use this
- * interface to receive the real response asynchronously by polling the
- * operation resource, or pass the operation resource to another API (such as
- * Google Cloud Pub/Sub API) to receive the response.  Any API service that
- * returns long-running operations should implement the `Operations` interface
- * so developers can have a consistent client experience.
+ * to return [Operation][google.longrunning.Operation] to the client, and the
+ * client can use this interface to receive the real response asynchronously by
+ * polling the operation resource, or pass the operation resource to another API
+ * (such as Pub/Sub API) to receive the response.  Any API service that returns
+ * long-running operations should implement the `Operations` interface so
+ * developers can have a consistent client experience.
  * </pre>
  */
-@javax.annotation.Generated(
-    value = "by gRPC proto compiler",
-    comments = "Source: google/longrunning/operations.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class OperationsGrpc {
 
@@ -262,6 +259,19 @@ public final class OperationsGrpc {
     return OperationsStub.newStub(factory, channel);
   }
 
+  /** Creates a new blocking-style stub that supports all types of calls on the service */
+  public static OperationsBlockingV2Stub newBlockingV2Stub(io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory<OperationsBlockingV2Stub> factory =
+        new io.grpc.stub.AbstractStub.StubFactory<OperationsBlockingV2Stub>() {
+          @java.lang.Override
+          public OperationsBlockingV2Stub newStub(
+              io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+            return new OperationsBlockingV2Stub(channel, callOptions);
+          }
+        };
+    return OperationsBlockingV2Stub.newStub(factory, channel);
+  }
+
   /**
    * Creates a new blocking-style stub that supports unary and streaming output calls on the service
    */
@@ -296,12 +306,12 @@ public final class OperationsGrpc {
    * <pre>
    * Manages long-running operations with an API service.
    * When an API method normally takes long time to complete, it can be designed
-   * to return [Operation][google.longrunning.Operation] to the client, and the client can use this
-   * interface to receive the real response asynchronously by polling the
-   * operation resource, or pass the operation resource to another API (such as
-   * Google Cloud Pub/Sub API) to receive the response.  Any API service that
-   * returns long-running operations should implement the `Operations` interface
-   * so developers can have a consistent client experience.
+   * to return [Operation][google.longrunning.Operation] to the client, and the
+   * client can use this interface to receive the real response asynchronously by
+   * polling the operation resource, or pass the operation resource to another API
+   * (such as Pub/Sub API) to receive the response.  Any API service that returns
+   * long-running operations should implement the `Operations` interface so
+   * developers can have a consistent client experience.
    * </pre>
    */
   public interface AsyncService {
@@ -312,13 +322,6 @@ public final class OperationsGrpc {
      * <pre>
      * Lists operations that match the specified filter in the request. If the
      * server doesn't support this method, it returns `UNIMPLEMENTED`.
-     * NOTE: the `name` binding allows API services to override the binding
-     * to use different resource name schemes, such as `users/&#42;&#47;operations`. To
-     * override the binding, API services can add a binding such as
-     * `"/v1/{name=users/&#42;}/operations"` to their service configuration.
-     * For backwards compatibility, the default name includes the operations
-     * collection id, however overriding users must ensure the name binding
-     * is the parent resource, without the operations collection id.
      * </pre>
      */
     default void listOperations(
@@ -374,8 +377,9 @@ public final class OperationsGrpc {
      * other methods to check whether the cancellation succeeded or whether the
      * operation completed despite cancellation. On successful cancellation,
      * the operation is not deleted; instead, it becomes an operation with
-     * an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-     * corresponding to `Code.CANCELLED`.
+     * an [Operation.error][google.longrunning.Operation.error] value with a
+     * [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+     * `Code.CANCELLED`.
      * </pre>
      */
     default void cancelOperation(
@@ -414,12 +418,12 @@ public final class OperationsGrpc {
    * <pre>
    * Manages long-running operations with an API service.
    * When an API method normally takes long time to complete, it can be designed
-   * to return [Operation][google.longrunning.Operation] to the client, and the client can use this
-   * interface to receive the real response asynchronously by polling the
-   * operation resource, or pass the operation resource to another API (such as
-   * Google Cloud Pub/Sub API) to receive the response.  Any API service that
-   * returns long-running operations should implement the `Operations` interface
-   * so developers can have a consistent client experience.
+   * to return [Operation][google.longrunning.Operation] to the client, and the
+   * client can use this interface to receive the real response asynchronously by
+   * polling the operation resource, or pass the operation resource to another API
+   * (such as Pub/Sub API) to receive the response.  Any API service that returns
+   * long-running operations should implement the `Operations` interface so
+   * developers can have a consistent client experience.
    * </pre>
    */
   public abstract static class OperationsImplBase implements io.grpc.BindableService, AsyncService {
@@ -436,12 +440,12 @@ public final class OperationsGrpc {
    * <pre>
    * Manages long-running operations with an API service.
    * When an API method normally takes long time to complete, it can be designed
-   * to return [Operation][google.longrunning.Operation] to the client, and the client can use this
-   * interface to receive the real response asynchronously by polling the
-   * operation resource, or pass the operation resource to another API (such as
-   * Google Cloud Pub/Sub API) to receive the response.  Any API service that
-   * returns long-running operations should implement the `Operations` interface
-   * so developers can have a consistent client experience.
+   * to return [Operation][google.longrunning.Operation] to the client, and the
+   * client can use this interface to receive the real response asynchronously by
+   * polling the operation resource, or pass the operation resource to another API
+   * (such as Pub/Sub API) to receive the response.  Any API service that returns
+   * long-running operations should implement the `Operations` interface so
+   * developers can have a consistent client experience.
    * </pre>
    */
   public static final class OperationsStub extends io.grpc.stub.AbstractAsyncStub<OperationsStub> {
@@ -460,13 +464,6 @@ public final class OperationsGrpc {
      * <pre>
      * Lists operations that match the specified filter in the request. If the
      * server doesn't support this method, it returns `UNIMPLEMENTED`.
-     * NOTE: the `name` binding allows API services to override the binding
-     * to use different resource name schemes, such as `users/&#42;&#47;operations`. To
-     * override the binding, API services can add a binding such as
-     * `"/v1/{name=users/&#42;}/operations"` to their service configuration.
-     * For backwards compatibility, the default name includes the operations
-     * collection id, however overriding users must ensure the name binding
-     * is the parent resource, without the operations collection id.
      * </pre>
      */
     public void listOperations(
@@ -528,8 +525,9 @@ public final class OperationsGrpc {
      * other methods to check whether the cancellation succeeded or whether the
      * operation completed despite cancellation. On successful cancellation,
      * the operation is not deleted; instead, it becomes an operation with
-     * an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-     * corresponding to `Code.CANCELLED`.
+     * an [Operation.error][google.longrunning.Operation.error] value with a
+     * [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+     * `Code.CANCELLED`.
      * </pre>
      */
     public void cancelOperation(
@@ -572,12 +570,128 @@ public final class OperationsGrpc {
    * <pre>
    * Manages long-running operations with an API service.
    * When an API method normally takes long time to complete, it can be designed
-   * to return [Operation][google.longrunning.Operation] to the client, and the client can use this
-   * interface to receive the real response asynchronously by polling the
-   * operation resource, or pass the operation resource to another API (such as
-   * Google Cloud Pub/Sub API) to receive the response.  Any API service that
-   * returns long-running operations should implement the `Operations` interface
-   * so developers can have a consistent client experience.
+   * to return [Operation][google.longrunning.Operation] to the client, and the
+   * client can use this interface to receive the real response asynchronously by
+   * polling the operation resource, or pass the operation resource to another API
+   * (such as Pub/Sub API) to receive the response.  Any API service that returns
+   * long-running operations should implement the `Operations` interface so
+   * developers can have a consistent client experience.
+   * </pre>
+   */
+  public static final class OperationsBlockingV2Stub
+      extends io.grpc.stub.AbstractBlockingStub<OperationsBlockingV2Stub> {
+    private OperationsBlockingV2Stub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      super(channel, callOptions);
+    }
+
+    @java.lang.Override
+    protected OperationsBlockingV2Stub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      return new OperationsBlockingV2Stub(channel, callOptions);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Lists operations that match the specified filter in the request. If the
+     * server doesn't support this method, it returns `UNIMPLEMENTED`.
+     * </pre>
+     */
+    public com.google.longrunning.ListOperationsResponse listOperations(
+        com.google.longrunning.ListOperationsRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+          getChannel(), getListOperationsMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Gets the latest state of a long-running operation.  Clients can use this
+     * method to poll the operation result at intervals as recommended by the API
+     * service.
+     * </pre>
+     */
+    public com.google.longrunning.Operation getOperation(
+        com.google.longrunning.GetOperationRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+          getChannel(), getGetOperationMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Deletes a long-running operation. This method indicates that the client is
+     * no longer interested in the operation result. It does not cancel the
+     * operation. If the server doesn't support this method, it returns
+     * `google.rpc.Code.UNIMPLEMENTED`.
+     * </pre>
+     */
+    public com.google.protobuf.Empty deleteOperation(
+        com.google.longrunning.DeleteOperationRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+          getChannel(), getDeleteOperationMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Starts asynchronous cancellation on a long-running operation.  The server
+     * makes a best effort to cancel the operation, but success is not
+     * guaranteed.  If the server doesn't support this method, it returns
+     * `google.rpc.Code.UNIMPLEMENTED`.  Clients can use
+     * [Operations.GetOperation][google.longrunning.Operations.GetOperation] or
+     * other methods to check whether the cancellation succeeded or whether the
+     * operation completed despite cancellation. On successful cancellation,
+     * the operation is not deleted; instead, it becomes an operation with
+     * an [Operation.error][google.longrunning.Operation.error] value with a
+     * [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+     * `Code.CANCELLED`.
+     * </pre>
+     */
+    public com.google.protobuf.Empty cancelOperation(
+        com.google.longrunning.CancelOperationRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+          getChannel(), getCancelOperationMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Waits until the specified long-running operation is done or reaches at most
+     * a specified timeout, returning the latest state.  If the operation is
+     * already done, the latest state is immediately returned.  If the timeout
+     * specified is greater than the default HTTP/RPC timeout, the HTTP/RPC
+     * timeout is used.  If the server does not support this method, it returns
+     * `google.rpc.Code.UNIMPLEMENTED`.
+     * Note that this method is on a best-effort basis.  It may return the latest
+     * state before the specified timeout (including immediately), meaning even an
+     * immediate response is no guarantee that the operation is done.
+     * </pre>
+     */
+    public com.google.longrunning.Operation waitOperation(
+        com.google.longrunning.WaitOperationRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+          getChannel(), getWaitOperationMethod(), getCallOptions(), request);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do limited synchronous rpc calls to service Operations.
+   *
+   * <pre>
+   * Manages long-running operations with an API service.
+   * When an API method normally takes long time to complete, it can be designed
+   * to return [Operation][google.longrunning.Operation] to the client, and the
+   * client can use this interface to receive the real response asynchronously by
+   * polling the operation resource, or pass the operation resource to another API
+   * (such as Pub/Sub API) to receive the response.  Any API service that returns
+   * long-running operations should implement the `Operations` interface so
+   * developers can have a consistent client experience.
    * </pre>
    */
   public static final class OperationsBlockingStub
@@ -598,13 +712,6 @@ public final class OperationsGrpc {
      * <pre>
      * Lists operations that match the specified filter in the request. If the
      * server doesn't support this method, it returns `UNIMPLEMENTED`.
-     * NOTE: the `name` binding allows API services to override the binding
-     * to use different resource name schemes, such as `users/&#42;&#47;operations`. To
-     * override the binding, API services can add a binding such as
-     * `"/v1/{name=users/&#42;}/operations"` to their service configuration.
-     * For backwards compatibility, the default name includes the operations
-     * collection id, however overriding users must ensure the name binding
-     * is the parent resource, without the operations collection id.
      * </pre>
      */
     public com.google.longrunning.ListOperationsResponse listOperations(
@@ -656,8 +763,9 @@ public final class OperationsGrpc {
      * other methods to check whether the cancellation succeeded or whether the
      * operation completed despite cancellation. On successful cancellation,
      * the operation is not deleted; instead, it becomes an operation with
-     * an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-     * corresponding to `Code.CANCELLED`.
+     * an [Operation.error][google.longrunning.Operation.error] value with a
+     * [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+     * `Code.CANCELLED`.
      * </pre>
      */
     public com.google.protobuf.Empty cancelOperation(
@@ -694,12 +802,12 @@ public final class OperationsGrpc {
    * <pre>
    * Manages long-running operations with an API service.
    * When an API method normally takes long time to complete, it can be designed
-   * to return [Operation][google.longrunning.Operation] to the client, and the client can use this
-   * interface to receive the real response asynchronously by polling the
-   * operation resource, or pass the operation resource to another API (such as
-   * Google Cloud Pub/Sub API) to receive the response.  Any API service that
-   * returns long-running operations should implement the `Operations` interface
-   * so developers can have a consistent client experience.
+   * to return [Operation][google.longrunning.Operation] to the client, and the
+   * client can use this interface to receive the real response asynchronously by
+   * polling the operation resource, or pass the operation resource to another API
+   * (such as Pub/Sub API) to receive the response.  Any API service that returns
+   * long-running operations should implement the `Operations` interface so
+   * developers can have a consistent client experience.
    * </pre>
    */
   public static final class OperationsFutureStub
@@ -719,13 +827,6 @@ public final class OperationsGrpc {
      * <pre>
      * Lists operations that match the specified filter in the request. If the
      * server doesn't support this method, it returns `UNIMPLEMENTED`.
-     * NOTE: the `name` binding allows API services to override the binding
-     * to use different resource name schemes, such as `users/&#42;&#47;operations`. To
-     * override the binding, API services can add a binding such as
-     * `"/v1/{name=users/&#42;}/operations"` to their service configuration.
-     * For backwards compatibility, the default name includes the operations
-     * collection id, however overriding users must ensure the name binding
-     * is the parent resource, without the operations collection id.
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<
@@ -778,8 +879,9 @@ public final class OperationsGrpc {
      * other methods to check whether the cancellation succeeded or whether the
      * operation completed despite cancellation. On successful cancellation,
      * the operation is not deleted; instead, it becomes an operation with
-     * an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-     * corresponding to `Code.CANCELLED`.
+     * an [Operation.error][google.longrunning.Operation.error] value with a
+     * [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+     * `Code.CANCELLED`.
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty>

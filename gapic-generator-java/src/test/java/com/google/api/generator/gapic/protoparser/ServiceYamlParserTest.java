@@ -24,14 +24,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ServiceYamlParserTest {
+class ServiceYamlParserTest {
 
   private static final String YAML_DIRECTORY = "src/test/resources/";
 
   @Test
-  public void parseServiceYaml_basic() {
+  void parseServiceYaml_basic() {
     String yamlFilename = "logging.yaml";
     Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
     Optional<com.google.api.Service> serviceYamlProtoOpt =
@@ -45,7 +45,7 @@ public class ServiceYamlParserTest {
   // TODO: Add more scenarios (e.g. null MethodSettings, null PublishingSettings, incorrect
   // FieldNames, etc.)
   @Test
-  public void parseServiceYaml_autoPopulatedFields() {
+  void parseServiceYaml_autoPopulatedFields() {
     String yamlFilename = "auto_populate_field_testing.yaml";
     Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
     Optional<com.google.api.Service> serviceYamlProtoOpt =

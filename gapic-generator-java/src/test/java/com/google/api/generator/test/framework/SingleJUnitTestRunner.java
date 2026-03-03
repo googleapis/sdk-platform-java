@@ -18,10 +18,10 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Request;
 import org.junit.runner.Result;
 
-public class SingleJUnitTestRunner {
+class SingleJUnitTestRunner {
   // SingleJUnitTestRunner runs single JUnit test whose class name is passed through `args`.
   // This is used to prepare codegen for updating goldens files.
-  public static void main(String... args) {
+  static void main(String... args) {
     // Check whether the test class name is passed correctly e.g.
     // `com.google.api.generator.gapic.composer.ComposerTest`
     if (args.length < 1) {
@@ -41,14 +41,14 @@ public class SingleJUnitTestRunner {
     }
   }
 
-  public static class JUnitClassNotFoundException extends RuntimeException {
-    public JUnitClassNotFoundException(String errorMessage) {
+  static class JUnitClassNotFoundException extends RuntimeException {
+    JUnitClassNotFoundException(String errorMessage) {
       super(errorMessage);
     }
   }
 
-  public static class MissingRequiredArgException extends RuntimeException {
-    public MissingRequiredArgException(String errorMessage) {
+  static class MissingRequiredArgException extends RuntimeException {
+    MissingRequiredArgException(String errorMessage) {
       super(errorMessage);
     }
   }
