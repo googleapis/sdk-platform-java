@@ -169,8 +169,8 @@ public abstract class ApiTracerContext {
   }
 
   private String[] getParsedFullMethodNameParts() {
-    Preconditions.checkState(fullMethodName() != null, "rpcMethod must be set to get SpanName");
-    Preconditions.checkState(transport() != null, "transport must be set to get SpanName");
+    Preconditions.checkState(fullMethodName() != null, "rpcMethod must be set");
+    Preconditions.checkState(transport() != null, "transport must be set");
 
     String regex =
         transport() == Transport.GRPC ? GRPC_FULL_METHOD_NAME_REGEX : HTTP_FULL_METHOD_NAME_REGEX;
