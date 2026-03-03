@@ -47,6 +47,7 @@ import com.google.api.gax.rpc.StreamingCallSettings;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.tracing.ApiTracerContext;
+import com.google.api.gax.tracing.SpanName;
 import com.google.api.gax.tracing.TracedBatchingCallable;
 import com.google.api.gax.tracing.TracedBidiCallable;
 import com.google.api.gax.tracing.TracedClientStreamingCallable;
@@ -182,6 +183,12 @@ public class GrpcCallableFactory {
           ClientContext clientContext,
           OperationsStub operationsStub) {
 
+    ApiTracerContext tracerContext = getApiTracerContext(grpcCallSettings.getMethodDescriptor());
+    SpanName initialSpanName =
+        SpanName.of(tracerContext.getClientName(), tracerContext.getMethodName());
+    SpanName operationSpanName =
+        SpanName.of(initialSpanName.getClientName(), initialSpanName.getMethodName() + "Operation");
+
     UnaryCallable<RequestT, Operation> initialGrpcCallable =
         createBaseUnaryCallable(
             grpcCallSettings, operationCallSettings.getInitialCallSettings(), clientContext);
@@ -191,9 +198,7 @@ public class GrpcCallableFactory {
     // Create a sub-trace for the initial RPC that starts the operation.
     UnaryCallable<RequestT, OperationSnapshot> tracedInitialCallable =
         new TracedOperationInitialCallable<>(
-            initialCallable,
-            clientContext.getTracerFactory(),
-            getApiTracerContext(grpcCallSettings.getMethodDescriptor()));
+            initialCallable, clientContext.getTracerFactory(), initialSpanName);
 
     LongRunningClient longRunningClient = new GrpcLongRunningClient(operationsStub);
     OperationCallable<RequestT, ResponseT, MetadataT> operationCallable =
@@ -202,11 +207,7 @@ public class GrpcCallableFactory {
 
     OperationCallable<RequestT, ResponseT, MetadataT> tracedOperationCallable =
         new TracedOperationCallable<>(
-            operationCallable,
-            clientContext.getTracerFactory(),
-            getApiTracerContext(grpcCallSettings.getMethodDescriptor()).toBuilder()
-                .setMethodNameSuffix("Operation")
-                .build());
+            operationCallable, clientContext.getTracerFactory(), operationSpanName);
 
     return tracedOperationCallable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }

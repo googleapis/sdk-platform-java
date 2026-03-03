@@ -53,13 +53,6 @@ public class TracedOperationInitialCallable<RequestT>
     super(innerCallable, tracedFactory, spanName);
   }
 
-  public TracedOperationInitialCallable(
-      UnaryCallable<RequestT, OperationSnapshot> innerCallable,
-      ApiTracerFactory tracedFactory,
-      ApiTracerContext apiTracerContext) {
-    super(innerCallable, tracedFactory, apiTracerContext);
-  }
-
   @Override
   public ApiFuture<OperationSnapshot> futureCall(RequestT request, ApiCallContext context) {
     InitialCallableFinisher finisher = new InitialCallableFinisher(context.getTracer());
