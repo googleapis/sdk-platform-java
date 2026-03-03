@@ -123,9 +123,6 @@ public abstract class ApiTracerContext {
   @Nullable
   public abstract Transport transport();
 
-  @Nullable
-  public abstract String methodNameSuffix();
-
   /**
    * Returns the client name part of the RPC.
    *
@@ -149,7 +146,7 @@ public abstract class ApiTracerContext {
    * Returns the method name part of the RPC.
    *
    * <p>This is extracted from {@link #fullMethodName()} using a regex that depends on the {@link
-   * #transport()}, and then the {@link #methodNameSuffix()} is appended if present.
+   * #transport()}.
    *
    * <ul>
    *   <li>For {@link Transport#GRPC} if {@code fullMethodName()} is
@@ -161,11 +158,7 @@ public abstract class ApiTracerContext {
    * @return the method name part of the RPC
    */
   public String getMethodName() {
-    String methodName = getParsedFullMethodNameParts()[1];
-    if (methodNameSuffix() != null) {
-      methodName += methodNameSuffix();
-    }
-    return methodName;
+    return getParsedFullMethodNameParts()[1];
   }
 
   private String[] getParsedFullMethodNameParts() {
@@ -224,9 +217,6 @@ public abstract class ApiTracerContext {
     if (other.transport() != null) {
       builder.setTransport(other.transport());
     }
-    if (other.methodNameSuffix() != null) {
-      builder.setMethodNameSuffix(other.methodNameSuffix());
-    }
     return builder.build();
   }
 
@@ -249,8 +239,6 @@ public abstract class ApiTracerContext {
     public abstract Builder setFullMethodName(@Nullable String rpcMethod);
 
     public abstract Builder setTransport(@Nullable Transport transport);
-
-    public abstract Builder setMethodNameSuffix(@Nullable String methodNameSuffix);
 
     public abstract ApiTracerContext build();
   }
