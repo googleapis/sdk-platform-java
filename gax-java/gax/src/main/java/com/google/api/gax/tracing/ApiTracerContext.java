@@ -51,8 +51,14 @@ import javax.annotation.Nullable;
 public abstract class ApiTracerContext {
 
   public enum Transport {
-    GRPC,
-    HTTP
+    GRPC("grpc"),
+    HTTP("http");
+
+    private final String label;
+
+    Transport(String label) {
+      this.label = label;
+    }
   }
 
   // Used to extract service and method name from a grpc MethodDescriptor.
@@ -69,7 +75,7 @@ public abstract class ApiTracerContext {
     if (transport() == null) {
       return null;
     }
-    return transport() == Transport.GRPC ? "grpc" : "http";
+    return transport().label;
   }
 
   @Nullable
