@@ -393,6 +393,9 @@ public abstract class EndpointContext {
     }
 
     private String parseServerAddress(String endpoint) {
+      if (Strings.isNullOrEmpty(endpoint)) {
+        return endpoint;
+      }
       HostAndPort hostAndPort = parseServerHostAndPort(endpoint);
       if (hostAndPort == null) {
         return null;
