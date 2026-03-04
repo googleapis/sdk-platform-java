@@ -81,4 +81,18 @@ class ApiTracerContextTest {
 
     assertThat(attributes).isEmpty();
   }
+
+  @Test
+  void testGetAttemptAttributes_emptyStrings() {
+    LibraryMetadata libraryMetadata =
+        LibraryMetadata.newBuilder().setRepository("").setArtifactName("").build();
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(libraryMetadata)
+            .setServerAddress("")
+            .build();
+    Map<String, Object> attributes = context.getAttemptAttributes();
+
+    assertThat(attributes).isEmpty();
+  }
 }

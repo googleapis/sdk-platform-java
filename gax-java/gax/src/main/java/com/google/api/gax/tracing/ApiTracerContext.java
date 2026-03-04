@@ -33,6 +33,7 @@ package com.google.api.gax.tracing;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Strings;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
@@ -59,16 +60,16 @@ public abstract class ApiTracerContext {
    */
   public Map<String, Object> getAttemptAttributes() {
     Map<String, Object> attributes = new HashMap<>();
-    if (serverAddress() != null) {
+    if (!Strings.isNullOrEmpty(serverAddress())) {
       attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress());
     }
     if (serverPort() != null) {
       attributes.put(ObservabilityAttributes.SERVER_PORT_ATTRIBUTE, serverPort());
     }
-    if (libraryMetadata().repository() != null) {
+    if (!Strings.isNullOrEmpty(libraryMetadata().repository())) {
       attributes.put(ObservabilityAttributes.REPO_ATTRIBUTE, libraryMetadata().repository());
     }
-    if (libraryMetadata().artifactName() != null) {
+    if (!Strings.isNullOrEmpty(libraryMetadata().artifactName())) {
       attributes.put(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, libraryMetadata().artifactName());
     }
     return attributes;
