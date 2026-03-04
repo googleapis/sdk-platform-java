@@ -393,23 +393,22 @@ public abstract class EndpointContext {
     }
 
     private String parseServerAddress(String endpoint) {
-      if (Strings.isNullOrEmpty(endpoint)) {
-        return endpoint;
+      HostAndPort hostAndPort = parseServerHostAndPort(endpoint);
+      if (hostAndPort == null) {
+        return null;
       }
-      String hostPort = endpoint;
-      if (hostPort.contains("://")) {
-        // Strip the scheme if present. HostAndPort doesn't support schemes.
-        hostPort = hostPort.substring(hostPort.indexOf("://") + 3);
-      }
-      try {
-        return HostAndPort.fromString(hostPort).getHost();
-      } catch (IllegalArgumentException e) {
-        // Fallback for cases HostAndPort can't handle.
-        return hostPort;
-      }
+      return hostAndPort.getHost();
     }
 
     private Integer parseServerPort(String endpoint) {
+      HostAndPort hostAndPort = parseServerHostAndPort(endpoint);
+      if (hostAndPort == null || !hostAndPort.hasPort()) {
+        return null;
+      }
+      return hostAndPort.getPort();
+    }
+
+    private HostAndPort parseServerHostAndPort(String endpoint) {
       if (Strings.isNullOrEmpty(endpoint)) {
         return null;
       }
@@ -419,11 +418,7 @@ public abstract class EndpointContext {
         hostPort = hostPort.substring(hostPort.indexOf("://") + 3);
       }
       try {
-        HostAndPort parsedHostPort = HostAndPort.fromString(hostPort);
-        if (parsedHostPort.hasPort()) {
-          return parsedHostPort.getPort();
-        }
-        return null;
+        return HostAndPort.fromString(hostPort);
       } catch (IllegalArgumentException e) {
         // Fallback for cases HostAndPort can't handle.
         return null;
