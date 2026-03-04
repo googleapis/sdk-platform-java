@@ -72,7 +72,6 @@ public abstract class SpanName {
    */
   public static SpanName of(ApiTracerContext apiTracerContext) {
     Preconditions.checkState(apiTracerContext.fullMethodName() != null, "rpcMethod must be set");
-    Preconditions.checkState(apiTracerContext.transport() != null, "transport must be set");
 
     Matcher matcher = FULL_METHOD_NAME_REGEX.matcher(apiTracerContext.fullMethodName());
 
