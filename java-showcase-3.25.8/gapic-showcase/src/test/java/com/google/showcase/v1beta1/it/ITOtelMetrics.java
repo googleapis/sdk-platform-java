@@ -349,7 +349,7 @@ class ITOtelMetrics {
     Map<String, String> expectedAttributes =
         ImmutableMap.of(
             MetricsTracer.METHOD_ATTRIBUTE,
-            "google.showcase.v1beta1.Echo/Echo",
+            "Echo.Echo",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
     verifyDefaultMetricsAttributes(actualMetricDataList, expectedAttributes);
@@ -406,7 +406,7 @@ class ITOtelMetrics {
     Map<String, String> expectedAttributes =
         ImmutableMap.of(
             MetricsTracer.METHOD_ATTRIBUTE,
-            "google.showcase.v1beta1.Echo/Block",
+            "Echo.Block",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
     verifyDefaultMetricsAttributes(actualMetricDataList, expectedAttributes);
@@ -464,7 +464,7 @@ class ITOtelMetrics {
     Map<String, String> expectedAttributes =
         ImmutableMap.of(
             MetricsTracer.METHOD_ATTRIBUTE,
-            "google.showcase.v1beta1.Echo/Block",
+            "Echo.Block",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
     verifyDefaultMetricsAttributes(actualMetricDataList, expectedAttributes);
@@ -588,7 +588,7 @@ class ITOtelMetrics {
     Map<String, String> expectedAttributes =
         ImmutableMap.of(
             MetricsTracer.METHOD_ATTRIBUTE,
-            "google.showcase.v1beta1.Echo/Echo",
+            "Echo.Echo",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
     verifyDefaultMetricsAttributes(actualMetricDataList, expectedAttributes);
@@ -645,7 +645,7 @@ class ITOtelMetrics {
     Map<String, String> expectedAttributes =
         ImmutableMap.of(
             MetricsTracer.METHOD_ATTRIBUTE,
-            "google.showcase.v1beta1.Echo/Block",
+            "Echo.Block",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
     verifyDefaultMetricsAttributes(actualMetricDataList, expectedAttributes);
@@ -777,7 +777,7 @@ class ITOtelMetrics {
     Map<String, String> expectedAttributes =
         ImmutableMap.of(
             MetricsTracer.METHOD_ATTRIBUTE,
-            "google.showcase.v1beta1.Echo/Block",
+            "Echo.Block",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
     verifyDefaultMetricsAttributes(actualMetricDataList, expectedAttributes);
