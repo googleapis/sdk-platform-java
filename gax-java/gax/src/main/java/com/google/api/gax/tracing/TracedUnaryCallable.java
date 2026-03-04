@@ -37,6 +37,7 @@ import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
 import com.google.common.util.concurrent.MoreExecutors;
+import javax.annotation.Nullable;
 
 /**
  * This callable wraps a callable chain in a {@link ApiTracer}.
@@ -48,8 +49,8 @@ import com.google.common.util.concurrent.MoreExecutors;
 public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<RequestT, ResponseT> {
   private final UnaryCallable<RequestT, ResponseT> innerCallable;
   private final ApiTracerFactory tracerFactory;
-  private final SpanName spanName;
-  private final ApiTracerContext apiTracerContext;
+  @Nullable private final SpanName spanName;
+  @Nullable private final ApiTracerContext apiTracerContext;
 
   public TracedUnaryCallable(
       UnaryCallable<RequestT, ResponseT> innerCallable,
