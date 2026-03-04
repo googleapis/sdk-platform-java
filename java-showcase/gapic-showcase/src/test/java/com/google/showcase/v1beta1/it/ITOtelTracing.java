@@ -138,7 +138,7 @@ class ITOtelTracing {
 
       SpanData attemptSpan =
           spans.stream()
-              .filter(span -> span.getName().equals("google.showcase.v1beta1/Echo/Echo/attempt"))
+              .filter(span -> span.getName().equals("Echo/Echo/attempt"))
               .findFirst()
               .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
       assertThat(attemptSpan.getKind()).isEqualTo(SpanKind.CLIENT);
