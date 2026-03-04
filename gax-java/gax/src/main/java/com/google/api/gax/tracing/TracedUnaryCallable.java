@@ -49,7 +49,7 @@ import javax.annotation.Nullable;
 public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<RequestT, ResponseT> {
   private final UnaryCallable<RequestT, ResponseT> innerCallable;
   private final ApiTracerFactory tracerFactory;
-  @Nullable private final SpanName spanName;
+  private final SpanName spanName;
   @Nullable private final ApiTracerContext apiTracerContext;
 
   public TracedUnaryCallable(
@@ -69,7 +69,7 @@ public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<Requ
     this.innerCallable = innerCallable;
     this.tracerFactory = tracerFactory;
     this.apiTracerContext = apiTracerContext;
-    this.spanName = null;
+    this.spanName = SpanName.of(apiTracerContext);
   }
 
   /**

@@ -54,7 +54,7 @@ public class TracedBidiCallable<RequestT, ResponseT>
     extends BidiStreamingCallable<RequestT, ResponseT> {
 
   @Nonnull private final ApiTracerFactory tracerFactory;
-  @Nullable private final SpanName spanName;
+  @Nonnull private final SpanName spanName;
   @Nullable private final ApiTracerContext apiTracerContext;
   @Nonnull private final BidiStreamingCallable<RequestT, ResponseT> innerCallable;
 
@@ -76,7 +76,7 @@ public class TracedBidiCallable<RequestT, ResponseT>
     this.apiTracerContext =
         Preconditions.checkNotNull(apiTracerContext, "apiTracerContext can't be null");
     this.innerCallable = Preconditions.checkNotNull(innerCallable, "innerCallable can't be null");
-    this.spanName = null;
+    this.spanName = SpanName.of(this.apiTracerContext);
   }
 
   @Override
