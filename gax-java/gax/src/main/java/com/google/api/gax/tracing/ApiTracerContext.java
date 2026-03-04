@@ -58,8 +58,6 @@ public abstract class ApiTracerContext {
     }
   }
 
-  // Used to extract service and method name from a grpc MethodDescriptor.
-
   /**
    * Returns the server address of the RPC.
    *
