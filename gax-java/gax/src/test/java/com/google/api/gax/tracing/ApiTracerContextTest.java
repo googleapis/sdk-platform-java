@@ -75,10 +75,83 @@ class ApiTracerContextTest {
   }
 
   @Test
+  void testGetAttemptAttributes_fullMethodName() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setFullMethodName("google.pubsub.v1.Publisher/Publish")
+            .build();
+    Map<String, String> attributes = context.getAttemptAttributes();
+
+    assertThat(attributes)
+        .containsEntry(
+            ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE,
+            "google.pubsub.v1.Publisher/Publish");
+  }
+
+  @Test
+  void testGetAttemptAttributes_rpcSystemName() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .build();
+    Map<String, String> attributes = context.getAttemptAttributes();
+
+    assertThat(attributes).containsEntry(ObservabilityAttributes.RPC_SYSTEM_NAME_ATTRIBUTE, "grpc");
+  }
+
+  @Test
   void testGetAttemptAttributes_empty() {
     ApiTracerContext context = ApiTracerContext.empty();
     Map<String, String> attributes = context.getAttemptAttributes();
 
     assertThat(attributes).isEmpty();
+  }
+
+  @Test
+  void testMerge() {
+    LibraryMetadata metadata = LibraryMetadata.newBuilder().setRepository("repo").build();
+    ApiTracerContext context1 =
+        ApiTracerContext.newBuilder()
+            .setServerAddress("address1")
+            .setLibraryMetadata(metadata)
+            .setFullMethodName("method1")
+            .setTransport(ApiTracerContext.Transport.HTTP)
+            .build();
+
+    LibraryMetadata metadata2 = LibraryMetadata.newBuilder().setArtifactName("artifact").build();
+    ApiTracerContext context2 =
+        ApiTracerContext.newBuilder()
+            .setServerAddress("address2")
+            .setLibraryMetadata(metadata2)
+            .setFullMethodName("method2")
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .build();
+
+    ApiTracerContext merged = context1.merge(context2);
+
+    assertThat(merged.serverAddress()).isEqualTo("address2");
+    assertThat(merged.libraryMetadata().artifactName()).isEqualTo("artifact");
+    // Note: LibraryMetadata.merge is not called in ApiTracerContext.merge, it replaces it if not
+    // empty.
+    assertThat(merged.libraryMetadata().repository()).isNull();
+    assertThat(merged.fullMethodName()).isEqualTo("method2");
+    assertThat(merged.transport()).isEqualTo(ApiTracerContext.Transport.GRPC);
+  }
+
+  @Test
+  void testMerge_emptyOther() {
+    ApiTracerContext context1 =
+        ApiTracerContext.newBuilder()
+            .setServerAddress("address1")
+            .setLibraryMetadata(LibraryMetadata.newBuilder().setRepository("repo").build())
+            .setFullMethodName("method1")
+            .setTransport(ApiTracerContext.Transport.HTTP)
+            .build();
+
+    ApiTracerContext merged = context1.merge(ApiTracerContext.empty());
+
+    assertThat(merged).isEqualTo(context1);
   }
 }
