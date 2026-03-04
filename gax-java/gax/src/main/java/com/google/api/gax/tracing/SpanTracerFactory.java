@@ -87,7 +87,7 @@ public class SpanTracerFactory implements ApiTracerFactory {
       // TODO(diegomarquezp): this is a placeholder for the HTTP span name and will be adjusted as
       // the
       // feature is developed.
-      attemptSpanName = context.getClientName() + "/" + context.getMethodName() + "/attempt";
+      attemptSpanName = context.fullMethodName() + "/attempt";
     }
 
     SpanTracer spanTracer = new SpanTracer(traceManager, context, attemptSpanName);

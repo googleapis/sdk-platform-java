@@ -210,7 +210,7 @@ class SpanTracerFactoryTest {
 
     tracer.attemptStarted(null, 1);
 
-    verify(traceManager).createSpan(eq("google.cloud.v1.Service/Method/attempt"), anyMap());
+    verify(traceManager).createSpan(eq("google.cloud.v1.Service.Method/attempt"), anyMap());
   }
 
   @Test

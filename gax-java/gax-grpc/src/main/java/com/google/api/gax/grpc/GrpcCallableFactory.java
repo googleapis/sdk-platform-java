@@ -55,6 +55,7 @@ import com.google.api.gax.tracing.TracedOperationCallable;
 import com.google.api.gax.tracing.TracedOperationInitialCallable;
 import com.google.api.gax.tracing.TracedServerStreamingCallable;
 import com.google.api.gax.tracing.TracedUnaryCallable;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableSet;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.OperationsStub;
@@ -184,8 +185,7 @@ public class GrpcCallableFactory {
           OperationsStub operationsStub) {
 
     ApiTracerContext tracerContext = getApiTracerContext(grpcCallSettings.getMethodDescriptor());
-    SpanName initialSpanName =
-        SpanName.of(tracerContext.getClientName(), tracerContext.getMethodName());
+    SpanName initialSpanName = SpanName.of(tracerContext);
     SpanName operationSpanName =
         SpanName.of(initialSpanName.getClientName(), initialSpanName.getMethodName() + "Operation");
 
@@ -326,8 +326,8 @@ public class GrpcCallableFactory {
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
 
-  private static ApiTracerContext getApiTracerContext(
-      @Nonnull MethodDescriptor<?, ?> methodDescriptor) {
+  @VisibleForTesting
+  static ApiTracerContext getApiTracerContext(@Nonnull MethodDescriptor<?, ?> methodDescriptor) {
     return ApiTracerContext.newBuilder()
         .setFullMethodName(methodDescriptor.getFullMethodName())
         .setTransport(ApiTracerContext.Transport.GRPC)

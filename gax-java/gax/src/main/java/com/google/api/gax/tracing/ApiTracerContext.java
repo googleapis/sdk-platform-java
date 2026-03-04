@@ -33,11 +33,8 @@ package com.google.api.gax.tracing;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.auto.value.AutoValue;
-import com.google.common.base.Preconditions;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.annotation.Nullable;
 
 /**
@@ -62,8 +59,6 @@ public abstract class ApiTracerContext {
   }
 
   // Used to extract service and method name from a grpc MethodDescriptor.
-  static final String GRPC_FULL_METHOD_NAME_REGEX = "^.*?([^./]+)/([^./]+)$";
-  static final String HTTP_FULL_METHOD_NAME_REGEX = "^(.+)\\.(.+)$";
 
   /**
    * Returns the server address of the RPC.
@@ -73,7 +68,7 @@ public abstract class ApiTracerContext {
    * @return the server address, or {@code null} if not set
    */
   @Nullable
-  public abstract String serverAddress();
+  abstract String serverAddress();
 
   /**
    * Returns the library metadata associated with the RPC.
@@ -82,7 +77,7 @@ public abstract class ApiTracerContext {
    *
    * @return the library metadata
    */
-  public abstract LibraryMetadata libraryMetadata();
+  abstract LibraryMetadata libraryMetadata();
 
   /**
    * Returns the RPC system name based on the transport.
@@ -92,7 +87,7 @@ public abstract class ApiTracerContext {
    * @return the RPC system name, or {@code null} if the transport is not set
    */
   @Nullable
-  public String rpcSystemName() {
+  String rpcSystemName() {
     if (transport() == null) {
       return null;
     }
@@ -110,7 +105,7 @@ public abstract class ApiTracerContext {
    * @return the full method name, or {@code null} if not set
    */
   @Nullable
-  public abstract String fullMethodName();
+  abstract String fullMethodName();
 
   /**
    * Returns the transport protocol used for the RPC.
@@ -121,63 +116,12 @@ public abstract class ApiTracerContext {
    * @return the transport protocol, or {@code null} if not set
    */
   @Nullable
-  public abstract Transport transport();
-
-  /**
-   * Returns the client name part of the RPC.
-   *
-   * <p>This is extracted from {@link #fullMethodName()} using a regex that depends on the {@link
-   * #transport()}.
-   *
-   * <ul>
-   *   <li>For {@link Transport#GRPC}, if {@code fullMethodName()} is
-   *       "google.pubsub.v1.Publisher/Publish", the client name is "Publisher".
-   *   <li>For {@link Transport#HTTP}, if {@code fullMethodName()} is
-   *       "google.pubsub.v1.Publisher.Publish", the client name is "google.pubsub.v1.Publisher".
-   * </ul>
-   *
-   * @return the client name part of the RPC
-   */
-  public String getClientName() {
-    return getParsedFullMethodNameParts()[0];
-  }
-
-  /**
-   * Returns the method name part of the RPC.
-   *
-   * <p>This is extracted from {@link #fullMethodName()} using a regex that depends on the {@link
-   * #transport()}.
-   *
-   * <ul>
-   *   <li>For {@link Transport#GRPC} if {@code fullMethodName()} is
-   *       "google.pubsub.v1.Publisher/Publish", the base method name is "Publish".
-   *   <li>For {@link Transport#HTTP}, if {@code fullMethodName()} is
-   *       "google.pubsub.v1.Publisher.Publish", the base method name is "Publish".
-   * </ul>
-   *
-   * @return the method name part of the RPC
-   */
-  public String getMethodName() {
-    return getParsedFullMethodNameParts()[1];
-  }
-
-  private String[] getParsedFullMethodNameParts() {
-    Preconditions.checkState(fullMethodName() != null, "rpcMethod must be set");
-    Preconditions.checkState(transport() != null, "transport must be set");
-
-    String regex =
-        transport() == Transport.GRPC ? GRPC_FULL_METHOD_NAME_REGEX : HTTP_FULL_METHOD_NAME_REGEX;
-    Pattern pattern = Pattern.compile(regex);
-    Matcher matcher = pattern.matcher(fullMethodName());
-
-    Preconditions.checkArgument(matcher.matches(), "Invalid rpcMethod: " + fullMethodName());
-    return new String[] {matcher.group(1), matcher.group(2)};
-  }
+  abstract Transport transport();
 
   /**
    * @return a map of attributes to be included in attempt-level spans
    */
-  public Map<String, String> getAttemptAttributes() {
+  Map<String, String> getAttemptAttributes() {
     Map<String, String> attributes = new HashMap<>();
     if (serverAddress() != null) {
       attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress());
@@ -203,7 +147,7 @@ public abstract class ApiTracerContext {
    * @param other the other context to merge with
    * @return a new {@link ApiTracerContext} with merged values
    */
-  public ApiTracerContext merge(ApiTracerContext other) {
+  ApiTracerContext merge(ApiTracerContext other) {
     Builder builder = toBuilder();
     if (other.serverAddress() != null) {
       builder.setServerAddress(other.serverAddress());

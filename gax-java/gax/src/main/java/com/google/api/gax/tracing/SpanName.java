@@ -32,12 +32,17 @@ package com.google.api.gax.tracing;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Preconditions;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** A value class to represent the name of the operation in an {@link ApiTracer}. */
 @BetaApi("Surface for tracing is not yet stable")
 @InternalApi("For google-cloud-java client use only")
 @AutoValue
 public abstract class SpanName {
+  private static final Pattern FULL_METHOD_NAME_REGEX = Pattern.compile("^.*?([^./]+)/([^./]+)$");
+
   /**
    * Creates a new instance of the name.
    *
@@ -48,6 +53,32 @@ public abstract class SpanName {
    */
   public static SpanName of(String clientName, String methodName) {
     return new AutoValue_SpanName(clientName, methodName);
+  }
+
+  /**
+   * Returns a new {@link SpanName} parsed from the given {@link ApiTracerContext}
+   *
+   * <p>This is extracted from {@link ApiTracerContext#fullMethodName()} using the {@link
+   * #FULL_METHOD_NAME_REGEX}
+   *
+   * <ul>
+   *   <li>If {@code fullMethodName()} is "google.pubsub.v1.Publisher/Publish", the client name is
+   *       "Publisher".
+   *   <li>If {@code fullMethodName()} is "google.pubsub.v1.Publisher/Publish", the base method name
+   *       is "Publish".
+   * </ul>
+   *
+   * @return a new {@link SpanName} with the parsed client name and method name
+   */
+  public static SpanName of(ApiTracerContext apiTracerContext) {
+    Preconditions.checkState(apiTracerContext.fullMethodName() != null, "rpcMethod must be set");
+    Preconditions.checkState(apiTracerContext.transport() != null, "transport must be set");
+
+    Matcher matcher = FULL_METHOD_NAME_REGEX.matcher(apiTracerContext.fullMethodName());
+
+    Preconditions.checkArgument(
+        matcher.matches(), "Invalid rpcMethod: " + apiTracerContext.fullMethodName());
+    return new AutoValue_SpanName(matcher.group(1), matcher.group(2));
   }
 
   /** The name of the client. ie BigtableData */

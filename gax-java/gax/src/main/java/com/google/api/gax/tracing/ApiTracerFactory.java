@@ -71,7 +71,7 @@ public interface ApiTracerFactory {
    */
   default ApiTracer newTracer(
       ApiTracer parent, ApiTracerContext tracerContext, OperationType operationType) {
-    SpanName spanName = SpanName.of(tracerContext.getClientName(), tracerContext.getMethodName());
+    SpanName spanName = SpanName.of(tracerContext);
     return newTracer(parent, spanName, operationType);
   }
 
