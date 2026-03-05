@@ -39,6 +39,7 @@ import com.google.common.base.Preconditions;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * A wrapper callable that will wrap a callable chain in a trace.
@@ -55,6 +56,7 @@ public class TracedClientStreamingCallable<RequestT, ResponseT>
   private final ClientStreamingCallable<RequestT, ResponseT> innerCallable;
   private final ApiTracerFactory tracerFactory;
   private final SpanName spanName;
+  @Nullable private final ApiTracerContext apiTracerContext;
 
   public TracedClientStreamingCallable(
       @Nonnull ClientStreamingCallable<RequestT, ResponseT> innerCallable,
@@ -63,14 +65,33 @@ public class TracedClientStreamingCallable<RequestT, ResponseT>
     this.tracerFactory = Preconditions.checkNotNull(tracerFactory, "tracerFactory can't be null");
     this.spanName = Preconditions.checkNotNull(spanName, "spanName can't be null");
     this.innerCallable = Preconditions.checkNotNull(innerCallable, "innerCallable can't be null");
+    this.apiTracerContext = null;
+  }
+
+  public TracedClientStreamingCallable(
+      @Nonnull ClientStreamingCallable<RequestT, ResponseT> innerCallable,
+      @Nonnull ApiTracerFactory tracerFactory,
+      @Nonnull ApiTracerContext apiTracerContext) {
+    this.tracerFactory = Preconditions.checkNotNull(tracerFactory, "tracerFactory can't be null");
+    this.apiTracerContext =
+        Preconditions.checkNotNull(apiTracerContext, "apiTracerContext can't be null");
+    this.innerCallable = Preconditions.checkNotNull(innerCallable, "innerCallable can't be null");
+    this.spanName = SpanName.of(this.apiTracerContext);
   }
 
   @Override
   public ApiStreamObserver<RequestT> clientStreamingCall(
       ApiStreamObserver<ResponseT> responseObserver, ApiCallContext context) {
 
-    ApiTracer tracer =
-        tracerFactory.newTracer(context.getTracer(), spanName, OperationType.ClientStreaming);
+    ApiTracer tracer;
+    if (apiTracerContext != null) {
+      tracer =
+          tracerFactory.newTracer(
+              context.getTracer(), apiTracerContext, OperationType.ClientStreaming);
+    } else {
+      tracer =
+          tracerFactory.newTracer(context.getTracer(), spanName, OperationType.ClientStreaming);
+    }
     context = context.withTracer(tracer);
 
     // Shared state that allows the response observer to know that the error it received was

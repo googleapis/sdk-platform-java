@@ -49,4 +49,10 @@ public class ObservabilityAttributes {
 
   /** The artifact name of the client library (e.g., "google-cloud-vision"). */
   public static final String ARTIFACT_ATTRIBUTE = "gcp.client.artifact";
+
+  /** The full RPC method name, including package, service, and method. */
+  public static final String GRPC_RPC_METHOD_ATTRIBUTE = "rpc.method";
+
+  /** The RPC system name, e.g. 'grpc' or 'http'. */
+  public static final String RPC_SYSTEM_NAME_ATTRIBUTE = "rpc.system.name";
 }

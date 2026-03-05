@@ -96,9 +96,9 @@ class ITOtelTracing {
 
       SpanData attemptSpan =
           spans.stream()
-              .filter(span -> span.getName().equals("Echo/Echo/attempt"))
+              .filter(span -> span.getName().equals("google.showcase.v1beta1.Echo/Echo"))
               .findFirst()
-              .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
+              .orElseThrow(() -> new AssertionError("Incorrect span name"));
       assertThat(attemptSpan.getKind()).isEqualTo(SpanKind.CLIENT);
       assertThat(
               attemptSpan
@@ -120,6 +120,16 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.ARTIFACT_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_ARTIFACT);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.RPC_SYSTEM_NAME_ATTRIBUTE)))
+          .isEqualTo("grpc");
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE)))
+          .isEqualTo("google.showcase.v1beta1.Echo/Echo");
     }
   }
 

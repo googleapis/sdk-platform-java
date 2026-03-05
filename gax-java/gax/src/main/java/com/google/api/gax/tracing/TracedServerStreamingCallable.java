@@ -37,6 +37,7 @@ import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
 import com.google.common.base.Preconditions;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * A wrapper callable that will wrap a callable chain in a trace.
@@ -50,6 +51,7 @@ public final class TracedServerStreamingCallable<RequestT, ResponseT>
 
   @Nonnull private final ApiTracerFactory tracerFactory;
   @Nonnull private final SpanName spanName;
+  @Nullable private final ApiTracerContext apiTracerContext;
   @Nonnull private final ServerStreamingCallable<RequestT, ResponseT> innerCallable;
 
   public TracedServerStreamingCallable(
@@ -59,14 +61,33 @@ public final class TracedServerStreamingCallable<RequestT, ResponseT>
     this.tracerFactory = Preconditions.checkNotNull(tracerFactory, "tracerFactory can't be null");
     this.spanName = Preconditions.checkNotNull(spanName, "spanName can't be null");
     this.innerCallable = Preconditions.checkNotNull(innerCallable, "innerCallable can't be null");
+    this.apiTracerContext = null;
+  }
+
+  public TracedServerStreamingCallable(
+      @Nonnull ServerStreamingCallable<RequestT, ResponseT> innerCallable,
+      @Nonnull ApiTracerFactory tracerFactory,
+      @Nonnull ApiTracerContext apiTracerContext) {
+    this.tracerFactory = Preconditions.checkNotNull(tracerFactory, "tracerFactory can't be null");
+    this.apiTracerContext =
+        Preconditions.checkNotNull(apiTracerContext, "apiTracerContext can't be null");
+    this.innerCallable = Preconditions.checkNotNull(innerCallable, "innerCallable can't be null");
+    this.spanName = SpanName.of(this.apiTracerContext);
   }
 
   @Override
   public void call(
       RequestT request, ResponseObserver<ResponseT> responseObserver, ApiCallContext context) {
 
-    ApiTracer tracer =
-        tracerFactory.newTracer(context.getTracer(), spanName, OperationType.ServerStreaming);
+    ApiTracer tracer;
+    if (apiTracerContext != null) {
+      tracer =
+          tracerFactory.newTracer(
+              context.getTracer(), apiTracerContext, OperationType.ServerStreaming);
+    } else {
+      tracer =
+          tracerFactory.newTracer(context.getTracer(), spanName, OperationType.ServerStreaming);
+    }
     TracedResponseObserver<ResponseT> tracedObserver =
         new TracedResponseObserver<>(tracer, responseObserver);
 

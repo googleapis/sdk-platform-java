@@ -46,18 +46,86 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class ApiTracerContext {
-  @Nullable
-  public abstract String serverAddress();
 
-  public abstract LibraryMetadata libraryMetadata();
+  public enum Transport {
+    GRPC("grpc"),
+    HTTP("http");
+
+    private final String label;
+
+    Transport(String label) {
+      this.label = label;
+    }
+  }
+
+  /**
+   * Returns the server address of the RPC.
+   *
+   * <p>Example: "pubsub.googleapis.com". This maps to the {@code server.address} attribute.
+   *
+   * @return the server address, or {@code null} if not set
+   */
+  @Nullable
+  abstract String serverAddress();
+
+  /**
+   * Returns the library metadata associated with the RPC.
+   *
+   * <p>See {@link LibraryMetadata} for examples of how this maps to observability attributes.
+   *
+   * @return the library metadata
+   */
+  abstract LibraryMetadata libraryMetadata();
+
+  /**
+   * Returns the RPC system name based on the transport.
+   *
+   * <p>Example: "grpc" or "http". This maps to the {@code rpc.system.name} attribute.
+   *
+   * @return the RPC system name, or {@code null} if the transport is not set
+   */
+  @Nullable
+  String rpcSystemName() {
+    if (transport() == null) {
+      return null;
+    }
+    return transport().label;
+  }
+
+  /**
+   * Returns the full name of the RPC method. Used in gRPC requests.
+   *
+   * <p>This is typically in the format "package.Service/Method"
+   *
+   * <p>Example: "google.pubsub.v1.Publisher/Publish". This maps to the {@code rpc.method}
+   * attribute.
+   *
+   * @return the full method name, or {@code null} if not set
+   */
+  @Nullable
+  abstract String fullMethodName();
+
+  /**
+   * Returns the transport protocol used for the RPC.
+   *
+   * <p>Example: {@link Transport#GRPC}. This is used to derive the {@code rpc.system.name}
+   * attribute (e.g., "grpc").
+   *
+   * @return the transport protocol, or {@code null} if not set
+   */
+  @Nullable
+  abstract Transport transport();
 
   /**
    * @return a map of attributes to be included in attempt-level spans
    */
-  public Map<String, String> getAttemptAttributes() {
+  Map<String, String> getAttemptAttributes() {
     Map<String, String> attributes = new HashMap<>();
     if (serverAddress() != null) {
       attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress());
+    }
+    if (rpcSystemName() != null) {
+      attributes.put(ObservabilityAttributes.RPC_SYSTEM_NAME_ATTRIBUTE, rpcSystemName());
     }
     if (libraryMetadata().repository() != null) {
       attributes.put(ObservabilityAttributes.REPO_ATTRIBUTE, libraryMetadata().repository());
@@ -65,7 +133,35 @@ public abstract class ApiTracerContext {
     if (libraryMetadata().artifactName() != null) {
       attributes.put(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, libraryMetadata().artifactName());
     }
+    if (transport() == Transport.GRPC) {
+      if (fullMethodName() != null) {
+        attributes.put(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE, fullMethodName());
+      }
+    }
     return attributes;
+  }
+
+  /**
+   * Merges this context with another context. The values in the other context take precedence.
+   *
+   * @param other the other context to merge with
+   * @return a new {@link ApiTracerContext} with merged values
+   */
+  ApiTracerContext merge(ApiTracerContext other) {
+    Builder builder = toBuilder();
+    if (other.serverAddress() != null) {
+      builder.setServerAddress(other.serverAddress());
+    }
+    if (!other.libraryMetadata().isEmpty()) {
+      builder.setLibraryMetadata(other.libraryMetadata());
+    }
+    if (other.fullMethodName() != null) {
+      builder.setFullMethodName(other.fullMethodName());
+    }
+    if (other.transport() != null) {
+      builder.setTransport(other.transport());
+    }
+    return builder.build();
   }
 
   public static ApiTracerContext empty() {
@@ -76,11 +172,17 @@ public abstract class ApiTracerContext {
     return new AutoValue_ApiTracerContext.Builder();
   }
 
+  public abstract Builder toBuilder();
+
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setServerAddress(@Nullable String serverAddress);
 
     public abstract Builder setLibraryMetadata(LibraryMetadata gapicProperties);
+
+    public abstract Builder setFullMethodName(@Nullable String rpcMethod);
+
+    public abstract Builder setTransport(@Nullable Transport transport);
 
     public abstract ApiTracerContext build();
   }

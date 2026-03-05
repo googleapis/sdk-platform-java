@@ -37,6 +37,7 @@ import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
 import com.google.common.util.concurrent.MoreExecutors;
+import javax.annotation.Nullable;
 
 /**
  * This callable wraps a callable chain in a {@link ApiTracer}.
@@ -49,6 +50,7 @@ public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<Requ
   private final UnaryCallable<RequestT, ResponseT> innerCallable;
   private final ApiTracerFactory tracerFactory;
   private final SpanName spanName;
+  @Nullable private final ApiTracerContext apiTracerContext;
 
   public TracedUnaryCallable(
       UnaryCallable<RequestT, ResponseT> innerCallable,
@@ -57,6 +59,17 @@ public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<Requ
     this.innerCallable = innerCallable;
     this.tracerFactory = tracerFactory;
     this.spanName = spanName;
+    this.apiTracerContext = null;
+  }
+
+  public TracedUnaryCallable(
+      UnaryCallable<RequestT, ResponseT> innerCallable,
+      ApiTracerFactory tracerFactory,
+      ApiTracerContext apiTracerContext) {
+    this.innerCallable = innerCallable;
+    this.tracerFactory = tracerFactory;
+    this.apiTracerContext = apiTracerContext;
+    this.spanName = SpanName.of(apiTracerContext);
   }
 
   /**
@@ -67,7 +80,12 @@ public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<Requ
    */
   @Override
   public ApiFuture<ResponseT> futureCall(RequestT request, ApiCallContext context) {
-    ApiTracer tracer = tracerFactory.newTracer(context.getTracer(), spanName, OperationType.Unary);
+    ApiTracer tracer;
+    if (apiTracerContext != null) {
+      tracer = tracerFactory.newTracer(context.getTracer(), apiTracerContext, OperationType.Unary);
+    } else {
+      tracer = tracerFactory.newTracer(context.getTracer(), spanName, OperationType.Unary);
+    }
     TraceFinisher<ResponseT> finisher = new TraceFinisher<>(tracer);
 
     try {

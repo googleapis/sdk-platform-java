@@ -33,107 +33,221 @@ package com.google.api.gax.tracing;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.google.api.gax.rpc.LibraryMetadata;
+import com.google.api.gax.tracing.ApiTracerContext.Transport;
+import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
 
 class SpanTracerFactoryTest {
+  private TraceManager traceManager;
+  private TraceManager.Span span;
 
-  @Test
-  void testNewTracer_createsOpenTelemetryTracingTracer() {
-    TraceManager recorder = mock(TraceManager.class);
-    when(recorder.createSpan(anyString(), anyMap())).thenReturn(mock(TraceManager.Span.class));
+  @BeforeEach
+  void setUp() {
+    traceManager = mock(TraceManager.class);
+    span = mock(TraceManager.Span.class);
+    when(traceManager.createSpan(anyString(), anyMap())).thenReturn(span);
+  }
 
-    SpanTracerFactory factory = new SpanTracerFactory(recorder);
-    ApiTracer tracer =
-        factory.newTracer(
-            null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testNewTracer_createsSpanTracer(boolean useContext) {
+    SpanTracerFactory factory = new SpanTracerFactory(traceManager);
+    ApiTracer tracer;
+    if (useContext) {
+      ApiTracerContext context =
+          ApiTracerContext.newBuilder()
+              .setFullMethodName("service/method")
+              .setTransport(Transport.GRPC)
+              .setLibraryMetadata(LibraryMetadata.empty())
+              .build();
+      tracer = factory.newTracer(null, context, OperationType.Unary);
+    } else {
+      tracer = factory.newTracer(null, SpanName.of("service", "method"), OperationType.Unary);
+    }
     assertThat(tracer).isInstanceOf(SpanTracer.class);
   }
 
-  @Test
-  void testNewTracer_addsAttributes() {
-    TraceManager recorder = mock(TraceManager.class);
-    TraceManager.Span attemptHandle = mock(TraceManager.Span.class);
-    when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
-
-    ApiTracerFactory factory = new SpanTracerFactory(recorder, ApiTracerContext.empty());
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testNewTracer_addsAttributes(boolean useContext) {
+    ApiTracerFactory factory = new SpanTracerFactory(traceManager, ApiTracerContext.empty());
     factory =
         factory.withContext(
             ApiTracerContext.newBuilder()
                 .setLibraryMetadata(LibraryMetadata.empty())
                 .setServerAddress("test-address")
                 .build());
-    ApiTracer tracer =
-        factory.newTracer(
-            null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
+    ApiTracer tracer;
+    if (useContext) {
+      ApiTracerContext context =
+          ApiTracerContext.newBuilder()
+              .setFullMethodName("service/method")
+              .setTransport(Transport.GRPC)
+              .setLibraryMetadata(LibraryMetadata.empty())
+              .build();
+      tracer = factory.newTracer(null, context, OperationType.Unary);
+    } else {
+      tracer = factory.newTracer(null, SpanName.of("service", "method"), OperationType.Unary);
+    }
 
     tracer.attemptStarted(null, 1);
 
     ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(recorder, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
+    verify(traceManager, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes).containsEntry("server.address", "test-address");
   }
 
-  @Test
-  void testWithContext_addsInferredAttributes() {
-    TraceManager recorder = mock(TraceManager.class);
-    TraceManager.Span attemptHandle = mock(TraceManager.Span.class);
-    when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
-
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testWithContext_addsInferredAttributes(boolean useContext) {
     ApiTracerContext context =
         ApiTracerContext.newBuilder()
             .setLibraryMetadata(LibraryMetadata.empty())
             .setServerAddress("example.com")
             .build();
 
-    SpanTracerFactory factory = new SpanTracerFactory(recorder);
+    SpanTracerFactory factory = new SpanTracerFactory(traceManager);
     ApiTracerFactory factoryWithContext = factory.withContext(context);
 
-    ApiTracer tracer =
-        factoryWithContext.newTracer(
-            null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
+    ApiTracer tracer;
+    if (useContext) {
+      ApiTracerContext callContext =
+          ApiTracerContext.newBuilder()
+              .setFullMethodName("service/method")
+              .setTransport(Transport.GRPC)
+              .setLibraryMetadata(LibraryMetadata.empty())
+              .build();
+      tracer = factoryWithContext.newTracer(null, callContext, OperationType.Unary);
+    } else {
+      tracer =
+          factoryWithContext.newTracer(null, SpanName.of("service", "method"), OperationType.Unary);
+    }
 
     tracer.attemptStarted(null, 1);
 
     ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(recorder, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
+    verify(traceManager, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes)
         .containsEntry(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, "example.com");
   }
 
-  @Test
-  void testWithContext_noEndpointContext_doesNotAddAttributes() {
-    TraceManager recorder = mock(TraceManager.class);
-    TraceManager.Span attemptHandle = mock(TraceManager.Span.class);
-    when(recorder.createSpan(anyString(), anyMap())).thenReturn(attemptHandle);
-
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testWithContext_noEndpointContext_doesNotAddServerAddressAttribute(boolean useContext) {
     ApiTracerContext context = ApiTracerContext.empty();
 
-    SpanTracerFactory factory = new SpanTracerFactory(recorder);
+    SpanTracerFactory factory = new SpanTracerFactory(traceManager);
     ApiTracerFactory factoryWithContext = factory.withContext(context);
 
-    ApiTracer tracer =
-        factoryWithContext.newTracer(
-            null, SpanName.of("service", "method"), ApiTracerFactory.OperationType.Unary);
+    ApiTracer tracer;
+    if (useContext) {
+      ApiTracerContext callContext =
+          ApiTracerContext.newBuilder()
+              .setFullMethodName("service/method")
+              .setTransport(Transport.GRPC)
+              .setLibraryMetadata(LibraryMetadata.empty())
+              .build();
+      tracer = factoryWithContext.newTracer(null, callContext, OperationType.Unary);
+    } else {
+      tracer =
+          factoryWithContext.newTracer(null, SpanName.of("service", "method"), OperationType.Unary);
+    }
 
     tracer.attemptStarted(null, 1);
 
     ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(recorder, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
+    verify(traceManager, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
 
     Map<String, String> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes)
         .doesNotContainKey(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE);
+  }
+
+  @Test
+  void testNewTracer_withContext_grpc_usesFullMethodName() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setFullMethodName("google.cloud.v1.Service/Method")
+            .setTransport(Transport.GRPC)
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .build();
+
+    SpanTracerFactory factory = new SpanTracerFactory(traceManager);
+    ApiTracer tracer = factory.newTracer(null, context, OperationType.Unary);
+
+    tracer.attemptStarted(null, 1);
+
+    verify(traceManager).createSpan(eq("google.cloud.v1.Service/Method"), anyMap());
+  }
+
+  @Test
+  void testNewTracer_withContext_http_usesPlaceholder() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setFullMethodName("google.cloud.v1.Service.Method")
+            .setTransport(Transport.HTTP)
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .build();
+
+    SpanTracerFactory factory = new SpanTracerFactory(traceManager);
+    ApiTracer tracer = factory.newTracer(null, context, OperationType.Unary);
+
+    tracer.attemptStarted(null, 1);
+
+    verify(traceManager).createSpan(eq("google.cloud.v1.Service.Method/attempt"), anyMap());
+  }
+
+  @Test
+  void testNewTracer_withSpanName_usesPlaceholder() {
+    SpanTracerFactory factory = new SpanTracerFactory(traceManager);
+    ApiTracer tracer =
+        factory.newTracer(null, SpanName.of("Service", "Method"), OperationType.Unary);
+
+    tracer.attemptStarted(null, 1);
+
+    verify(traceManager).createSpan(eq("Service/Method/attempt"), anyMap());
+  }
+
+  @Test
+  void testNewTracer_mergesFactoryContext() {
+    ApiTracerContext apiTracerContext =
+        ApiTracerContext.newBuilder()
+            .setServerAddress("factory-address")
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .build();
+    SpanTracerFactory factory = new SpanTracerFactory(traceManager, apiTracerContext);
+
+    ApiTracerContext callContext =
+        ApiTracerContext.newBuilder()
+            .setFullMethodName("Service/Method")
+            .setTransport(Transport.GRPC)
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .build();
+
+    ApiTracer tracer = factory.newTracer(null, callContext, OperationType.Unary);
+    tracer.attemptStarted(null, 1);
+
+    ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
+    verify(traceManager).createSpan(anyString(), attributesCaptor.capture());
+
+    Map<String, String> attributes = attributesCaptor.getValue();
+    assertThat(attributes).containsEntry("server.address", "factory-address");
+    assertThat(attributes).containsEntry("rpc.method", "Service/Method");
   }
 }
