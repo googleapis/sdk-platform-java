@@ -33,11 +33,8 @@ package com.google.api.gax.tracing;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.gax.rpc.LibraryMetadata;
-import com.google.common.collect.ImmutableMap;
-import io.grpc.MethodDescriptor;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 class ApiTracerContextTest {
 
@@ -104,6 +101,33 @@ class ApiTracerContextTest {
   }
 
   @Test
+  void testGetAttemptAttributes_fullMethodName() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setFullMethodName("google.pubsub.v1.Publisher/Publish")
+            .build();
+    Map<String, String> attributes = context.getAttemptAttributes();
+
+    assertThat(attributes)
+        .containsEntry(
+            ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE,
+            "google.pubsub.v1.Publisher/Publish");
+  }
+
+  @Test
+  void testGetAttemptAttributes_rpcSystemName() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .build();
+    Map<String, String> attributes = context.getAttemptAttributes();
+
+    assertThat(attributes).containsEntry(ObservabilityAttributes.RPC_SYSTEM_NAME_ATTRIBUTE, "grpc");
+  }
+
+  @Test
   void testGetAttemptAttributes_empty() {
     ApiTracerContext context = ApiTracerContext.empty();
     Map<String, String> attributes = context.getAttemptAttributes();
@@ -112,95 +136,49 @@ class ApiTracerContextTest {
   }
 
   @Test
-  void testGetSpanNamePartsGrpc() {
-    @SuppressWarnings("unchecked")
-    MethodDescriptor<?, ?> descriptor =
-        MethodDescriptor.newBuilder()
-            .setType(MethodDescriptor.MethodType.SERVER_STREAMING)
-            .setFullMethodName("google.bigtable.v2.Bigtable/ReadRows")
-            .setRequestMarshaller(Mockito.mock(MethodDescriptor.Marshaller.class))
-            .setResponseMarshaller(Mockito.mock(MethodDescriptor.Marshaller.class))
+  void testMerge() {
+    LibraryMetadata metadata = LibraryMetadata.newBuilder().setRepository("repo").build();
+    ApiTracerContext context1 =
+        ApiTracerContext.newBuilder()
+            .setServerAddress("address1")
+            .setLibraryMetadata(metadata)
+            .setFullMethodName("method1")
+            .setTransport(ApiTracerContext.Transport.HTTP)
             .build();
 
-    ApiTracerContext context =
+    LibraryMetadata metadata2 = LibraryMetadata.newBuilder().setArtifactName("artifact").build();
+    ApiTracerContext context2 =
         ApiTracerContext.newBuilder()
-            .setLibraryMetadata(LibraryMetadata.empty())
-            .setFullMethodName(descriptor.getFullMethodName())
+            .setServerAddress("address2")
+            .setLibraryMetadata(metadata2)
+            .setFullMethodName("method2")
             .setTransport(ApiTracerContext.Transport.GRPC)
             .build();
-    assertThat(context.getClientName()).isEqualTo("Bigtable");
-    assertThat(context.getMethodName()).isEqualTo("ReadRows");
+
+    ApiTracerContext merged = context1.merge(context2);
+
+    assertThat(merged.serverAddress()).isEqualTo("address2");
+    assertThat(merged.libraryMetadata().artifactName()).isEqualTo("artifact");
+    // Note: LibraryMetadata.merge is not called in ApiTracerContext.merge, it replaces it if not
+    // empty.
+    assertThat(merged.libraryMetadata().repository()).isNull();
+    assertThat(merged.fullMethodName()).isEqualTo("method2");
+    assertThat(merged.transport()).isEqualTo(ApiTracerContext.Transport.GRPC);
   }
 
   @Test
-  void testGetSpanNamePartsGrpc_withSuffix() {
-    @SuppressWarnings("unchecked")
-    MethodDescriptor<?, ?> descriptor =
-        MethodDescriptor.newBuilder()
-            .setType(MethodDescriptor.MethodType.SERVER_STREAMING)
-            .setFullMethodName("google.bigtable.v2.Bigtable/ReadRows")
-            .setRequestMarshaller(Mockito.mock(MethodDescriptor.Marshaller.class))
-            .setResponseMarshaller(Mockito.mock(MethodDescriptor.Marshaller.class))
-            .build();
-
-    ApiTracerContext context =
+  void testMerge_emptyOther() {
+    ApiTracerContext context1 =
         ApiTracerContext.newBuilder()
-            .setLibraryMetadata(LibraryMetadata.empty())
-            .setFullMethodName(descriptor.getFullMethodName())
-            .setTransport(ApiTracerContext.Transport.GRPC)
-            .setMethodNameSuffix("Operation")
-            .build();
-    assertThat(context.getClientName()).isEqualTo("Bigtable");
-    assertThat(context.getMethodName()).isEqualTo("ReadRowsOperation");
-  }
-
-  @Test
-  void testGetSpanNamePartsUnqualifiedGrpc() {
-    @SuppressWarnings("unchecked")
-    MethodDescriptor<?, ?> descriptor =
-        MethodDescriptor.newBuilder()
-            .setType(MethodDescriptor.MethodType.SERVER_STREAMING)
-            .setFullMethodName("UnqualifiedService/ReadRows")
-            .setRequestMarshaller(Mockito.mock(MethodDescriptor.Marshaller.class))
-            .setResponseMarshaller(Mockito.mock(MethodDescriptor.Marshaller.class))
+            .setServerAddress("address1")
+            .setLibraryMetadata(LibraryMetadata.newBuilder().setRepository("repo").build())
+            .setFullMethodName("method1")
+            .setTransport(ApiTracerContext.Transport.HTTP)
             .build();
 
-    ApiTracerContext context =
-        ApiTracerContext.newBuilder()
-            .setLibraryMetadata(LibraryMetadata.empty())
-            .setFullMethodName(descriptor.getFullMethodName())
-            .setTransport(ApiTracerContext.Transport.GRPC)
-            .build();
-    assertThat(context.getClientName()).isEqualTo("UnqualifiedService");
-    assertThat(context.getMethodName()).isEqualTo("ReadRows");
-  }
+    ApiTracerContext merged = context1.merge(ApiTracerContext.empty());
 
-  @Test
-  void testGetSpanNamePartsHttp() {
-    Map<String, String[]> validNames =
-        ImmutableMap.of(
-            "compute.projects.disableXpnHost", new String[] {"compute.projects", "disableXpnHost"},
-            "client.method", new String[] {"client", "method"});
-
-    for (Map.Entry<String, String[]> entry : validNames.entrySet()) {
-      @SuppressWarnings("unchecked")
-      MethodDescriptor<?, ?> descriptor =
-          MethodDescriptor.newBuilder()
-              .setFullMethodName(entry.getKey())
-              .setType(MethodDescriptor.MethodType.UNARY)
-              .setRequestMarshaller(Mockito.mock(MethodDescriptor.Marshaller.class))
-              .setResponseMarshaller(Mockito.mock(MethodDescriptor.Marshaller.class))
-              .build();
-
-      ApiTracerContext context =
-          ApiTracerContext.newBuilder()
-              .setLibraryMetadata(LibraryMetadata.empty())
-              .setFullMethodName(descriptor.getFullMethodName())
-              .setTransport(ApiTracerContext.Transport.HTTP)
-              .build();
-      assertThat(context.getClientName()).isEqualTo(entry.getValue()[0]);
-      assertThat(context.getMethodName()).isEqualTo(entry.getValue()[1]);
-    }
+    assertThat(merged).isEqualTo(context1);
   }
 
   @Test

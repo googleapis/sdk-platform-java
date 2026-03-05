@@ -45,9 +45,23 @@ import javax.annotation.Nullable;
 @AutoValue
 public abstract class LibraryMetadata {
 
+  /**
+   * Returns the repository of the client library.
+   *
+   * <p>Example: "googleapis/google-cloud-java". This maps to the {@code gcp.client.repo} attribute.
+   *
+   * @return the repository, or {@code null} if not set
+   */
   @Nullable
   public abstract String repository();
 
+  /**
+   * Returns the artifact name of the client library.
+   *
+   * <p>Example: "google-cloud-vision". This maps to the {@code gcp.client.artifact} attribute.
+   *
+   * @return the artifact name, or {@code null} if not set
+   */
   @Nullable
   public abstract String artifactName();
 

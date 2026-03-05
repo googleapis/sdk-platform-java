@@ -42,12 +42,19 @@ import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.StatusCode.Code;
+import com.google.api.gax.tracing.SpanName;
 import com.google.auth.Credentials;
+import com.google.common.collect.ImmutableList;
+import com.google.common.truth.Truth;
 import com.google.type.Color;
 import com.google.type.Money;
 import io.grpc.CallOptions;
 import io.grpc.ManagedChannel;
+import io.grpc.MethodDescriptor;
+import io.grpc.MethodDescriptor.Marshaller;
+import io.grpc.MethodDescriptor.MethodType;
 import io.grpc.inprocess.InProcessChannelBuilder;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -137,5 +144,64 @@ class GrpcCallableFactoryTest {
     }
     assertThat(actualError2).isInstanceOf(InvalidArgumentException.class);
     assertThat(((InvalidArgumentException) actualError2).isRetryable()).isTrue();
+  }
+
+  @Test
+  void testGetSpanName() {
+    @SuppressWarnings("unchecked")
+    MethodDescriptor<?, ?> descriptor =
+        MethodDescriptor.newBuilder()
+            .setType(MethodType.SERVER_STREAMING)
+            .setFullMethodName("google.bigtable.v2.Bigtable/ReadRows")
+            .setRequestMarshaller(Mockito.mock(Marshaller.class))
+            .setResponseMarshaller(Mockito.mock(Marshaller.class))
+            .build();
+
+    SpanName actualSpanName = SpanName.of(GrpcCallableFactory.getApiTracerContext(descriptor));
+    assertThat(actualSpanName).isEqualTo(SpanName.of("Bigtable", "ReadRows"));
+  }
+
+  @Test
+  void testGetSpanNameUnqualified() {
+    @SuppressWarnings("unchecked")
+    MethodDescriptor<?, ?> descriptor =
+        MethodDescriptor.newBuilder()
+            .setType(MethodType.SERVER_STREAMING)
+            .setFullMethodName("UnqualifiedService/ReadRows")
+            .setRequestMarshaller(Mockito.mock(Marshaller.class))
+            .setResponseMarshaller(Mockito.mock(Marshaller.class))
+            .build();
+
+    SpanName actualSpanName = SpanName.of(GrpcCallableFactory.getApiTracerContext(descriptor));
+    assertThat(actualSpanName).isEqualTo(SpanName.of("UnqualifiedService", "ReadRows"));
+  }
+
+  @Test
+  void testGetSpanNameInvalid() {
+    List<String> invalidNames = ImmutableList.of("BareMethod", "/MethodWithoutService");
+
+    for (String invalidName : invalidNames) {
+      @SuppressWarnings("unchecked")
+      MethodDescriptor<?, ?> descriptor =
+          MethodDescriptor.newBuilder()
+              .setType(MethodType.SERVER_STREAMING)
+              .setFullMethodName(invalidName)
+              .setRequestMarshaller(Mockito.mock(Marshaller.class))
+              .setResponseMarshaller(Mockito.mock(Marshaller.class))
+              .build();
+
+      IllegalArgumentException actualError = null;
+      try {
+        SpanName spanName = SpanName.of(GrpcCallableFactory.getApiTracerContext(descriptor));
+        Truth.assertWithMessage(
+                "Invalid method descriptor should not have a valid span name: %s should not generate the spanName: %s",
+                invalidName, spanName)
+            .fail();
+      } catch (IllegalArgumentException e) {
+        actualError = e;
+      }
+
+      assertThat(actualError).isNotNull();
+    }
   }
 }

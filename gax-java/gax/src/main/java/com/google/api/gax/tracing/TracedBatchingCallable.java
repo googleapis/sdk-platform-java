@@ -50,7 +50,7 @@ import javax.annotation.Nullable;
 public class TracedBatchingCallable<RequestT, ResponseT>
     extends UnaryCallable<RequestT, ResponseT> {
   private final ApiTracerFactory tracerFactory;
-  @Nullable private final SpanName spanName;
+  private final SpanName spanName;
   @Nullable private final ApiTracerContext apiTracerContext;
   private final BatchingDescriptor<RequestT, ResponseT> batchingDescriptor;
   private final UnaryCallable<RequestT, ResponseT> innerCallable;
@@ -76,7 +76,7 @@ public class TracedBatchingCallable<RequestT, ResponseT>
     this.apiTracerContext = apiTracerContext;
     this.batchingDescriptor = batchingDescriptor;
     this.innerCallable = innerCallable;
-    this.spanName = null;
+    this.spanName = SpanName.of(apiTracerContext);
   }
 
   @Override

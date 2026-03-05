@@ -44,14 +44,12 @@ import com.google.api.gax.longrunning.OperationFuture;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.retrying.RetryingFuture;
 import com.google.api.gax.rpc.ApiCallContext;
-import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.testing.FakeCallContext;
-import com.google.api.gax.tracing.ApiTracerContext.Transport;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -59,12 +57,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class TracedOperationCallableTest {
   private static final SpanName SPAN_NAME = SpanName.of("FakeClient", "FakeOperation");
-  private static final ApiTracerContext TRACER_CONTEXT =
-      ApiTracerContext.newBuilder()
-          .setFullMethodName("FakeClient/FakeOperation")
-          .setTransport(Transport.GRPC)
-          .setLibraryMetadata(LibraryMetadata.empty())
-          .build();
 
   @Mock private ApiTracerFactory tracerFactory;
   private ApiTracer parentTracer;
@@ -75,78 +67,53 @@ class TracedOperationCallableTest {
   private TracedOperationCallable<String, String, Long> tracedOperationCallable;
   private FakeCallContext callContext;
 
-  void init(boolean useContext) {
+  @BeforeEach
+  void setUp() {
     parentTracer = BaseApiTracer.getInstance();
 
     // Wire the mock tracer factory
-    if (useContext) {
-      when(tracerFactory.newTracer(
-              any(ApiTracer.class), any(ApiTracerContext.class), eq(OperationType.LongRunning)))
-          .thenReturn(tracer);
-      tracedOperationCallable =
-          new TracedOperationCallable<>(innerCallable, tracerFactory, TRACER_CONTEXT);
-    } else {
-      when(tracerFactory.newTracer(
-              any(ApiTracer.class), any(SpanName.class), eq(OperationType.LongRunning)))
-          .thenReturn(tracer);
-      tracedOperationCallable =
-          new TracedOperationCallable<>(innerCallable, tracerFactory, SPAN_NAME);
-    }
+    when(tracerFactory.newTracer(
+            any(ApiTracer.class), any(SpanName.class), eq(OperationType.LongRunning)))
+        .thenReturn(tracer);
 
     // Wire the mock inner callable
     innerResult = new FakeOperationFuture();
     when(innerCallable.futureCall(anyString(), any(ApiCallContext.class))).thenReturn(innerResult);
 
+    // Build the system under test
+    tracedOperationCallable =
+        new TracedOperationCallable<>(innerCallable, tracerFactory, SPAN_NAME);
     callContext = FakeCallContext.createDefault();
   }
 
-  @ParameterizedTest
-  @ValueSource(booleans = {false, true})
-  void testTracerCreated(boolean useContext) {
-    init(useContext);
+  @Test
+  void testTracerCreated() {
     tracedOperationCallable.futureCall("test", callContext);
-    if (useContext) {
-      verify(tracerFactory, times(1))
-          .newTracer(parentTracer, TRACER_CONTEXT, OperationType.LongRunning);
-    } else {
-      verify(tracerFactory, times(1)).newTracer(parentTracer, SPAN_NAME, OperationType.LongRunning);
-    }
+    verify(tracerFactory, times(1)).newTracer(parentTracer, SPAN_NAME, OperationType.LongRunning);
   }
 
-  @ParameterizedTest
-  @ValueSource(booleans = {false, true})
-  void testOperationFinish(boolean useContext) {
-    init(useContext);
+  @Test
+  void testOperationFinish() {
     innerResult.set("successful result");
     tracedOperationCallable.futureCall("test", callContext);
 
     verify(tracer, times(1)).operationSucceeded();
   }
 
-  @ParameterizedTest
-  @ValueSource(booleans = {false, true})
-  void testOperationCancelled(boolean useContext) {
-    init(useContext);
+  @Test
+  void testOperationCancelled() {
     innerResult.cancel(true);
     tracedOperationCallable.futureCall("test", callContext);
     verify(tracer, times(1)).operationCancelled();
   }
 
-  @ParameterizedTest
-  @ValueSource(booleans = {false, true})
-  void testExternalOperationCancel(boolean useContext) {
-    init(useContext);
+  @Test
+  void testExternalOperationCancel() {
     Mockito.reset(innerCallable, tracerFactory);
 
-    if (useContext) {
-      when(tracerFactory.newTracer(
-              any(ApiTracer.class), any(ApiTracerContext.class), eq(OperationType.Unary)))
-          .thenReturn(tracer);
-    } else {
-      when(tracerFactory.newTracer(
-              any(ApiTracer.class), any(SpanName.class), eq(OperationType.Unary)))
-          .thenReturn(tracer);
-    }
+    when(tracerFactory.newTracer(
+            any(ApiTracer.class), any(SpanName.class), eq(OperationType.Unary)))
+        .thenReturn(tracer);
 
     SettableApiFuture<Void> innerCancelResult = SettableApiFuture.create();
     when(innerCallable.cancel(anyString(), any(ApiCallContext.class)))
@@ -154,23 +121,15 @@ class TracedOperationCallableTest {
 
     tracedOperationCallable.cancel("some external operation", callContext);
 
-    if (useContext) {
-      ApiTracerContext cancelContext =
-          TRACER_CONTEXT.toBuilder().setMethodNameSuffix(".Cancel").build();
-      verify(tracerFactory, times(1)).newTracer(parentTracer, cancelContext, OperationType.Unary);
-    } else {
-      verify(tracerFactory, times(1))
-          .newTracer(
-              parentTracer,
-              SpanName.of(SPAN_NAME.getClientName(), SPAN_NAME.getMethodName() + ".Cancel"),
-              OperationType.Unary);
-    }
+    verify(tracerFactory, times(1))
+        .newTracer(
+            parentTracer,
+            SpanName.of(SPAN_NAME.getClientName(), SPAN_NAME.getMethodName() + ".Cancel"),
+            OperationType.Unary);
   }
 
-  @ParameterizedTest
-  @ValueSource(booleans = {false, true})
-  void testOperationFailed(boolean useContext) {
-    init(useContext);
+  @Test
+  void testOperationFailed() {
     RuntimeException fakeError = new RuntimeException("fake error");
     innerResult.setException(fakeError);
     tracedOperationCallable.futureCall("test", callContext);
@@ -178,10 +137,8 @@ class TracedOperationCallableTest {
     verify(tracer, times(1)).operationFailed(fakeError);
   }
 
-  @ParameterizedTest
-  @ValueSource(booleans = {false, true})
-  void testSyncError(boolean useContext) {
-    init(useContext);
+  @Test
+  void testSyncError() {
     RuntimeException fakeError = new RuntimeException("fake error");
 
     // Reset the irrelevant expectations from setup. (only needed to silence the warnings).

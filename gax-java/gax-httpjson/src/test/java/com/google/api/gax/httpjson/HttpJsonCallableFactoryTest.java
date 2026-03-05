@@ -31,11 +31,10 @@ package com.google.api.gax.httpjson;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import com.google.api.client.http.HttpMethods;
 import com.google.api.gax.tracing.ApiTracerContext;
+import com.google.api.gax.tracing.SpanName;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import java.util.List;
@@ -47,12 +46,12 @@ import org.mockito.Mockito;
 class HttpJsonCallableFactoryTest {
   @Test
   void testGetApiTracerContext() {
-    Map<String, String[]> validNames =
+    Map<String, SpanName> validNames =
         ImmutableMap.of(
-            "compute.projects.disableXpnHost", new String[] {"compute.projects", "disableXpnHost"},
-            "client.method", new String[] {"client", "method"});
+            "google.cloud.service.v1.CoolService/CoolRPC", SpanName.of("CoolService", "CoolRPC"),
+            "CoolService/CoolRPC", SpanName.of("CoolService", "CoolRPC"));
 
-    for (Entry<String, String[]> entry : validNames.entrySet()) {
+    for (Entry<String, SpanName> entry : validNames.entrySet()) {
       @SuppressWarnings("unchecked")
       ApiMethodDescriptor<?, ?> descriptor =
           ApiMethodDescriptor.newBuilder()
@@ -63,8 +62,9 @@ class HttpJsonCallableFactoryTest {
               .build();
 
       ApiTracerContext context = HttpJsonCallableFactory.getApiTracerContext(descriptor);
-      assertThat(context.getClientName()).isEqualTo(entry.getValue()[0]);
-      assertThat(context.getMethodName()).isEqualTo(entry.getValue()[1]);
+      SpanName actual = SpanName.of(context);
+      assertThat(actual.getClientName()).isEqualTo(entry.getValue().getClientName());
+      assertThat(actual.getMethodName()).isEqualTo(entry.getValue().getMethodName());
     }
   }
 
@@ -85,7 +85,7 @@ class HttpJsonCallableFactoryTest {
       IllegalArgumentException actualError = null;
       try {
         ApiTracerContext context = HttpJsonCallableFactory.getApiTracerContext(descriptor);
-        context.getClientName();
+        SpanName.of(context);
         assertWithMessage(
                 "Invalid method descriptor should not have a valid client name: %s", invalidName)
             .fail();
@@ -94,27 +94,5 @@ class HttpJsonCallableFactoryTest {
       }
       assertThat(actualError).isNotNull();
     }
-  }
-
-  @Test
-  void testGetApiTracerContext_populatesHttpFields() {
-    HttpRequestFormatter<?> requestFormatter = mock(HttpRequestFormatter.class);
-    ProtoPathTemplate pathTemplate = mock(ProtoPathTemplate.class);
-    when(pathTemplate.toRawString()).thenReturn("v1/projects/{project}/echo");
-    when(requestFormatter.getPathTemplate()).thenReturn(pathTemplate);
-
-    @SuppressWarnings("unchecked")
-    ApiMethodDescriptor<?, ?> descriptor =
-        ApiMethodDescriptor.newBuilder()
-            .setFullMethodName("google.showcase.v1beta1.Echo/Echo")
-            .setHttpMethod(HttpMethods.POST)
-            .setRequestFormatter(requestFormatter)
-            .setResponseParser(mock(HttpResponseParser.class))
-            .build();
-
-    ApiTracerContext context = HttpJsonCallableFactory.getApiTracerContext(descriptor);
-    assertThat(context.httpMethod()).isEqualTo("POST");
-    assertThat(context.httpPathTemplate()).isEqualTo("v1/projects/{project}/echo");
-    assertThat(context.transport()).isEqualTo(ApiTracerContext.Transport.HTTP);
   }
 }

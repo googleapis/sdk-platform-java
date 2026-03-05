@@ -45,16 +45,13 @@ import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.tracing.ApiTracerContext;
+import com.google.api.gax.tracing.SpanName;
 import com.google.api.gax.tracing.TracedUnaryCallable;
 import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 
 /** Class with utility methods to create http/json-based direct callables. */
 public class HttpJsonCallableFactory {
-  // Used to extract service and method name from a grpc MethodDescriptor.
-  // fullMethodName has the format: service.resource.action
-  // For example: compute.instances.addAccessConfig
-  private static final Pattern FULL_METHOD_NAME_REGEX = Pattern.compile("^(.+)\\.(.+)$");
 
   private HttpJsonCallableFactory() {}
 

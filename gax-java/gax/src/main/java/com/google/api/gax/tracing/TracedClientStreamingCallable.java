@@ -55,7 +55,7 @@ public class TracedClientStreamingCallable<RequestT, ResponseT>
     extends ClientStreamingCallable<RequestT, ResponseT> {
   private final ClientStreamingCallable<RequestT, ResponseT> innerCallable;
   private final ApiTracerFactory tracerFactory;
-  @Nullable private final SpanName spanName;
+  private final SpanName spanName;
   @Nullable private final ApiTracerContext apiTracerContext;
 
   public TracedClientStreamingCallable(
@@ -76,7 +76,7 @@ public class TracedClientStreamingCallable<RequestT, ResponseT>
     this.apiTracerContext =
         Preconditions.checkNotNull(apiTracerContext, "apiTracerContext can't be null");
     this.innerCallable = Preconditions.checkNotNull(innerCallable, "innerCallable can't be null");
-    this.spanName = null;
+    this.spanName = SpanName.of(this.apiTracerContext);
   }
 
   @Override

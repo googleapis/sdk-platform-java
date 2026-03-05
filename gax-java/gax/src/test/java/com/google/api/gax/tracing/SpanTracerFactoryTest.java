@@ -46,6 +46,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
 
@@ -196,14 +197,21 @@ class SpanTracerFactoryTest {
     verify(traceManager).createSpan(eq("google.cloud.v1.Service/Method"), anyMap());
   }
 
-  @Test
-  void testNewTracer_withContext_http_usesHttpMethodAndPathTemplate() {
+  @ParameterizedTest
+  @CsvSource({
+    "POST, v1/projects/{project}/methods, POST v1/projects/{project}/methods",
+    "GET, v1/projects/{project}/methods/{method}, GET v1/projects/{project}/methods/{method}",
+    "DELETE, v1/projects/{project}/methods/{method}, DELETE v1/projects/{project}/methods/{method}",
+    "PATCH, v1/projects/{project}/methods/{method}, PATCH v1/projects/{project}/methods/{method}"
+  })
+  void testNewTracer_withContext_http_usesHttpMethodAndPathTemplate(
+      String httpMethod, String httpPathTemplate, String expectedSpanName) {
     ApiTracerContext context =
         ApiTracerContext.newBuilder()
             .setFullMethodName("google.cloud.v1.Service.Method")
             .setTransport(Transport.HTTP)
-            .setHttpMethod("POST")
-            .setHttpPathTemplate("v1/projects/{project}/methods")
+            .setHttpMethod(httpMethod)
+            .setHttpPathTemplate(httpPathTemplate)
             .setLibraryMetadata(LibraryMetadata.empty())
             .build();
 
@@ -212,7 +220,7 @@ class SpanTracerFactoryTest {
 
     tracer.attemptStarted(null, 1);
 
-    verify(traceManager).createSpan(eq("POST v1/projects/{project}/methods"), anyMap());
+    verify(traceManager).createSpan(eq(expectedSpanName), anyMap());
   }
 
   @Test
