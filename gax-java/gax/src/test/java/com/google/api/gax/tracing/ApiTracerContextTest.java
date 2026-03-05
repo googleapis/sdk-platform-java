@@ -75,11 +75,50 @@ class ApiTracerContextTest {
   }
 
   @Test
-  void testGetAttemptAttributes_fullMethodName() {
+  void testGetAttemptAttributes_httpMethod() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.HTTP)
+            .setHttpMethod("POST")
+            .build();
+    Map<String, String> attributes = context.getAttemptAttributes();
+
+    assertThat(attributes).containsEntry(ObservabilityAttributes.HTTP_METHOD_ATTRIBUTE, "POST");
+  }
+
+  @Test
+  void testGetAttemptAttributes_httpMethod_notHttpTransport() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .setHttpMethod("POST")
+            .build();
+    Map<String, String> attributes = context.getAttemptAttributes();
+
+    assertThat(attributes).doesNotContainKey(ObservabilityAttributes.HTTP_METHOD_ATTRIBUTE);
+  }
+
+  @Test
+  void testGetAttemptAttributes_fullMethodName_notGrpcTransport_notPresent() {
     ApiTracerContext context =
         ApiTracerContext.newBuilder()
             .setLibraryMetadata(LibraryMetadata.empty())
             .setFullMethodName("google.pubsub.v1.Publisher/Publish")
+            .build();
+    Map<String, String> attributes = context.getAttemptAttributes();
+
+    assertThat(attributes).doesNotContainKey(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE);
+  }
+
+  @Test
+  void testGetAttemptAttributes_fullMethodName_grpcTransport_present() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setFullMethodName("google.pubsub.v1.Publisher/Publish")
+            .setTransport(ApiTracerContext.Transport.GRPC)
             .build();
     Map<String, String> attributes = context.getAttemptAttributes();
 
@@ -153,5 +192,23 @@ class ApiTracerContextTest {
     ApiTracerContext merged = context1.merge(ApiTracerContext.empty());
 
     assertThat(merged).isEqualTo(context1);
+  }
+
+  @Test
+  void testMerge_httpFields() {
+    ApiTracerContext context1 =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setHttpMethod("GET")
+            .build();
+    ApiTracerContext context2 =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setHttpPathTemplate("v1/projects/{project}")
+            .build();
+
+    ApiTracerContext merged = context1.merge(context2);
+    assertThat(merged.httpMethod()).isEqualTo("GET");
+    assertThat(merged.httpPathTemplate()).isEqualTo("v1/projects/{project}");
   }
 }

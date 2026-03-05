@@ -116,6 +116,12 @@ public abstract class ApiTracerContext {
   @Nullable
   abstract Transport transport();
 
+  @Nullable
+  abstract String httpMethod();
+
+  @Nullable
+  abstract String httpPathTemplate();
+
   /**
    * @return a map of attributes to be included in attempt-level spans
    */
@@ -123,9 +129,6 @@ public abstract class ApiTracerContext {
     Map<String, String> attributes = new HashMap<>();
     if (serverAddress() != null) {
       attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress());
-    }
-    if (fullMethodName() != null) {
-      attributes.put(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE, fullMethodName());
     }
     if (rpcSystemName() != null) {
       attributes.put(ObservabilityAttributes.RPC_SYSTEM_NAME_ATTRIBUTE, rpcSystemName());
@@ -135,6 +138,16 @@ public abstract class ApiTracerContext {
     }
     if (libraryMetadata().artifactName() != null) {
       attributes.put(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, libraryMetadata().artifactName());
+    }
+    if (transport() == Transport.HTTP) {
+      if (httpMethod() != null) {
+        attributes.put(ObservabilityAttributes.HTTP_METHOD_ATTRIBUTE, httpMethod());
+      }
+    }
+    if (transport() == Transport.GRPC) {
+      if (fullMethodName() != null) {
+        attributes.put(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE, fullMethodName());
+      }
     }
     return attributes;
   }
@@ -159,6 +172,12 @@ public abstract class ApiTracerContext {
     if (other.transport() != null) {
       builder.setTransport(other.transport());
     }
+    if (other.httpMethod() != null) {
+      builder.setHttpMethod(other.httpMethod());
+    }
+    if (other.httpPathTemplate() != null) {
+      builder.setHttpPathTemplate(other.httpPathTemplate());
+    }
     return builder.build();
   }
 
@@ -181,6 +200,10 @@ public abstract class ApiTracerContext {
     public abstract Builder setFullMethodName(@Nullable String rpcMethod);
 
     public abstract Builder setTransport(@Nullable Transport transport);
+
+    public abstract Builder setHttpMethod(@Nullable String httpMethod);
+
+    public abstract Builder setHttpPathTemplate(@Nullable String rawString);
 
     public abstract ApiTracerContext build();
   }

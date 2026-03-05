@@ -55,4 +55,7 @@ public class ObservabilityAttributes {
 
   /** The RPC system name, e.g. 'grpc' or 'http'. */
   public static final String RPC_SYSTEM_NAME_ATTRIBUTE = "rpc.system.name";
+
+  /** The HTTP method of the request (e.g., "GET"). Only used in HTTP transport. */
+  public static final String HTTP_METHOD_ATTRIBUTE = "http.request.method";
 }
