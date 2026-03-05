@@ -101,11 +101,24 @@ class ApiTracerContextTest {
   }
 
   @Test
-  void testGetAttemptAttributes_fullMethodName() {
+  void testGetAttemptAttributes_fullMethodName_notGrpcTransport_notPresent() {
     ApiTracerContext context =
         ApiTracerContext.newBuilder()
             .setLibraryMetadata(LibraryMetadata.empty())
             .setFullMethodName("google.pubsub.v1.Publisher/Publish")
+            .build();
+    Map<String, String> attributes = context.getAttemptAttributes();
+
+    assertThat(attributes).doesNotContainKey(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE);
+  }
+
+  @Test
+  void testGetAttemptAttributes_fullMethodName_grpcTransport_present() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setFullMethodName("google.pubsub.v1.Publisher/Publish")
+            .setTransport(ApiTracerContext.Transport.GRPC)
             .build();
     Map<String, String> attributes = context.getAttemptAttributes();
 

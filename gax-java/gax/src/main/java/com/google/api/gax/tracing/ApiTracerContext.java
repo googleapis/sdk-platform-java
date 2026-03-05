@@ -130,9 +130,6 @@ public abstract class ApiTracerContext {
     if (serverAddress() != null) {
       attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress());
     }
-    if (fullMethodName() != null) {
-      attributes.put(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE, fullMethodName());
-    }
     if (rpcSystemName() != null) {
       attributes.put(ObservabilityAttributes.RPC_SYSTEM_NAME_ATTRIBUTE, rpcSystemName());
     }
@@ -145,6 +142,11 @@ public abstract class ApiTracerContext {
     if (transport() == Transport.HTTP) {
       if (httpMethod() != null) {
         attributes.put(ObservabilityAttributes.HTTP_METHOD_ATTRIBUTE, httpMethod());
+      }
+    }
+    if (transport() == Transport.GRPC) {
+      if (fullMethodName() != null) {
+        attributes.put(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE, fullMethodName());
       }
     }
     return attributes;
