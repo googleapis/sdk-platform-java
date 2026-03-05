@@ -269,6 +269,8 @@ public abstract class EndpointContext {
 
     abstract String resolvedUniverseDomain();
 
+    abstract String resolvedEndpoint();
+
     abstract EndpointContext autoBuild();
 
     private String determineUniverseDomain() {
@@ -393,7 +395,7 @@ public abstract class EndpointContext {
     }
 
     private String parseServerAddress(String endpoint) {
-      if (Strings.isNullOrEmpty(endpoint)) {
+      if (endpoint.isEmpty()) {
         return endpoint;
       }
       HostAndPort hostAndPort = parseServerHostAndPort(endpoint);
@@ -404,17 +406,17 @@ public abstract class EndpointContext {
     }
 
     private Integer parseServerPort(String endpoint) {
+      if (endpoint.isEmpty()) {
+        return null;
+      }
       HostAndPort hostAndPort = parseServerHostAndPort(endpoint);
-      if (hostAndPort == null || !hostAndPort.hasPort()) {
+      if (!hostAndPort.hasPort()) {
         return null;
       }
       return hostAndPort.getPort();
     }
 
     private HostAndPort parseServerHostAndPort(String endpoint) {
-      if (Strings.isNullOrEmpty(endpoint)) {
-        return null;
-      }
       String hostPort = endpoint;
       if (hostPort.contains("://")) {
         // Strip the scheme if present. HostAndPort doesn't support schemes.
@@ -464,8 +466,8 @@ public abstract class EndpointContext {
       setResolvedUniverseDomain(determineUniverseDomain());
       String endpoint = determineEndpoint();
       setResolvedEndpoint(endpoint);
-      setResolvedServerAddress(parseServerAddress(endpoint));
-      setResolvedServerPort(parseServerPort(endpoint));
+      setResolvedServerAddress(parseServerAddress(resolvedEndpoint()));
+      setResolvedServerPort(parseServerPort(resolvedEndpoint()));
       setUseS2A(shouldUseS2A());
       return autoBuild();
     }
