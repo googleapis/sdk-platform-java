@@ -154,7 +154,7 @@ They are shared by all GAPICs of a library.
 | rest_documentation    |    No    |                                                                                                                                           |
 | rpc_documentation     |    No    |                                                                                                                                           |
 | cloud_api             |    No    | `true` if not specified                                                                                                                   |
-| requires-billing      |    No    | `true` if not specified                                                                                                                   |
+| requires_billing      |    No    | `true` if not specified                                                                                                                   |
 | transport             |    No    | must be one of `grpc`, `rest` or `both`. This value would only be used for generating .repo-metadata.json and relevant sections in README |
 
 
