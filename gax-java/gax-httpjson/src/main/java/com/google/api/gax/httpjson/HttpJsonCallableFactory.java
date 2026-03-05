@@ -45,9 +45,7 @@ import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.tracing.ApiTracerContext;
-import com.google.api.gax.tracing.SpanName;
 import com.google.api.gax.tracing.TracedUnaryCallable;
-import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 
 /** Class with utility methods to create http/json-based direct callables. */

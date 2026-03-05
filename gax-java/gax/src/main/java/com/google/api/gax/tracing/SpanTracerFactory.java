@@ -85,8 +85,7 @@ public class SpanTracerFactory implements ApiTracerFactory {
       attemptSpanName = mergedContext.fullMethodName();
     } else {
       attemptSpanName =
-          String.format(
-              "%s %s", mergedContext.httpMethod(), mergedContext.httpPathTemplate());
+          String.format("%s %s", mergedContext.httpMethod(), mergedContext.httpPathTemplate());
     }
 
     SpanTracer spanTracer = new SpanTracer(traceManager, mergedContext, attemptSpanName);
