@@ -33,6 +33,7 @@ package com.google.api.gax.tracing;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Strings;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
@@ -49,20 +50,26 @@ public abstract class ApiTracerContext {
   @Nullable
   public abstract String serverAddress();
 
+  @Nullable
+  public abstract Integer serverPort();
+
   public abstract LibraryMetadata libraryMetadata();
 
   /**
    * @return a map of attributes to be included in attempt-level spans
    */
-  public Map<String, String> getAttemptAttributes() {
-    Map<String, String> attributes = new HashMap<>();
-    if (serverAddress() != null) {
+  public Map<String, Object> getAttemptAttributes() {
+    Map<String, Object> attributes = new HashMap<>();
+    if (!Strings.isNullOrEmpty(serverAddress())) {
       attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress());
     }
-    if (libraryMetadata().repository() != null) {
+    if (serverPort() != null) {
+      attributes.put(ObservabilityAttributes.SERVER_PORT_ATTRIBUTE, serverPort());
+    }
+    if (!Strings.isNullOrEmpty(libraryMetadata().repository())) {
       attributes.put(ObservabilityAttributes.REPO_ATTRIBUTE, libraryMetadata().repository());
     }
-    if (libraryMetadata().artifactName() != null) {
+    if (!Strings.isNullOrEmpty(libraryMetadata().artifactName())) {
       attributes.put(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, libraryMetadata().artifactName());
     }
     return attributes;
@@ -81,6 +88,8 @@ public abstract class ApiTracerContext {
     public abstract Builder setServerAddress(@Nullable String serverAddress);
 
     public abstract Builder setLibraryMetadata(LibraryMetadata gapicProperties);
+
+    public abstract Builder setServerPort(Integer serverPort);
 
     public abstract ApiTracerContext build();
   }

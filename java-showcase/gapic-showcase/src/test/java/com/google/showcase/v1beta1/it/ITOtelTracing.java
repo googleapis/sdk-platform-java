@@ -54,6 +54,7 @@ import org.junit.jupiter.api.Test;
 
 class ITOtelTracing {
   private static final String SHOWCASE_SERVER_ADDRESS = "localhost";
+  private static final long SHOWCASE_SERVER_PORT = 7469;
   private static final String SHOWCASE_REPO = "googleapis/sdk-platform-java";
   private static final String SHOWCASE_ARTIFACT = "com.google.cloud:gapic-showcase";
 
@@ -113,6 +114,11 @@ class ITOtelTracing {
       assertThat(
               attemptSpan
                   .getAttributes()
+                  .get(AttributeKey.longKey(ObservabilityAttributes.SERVER_PORT_ATTRIBUTE)))
+          .isEqualTo(SHOWCASE_SERVER_PORT);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.REPO_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_REPO);
       assertThat(
@@ -152,6 +158,11 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_SERVER_ADDRESS);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.longKey(ObservabilityAttributes.SERVER_PORT_ATTRIBUTE)))
+          .isEqualTo(SHOWCASE_SERVER_PORT);
       assertThat(
               attemptSpan
                   .getAttributes()
