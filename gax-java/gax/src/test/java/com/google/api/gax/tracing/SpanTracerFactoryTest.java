@@ -76,10 +76,10 @@ class SpanTracerFactoryTest {
 
     tracer.attemptStarted(null, 1);
 
-    ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
+    ArgumentCaptor<Map<String, Object>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
     verify(recorder, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
 
-    Map<String, String> attemptAttributes = attributesCaptor.getValue();
+    Map<String, Object> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes).containsEntry("server.address", "test-address");
   }
 
@@ -104,10 +104,10 @@ class SpanTracerFactoryTest {
 
     tracer.attemptStarted(null, 1);
 
-    ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
+    ArgumentCaptor<Map<String, Object>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
     verify(recorder, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
 
-    Map<String, String> attemptAttributes = attributesCaptor.getValue();
+    Map<String, Object> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes)
         .containsEntry(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, "example.com");
   }
@@ -129,10 +129,10 @@ class SpanTracerFactoryTest {
 
     tracer.attemptStarted(null, 1);
 
-    ArgumentCaptor<Map<String, String>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
+    ArgumentCaptor<Map<String, Object>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
     verify(recorder, atLeastOnce()).createSpan(anyString(), attributesCaptor.capture());
 
-    Map<String, String> attemptAttributes = attributesCaptor.getValue();
+    Map<String, Object> attemptAttributes = attributesCaptor.getValue();
     assertThat(attemptAttributes)
         .doesNotContainKey(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE);
   }

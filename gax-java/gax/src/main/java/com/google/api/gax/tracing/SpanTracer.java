@@ -48,7 +48,7 @@ public class SpanTracer implements ApiTracer {
   public static final String DEFAULT_LANGUAGE = "Java";
 
   private final TraceManager traceManager;
-  private final Map<String, String> attemptAttributes;
+  private final Map<String, Object> attemptAttributes;
   private final String attemptSpanName;
   private final ApiTracerContext apiTracerContext;
   private TraceManager.Span attemptHandle;
@@ -75,7 +75,7 @@ public class SpanTracer implements ApiTracer {
 
   @Override
   public void attemptStarted(Object request, int attemptNumber) {
-    Map<String, String> attemptAttributes = new HashMap<>(this.attemptAttributes);
+    Map<String, Object> attemptAttributes = new HashMap<>(this.attemptAttributes);
     // Start the specific attempt span with the operation span as parent
     this.attemptHandle = traceManager.createSpan(attemptSpanName, attemptAttributes);
   }
