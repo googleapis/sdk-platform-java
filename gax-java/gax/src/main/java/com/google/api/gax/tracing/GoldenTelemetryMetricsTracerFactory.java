@@ -27,35 +27,36 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import io.opentelemetry.api.OpenTelemetry;
 
 /**
- * Utility class with common attribute names in app-centric observability.
+ * A {@link ApiTracerFactory} to build instances of {@link GoldenTelemetryMetricsTracer}.
  *
- * <p>For internal use only.
+ * <p>This class is expected to be initialized once during client initialization.
  */
-@InternalApi
 @BetaApi
-public class ObservabilityAttributes {
-  /** The address of the server being called (e.g., "pubsub.googleapis.com"). */
-  public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
+@InternalApi
+public class GoldenTelemetryMetricsTracerFactory implements ApiTracerFactory {
 
-  /** The port of the server being called (e.g., 443). */
-  public static final String SERVER_PORT_ATTRIBUTE = "server.port";
+  private ApiTracerContext apiTracerContext;
+  private final OpenTelemetry openTelemetry;
 
-  /** The repository of the client library (e.g., "googleapis/google-cloud-java"). */
-  public static final String REPO_ATTRIBUTE = "gcp.client.repo";
+  public GoldenTelemetryMetricsTracerFactory(OpenTelemetry openTelemetry) {
+    this.openTelemetry = openTelemetry;
+  }
 
-  /** The artifact name of the client library (e.g., "google-cloud-vision"). */
-  public static final String ARTIFACT_ATTRIBUTE = "gcp.client.artifact";
+  @Override
+  public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
+    return new GoldenTelemetryMetricsTracer(openTelemetry, apiTracerContext);
+  }
 
-  /**
-   * The error codes of the request. The value will be the string representation of the canonical
-   * gRPC status code (e.g., "OK", "INTERNAL").
-   */
-  public static final String RPC_RESPONSE_STATUS_ATTRIBUTE = "rpc.response.status_code";
+  @Override
+  public ApiTracerFactory withContext(ApiTracerContext context) {
+    this.apiTracerContext = context;
+    return this;
+  }
 }

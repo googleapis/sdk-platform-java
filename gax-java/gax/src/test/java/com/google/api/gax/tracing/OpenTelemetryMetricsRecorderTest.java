@@ -29,15 +29,12 @@
  */
 package com.google.api.gax.tracing;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.common.truth.Truth;
 import com.google.rpc.Code;
 import io.opentelemetry.api.OpenTelemetry;
-import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.DoubleHistogram;
 import io.opentelemetry.api.metrics.DoubleHistogramBuilder;
@@ -104,7 +101,7 @@ class OpenTelemetryMetricsRecorderTest {
   void testAttemptCountRecorder_recordsAttributes() {
     Map<String, String> attributes = getAttributes(Code.OK);
 
-    Attributes otelAttributes = otelMetricsRecorder.toOtelAttributes(attributes);
+    Attributes otelAttributes = ObservabilityUtils.toOtelAttributes(attributes);
     otelMetricsRecorder.recordAttemptCount(1, attributes);
 
     verify(attemptCountRecorder).add(1, otelAttributes);
@@ -115,7 +112,7 @@ class OpenTelemetryMetricsRecorderTest {
   void testAttemptLatencyRecorder_recordsAttributes() {
     Map<String, String> attributes = getAttributes(Code.NOT_FOUND);
 
-    Attributes otelAttributes = otelMetricsRecorder.toOtelAttributes(attributes);
+    Attributes otelAttributes = ObservabilityUtils.toOtelAttributes(attributes);
     otelMetricsRecorder.recordAttemptLatency(1.1, attributes);
 
     verify(attemptLatencyRecorder).record(1.1, otelAttributes);
@@ -126,7 +123,7 @@ class OpenTelemetryMetricsRecorderTest {
   void testOperationCountRecorder_recordsAttributes() {
     Map<String, String> attributes = getAttributes(Code.OK);
 
-    Attributes otelAttributes = otelMetricsRecorder.toOtelAttributes(attributes);
+    Attributes otelAttributes = ObservabilityUtils.toOtelAttributes(attributes);
     otelMetricsRecorder.recordOperationCount(1, attributes);
 
     verify(operationCountRecorder).add(1, otelAttributes);
@@ -137,32 +134,11 @@ class OpenTelemetryMetricsRecorderTest {
   void testOperationLatencyRecorder_recordsAttributes() {
     Map<String, String> attributes = getAttributes(Code.INVALID_ARGUMENT);
 
-    Attributes otelAttributes = otelMetricsRecorder.toOtelAttributes(attributes);
+    Attributes otelAttributes = ObservabilityUtils.toOtelAttributes(attributes);
     otelMetricsRecorder.recordOperationLatency(1.7, attributes);
 
     verify(operationLatencyRecorder).record(1.7, otelAttributes);
     verifyNoMoreInteractions(operationLatencyRecorder);
-  }
-
-  @Test
-  void testToOtelAttributes_correctConversion() {
-    Map<String, String> attributes = getAttributes(Code.OK);
-
-    Attributes otelAttributes = otelMetricsRecorder.toOtelAttributes(attributes);
-
-    Truth.assertThat(otelAttributes.get(AttributeKey.stringKey("status")))
-        .isEqualTo(Code.OK.toString());
-    Truth.assertThat(otelAttributes.get(AttributeKey.stringKey("method_name")))
-        .isEqualTo(DEFAULT_METHOD_NAME);
-    Truth.assertThat(otelAttributes.get(AttributeKey.stringKey("language")))
-        .isEqualTo(MetricsTracer.DEFAULT_LANGUAGE);
-  }
-
-  @Test
-  void testToOtelAttributes_nullInput() {
-    Throwable thrown =
-        assertThrows(NullPointerException.class, () -> otelMetricsRecorder.toOtelAttributes(null));
-    Truth.assertThat(thrown).hasMessageThat().contains("Attributes map cannot be null");
   }
 
   private void setupAttemptCountRecorder() {

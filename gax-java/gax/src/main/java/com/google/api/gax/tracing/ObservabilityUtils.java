@@ -27,35 +27,43 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package com.google.api.gax.tracing;
 
-import com.google.api.core.BetaApi;
-import com.google.api.core.InternalApi;
+import com.google.api.gax.rpc.ApiException;
+import com.google.api.gax.rpc.StatusCode;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Preconditions;
+import io.opentelemetry.api.common.Attributes;
+import io.opentelemetry.api.common.AttributesBuilder;
+import java.util.Map;
+import java.util.concurrent.CancellationException;
+import javax.annotation.Nullable;
 
-/**
- * Utility class with common attribute names in app-centric observability.
- *
- * <p>For internal use only.
- */
-@InternalApi
-@BetaApi
-public class ObservabilityAttributes {
-  /** The address of the server being called (e.g., "pubsub.googleapis.com"). */
-  public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
+class ObservabilityUtils {
 
-  /** The port of the server being called (e.g., 443). */
-  public static final String SERVER_PORT_ATTRIBUTE = "server.port";
+  /** Function to extract the status of the error as a string */
+  @VisibleForTesting
+  static String extractStatus(@Nullable Throwable error) {
+    final String statusString;
 
-  /** The repository of the client library (e.g., "googleapis/google-cloud-java"). */
-  public static final String REPO_ATTRIBUTE = "gcp.client.repo";
+    if (error == null) {
+      return StatusCode.Code.OK.toString();
+    } else if (error instanceof CancellationException) {
+      statusString = StatusCode.Code.CANCELLED.toString();
+    } else if (error instanceof ApiException) {
+      statusString = ((ApiException) error).getStatusCode().getCode().toString();
+    } else {
+      statusString = StatusCode.Code.UNKNOWN.toString();
+    }
 
-  /** The artifact name of the client library (e.g., "google-cloud-vision"). */
-  public static final String ARTIFACT_ATTRIBUTE = "gcp.client.artifact";
+    return statusString;
+  }
 
-  /**
-   * The error codes of the request. The value will be the string representation of the canonical
-   * gRPC status code (e.g., "OK", "INTERNAL").
-   */
-  public static final String RPC_RESPONSE_STATUS_ATTRIBUTE = "rpc.response.status_code";
+  @VisibleForTesting
+  static Attributes toOtelAttributes(Map<String, String> attributes) {
+    Preconditions.checkNotNull(attributes, "Attributes map cannot be null");
+    AttributesBuilder attributesBuilder = Attributes.builder();
+    attributes.forEach(attributesBuilder::put);
+    return attributesBuilder.build();
+  }
 }
