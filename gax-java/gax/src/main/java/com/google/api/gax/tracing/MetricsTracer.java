@@ -35,16 +35,13 @@ import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.core.ObsoleteApi;
-import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Stopwatch;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-import javax.annotation.Nullable;
 
 /**
  * This class computes generic metrics that can be observed in the lifecycle of an RPC operation.
@@ -123,7 +120,7 @@ public class MetricsTracer implements ApiTracer {
     if (operationFinished.getAndSet(true)) {
       throw new IllegalStateException(OPERATION_FINISHED_STATUS_MESSAGE);
     }
-    attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
+    attributes.put(STATUS_ATTRIBUTE, ObservabilityUtils.extractStatus(error));
     metricsRecorder.recordOperationLatency(
         operationTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     metricsRecorder.recordOperationCount(1, attributes);
@@ -175,7 +172,7 @@ public class MetricsTracer implements ApiTracer {
    */
   @Override
   public void attemptFailedDuration(Throwable error, java.time.Duration delay) {
-    attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
+    attributes.put(STATUS_ATTRIBUTE, ObservabilityUtils.extractStatus(error));
     metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     metricsRecorder.recordAttemptCount(1, attributes);
   }
@@ -199,7 +196,7 @@ public class MetricsTracer implements ApiTracer {
    */
   @Override
   public void attemptFailedRetriesExhausted(Throwable error) {
-    attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
+    attributes.put(STATUS_ATTRIBUTE, ObservabilityUtils.extractStatus(error));
     metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     metricsRecorder.recordAttemptCount(1, attributes);
   }
@@ -213,27 +210,9 @@ public class MetricsTracer implements ApiTracer {
    */
   @Override
   public void attemptPermanentFailure(Throwable error) {
-    attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
+    attributes.put(STATUS_ATTRIBUTE, ObservabilityUtils.extractStatus(error));
     metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     metricsRecorder.recordAttemptCount(1, attributes);
-  }
-
-  /** Function to extract the status of the error as a string */
-  @VisibleForTesting
-  static String extractStatus(@Nullable Throwable error) {
-    final String statusString;
-
-    if (error == null) {
-      return StatusCode.Code.OK.toString();
-    } else if (error instanceof CancellationException) {
-      statusString = StatusCode.Code.CANCELLED.toString();
-    } else if (error instanceof ApiException) {
-      statusString = ((ApiException) error).getStatusCode().getCode().toString();
-    } else {
-      statusString = StatusCode.Code.UNKNOWN.toString();
-    }
-
-    return statusString;
   }
 
   /**

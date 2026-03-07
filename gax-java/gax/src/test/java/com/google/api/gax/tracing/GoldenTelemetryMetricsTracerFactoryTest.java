@@ -27,32 +27,30 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package com.google.api.gax.tracing;
 
-import com.google.api.core.BetaApi;
-import com.google.api.core.InternalApi;
+import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Mockito.mock;
 
-/**
- * Utility class with common attribute names in app-centric observability.
- *
- * <p>For internal use only.
- */
-@InternalApi
-@BetaApi
-public class ObservabilityAttributes {
-  /** The address of the server being called (e.g., "pubsub.googleapis.com"). */
-  public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
+import io.opentelemetry.api.OpenTelemetry;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-  /** The repository of the client library (e.g., "googleapis/google-cloud-java"). */
-  public static final String REPO_ATTRIBUTE = "gcp.client.repo";
+class GoldenTelemetryMetricsTracerFactoryTest {
 
-  /** The artifact name of the client library (e.g., "google-cloud-vision"). */
-  public static final String ARTIFACT_ATTRIBUTE = "gcp.client.artifact";
+  private GoldenTelemetryMetricsTracerFactory tracerFactory;
 
-  /**
-   * The error codes of the request. The value will be the string representation of the canonical
-   * gRPC status code (e.g., "OK", "INTERNAL").
-   */
-  public static final String RPC_RESPONSE_STATUS_ATTRIBUTE = "rpc.response.status_code";
+  @BeforeEach
+  void setUp() {
+    tracerFactory = new GoldenTelemetryMetricsTracerFactory(OpenTelemetry.noop());
+    tracerFactory.withContext(ApiTracerContext.empty());
+  }
+
+  @Test
+  void newTracer_createsTracer_successfully() {
+    ApiTracer actual =
+        tracerFactory.newTracer(
+            mock(ApiTracer.class), mock(SpanName.class), ApiTracerFactory.OperationType.Unary);
+    assertThat(actual).isInstanceOf(GoldenTelemetryMetricsTracer.class);
+  }
 }
