@@ -47,6 +47,9 @@ public class GoldenTelemetryMetricsTracer implements ApiTracer {
   static final String CLIENT_REQUEST_DURATION_METRIC_NAME = "gcp.client.request.duration";
   static final String CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION =
       "Measures the total time taken for a logical client request, including any retries, backoff, and pre/post-processing";
+  static final String OPERATION_FINISHED_STATUS_MESSAGE =
+          "Operation has already been completed";
+
   private final Stopwatch clientRequestTimer = Stopwatch.createStarted();
   private final AtomicBoolean clientRequestFinished;
   final DoubleHistogram clientRequestDurationRecorder;
@@ -79,7 +82,7 @@ public class GoldenTelemetryMetricsTracer implements ApiTracer {
   @Override
   public void operationSucceeded() {
     if (clientRequestFinished.getAndSet(true)) {
-      throw new IllegalStateException();
+      throw new IllegalStateException(OPERATION_FINISHED_STATUS_MESSAGE);
     }
     attributes.put(RPC_RESPONSE_STATUS_ATTRIBUTE, StatusCode.Code.OK.toString());
     clientRequestDurationRecorder.record(
@@ -89,7 +92,7 @@ public class GoldenTelemetryMetricsTracer implements ApiTracer {
   @Override
   public void operationCancelled() {
     if (clientRequestFinished.getAndSet(true)) {
-      throw new IllegalStateException();
+      throw new IllegalStateException(OPERATION_FINISHED_STATUS_MESSAGE);
     }
     attributes.put(RPC_RESPONSE_STATUS_ATTRIBUTE, StatusCode.Code.CANCELLED.toString());
     clientRequestDurationRecorder.record(
@@ -99,7 +102,7 @@ public class GoldenTelemetryMetricsTracer implements ApiTracer {
   @Override
   public void operationFailed(Throwable error) {
     if (clientRequestFinished.getAndSet(true)) {
-      throw new IllegalStateException();
+      throw new IllegalStateException(OPERATION_FINISHED_STATUS_MESSAGE);
     }
     attributes.put(RPC_RESPONSE_STATUS_ATTRIBUTE, ObservabilityUtils.extractStatus(error));
     clientRequestDurationRecorder.record(

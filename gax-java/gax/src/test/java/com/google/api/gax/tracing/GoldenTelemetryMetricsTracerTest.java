@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.tracing;
 
+import static com.google.api.gax.tracing.GoldenTelemetryMetricsTracer.OPERATION_FINISHED_STATUS_MESSAGE;
 import static com.google.api.gax.tracing.ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -125,7 +126,8 @@ class GoldenTelemetryMetricsTracerTest {
   @Test
   void operationCompleted_throwsExceptionOnSecondCall() {
     tracer.operationSucceeded();
-    assertThrows(IllegalStateException.class, () -> tracer.operationSucceeded());
+    IllegalStateException actualException = assertThrows(IllegalStateException.class, () -> tracer.operationSucceeded());
+    assertThat(actualException).hasMessageThat().isEqualTo(OPERATION_FINISHED_STATUS_MESSAGE);
   }
 
   private void verifyMetricDataContainsMeterInfo(MetricData metricData) {
