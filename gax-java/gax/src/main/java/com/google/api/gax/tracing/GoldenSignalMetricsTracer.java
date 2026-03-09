@@ -42,7 +42,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class GoldenTelemetryMetricsTracer implements ApiTracer {
+public class GoldenSignalMetricsTracer implements ApiTracer {
 
   static final String CLIENT_REQUEST_DURATION_METRIC_NAME = "gcp.client.request.duration";
   static final String CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION =
@@ -65,7 +65,7 @@ public class GoldenTelemetryMetricsTracer implements ApiTracer {
    * @param openTelemetry OpenTelemetry
    * @param apiTracerContext ApiTracerContext
    */
-  public GoldenTelemetryMetricsTracer(
+  public GoldenSignalMetricsTracer(
       OpenTelemetry openTelemetry, ApiTracerContext apiTracerContext) {
     this.clientRequestFinished = new AtomicBoolean();
     Meter meter =

@@ -34,24 +34,24 @@ import com.google.api.core.InternalApi;
 import io.opentelemetry.api.OpenTelemetry;
 
 /**
- * A {@link ApiTracerFactory} to build instances of {@link GoldenTelemetryMetricsTracer}.
+ * A {@link ApiTracerFactory} to build instances of {@link GoldenSignalMetricsTracer}.
  *
  * <p>This class is expected to be initialized once during client initialization.
  */
 @BetaApi
 @InternalApi
-public class GoldenTelemetryMetricsTracerFactory implements ApiTracerFactory {
+public class GoldenSignalMetricsTracerFactory implements ApiTracerFactory {
 
   private ApiTracerContext apiTracerContext;
   private final OpenTelemetry openTelemetry;
 
-  public GoldenTelemetryMetricsTracerFactory(OpenTelemetry openTelemetry) {
+  public GoldenSignalMetricsTracerFactory(OpenTelemetry openTelemetry) {
     this.openTelemetry = openTelemetry;
   }
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    return new GoldenTelemetryMetricsTracer(openTelemetry, apiTracerContext);
+    return new GoldenSignalMetricsTracer(openTelemetry, apiTracerContext);
   }
 
   @Override

@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.tracing;
 
-import static com.google.api.gax.tracing.GoldenTelemetryMetricsTracer.OPERATION_FINISHED_STATUS_MESSAGE;
+import static com.google.api.gax.tracing.GoldenSignalMetricsTracer.OPERATION_FINISHED_STATUS_MESSAGE;
 import static com.google.api.gax.tracing.ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -49,7 +49,7 @@ import java.util.Collection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class GoldenTelemetryMetricsTracerTest {
+class GoldenSignalMetricsTracerTest {
   private static final String ARTIFACT_NAME = "test-library";
   private static final LibraryMetadata LIBRARY_METADATA =
       LibraryMetadata.newBuilder().setArtifactName(ARTIFACT_NAME).build();
@@ -58,7 +58,7 @@ class GoldenTelemetryMetricsTracerTest {
 
   private InMemoryMetricReader metricReader;
 
-  private GoldenTelemetryMetricsTracer tracer;
+  private GoldenSignalMetricsTracer tracer;
 
   @BeforeEach
   void setUp() {
@@ -67,7 +67,7 @@ class GoldenTelemetryMetricsTracerTest {
         SdkMeterProvider.builder().registerMetricReader(metricReader).build();
     OpenTelemetry openTelemetry =
         OpenTelemetrySdk.builder().setMeterProvider(meterProvider).build();
-    tracer = new GoldenTelemetryMetricsTracer(openTelemetry, CONTEXT);
+    tracer = new GoldenSignalMetricsTracer(openTelemetry, CONTEXT);
   }
 
   @Test
@@ -132,9 +132,9 @@ class GoldenTelemetryMetricsTracerTest {
 
   private void verifyMetricDataContainsMeterInfo(MetricData metricData) {
     assertThat(metricData.getName())
-        .isEqualTo(GoldenTelemetryMetricsTracer.CLIENT_REQUEST_DURATION_METRIC_NAME);
+        .isEqualTo(GoldenSignalMetricsTracer.CLIENT_REQUEST_DURATION_METRIC_NAME);
     assertThat(metricData.getDescription())
-        .isEqualTo(GoldenTelemetryMetricsTracer.CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION);
+        .isEqualTo(GoldenSignalMetricsTracer.CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION);
     assertThat(metricData.getUnit()).isEqualTo("s");
     assertThat(metricData.getInstrumentationScopeInfo().getName()).isEqualTo(ARTIFACT_NAME);
   }

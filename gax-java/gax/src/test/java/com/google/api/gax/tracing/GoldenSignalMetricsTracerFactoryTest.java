@@ -36,13 +36,13 @@ import io.opentelemetry.api.OpenTelemetry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class GoldenTelemetryMetricsTracerFactoryTest {
+class GoldenSignalMetricsTracerFactoryTest {
 
-  private GoldenTelemetryMetricsTracerFactory tracerFactory;
+  private GoldenSignalMetricsTracerFactory tracerFactory;
 
   @BeforeEach
   void setUp() {
-    tracerFactory = new GoldenTelemetryMetricsTracerFactory(OpenTelemetry.noop());
+    tracerFactory = new GoldenSignalMetricsTracerFactory(OpenTelemetry.noop());
     tracerFactory.withContext(ApiTracerContext.empty());
   }
 
@@ -51,6 +51,6 @@ class GoldenTelemetryMetricsTracerFactoryTest {
     ApiTracer actual =
         tracerFactory.newTracer(
             mock(ApiTracer.class), mock(SpanName.class), ApiTracerFactory.OperationType.Unary);
-    assertThat(actual).isInstanceOf(GoldenTelemetryMetricsTracer.class);
+    assertThat(actual).isInstanceOf(GoldenSignalMetricsTracer.class);
   }
 }
