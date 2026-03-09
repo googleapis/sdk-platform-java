@@ -29,43 +29,37 @@
  */
 package com.google.api.gax.tracing;
 
-import com.google.api.core.BetaApi;
-import com.google.api.core.InternalApi;
 import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.metrics.DoubleHistogram;
+import io.opentelemetry.api.metrics.Meter;
+import java.util.Map;
 
 /**
- * A {@link ApiTracerFactory} to build instances of {@link GoldenSignalMetricsTracer}.
- *
- * <p>This class is expected to be initialized once during client initialization.
+ * This class takes an OpenTelemetry object, and creates instruments (meters, histograms etc.) from
+ * it for recording golden signal metrics. There must be only one instance of
+ * GoldenSignalsMetricsRecorder per client, all the methods in this class are expected to be called
+ * from multiple threads, hence they need to be thread safe.
  */
-@BetaApi
-@InternalApi
-public class GoldenSignalMetricsTracerFactory implements ApiTracerFactory {
+class GoldenSignalsMetricsRecorder {
+  static final String CLIENT_REQUEST_DURATION_METRIC_NAME = "gcp.client.request.duration";
+  static final String CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION =
+      "Measures the total time taken for a logical client request, including any retries, backoff, and pre/post-processing";
 
-  private ApiTracerContext apiTracerContext;
-  private final OpenTelemetry openTelemetry;
-  private GoldenSignalsMetricsRecorder metricsRecorder;
+  final DoubleHistogram clientRequestDurationRecorder;
 
-  public GoldenSignalMetricsTracerFactory(OpenTelemetry openTelemetry) {
-    this.openTelemetry = openTelemetry;
+  GoldenSignalsMetricsRecorder(OpenTelemetry openTelemetry, String libraryName) {
+    Meter meter = openTelemetry.meterBuilder(libraryName).build();
+
+    this.clientRequestDurationRecorder =
+        meter
+            .histogramBuilder(CLIENT_REQUEST_DURATION_METRIC_NAME)
+            .setDescription(CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION)
+            .setUnit("s")
+            .build();
   }
 
-  @Override
-  public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    if (metricsRecorder == null) {
-      // This should never happen, in case it happens, create a no-op api tracer to not block
-      // regular requests.
-      return new BaseApiTracer();
-    }
-    return new GoldenSignalMetricsTracer(metricsRecorder);
-  }
-
-  @Override
-  public ApiTracerFactory withContext(ApiTracerContext context) {
-    this.apiTracerContext = context;
-    this.metricsRecorder =
-        new GoldenSignalsMetricsRecorder(
-            openTelemetry, apiTracerContext.libraryMetadata().artifactName());
-    return this;
+  void recordOperationLatency(double operationLatency, Map<String, String> attributes) {
+    clientRequestDurationRecorder.record(
+        operationLatency, ObservabilityUtils.toOtelAttributes(attributes));
   }
 }

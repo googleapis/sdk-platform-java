@@ -43,14 +43,22 @@ class GoldenSignalMetricsTracerFactoryTest {
   @BeforeEach
   void setUp() {
     tracerFactory = new GoldenSignalMetricsTracerFactory(OpenTelemetry.noop());
-    tracerFactory.withContext(ApiTracerContext.empty());
   }
 
   @Test
   void newTracer_createsTracer_successfully() {
+    tracerFactory.withContext(ApiTracerContext.empty());
     ApiTracer actual =
         tracerFactory.newTracer(
             mock(ApiTracer.class), mock(SpanName.class), ApiTracerFactory.OperationType.Unary);
     assertThat(actual).isInstanceOf(GoldenSignalMetricsTracer.class);
+  }
+
+  @Test
+  void newTracer_createsBaseTracer_ifMetricsRecorderIsNull() {
+    ApiTracer actual =
+        tracerFactory.newTracer(
+            mock(ApiTracer.class), mock(SpanName.class), ApiTracerFactory.OperationType.Unary);
+    assertThat(actual).isInstanceOf(BaseApiTracer.class);
   }
 }

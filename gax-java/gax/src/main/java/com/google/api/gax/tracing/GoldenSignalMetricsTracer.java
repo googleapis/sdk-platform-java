@@ -30,29 +30,22 @@
 package com.google.api.gax.tracing;
 
 import static com.google.api.gax.tracing.ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE;
-import static com.google.api.gax.tracing.ObservabilityUtils.toOtelAttributes;
 
 import com.google.api.gax.rpc.StatusCode;
 import com.google.common.base.Stopwatch;
-import io.opentelemetry.api.OpenTelemetry;
-import io.opentelemetry.api.metrics.DoubleHistogram;
-import io.opentelemetry.api.metrics.Meter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-public class GoldenSignalMetricsTracer implements ApiTracer {
-
-  static final String CLIENT_REQUEST_DURATION_METRIC_NAME = "gcp.client.request.duration";
-  static final String CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION =
-      "Measures the total time taken for a logical client request, including any retries, backoff, and pre/post-processing";
-  static final String OPERATION_FINISHED_STATUS_MESSAGE =
-          "Operation has already been completed";
-
+/**
+ * This class computes golden signal metrics that can be observed in the lifecycle of an RPC
+ * operation. The responsibility of recording metrics should delegate to {@link
+ * GoldenSignalsMetricsRecorder}, hence this class should not have any knowledge about the
+ * observability framework (e.g. OpenTelemetry).
+ */
+class GoldenSignalMetricsTracer implements ApiTracer {
   private final Stopwatch clientRequestTimer = Stopwatch.createStarted();
-  private final AtomicBoolean clientRequestFinished;
-  final DoubleHistogram clientRequestDurationRecorder;
+  private final GoldenSignalsMetricsRecorder metricsRecorder;
   private final Map<String, String> attributes = new HashMap<>();
 
   /**
@@ -62,50 +55,30 @@ public class GoldenSignalMetricsTracer implements ApiTracer {
    *   <li>Client Request Duration: Histogram
    * </ul>
    *
-   * @param openTelemetry OpenTelemetry
-   * @param apiTracerContext ApiTracerContext
+   * @param metricsRecorder OpenTelemetry
    */
-  public GoldenSignalMetricsTracer(
-      OpenTelemetry openTelemetry, ApiTracerContext apiTracerContext) {
-    this.clientRequestFinished = new AtomicBoolean();
-    Meter meter =
-        openTelemetry.meterBuilder(apiTracerContext.libraryMetadata().artifactName()).build();
-
-    this.clientRequestDurationRecorder =
-        meter
-            .histogramBuilder(CLIENT_REQUEST_DURATION_METRIC_NAME)
-            .setDescription(CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION)
-            .setUnit("s")
-            .build();
+  GoldenSignalMetricsTracer(GoldenSignalsMetricsRecorder metricsRecorder) {
+    this.metricsRecorder = metricsRecorder;
   }
 
   @Override
   public void operationSucceeded() {
-    if (clientRequestFinished.getAndSet(true)) {
-      throw new IllegalStateException(OPERATION_FINISHED_STATUS_MESSAGE);
-    }
     attributes.put(RPC_RESPONSE_STATUS_ATTRIBUTE, StatusCode.Code.OK.toString());
-    clientRequestDurationRecorder.record(
-        clientRequestTimer.elapsed(TimeUnit.SECONDS), toOtelAttributes(attributes));
+    metricsRecorder.recordOperationLatency(
+        clientRequestTimer.elapsed(TimeUnit.SECONDS), attributes);
   }
 
   @Override
   public void operationCancelled() {
-    if (clientRequestFinished.getAndSet(true)) {
-      throw new IllegalStateException(OPERATION_FINISHED_STATUS_MESSAGE);
-    }
     attributes.put(RPC_RESPONSE_STATUS_ATTRIBUTE, StatusCode.Code.CANCELLED.toString());
-    clientRequestDurationRecorder.record(
-        clientRequestTimer.elapsed(TimeUnit.SECONDS), toOtelAttributes(attributes));
+    metricsRecorder.recordOperationLatency(
+        clientRequestTimer.elapsed(TimeUnit.SECONDS), attributes);
   }
 
   @Override
   public void operationFailed(Throwable error) {
-    if (clientRequestFinished.getAndSet(true)) {
-      throw new IllegalStateException(OPERATION_FINISHED_STATUS_MESSAGE);
-    }
     attributes.put(RPC_RESPONSE_STATUS_ATTRIBUTE, ObservabilityUtils.extractStatus(error));
-    clientRequestDurationRecorder.record(
-        clientRequestTimer.elapsed(TimeUnit.SECONDS), toOtelAttributes(attributes));
+    metricsRecorder.recordOperationLatency(
+        clientRequestTimer.elapsed(TimeUnit.SECONDS), attributes);
   }
 }
