@@ -343,6 +343,8 @@ class EndpointContextTest {
     Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(clientSettingsEndpoint);
     Truth.assertThat(endpointContext.resolvedUniverseDomain())
         .isEqualTo(Credentials.GOOGLE_DEFAULT_UNIVERSE);
+
+    endpointContext.toBuilder().build();
   }
 
   // This Universe Domain should match the `GOOGLE_CLOUD_UNIVERSE_DOMAIN` Env Var
