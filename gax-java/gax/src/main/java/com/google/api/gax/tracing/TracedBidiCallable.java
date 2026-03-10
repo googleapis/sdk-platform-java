@@ -87,9 +87,7 @@ public class TracedBidiCallable<RequestT, ResponseT>
 
     ApiTracer tracer;
     if (apiTracerContext != null) {
-      tracer =
-          tracerFactory.newTracer(
-              context.getTracer(), apiTracerContext, OperationType.BidiStreaming);
+      tracer = tracerFactory.newTracer(context.getTracer(), apiTracerContext);
     } else {
       tracer = tracerFactory.newTracer(context.getTracer(), spanName, OperationType.BidiStreaming);
     }

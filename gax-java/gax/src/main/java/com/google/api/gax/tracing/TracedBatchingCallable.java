@@ -85,8 +85,7 @@ public class TracedBatchingCallable<RequestT, ResponseT>
     // So this start a top level tracer.
     ApiTracer tracer;
     if (apiTracerContext != null) {
-      tracer =
-          tracerFactory.newTracer(context.getTracer(), apiTracerContext, OperationType.Batching);
+      tracer = tracerFactory.newTracer(context.getTracer(), apiTracerContext);
     } else {
       tracer = tracerFactory.newTracer(context.getTracer(), spanName, OperationType.Batching);
     }

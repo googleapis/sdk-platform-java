@@ -76,6 +76,16 @@ public interface ApiTracerFactory {
   }
 
   /**
+   * Create a new {@link ApiTracer} that will be a child of the current context.
+   *
+   * @param parent the parent of this tracer
+   * @param tracerContext the method-definition-specific tracer context
+   */
+  default ApiTracer newTracer(ApiTracer parent, ApiTracerContext tracerContext) {
+    return newTracer(parent, tracerContext, tracerContext.operationType());
+  }
+
+  /**
    * @return the {@link ApiTracerContext} for this factory
    */
   default ApiTracerContext getApiTracerContext() {

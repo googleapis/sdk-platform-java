@@ -32,6 +32,7 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.LibraryMetadata;
+import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
 import com.google.auto.value.AutoValue;
 import java.util.HashMap;
 import java.util.Map;
@@ -117,6 +118,14 @@ public abstract class ApiTracerContext {
   abstract Transport transport();
 
   /**
+   * Returns the type of operation the {@link ApiTracer} is tracing.
+   *
+   * @return the operation type, or {@code null} if not set
+   */
+  @Nullable
+  public abstract OperationType operationType();
+
+  /**
    * @return a map of attributes to be included in attempt-level spans
    */
   Map<String, String> getAttemptAttributes() {
@@ -161,6 +170,9 @@ public abstract class ApiTracerContext {
     if (other.transport() != null) {
       builder.setTransport(other.transport());
     }
+    if (other.operationType() != null) {
+      builder.setOperationType(other.operationType());
+    }
     return builder.build();
   }
 
@@ -183,6 +195,8 @@ public abstract class ApiTracerContext {
     public abstract Builder setFullMethodName(@Nullable String rpcMethod);
 
     public abstract Builder setTransport(@Nullable Transport transport);
+
+    public abstract Builder setOperationType(@Nullable OperationType operationType);
 
     public abstract ApiTracerContext build();
   }
