@@ -44,11 +44,20 @@ public class ObservabilityAttributes {
   /** The address of the server being called (e.g., "pubsub.googleapis.com"). */
   public static final String SERVER_ADDRESS_ATTRIBUTE = "server.address";
 
+  /** The port of the server being called (e.g., 443). */
+  public static final String SERVER_PORT_ATTRIBUTE = "server.port";
+
   /** The repository of the client library (e.g., "googleapis/google-cloud-java"). */
   public static final String REPO_ATTRIBUTE = "gcp.client.repo";
 
   /** The artifact name of the client library (e.g., "google-cloud-vision"). */
   public static final String ARTIFACT_ATTRIBUTE = "gcp.client.artifact";
+
+  /** The full RPC method name, including package, service, and method. */
+  public static final String GRPC_RPC_METHOD_ATTRIBUTE = "rpc.method";
+
+  /** The RPC system name, e.g. 'grpc' or 'http'. */
+  public static final String RPC_SYSTEM_NAME_ATTRIBUTE = "rpc.system.name";
 
   /**
    * The error codes of the request. The value will be the string representation of the canonical

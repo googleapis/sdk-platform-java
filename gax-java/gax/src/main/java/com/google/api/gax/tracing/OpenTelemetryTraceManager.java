@@ -51,14 +51,21 @@ public class OpenTelemetryTraceManager implements TraceManager {
   }
 
   @Override
-  public Span createSpan(String name, Map<String, String> attributes) {
+  public Span createSpan(String name, Map<String, Object> attributes) {
     SpanBuilder spanBuilder = tracer.spanBuilder(name);
 
     // Attempt spans are of the CLIENT kind
     spanBuilder.setSpanKind(SpanKind.CLIENT);
 
     if (attributes != null) {
-      attributes.forEach((k, v) -> spanBuilder.setAttribute(k, v));
+      attributes.forEach(
+          (k, v) -> {
+            if (v instanceof String) {
+              spanBuilder.setAttribute(k, (String) v);
+            } else if (v instanceof Integer) {
+              spanBuilder.setAttribute(k, (long) (Integer) v);
+            }
+          });
     }
 
     io.opentelemetry.api.trace.Span span = spanBuilder.startSpan();
