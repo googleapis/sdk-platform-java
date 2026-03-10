@@ -50,9 +50,11 @@ import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CancellationException;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -112,6 +114,23 @@ class TracedBidiCallableTest {
       verify(tracerFactory, times(1))
           .newTracer(parentTracer, SPAN_NAME, OperationType.BidiStreaming);
     }
+  }
+
+  @Test
+  void testOperationTypeIsSet() {
+    init(true);
+    ApiTracerContext contextWithWrongType =
+        TRACER_CONTEXT.toBuilder().setOperationType(OperationType.Unary).build();
+
+    innerCallable = new FakeBidiCallable();
+    tracedCallable = new TracedBidiCallable<>(innerCallable, tracerFactory, contextWithWrongType);
+
+    tracedCallable.call(new FakeBidiObserver(), FakeCallContext.createDefault());
+
+    ArgumentCaptor<ApiTracerContext> contextCaptor =
+        ArgumentCaptor.forClass(ApiTracerContext.class);
+    verify(tracerFactory).newTracer(any(ApiTracer.class), contextCaptor.capture());
+    assertThat(contextCaptor.getValue().operationType()).isEqualTo(OperationType.BidiStreaming);
   }
 
   @ParameterizedTest

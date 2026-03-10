@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.tracing;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.eq;
@@ -44,9 +45,11 @@ import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.api.gax.tracing.ApiTracerContext.Transport;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -102,6 +105,28 @@ class TracedUnaryCallableTest {
     } else {
       verify(tracerFactory, times(1)).newTracer(parentTracer, SPAN_NAME, OperationType.Unary);
     }
+  }
+
+  @Test
+  void testOperationTypeIsSet() {
+    when(tracerFactory.newTracer(any(ApiTracer.class), any(ApiTracerContext.class)))
+        .thenReturn(tracer);
+    tracedUnaryCallable = new TracedUnaryCallable<>(innerCallable, tracerFactory, TRACER_CONTEXT);
+    ApiTracerContext contextWithWrongType =
+        TRACER_CONTEXT.toBuilder().setOperationType(OperationType.BidiStreaming).build();
+
+    tracedUnaryCallable =
+        new TracedUnaryCallable<>(innerCallable, tracerFactory, contextWithWrongType);
+
+    innerResult = SettableApiFuture.create();
+    when(innerCallable.futureCall(anyString(), any(ApiCallContext.class))).thenReturn(innerResult);
+
+    tracedUnaryCallable.futureCall("test", FakeCallContext.createDefault());
+
+    ArgumentCaptor<ApiTracerContext> contextCaptor =
+        ArgumentCaptor.forClass(ApiTracerContext.class);
+    verify(tracerFactory).newTracer(any(ApiTracer.class), contextCaptor.capture());
+    assertThat(contextCaptor.getValue().operationType()).isEqualTo(OperationType.Unary);
   }
 
   @ParameterizedTest

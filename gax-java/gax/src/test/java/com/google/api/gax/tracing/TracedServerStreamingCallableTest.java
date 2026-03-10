@@ -49,6 +49,7 @@ import com.google.api.gax.rpc.testing.MockStreamingApi.MockResponseObserver;
 import com.google.api.gax.rpc.testing.MockStreamingApi.MockServerStreamingCall;
 import com.google.api.gax.rpc.testing.MockStreamingApi.MockServerStreamingCallable;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -104,6 +105,14 @@ class TracedServerStreamingCallableTest {
       verify(tracerFactory, times(1))
           .newTracer(parentTracer, SPAN_NAME, OperationType.ServerStreaming);
     }
+  }
+
+  @Test
+  void testOperationTypeIsSet() {
+    init(true);
+    tracedCallable.call("test", responseObserver, callContext);
+
+    verify(tracerContextBuilder).setOperationType(OperationType.ServerStreaming);
   }
 
   @ParameterizedTest
