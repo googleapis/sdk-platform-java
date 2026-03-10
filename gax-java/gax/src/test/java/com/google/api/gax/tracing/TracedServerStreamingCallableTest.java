@@ -80,7 +80,7 @@ class TracedServerStreamingCallableTest {
       when(tracerFactory.newTracer(any(ApiTracer.class), any(ApiTracerContext.class)))
           .thenReturn(tracer);
       when(tracerContext.fullMethodName()).thenReturn("FakeClient/FakeRpc");
-      t statutracedCallable =
+      tracedCallable =
           new TracedServerStreamingCallable<>(innerCallable, tracerFactory, tracerContext);
     } else {
       when(tracerFactory.newTracer(
