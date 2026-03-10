@@ -29,81 +29,90 @@
  */
 package com.google.api.gax.tracing;
 
-import com.google.api.gax.rpc.StatusCode;
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.common.collect.ImmutableMap;
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
-import io.opentelemetry.sdk.metrics.data.HistogramPointData;
 import io.opentelemetry.sdk.metrics.data.MetricData;
 import io.opentelemetry.sdk.testing.exporter.InMemoryMetricReader;
+import java.util.Collection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
-
 import static com.google.api.gax.tracing.GoldenSignalsMetricsRecorder.CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION;
 import static com.google.api.gax.tracing.GoldenSignalsMetricsRecorder.CLIENT_REQUEST_DURATION_METRIC_NAME;
-import static com.google.api.gax.tracing.ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE;
-import static com.google.common.truth.Truth.assertThat;
+import static com.google.api.gax.tracing.GoldenSignalsMetricsRecorder.BOUNDARIES;
 
 class GoldenSignalsMetricsRecorderTest {
-    private static final String ARTIFACT_NAME = "test-library";
-    private static final String ATTRIBUTE_1 = "attribute_1";
-    private static final String VALUE_1 = "value_1";
+  private static final String ARTIFACT_NAME = "test-library";
+  private static final String ATTRIBUTE_1 = "attribute_1";
+  private static final String VALUE_1 = "value_1";
 
-    private InMemoryMetricReader metricReader;
+  private InMemoryMetricReader metricReader;
 
-    private GoldenSignalsMetricsRecorder recorder;
+  private GoldenSignalsMetricsRecorder recorder;
 
-    @BeforeEach
-    void setUp() {
-        metricReader = InMemoryMetricReader.create();
-        SdkMeterProvider meterProvider =
-                SdkMeterProvider.builder().registerMetricReader(metricReader).build();
-        OpenTelemetry openTelemetry =
-                OpenTelemetrySdk.builder().setMeterProvider(meterProvider).build();
-        recorder =
-                new GoldenSignalsMetricsRecorder(openTelemetry, ARTIFACT_NAME);
-    }
+  @BeforeEach
+  void setUp() {
+    metricReader = InMemoryMetricReader.create();
+    SdkMeterProvider meterProvider =
+        SdkMeterProvider.builder().registerMetricReader(metricReader).build();
+    OpenTelemetry openTelemetry =
+        OpenTelemetrySdk.builder().setMeterProvider(meterProvider).build();
+    recorder = new GoldenSignalsMetricsRecorder(openTelemetry, ARTIFACT_NAME);
+  }
 
-    @Test
-    void recordOperationLatency_shouldRecordMeterInfo() {
-        recorder.recordOperationLatency(0.012, ImmutableMap.of(ATTRIBUTE_1, VALUE_1));
+  @Test
+  void recordOperationLatency_shouldRecordMeterInfo() {
+    recorder.recordOperationLatency(0.012, ImmutableMap.of(ATTRIBUTE_1, VALUE_1));
 
-        Collection<MetricData> metrics = metricReader.collectAllMetrics();
-        assertThat(metrics).hasSize(1);
-        MetricData metricData = metrics.iterator().next();
+    Collection<MetricData> metrics = metricReader.collectAllMetrics();
+    assertThat(metrics).hasSize(1);
+    MetricData metricData = metrics.iterator().next();
 
-        assertThat(metricData.getName()).isEqualTo(CLIENT_REQUEST_DURATION_METRIC_NAME);
-        assertThat(metricData.getDescription()).isEqualTo(CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION);
-        assertThat(metricData.getUnit()).isEqualTo("s");
-        assertThat(metricData.getInstrumentationScopeInfo().getName()).isEqualTo(ARTIFACT_NAME);
-    }
+    assertThat(metricData.getName()).isEqualTo(CLIENT_REQUEST_DURATION_METRIC_NAME);
+    assertThat(metricData.getDescription()).isEqualTo(CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION);
+    assertThat(metricData.getUnit()).isEqualTo("s");
+    assertThat(metricData.getInstrumentationScopeInfo().getName()).isEqualTo(ARTIFACT_NAME);
+  }
 
-    @Test
-    void recordOperationLatency_shouldRecordMetrics() {
-        recorder.recordOperationLatency(0.012, ImmutableMap.of(ATTRIBUTE_1, VALUE_1));
+  @Test
+  void recordOperationLatency_shouldRecordWithBoundaries() {
+    recorder.recordOperationLatency(0.012, ImmutableMap.of(ATTRIBUTE_1, VALUE_1));
 
-        Collection<MetricData> metrics = metricReader.collectAllMetrics();
-        assertThat(metrics).hasSize(1);
-        MetricData metricData = metrics.iterator().next();
+    Collection<MetricData> metrics = metricReader.collectAllMetrics();
+    assertThat(metrics).hasSize(1);
+    MetricData metricData = metrics.iterator().next();
 
-        assertThat(metricData.getHistogramData().getPoints()).hasSize(1);
-        assertThat(metricData.getHistogramData().getPoints().iterator().next().getMax()).isNonZero();
-    }
+    assertThat(metricData.getHistogramData().getPoints().iterator().next().getBoundaries())
+        .isEqualTo(BOUNDARIES);
+  }
 
-    @Test
-    void recordOperationLatency_shouldRecordMetricAttributes() {
-        recorder.recordOperationLatency(0.012, ImmutableMap.of(ATTRIBUTE_1, VALUE_1));
+  @Test
+  void recordOperationLatency_shouldRecordMetrics() {
+    recorder.recordOperationLatency(0.012, ImmutableMap.of(ATTRIBUTE_1, VALUE_1));
 
-        Collection<MetricData> metrics = metricReader.collectAllMetrics();
-        assertThat(metrics).hasSize(1);
-        MetricData metricData = metrics.iterator().next();
+    Collection<MetricData> metrics = metricReader.collectAllMetrics();
+    assertThat(metrics).hasSize(1);
+    MetricData metricData = metrics.iterator().next();
 
-        assertThat(metricData.getHistogramData().getPoints().iterator().next().getAttributes())
-                .isEqualTo(Attributes.of(AttributeKey.stringKey(ATTRIBUTE_1), VALUE_1));
-    }
+    assertThat(metricData.getHistogramData().getPoints()).hasSize(1);
+    assertThat(metricData.getHistogramData().getPoints().iterator().next().getMax()).isNonZero();
+  }
+
+  @Test
+  void recordOperationLatency_shouldRecordMetricAttributes() {
+    recorder.recordOperationLatency(0.012, ImmutableMap.of(ATTRIBUTE_1, VALUE_1));
+
+    Collection<MetricData> metrics = metricReader.collectAllMetrics();
+    assertThat(metrics).hasSize(1);
+    MetricData metricData = metrics.iterator().next();
+
+    assertThat(metricData.getHistogramData().getPoints().iterator().next().getAttributes())
+        .isEqualTo(Attributes.of(AttributeKey.stringKey(ATTRIBUTE_1), VALUE_1));
+  }
 }

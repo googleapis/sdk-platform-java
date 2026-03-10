@@ -29,9 +29,13 @@
  */
 package com.google.api.gax.tracing;
 
+import static com.google.api.gax.tracing.ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE;
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
+import com.google.common.testing.FakeTicker;
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
@@ -39,20 +43,20 @@ import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
 import io.opentelemetry.sdk.metrics.data.MetricData;
 import io.opentelemetry.sdk.testing.exporter.InMemoryMetricReader;
+import java.util.Collection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
-
-import static com.google.api.gax.tracing.ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE;
-import static com.google.common.truth.Truth.assertThat;
-
 class GoldenSignalMetricsTracerTest {
   private static final String ARTIFACT_NAME = "test-library";
+  public static final int TEST_REQUEST_DURATION_NANO = 2345698;
+  public static final double EXPECTED_REQUEST_DURATION_SECOND = 2345698 / 1_000_000_000.0;
 
   private InMemoryMetricReader metricReader;
 
   private GoldenSignalMetricsTracer tracer;
+
+  private FakeTicker ticker;
 
   @BeforeEach
   void setUp() {
@@ -61,13 +65,15 @@ class GoldenSignalMetricsTracerTest {
         SdkMeterProvider.builder().registerMetricReader(metricReader).build();
     OpenTelemetry openTelemetry =
         OpenTelemetrySdk.builder().setMeterProvider(meterProvider).build();
+    ticker = new FakeTicker();
     tracer =
         new GoldenSignalMetricsTracer(
-            new GoldenSignalsMetricsRecorder(openTelemetry, ARTIFACT_NAME));
+            new GoldenSignalsMetricsRecorder(openTelemetry, ARTIFACT_NAME), ticker);
   }
 
   @Test
   void operationSucceeded_shouldRecordsDuration() {
+    ticker.advance(TEST_REQUEST_DURATION_NANO);
     tracer.operationSucceeded();
 
     Collection<MetricData> metrics = metricReader.collectAllMetrics();
@@ -75,7 +81,8 @@ class GoldenSignalMetricsTracerTest {
     MetricData metricData = metrics.iterator().next();
 
     assertThat(metricData.getHistogramData().getPoints()).hasSize(1);
-    assertThat(metricData.getHistogramData().getPoints().iterator().next().getMax()).isNonZero();
+    assertThat(metricData.getHistogramData().getPoints().iterator().next().getMax())
+        .isEqualTo(EXPECTED_REQUEST_DURATION_SECOND);
   }
 
   @Test
@@ -88,14 +95,15 @@ class GoldenSignalMetricsTracerTest {
 
     assertThat(metricData.getHistogramData().getPoints()).hasSize(1);
     assertThat(metricData.getHistogramData().getPoints().iterator().next().getAttributes())
-            .isEqualTo(
-                    Attributes.of(
-                            AttributeKey.stringKey(RPC_RESPONSE_STATUS_ATTRIBUTE),
-                            StatusCode.Code.OK.toString()));
+        .isEqualTo(
+            Attributes.of(
+                AttributeKey.stringKey(RPC_RESPONSE_STATUS_ATTRIBUTE),
+                StatusCode.Code.OK.toString()));
   }
 
   @Test
   void operationCancelled_shouldRecordsDuration() {
+    ticker.advance(TEST_REQUEST_DURATION_NANO);
     tracer.operationCancelled();
 
     Collection<MetricData> metrics = metricReader.collectAllMetrics();
@@ -103,7 +111,8 @@ class GoldenSignalMetricsTracerTest {
     MetricData metricData = metrics.iterator().next();
 
     assertThat(metricData.getHistogramData().getPoints()).hasSize(1);
-    assertThat(metricData.getHistogramData().getPoints().iterator().next().getMax()).isNonZero();
+    assertThat(metricData.getHistogramData().getPoints().iterator().next().getMax())
+        .isEqualTo(EXPECTED_REQUEST_DURATION_SECOND);
   }
 
   @Test
@@ -116,16 +125,17 @@ class GoldenSignalMetricsTracerTest {
 
     assertThat(metricData.getHistogramData().getPoints()).hasSize(1);
     assertThat(metricData.getHistogramData().getPoints().iterator().next().getAttributes())
-            .isEqualTo(
-                    Attributes.of(
-                            AttributeKey.stringKey(RPC_RESPONSE_STATUS_ATTRIBUTE),
-                            StatusCode.Code.CANCELLED.toString()));
+        .isEqualTo(
+            Attributes.of(
+                AttributeKey.stringKey(RPC_RESPONSE_STATUS_ATTRIBUTE),
+                StatusCode.Code.CANCELLED.toString()));
   }
 
   @Test
   void operationFailed_shouldRecordsDuration() {
+    ticker.advance(TEST_REQUEST_DURATION_NANO);
     ApiException error =
-            new ApiException("test error", null, new FakeStatusCode(StatusCode.Code.INTERNAL), false);
+        new ApiException("test error", null, new FakeStatusCode(StatusCode.Code.INTERNAL), false);
     tracer.operationFailed(error);
 
     Collection<MetricData> metrics = metricReader.collectAllMetrics();
@@ -133,13 +143,14 @@ class GoldenSignalMetricsTracerTest {
     MetricData metricData = metrics.iterator().next();
 
     assertThat(metricData.getHistogramData().getPoints()).hasSize(1);
-    assertThat(metricData.getHistogramData().getPoints().iterator().next().getMax()).isNonZero();
+    assertThat(metricData.getHistogramData().getPoints().iterator().next().getMax())
+        .isEqualTo(EXPECTED_REQUEST_DURATION_SECOND);
   }
 
   @Test
   void operationFailed_shouldRecordsOKStatus() {
     ApiException error =
-            new ApiException("test error", null, new FakeStatusCode(StatusCode.Code.INTERNAL), false);
+        new ApiException("test error", null, new FakeStatusCode(StatusCode.Code.INTERNAL), false);
     tracer.operationFailed(error);
 
     Collection<MetricData> metrics = metricReader.collectAllMetrics();
@@ -148,9 +159,9 @@ class GoldenSignalMetricsTracerTest {
 
     assertThat(metricData.getHistogramData().getPoints()).hasSize(1);
     assertThat(metricData.getHistogramData().getPoints().iterator().next().getAttributes())
-            .isEqualTo(
-                    Attributes.of(
-                            AttributeKey.stringKey(RPC_RESPONSE_STATUS_ATTRIBUTE),
-                            StatusCode.Code.INTERNAL.toString()));
+        .isEqualTo(
+            Attributes.of(
+                AttributeKey.stringKey(RPC_RESPONSE_STATUS_ATTRIBUTE),
+                StatusCode.Code.INTERNAL.toString()));
   }
 }
