@@ -42,7 +42,7 @@ import java.util.Map;
 @InternalApi
 public interface TraceManager {
   /** Starts a span and returns a handle to manage its lifecycle. */
-  Span createSpan(String name, Map<String, String> attributes);
+  Span createSpan(String name, Map<String, Object> attributes);
 
   interface Span {
     void end();

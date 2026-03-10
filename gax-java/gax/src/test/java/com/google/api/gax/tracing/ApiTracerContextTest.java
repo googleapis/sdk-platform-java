@@ -45,7 +45,7 @@ class ApiTracerContextTest {
             .setLibraryMetadata(LibraryMetadata.empty())
             .setServerAddress("test-address")
             .build();
-    Map<String, String> attributes = context.getAttemptAttributes();
+    Map<String, Object> attributes = context.getAttemptAttributes();
 
     assertThat(attributes)
         .containsEntry(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, "test-address");
@@ -57,7 +57,7 @@ class ApiTracerContextTest {
         LibraryMetadata.newBuilder().setRepository("test-repo").build();
     ApiTracerContext context =
         ApiTracerContext.newBuilder().setLibraryMetadata(libraryMetadata).build();
-    Map<String, String> attributes = context.getAttemptAttributes();
+    Map<String, Object> attributes = context.getAttemptAttributes();
 
     assertThat(attributes).containsEntry(ObservabilityAttributes.REPO_ATTRIBUTE, "test-repo");
   }
@@ -68,7 +68,7 @@ class ApiTracerContextTest {
         LibraryMetadata.newBuilder().setArtifactName("test-artifact").build();
     ApiTracerContext context =
         ApiTracerContext.newBuilder().setLibraryMetadata(libraryMetadata).build();
-    Map<String, String> attributes = context.getAttemptAttributes();
+    Map<String, Object> attributes = context.getAttemptAttributes();
 
     assertThat(attributes)
         .containsEntry(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, "test-artifact");
@@ -81,7 +81,7 @@ class ApiTracerContextTest {
             .setLibraryMetadata(LibraryMetadata.empty())
             .setFullMethodName("google.pubsub.v1.Publisher/Publish")
             .build();
-    Map<String, String> attributes = context.getAttemptAttributes();
+    Map<String, Object> attributes = context.getAttemptAttributes();
 
     assertThat(attributes).doesNotContainKey(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE);
   }
@@ -94,7 +94,7 @@ class ApiTracerContextTest {
             .setFullMethodName("google.pubsub.v1.Publisher/Publish")
             .setTransport(ApiTracerContext.Transport.GRPC)
             .build();
-    Map<String, String> attributes = context.getAttemptAttributes();
+    Map<String, Object> attributes = context.getAttemptAttributes();
 
     assertThat(attributes)
         .containsEntry(
@@ -109,7 +109,7 @@ class ApiTracerContextTest {
             .setLibraryMetadata(LibraryMetadata.empty())
             .setTransport(ApiTracerContext.Transport.GRPC)
             .build();
-    Map<String, String> attributes = context.getAttemptAttributes();
+    Map<String, Object> attributes = context.getAttemptAttributes();
 
     assertThat(attributes).containsEntry(ObservabilityAttributes.RPC_SYSTEM_NAME_ATTRIBUTE, "grpc");
   }
@@ -117,7 +117,21 @@ class ApiTracerContextTest {
   @Test
   void testGetAttemptAttributes_empty() {
     ApiTracerContext context = ApiTracerContext.empty();
-    Map<String, String> attributes = context.getAttemptAttributes();
+    Map<String, Object> attributes = context.getAttemptAttributes();
+
+    assertThat(attributes).isEmpty();
+  }
+
+  @Test
+  void testGetAttemptAttributes_emptyStrings() {
+    LibraryMetadata libraryMetadata =
+        LibraryMetadata.newBuilder().setRepository("").setArtifactName("").build();
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(libraryMetadata)
+            .setServerAddress("")
+            .build();
+    Map<String, Object> attributes = context.getAttemptAttributes();
 
     assertThat(attributes).isEmpty();
   }

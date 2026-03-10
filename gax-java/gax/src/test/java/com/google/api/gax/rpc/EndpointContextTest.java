@@ -595,7 +595,7 @@ class EndpointContextTest {
   }
 
   @Test
-  void endpointContextBuild_resolvesPortAndServerAddress() throws IOException {
+  void endpointContextBuild_resolvesServerAddress() throws IOException {
     String endpoint = "http://localhost:7469";
     EndpointContext endpointContext =
         defaultEndpointContextBuilder
@@ -637,5 +637,50 @@ class EndpointContextTest {
             .setTransportChannelProviderEndpoint(null)
             .build();
     Truth.assertThat(endpointContext.resolvedServerAddress()).isEqualTo("2001:db8::1");
+  }
+
+  @Test
+  void endpointContextBuild_resolvesPort() throws IOException {
+    String endpoint = "http://localhost:7469";
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder
+            .setClientSettingsEndpoint(endpoint)
+            .setTransportChannelProviderEndpoint(null)
+            .build();
+    Truth.assertThat(endpointContext.resolvedServerPort()).isEqualTo(7469);
+
+    endpoint = "localhost:7469";
+    endpointContext =
+        defaultEndpointContextBuilder
+            .setClientSettingsEndpoint(endpoint)
+            .setTransportChannelProviderEndpoint(null)
+            .build();
+    Truth.assertThat(endpointContext.resolvedServerPort()).isEqualTo(7469);
+
+    endpoint = "test.googleapis.com:443";
+    endpointContext =
+        defaultEndpointContextBuilder
+            .setClientSettingsEndpoint(endpoint)
+            .setTransportChannelProviderEndpoint(null)
+            .build();
+    Truth.assertThat(endpointContext.resolvedServerPort()).isEqualTo(443);
+
+    // IPv6 literal with port
+    endpoint = "[2001:db8::1]:443";
+    endpointContext =
+        defaultEndpointContextBuilder
+            .setClientSettingsEndpoint(endpoint)
+            .setTransportChannelProviderEndpoint(null)
+            .build();
+    Truth.assertThat(endpointContext.resolvedServerPort()).isEqualTo(443);
+
+    // Bare IPv6 literal (no port)
+    endpoint = "2001:db8::1";
+    endpointContext =
+        defaultEndpointContextBuilder
+            .setClientSettingsEndpoint(endpoint)
+            .setTransportChannelProviderEndpoint(null)
+            .build();
+    Truth.assertThat(endpointContext.resolvedServerPort()).isNull();
   }
 }
