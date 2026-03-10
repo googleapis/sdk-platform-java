@@ -42,7 +42,6 @@ import javax.annotation.Nullable;
 class ObservabilityUtils {
 
   /** Function to extract the status of the error as a string */
-  @VisibleForTesting
   static String extractStatus(@Nullable Throwable error) {
     final String statusString;
 
@@ -59,7 +58,6 @@ class ObservabilityUtils {
     return statusString;
   }
 
-  @VisibleForTesting
   static Attributes toOtelAttributes(Map<String, String> attributes) {
     Preconditions.checkNotNull(attributes, "Attributes map cannot be null");
     AttributesBuilder attributesBuilder = Attributes.builder();
