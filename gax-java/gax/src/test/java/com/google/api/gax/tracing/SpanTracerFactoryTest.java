@@ -72,7 +72,7 @@ class SpanTracerFactoryTest {
               .setTransport(Transport.GRPC)
               .setLibraryMetadata(LibraryMetadata.empty())
               .build();
-      tracer = factory.newTracer(null, context, OperationType.Unary);
+      tracer = factory.newTracer(null, context);
     } else {
       tracer = factory.newTracer(null, SpanName.of("service", "method"), OperationType.Unary);
     }
@@ -97,7 +97,7 @@ class SpanTracerFactoryTest {
               .setTransport(Transport.GRPC)
               .setLibraryMetadata(LibraryMetadata.empty())
               .build();
-      tracer = factory.newTracer(null, context, OperationType.Unary);
+      tracer = factory.newTracer(null, context);
     } else {
       tracer = factory.newTracer(null, SpanName.of("service", "method"), OperationType.Unary);
     }
@@ -131,7 +131,7 @@ class SpanTracerFactoryTest {
               .setTransport(Transport.GRPC)
               .setLibraryMetadata(LibraryMetadata.empty())
               .build();
-      tracer = factoryWithContext.newTracer(null, callContext, OperationType.Unary);
+      tracer = factoryWithContext.newTracer(null, callContext);
     } else {
       tracer =
           factoryWithContext.newTracer(null, SpanName.of("service", "method"), OperationType.Unary);
@@ -163,7 +163,7 @@ class SpanTracerFactoryTest {
               .setTransport(Transport.GRPC)
               .setLibraryMetadata(LibraryMetadata.empty())
               .build();
-      tracer = factoryWithContext.newTracer(null, callContext, OperationType.Unary);
+      tracer = factoryWithContext.newTracer(null, callContext);
     } else {
       tracer =
           factoryWithContext.newTracer(null, SpanName.of("service", "method"), OperationType.Unary);
@@ -189,7 +189,7 @@ class SpanTracerFactoryTest {
             .build();
 
     SpanTracerFactory factory = new SpanTracerFactory(traceManager);
-    ApiTracer tracer = factory.newTracer(null, context, OperationType.Unary);
+    ApiTracer tracer = factory.newTracer(null, context);
 
     tracer.attemptStarted(null, 1);
 
@@ -206,7 +206,7 @@ class SpanTracerFactoryTest {
             .build();
 
     SpanTracerFactory factory = new SpanTracerFactory(traceManager);
-    ApiTracer tracer = factory.newTracer(null, context, OperationType.Unary);
+    ApiTracer tracer = factory.newTracer(null, context);
 
     tracer.attemptStarted(null, 1);
 
@@ -240,7 +240,7 @@ class SpanTracerFactoryTest {
             .setLibraryMetadata(LibraryMetadata.empty())
             .build();
 
-    ApiTracer tracer = factory.newTracer(null, callContext, OperationType.Unary);
+    ApiTracer tracer = factory.newTracer(null, callContext);
     tracer.attemptStarted(null, 1);
 
     ArgumentCaptor<Map<String, Object>> attributesCaptor = ArgumentCaptor.forClass(Map.class);

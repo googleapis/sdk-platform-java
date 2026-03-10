@@ -77,7 +77,7 @@ public class SpanTracerFactory implements ApiTracerFactory {
 
   @Override
   public ApiTracer newTracer(
-      ApiTracer parent, ApiTracerContext apiTracerContext, OperationType operationType) {
+      ApiTracer parent, ApiTracerContext apiTracerContext) {
     ApiTracerContext context = this.apiTracerContext.merge(apiTracerContext);
 
     String attemptSpanName;
@@ -90,8 +90,7 @@ public class SpanTracerFactory implements ApiTracerFactory {
       attemptSpanName = context.fullMethodName() + "/attempt";
     }
 
-    SpanTracer spanTracer = new SpanTracer(traceManager, context, attemptSpanName);
-    return spanTracer;
+    return new SpanTracer(traceManager, context, attemptSpanName);
   }
 
   @Override
