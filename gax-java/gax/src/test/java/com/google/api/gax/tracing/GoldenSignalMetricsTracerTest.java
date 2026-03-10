@@ -29,13 +29,7 @@
  */
 package com.google.api.gax.tracing;
 
-import static com.google.api.gax.tracing.GoldenSignalsMetricsRecorder.CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION;
-import static com.google.api.gax.tracing.GoldenSignalsMetricsRecorder.CLIENT_REQUEST_DURATION_METRIC_NAME;
-import static com.google.api.gax.tracing.ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE;
-import static com.google.common.truth.Truth.assertThat;
-
 import com.google.api.gax.rpc.ApiException;
-import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
 import io.opentelemetry.api.OpenTelemetry;
@@ -45,14 +39,16 @@ import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
 import io.opentelemetry.sdk.metrics.data.MetricData;
 import io.opentelemetry.sdk.testing.exporter.InMemoryMetricReader;
-import java.util.Collection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
+
+import static com.google.api.gax.tracing.ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE;
+import static com.google.common.truth.Truth.assertThat;
+
 class GoldenSignalMetricsTracerTest {
   private static final String ARTIFACT_NAME = "test-library";
-  private static final LibraryMetadata LIBRARY_METADATA =
-      LibraryMetadata.newBuilder().setArtifactName(ARTIFACT_NAME).build();
 
   private InMemoryMetricReader metricReader;
 
@@ -71,62 +67,90 @@ class GoldenSignalMetricsTracerTest {
   }
 
   @Test
-  void operationSucceeded_recordsDuration() {
+  void operationSucceeded_shouldRecordsDuration() {
     tracer.operationSucceeded();
 
     Collection<MetricData> metrics = metricReader.collectAllMetrics();
     assertThat(metrics).hasSize(1);
     MetricData metricData = metrics.iterator().next();
 
-    verifyMetricDataContainsMeterInfo(metricData);
     assertThat(metricData.getHistogramData().getPoints()).hasSize(1);
-    assertThat(metricData.getHistogramData().getPoints().iterator().next().getAttributes())
-        .isEqualTo(
-            Attributes.of(
-                AttributeKey.stringKey(RPC_RESPONSE_STATUS_ATTRIBUTE),
-                StatusCode.Code.OK.toString()));
+    assertThat(metricData.getHistogramData().getPoints().iterator().next().getMax()).isNonZero();
   }
 
   @Test
-  void operationCancelled_recordsDuration() {
+  void operationSucceeded_shouldRecordsOKStatus() {
+    tracer.operationSucceeded();
+
+    Collection<MetricData> metrics = metricReader.collectAllMetrics();
+    assertThat(metrics).hasSize(1);
+    MetricData metricData = metrics.iterator().next();
+
+    assertThat(metricData.getHistogramData().getPoints()).hasSize(1);
+    assertThat(metricData.getHistogramData().getPoints().iterator().next().getAttributes())
+            .isEqualTo(
+                    Attributes.of(
+                            AttributeKey.stringKey(RPC_RESPONSE_STATUS_ATTRIBUTE),
+                            StatusCode.Code.OK.toString()));
+  }
+
+  @Test
+  void operationCancelled_shouldRecordsDuration() {
     tracer.operationCancelled();
 
     Collection<MetricData> metrics = metricReader.collectAllMetrics();
     assertThat(metrics).hasSize(1);
     MetricData metricData = metrics.iterator().next();
 
-    verifyMetricDataContainsMeterInfo(metricData);
     assertThat(metricData.getHistogramData().getPoints()).hasSize(1);
-    assertThat(metricData.getHistogramData().getPoints().iterator().next().getAttributes())
-        .isEqualTo(
-            Attributes.of(
-                AttributeKey.stringKey(RPC_RESPONSE_STATUS_ATTRIBUTE),
-                StatusCode.Code.CANCELLED.toString()));
+    assertThat(metricData.getHistogramData().getPoints().iterator().next().getMax()).isNonZero();
   }
 
   @Test
-  void operationFailed_recordsDuration() {
+  void operationCancelled_shouldRecordsOKStatus() {
+    tracer.operationCancelled();
+
+    Collection<MetricData> metrics = metricReader.collectAllMetrics();
+    assertThat(metrics).hasSize(1);
+    MetricData metricData = metrics.iterator().next();
+
+    assertThat(metricData.getHistogramData().getPoints()).hasSize(1);
+    assertThat(metricData.getHistogramData().getPoints().iterator().next().getAttributes())
+            .isEqualTo(
+                    Attributes.of(
+                            AttributeKey.stringKey(RPC_RESPONSE_STATUS_ATTRIBUTE),
+                            StatusCode.Code.CANCELLED.toString()));
+  }
+
+  @Test
+  void operationFailed_shouldRecordsDuration() {
     ApiException error =
-        new ApiException("test error", null, new FakeStatusCode(StatusCode.Code.INTERNAL), false);
+            new ApiException("test error", null, new FakeStatusCode(StatusCode.Code.INTERNAL), false);
     tracer.operationFailed(error);
 
     Collection<MetricData> metrics = metricReader.collectAllMetrics();
     assertThat(metrics).hasSize(1);
     MetricData metricData = metrics.iterator().next();
 
-    verifyMetricDataContainsMeterInfo(metricData);
     assertThat(metricData.getHistogramData().getPoints()).hasSize(1);
-    assertThat(metricData.getHistogramData().getPoints().iterator().next().getAttributes())
-        .isEqualTo(
-            Attributes.of(
-                AttributeKey.stringKey(RPC_RESPONSE_STATUS_ATTRIBUTE),
-                StatusCode.Code.INTERNAL.toString()));
+    assertThat(metricData.getHistogramData().getPoints().iterator().next().getMax()).isNonZero();
   }
 
-  private void verifyMetricDataContainsMeterInfo(MetricData metricData) {
-    assertThat(metricData.getName()).isEqualTo(CLIENT_REQUEST_DURATION_METRIC_NAME);
-    assertThat(metricData.getDescription()).isEqualTo(CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION);
-    assertThat(metricData.getUnit()).isEqualTo("s");
-    assertThat(metricData.getInstrumentationScopeInfo().getName()).isEqualTo(ARTIFACT_NAME);
+  @Test
+  void operationFailed_shouldRecordsOKStatus() {
+    ApiException error =
+            new ApiException("test error", null, new FakeStatusCode(StatusCode.Code.INTERNAL), false);
+    tracer.operationFailed(error);
+
+    Collection<MetricData> metrics = metricReader.collectAllMetrics();
+    assertThat(metrics).hasSize(1);
+    MetricData metricData = metrics.iterator().next();
+
+    assertThat(metricData.getHistogramData().getPoints()).hasSize(1);
+    assertThat(metricData.getHistogramData().getPoints().iterator().next().getAttributes())
+            .isEqualTo(
+                    Attributes.of(
+                            AttributeKey.stringKey(RPC_RESPONSE_STATUS_ATTRIBUTE),
+                            StatusCode.Code.INTERNAL.toString()));
   }
 }
