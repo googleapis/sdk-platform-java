@@ -60,6 +60,7 @@ class TracedBatchingCallableTest {
           .setFullMethodName("FakeClient/FakeRpc")
           .setTransport(Transport.GRPC)
           .setLibraryMetadata(LibraryMetadata.empty())
+          .setOperationType(OperationType.Batching)
           .build();
 
   @Mock private ApiTracerFactory tracerFactory;
@@ -74,8 +75,7 @@ class TracedBatchingCallableTest {
   void init(boolean useContext) {
     // Wire the mock tracer factory
     if (useContext) {
-      when(tracerFactory.newTracer(
-              any(ApiTracer.class), any(ApiTracerContext.class), eq(OperationType.Batching)))
+      when(tracerFactory.newTracer(any(ApiTracer.class), any(ApiTracerContext.class)))
           .thenReturn(tracer);
       tracedBatchingCallable =
           new TracedBatchingCallable<>(
@@ -102,8 +102,7 @@ class TracedBatchingCallableTest {
     init(useContext);
     tracedBatchingCallable.futureCall("test", callContext);
     if (useContext) {
-      verify(tracerFactory, times(1))
-          .newTracer(callContext.getTracer(), TRACER_CONTEXT, OperationType.Batching);
+      verify(tracerFactory, times(1)).newTracer(callContext.getTracer(), TRACER_CONTEXT);
     } else {
       verify(tracerFactory, times(1))
           .newTracer(callContext.getTracer(), SPAN_NAME, OperationType.Batching);

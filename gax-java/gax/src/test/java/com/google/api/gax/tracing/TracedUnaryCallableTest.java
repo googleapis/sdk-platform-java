@@ -58,6 +58,7 @@ class TracedUnaryCallableTest {
           .setFullMethodName("FakeClient/FakeRpc")
           .setTransport(Transport.GRPC)
           .setLibraryMetadata(LibraryMetadata.empty())
+          .setOperationType(OperationType.Unary)
           .build();
 
   @Mock private ApiTracerFactory tracerFactory;
@@ -74,8 +75,7 @@ class TracedUnaryCallableTest {
 
     // Wire the mock tracer factory
     if (useContext) {
-      when(tracerFactory.newTracer(
-              any(ApiTracer.class), any(ApiTracerContext.class), eq(OperationType.Unary)))
+      when(tracerFactory.newTracer(any(ApiTracer.class), any(ApiTracerContext.class)))
           .thenReturn(tracer);
       tracedUnaryCallable = new TracedUnaryCallable<>(innerCallable, tracerFactory, TRACER_CONTEXT);
     } else {
@@ -98,7 +98,7 @@ class TracedUnaryCallableTest {
     init(useContext);
     tracedUnaryCallable.futureCall("test", callContext);
     if (useContext) {
-      verify(tracerFactory, times(1)).newTracer(parentTracer, TRACER_CONTEXT, OperationType.Unary);
+      verify(tracerFactory, times(1)).newTracer(parentTracer, TRACER_CONTEXT);
     } else {
       verify(tracerFactory, times(1)).newTracer(parentTracer, SPAN_NAME, OperationType.Unary);
     }

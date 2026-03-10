@@ -81,9 +81,7 @@ public final class TracedServerStreamingCallable<RequestT, ResponseT>
 
     ApiTracer tracer;
     if (apiTracerContext != null) {
-      tracer =
-          tracerFactory.newTracer(
-              context.getTracer(), apiTracerContext, OperationType.ServerStreaming);
+      tracer = tracerFactory.newTracer(context.getTracer(), apiTracerContext);
     } else {
       tracer =
           tracerFactory.newTracer(context.getTracer(), spanName, OperationType.ServerStreaming);

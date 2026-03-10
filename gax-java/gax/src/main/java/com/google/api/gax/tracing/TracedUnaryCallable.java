@@ -82,7 +82,7 @@ public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<Requ
   public ApiFuture<ResponseT> futureCall(RequestT request, ApiCallContext context) {
     ApiTracer tracer;
     if (apiTracerContext != null) {
-      tracer = tracerFactory.newTracer(context.getTracer(), apiTracerContext, OperationType.Unary);
+      tracer = tracerFactory.newTracer(context.getTracer(), apiTracerContext);
     } else {
       tracer = tracerFactory.newTracer(context.getTracer(), spanName, OperationType.Unary);
     }

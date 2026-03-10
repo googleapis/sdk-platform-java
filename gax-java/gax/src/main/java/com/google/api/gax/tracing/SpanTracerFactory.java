@@ -88,8 +88,7 @@ public class SpanTracerFactory implements ApiTracerFactory {
           String.format("%s %s", mergedContext.httpMethod(), mergedContext.httpPathTemplate());
     }
 
-    SpanTracer spanTracer = new SpanTracer(traceManager, mergedContext, attemptSpanName);
-    return spanTracer;
+    return new SpanTracer(traceManager, mergedContext, attemptSpanName);
   }
 
   @Override

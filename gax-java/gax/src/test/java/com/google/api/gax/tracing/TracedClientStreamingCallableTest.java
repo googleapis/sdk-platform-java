@@ -31,7 +31,6 @@ package com.google.api.gax.tracing;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -65,6 +64,7 @@ class TracedClientStreamingCallableTest {
           .setFullMethodName("fake-client/fake-method")
           .setTransport(Transport.GRPC)
           .setLibraryMetadata(LibraryMetadata.empty())
+          .setOperationType(OperationType.ClientStreaming)
           .build();
 
   @Mock private ApiTracerFactory tracerFactory;
@@ -81,8 +81,7 @@ class TracedClientStreamingCallableTest {
     callContext = FakeCallContext.createDefault();
     innerCallable = new FakeClientCallable();
     if (useContext) {
-      when(tracerFactory.newTracer(
-              any(ApiTracer.class), any(ApiTracerContext.class), eq(OperationType.ClientStreaming)))
+      when(tracerFactory.newTracer(any(ApiTracer.class), any(ApiTracerContext.class)))
           .thenReturn(tracer);
       tracedCallable =
           new TracedClientStreamingCallable<>(innerCallable, tracerFactory, TRACER_CONTEXT);
@@ -100,8 +99,7 @@ class TracedClientStreamingCallableTest {
     tracedCallable.clientStreamingCall(outerResponseObsever, callContext);
 
     if (useContext) {
-      verify(tracerFactory, times(1))
-          .newTracer(parentTracer, TRACER_CONTEXT, OperationType.ClientStreaming);
+      verify(tracerFactory, times(1)).newTracer(parentTracer, TRACER_CONTEXT);
     } else {
       verify(tracerFactory, times(1))
           .newTracer(parentTracer, SPAN_NAME, OperationType.ClientStreaming);

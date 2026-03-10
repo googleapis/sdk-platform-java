@@ -32,7 +32,9 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.LibraryMetadata;
+import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Strings;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
@@ -67,6 +69,16 @@ public abstract class ApiTracerContext {
    */
   @Nullable
   abstract String serverAddress();
+
+  /**
+   * Returns the server port of the RPC.
+   *
+   * <p>Example: 1337. This maps to the {@code server.port} attribute.
+   *
+   * @return the server port, or {@code null} if not set
+   */
+  @Nullable
+  public abstract Integer serverPort();
 
   /**
    * Returns the library metadata associated with the RPC.
@@ -116,38 +128,67 @@ public abstract class ApiTracerContext {
   @Nullable
   abstract Transport transport();
 
+  /**
+   * Returns the type of operation the {@link ApiTracer} is tracing.
+   *
+   * @return the operation type, or {@code null} if not set
+   */
+  @Nullable
+  public abstract OperationType operationType();
+
+  /**
+   * Returns the HTTP method used for the RPC, in case the RPC is an HttpJson method.
+   *
+   * <p>Example: {@code PATCH}.
+   *
+   * @return the HTTP method, or {@code null} if not set
+   */
   @Nullable
   abstract String httpMethod();
 
+  /**
+   * Returns the HTTP path template used for the RPC, in case the RPC is an HttpJson method.
+   *
+   * <p>Example: {@code /users/{user_id}/get}.
+   *
+   * @return the HTTP path template, or {@code null} if not set
+   */
   @Nullable
   abstract String httpPathTemplate();
 
   /**
    * @return a map of attributes to be included in attempt-level spans
    */
-  Map<String, String> getAttemptAttributes() {
-    Map<String, String> attributes = new HashMap<>();
-    if (serverAddress() != null) {
+  public Map<String, Object> getAttemptAttributes() {
+    Map<String, Object> attributes = new HashMap<>();
+    if (!Strings.isNullOrEmpty(serverAddress())) {
       attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress());
+    }
+    if (serverPort() != null) {
+      attributes.put(ObservabilityAttributes.SERVER_PORT_ATTRIBUTE, serverPort());
     }
     if (rpcSystemName() != null) {
       attributes.put(ObservabilityAttributes.RPC_SYSTEM_NAME_ATTRIBUTE, rpcSystemName());
     }
-    if (libraryMetadata().repository() != null) {
-      attributes.put(ObservabilityAttributes.REPO_ATTRIBUTE, libraryMetadata().repository());
-    }
-    if (libraryMetadata().artifactName() != null) {
-      attributes.put(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, libraryMetadata().artifactName());
-    }
-    if (transport() == Transport.HTTP) {
-      if (httpMethod() != null) {
-        attributes.put(ObservabilityAttributes.HTTP_METHOD_ATTRIBUTE, httpMethod());
+    if (!libraryMetadata().isEmpty()) {
+      if (!Strings.isNullOrEmpty(libraryMetadata().repository())) {
+        attributes.put(ObservabilityAttributes.REPO_ATTRIBUTE, libraryMetadata().repository());
+      }
+      if (!Strings.isNullOrEmpty(libraryMetadata().artifactName())) {
+        attributes.put(
+            ObservabilityAttributes.ARTIFACT_ATTRIBUTE, libraryMetadata().artifactName());
       }
     }
     if (transport() == Transport.GRPC) {
-      if (fullMethodName() != null) {
+      if (!Strings.isNullOrEmpty(fullMethodName())) {
         attributes.put(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE, fullMethodName());
       }
+      if (Strings.isNullOrEmpty(fullMethodName())) {
+        attributes.put(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE, fullMethodName());
+      }
+    }
+    if (transport() == Transport.HTTP && !Strings.isNullOrEmpty(httpMethod())) {
+      attributes.put(ObservabilityAttributes.HTTP_METHOD_ATTRIBUTE, httpMethod());
     }
     return attributes;
   }
@@ -160,23 +201,29 @@ public abstract class ApiTracerContext {
    */
   ApiTracerContext merge(ApiTracerContext other) {
     Builder builder = toBuilder();
-    if (other.serverAddress() != null) {
+    if (!Strings.isNullOrEmpty(other.serverAddress())) {
       builder.setServerAddress(other.serverAddress());
+    }
+    if (other.serverPort() != null) {
+      builder.setServerPort(other.serverPort());
     }
     if (!other.libraryMetadata().isEmpty()) {
       builder.setLibraryMetadata(other.libraryMetadata());
     }
-    if (other.fullMethodName() != null) {
+    if (!Strings.isNullOrEmpty(other.fullMethodName())) {
       builder.setFullMethodName(other.fullMethodName());
     }
     if (other.transport() != null) {
       builder.setTransport(other.transport());
     }
-    if (other.httpMethod() != null) {
+    if (!Strings.isNullOrEmpty(other.httpMethod())) {
       builder.setHttpMethod(other.httpMethod());
     }
-    if (other.httpPathTemplate() != null) {
+    if (!Strings.isNullOrEmpty(other.httpPathTemplate())) {
       builder.setHttpPathTemplate(other.httpPathTemplate());
+    }
+    if (other.operationType() != null) {
+      builder.setOperationType(other.operationType());
     }
     return builder.build();
   }
@@ -200,6 +247,10 @@ public abstract class ApiTracerContext {
     public abstract Builder setFullMethodName(@Nullable String rpcMethod);
 
     public abstract Builder setTransport(@Nullable Transport transport);
+
+    public abstract Builder setOperationType(@Nullable OperationType operationType);
+
+    public abstract Builder setServerPort(@Nullable Integer serverPort);
 
     public abstract Builder setHttpMethod(@Nullable String httpMethod);
 

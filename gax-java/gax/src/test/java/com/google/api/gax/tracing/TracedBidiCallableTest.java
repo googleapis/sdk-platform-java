@@ -31,7 +31,6 @@ package com.google.api.gax.tracing;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -65,6 +64,7 @@ class TracedBidiCallableTest {
           .setFullMethodName("fake-client/fake-method")
           .setTransport(Transport.GRPC)
           .setLibraryMetadata(LibraryMetadata.empty())
+          .setOperationType(OperationType.BidiStreaming)
           .build();
 
   private FakeBidiObserver outerObserver;
@@ -84,8 +84,7 @@ class TracedBidiCallableTest {
     outerCallContext = FakeCallContext.createDefault();
 
     if (useContext) {
-      when(tracerFactory.newTracer(
-              any(ApiTracer.class), any(ApiTracerContext.class), eq(OperationType.BidiStreaming)))
+      when(tracerFactory.newTracer(any(ApiTracer.class), any(ApiTracerContext.class)))
           .thenReturn(tracer);
     } else {
       when(tracerFactory.newTracer(parentTracer, SPAN_NAME, OperationType.BidiStreaming))
@@ -108,8 +107,7 @@ class TracedBidiCallableTest {
     tracedCallable.call(outerObserver, outerCallContext);
 
     if (useContext) {
-      verify(tracerFactory, times(1))
-          .newTracer(parentTracer, TRACER_CONTEXT, OperationType.BidiStreaming);
+      verify(tracerFactory, times(1)).newTracer(parentTracer, TRACER_CONTEXT);
     } else {
       verify(tracerFactory, times(1))
           .newTracer(parentTracer, SPAN_NAME, OperationType.BidiStreaming);
