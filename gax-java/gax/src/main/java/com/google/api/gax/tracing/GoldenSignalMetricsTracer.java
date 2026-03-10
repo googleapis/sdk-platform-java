@@ -47,6 +47,7 @@ class GoldenSignalMetricsTracer implements ApiTracer {
   private final Stopwatch clientRequestTimer = Stopwatch.createStarted();
   private final GoldenSignalsMetricsRecorder metricsRecorder;
   private final Map<String, String> attributes = new HashMap<>();
+  private final ApiTracerContext apiTracerContext;
 
   /**
    * Creates the following instruments for the following metrics:
@@ -55,15 +56,18 @@ class GoldenSignalMetricsTracer implements ApiTracer {
    *   <li>Client Request Duration: Histogram
    * </ul>
    *
-   * @param metricsRecorder OpenTelemetry
+   * @param metricsRecorder  OpenTelemetry
+   * @param apiTracerContext
    */
-  GoldenSignalMetricsTracer(GoldenSignalsMetricsRecorder metricsRecorder) {
+  GoldenSignalMetricsTracer(GoldenSignalsMetricsRecorder metricsRecorder, ApiTracerContext apiTracerContext) {
     this.metricsRecorder = metricsRecorder;
+    this.apiTracerContext = apiTracerContext;
   }
 
   @Override
   public void operationSucceeded() {
     attributes.put(RPC_RESPONSE_STATUS_ATTRIBUTE, StatusCode.Code.OK.toString());
+    attributes.putAll(apiTracerContext.getMetricsAttributes());
     metricsRecorder.recordOperationLatency(
         clientRequestTimer.elapsed(TimeUnit.SECONDS), attributes);
   }
@@ -71,6 +75,7 @@ class GoldenSignalMetricsTracer implements ApiTracer {
   @Override
   public void operationCancelled() {
     attributes.put(RPC_RESPONSE_STATUS_ATTRIBUTE, StatusCode.Code.CANCELLED.toString());
+    attributes.putAll(apiTracerContext.getMetricsAttributes());
     metricsRecorder.recordOperationLatency(
         clientRequestTimer.elapsed(TimeUnit.SECONDS), attributes);
   }
@@ -78,6 +83,7 @@ class GoldenSignalMetricsTracer implements ApiTracer {
   @Override
   public void operationFailed(Throwable error) {
     attributes.put(RPC_RESPONSE_STATUS_ATTRIBUTE, ObservabilityUtils.extractStatus(error));
+    attributes.putAll(apiTracerContext.getMetricsAttributes());
     metricsRecorder.recordOperationLatency(
         clientRequestTimer.elapsed(TimeUnit.SECONDS), attributes);
   }

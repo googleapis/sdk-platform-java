@@ -57,7 +57,7 @@ public class GoldenSignalMetricsTracerFactory implements ApiTracerFactory {
       // regular requests.
       return new BaseApiTracer();
     }
-    return new GoldenSignalMetricsTracer(metricsRecorder);
+    return new GoldenSignalMetricsTracer(metricsRecorder, apiTracerContext);
   }
 
   @Override

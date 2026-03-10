@@ -63,7 +63,7 @@ class GoldenSignalMetricsTracerTest {
         OpenTelemetrySdk.builder().setMeterProvider(meterProvider).build();
     tracer =
         new GoldenSignalMetricsTracer(
-            new GoldenSignalsMetricsRecorder(openTelemetry, ARTIFACT_NAME));
+            new GoldenSignalsMetricsRecorder(openTelemetry, ARTIFACT_NAME), ApiTracerContext.empty());
   }
 
   @Test

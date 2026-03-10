@@ -33,9 +33,22 @@ package com.google.api.gax.tracing;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.auto.value.AutoValue;
+import org.apache.http.protocol.HTTP;
+
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
+//gcp.client.service [consistent across T4 spans]
+//gcp.client.version [consistent across T4 spans]
+//        rpc.system.name (e.g., grpc, http) [consistent across T4 spans]
+//        rpc.response.status_code (for gRPC and HTTP) [from last T4 span]
+//        rpc.method (for gRPC and HTTP) [from the last T4 span]
+//url.domain [consistent across T4 spans]
+//        url.template (for HTTP) [from the first T4 span]
+//        http.response.status_code (for HTTP) [from the last T4 span]
+//server.address [from the last T4 span]
+//server.port [from the last T4 span]
+//        error.type (if the overall T3 operation failed)
 
 /**
  * A context object that contains information used to infer attributes that are common for all
@@ -51,6 +64,15 @@ public abstract class ApiTracerContext {
 
   public abstract LibraryMetadata libraryMetadata();
 
+  @Nullable
+  public abstract String serviceName();
+
+  @Nullable
+  public abstract String urlDomain();
+
+  @Nullable
+  public abstract String urlTemplate();
+
   /**
    * @return a map of attributes to be included in attempt-level spans
    */
@@ -64,6 +86,25 @@ public abstract class ApiTracerContext {
     }
     if (libraryMetadata().artifactName() != null) {
       attributes.put(ObservabilityAttributes.ARTIFACT_ATTRIBUTE, libraryMetadata().artifactName());
+    }
+    return attributes;
+  }
+
+  Map<String, String> getMetricsAttributes() {
+    Map<String, String> attributes = new HashMap<>();
+    if (serverAddress() != null) {
+      attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress());
+    }
+    if (serviceName() != null) {
+      attributes.put("gcp.client.service", serviceName());
+    }
+    if (transport() == HTTP) {
+      if (urlDomain() != null) {
+        attributes.put("url.domain", serviceName());
+      }
+      if (serviceName() != null) {
+        attributes.put("url.template", serviceName());
+      }
     }
     return attributes;
   }
