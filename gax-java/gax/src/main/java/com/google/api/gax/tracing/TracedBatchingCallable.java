@@ -73,7 +73,8 @@ public class TracedBatchingCallable<RequestT, ResponseT>
       ApiTracerContext apiTracerContext,
       BatchingDescriptor<RequestT, ResponseT> batchingDescriptor) {
     this.tracerFactory = tracerFactory;
-    this.apiTracerContext = apiTracerContext;
+    this.apiTracerContext =
+        apiTracerContext.toBuilder().setOperationType(OperationType.Batching).build();
     this.batchingDescriptor = batchingDescriptor;
     this.innerCallable = innerCallable;
     this.spanName = SpanName.of(apiTracerContext);

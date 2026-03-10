@@ -70,7 +70,9 @@ public final class TracedServerStreamingCallable<RequestT, ResponseT>
       @Nonnull ApiTracerContext apiTracerContext) {
     this.tracerFactory = Preconditions.checkNotNull(tracerFactory, "tracerFactory can't be null");
     this.apiTracerContext =
-        Preconditions.checkNotNull(apiTracerContext, "apiTracerContext can't be null");
+        Preconditions.checkNotNull(apiTracerContext, "apiTracerContext can't be null").toBuilder()
+            .setOperationType(OperationType.ClientStreaming)
+            .build();
     this.innerCallable = Preconditions.checkNotNull(innerCallable, "innerCallable can't be null");
     this.spanName = SpanName.of(this.apiTracerContext);
   }
