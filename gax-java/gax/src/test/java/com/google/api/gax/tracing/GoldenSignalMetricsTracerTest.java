@@ -53,8 +53,6 @@ class GoldenSignalMetricsTracerTest {
   private static final String ARTIFACT_NAME = "test-library";
   private static final LibraryMetadata LIBRARY_METADATA =
       LibraryMetadata.newBuilder().setArtifactName(ARTIFACT_NAME).build();
-  private static final ApiTracerContext CONTEXT =
-      ApiTracerContext.newBuilder().setLibraryMetadata(LIBRARY_METADATA).build();
 
   private InMemoryMetricReader metricReader;
 

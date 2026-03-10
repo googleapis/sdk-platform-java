@@ -75,7 +75,6 @@ class ObservabilityUtilsTest {
     String attribute2Value = "Does not matter";
     Map<String, String> attributes =
         ImmutableMap.of(attribute1, attribute1Value, attribute2, attribute2Value);
-    ;
 
     Attributes otelAttributes = ObservabilityUtils.toOtelAttributes(attributes);
 
