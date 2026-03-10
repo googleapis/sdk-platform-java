@@ -29,6 +29,9 @@
  */
 package com.google.api.gax.tracing;
 
+import static com.google.api.gax.tracing.GoldenSignalsMetricsRecorder.BOUNDARIES;
+import static com.google.api.gax.tracing.GoldenSignalsMetricsRecorder.CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION;
+import static com.google.api.gax.tracing.GoldenSignalsMetricsRecorder.CLIENT_REQUEST_DURATION_METRIC_NAME;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.common.collect.ImmutableMap;
@@ -42,10 +45,6 @@ import io.opentelemetry.sdk.testing.exporter.InMemoryMetricReader;
 import java.util.Collection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static com.google.api.gax.tracing.GoldenSignalsMetricsRecorder.CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION;
-import static com.google.api.gax.tracing.GoldenSignalsMetricsRecorder.CLIENT_REQUEST_DURATION_METRIC_NAME;
-import static com.google.api.gax.tracing.GoldenSignalsMetricsRecorder.BOUNDARIES;
 
 class GoldenSignalsMetricsRecorderTest {
   private static final String ARTIFACT_NAME = "test-library";
