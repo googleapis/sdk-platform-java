@@ -159,7 +159,7 @@ public abstract class ApiTracerContext {
             ObservabilityAttributes.ARTIFACT_ATTRIBUTE, libraryMetadata().artifactName());
       }
     }
-    if (transport() == Transport.GRPC && fullMethodName() != null) {
+    if (transport() == Transport.GRPC && !Strings.isNullOrEmpty(fullMethodName())) {
       attributes.put(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE, fullMethodName());
     }
     return attributes;
