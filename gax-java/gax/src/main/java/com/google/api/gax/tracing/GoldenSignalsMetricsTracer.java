@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
  * GoldenSignalsMetricsRecorder}, hence this class should not have any knowledge about the
  * observability framework (e.g. OpenTelemetry).
  */
-class GoldenSignalMetricsTracer implements ApiTracer {
+class GoldenSignalsMetricsTracer implements ApiTracer {
   private final Stopwatch clientRequestTimer;
   private final GoldenSignalsMetricsRecorder metricsRecorder;
   private final Map<String, String> attributes = new HashMap<>();
@@ -59,17 +59,22 @@ class GoldenSignalMetricsTracer implements ApiTracer {
    *
    * @param metricsRecorder OpenTelemetry
    */
-  GoldenSignalMetricsTracer(GoldenSignalsMetricsRecorder metricsRecorder) {
+  GoldenSignalsMetricsTracer(GoldenSignalsMetricsRecorder metricsRecorder) {
     this.clientRequestTimer = Stopwatch.createStarted();
     this.metricsRecorder = metricsRecorder;
   }
 
   @VisibleForTesting
-  GoldenSignalMetricsTracer(GoldenSignalsMetricsRecorder metricsRecorder, Ticker ticker) {
+  GoldenSignalsMetricsTracer(GoldenSignalsMetricsRecorder metricsRecorder, Ticker ticker) {
     this.clientRequestTimer = Stopwatch.createStarted(ticker);
     this.metricsRecorder = metricsRecorder;
   }
 
+  /**
+   * The concept of "operation" and "client request" are the same. They both represent the total
+   * time taken for a logical client request, including any retries, backoff, and
+   * pre/post-processing
+   */
   @Override
   public void operationSucceeded() {
     attributes.put(RPC_RESPONSE_STATUS_ATTRIBUTE, StatusCode.Code.OK.toString());

@@ -47,14 +47,14 @@ import java.util.Collection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class GoldenSignalMetricsTracerTest {
+class GoldenSignalsMetricsTracerTest {
   private static final String ARTIFACT_NAME = "test-library";
   public static final int TEST_REQUEST_DURATION_NANO = 2345698;
   public static final double EXPECTED_REQUEST_DURATION_SECOND = 2345698 / 1_000_000_000.0;
 
   private InMemoryMetricReader metricReader;
 
-  private GoldenSignalMetricsTracer tracer;
+  private GoldenSignalsMetricsTracer tracer;
 
   private FakeTicker ticker;
 
@@ -67,7 +67,7 @@ class GoldenSignalMetricsTracerTest {
         OpenTelemetrySdk.builder().setMeterProvider(meterProvider).build();
     ticker = new FakeTicker();
     tracer =
-        new GoldenSignalMetricsTracer(
+        new GoldenSignalsMetricsTracer(
             new GoldenSignalsMetricsRecorder(openTelemetry, ARTIFACT_NAME), ticker);
   }
 
