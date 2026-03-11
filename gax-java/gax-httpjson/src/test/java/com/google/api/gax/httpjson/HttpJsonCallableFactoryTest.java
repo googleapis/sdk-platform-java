@@ -35,6 +35,7 @@ import static com.google.common.truth.Truth.assertWithMessage;
 import com.google.api.client.http.HttpMethods;
 import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.api.gax.tracing.SpanName;
+import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import java.util.List;
@@ -44,6 +45,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 class HttpJsonCallableFactoryTest {
+  private HttpRequestFormatter createMockRequestFormatter() {
+    HttpRequestFormatter formatter = Mockito.mock(HttpRequestFormatter.class);
+    PathTemplate template = PathTemplate.create("/test/path/template");
+    Mockito.when(formatter.getPathTemplate()).thenReturn(template);
+    return formatter;
+  }
+
   @Test
   void testGetApiTracerContext() {
     Map<String, SpanName> validNames =
@@ -57,7 +65,7 @@ class HttpJsonCallableFactoryTest {
           ApiMethodDescriptor.newBuilder()
               .setFullMethodName(entry.getKey())
               .setHttpMethod(HttpMethods.POST)
-              .setRequestFormatter(Mockito.mock(HttpRequestFormatter.class))
+              .setRequestFormatter(createMockRequestFormatter())
               .setResponseParser(Mockito.mock(HttpResponseParser.class))
               .build();
 
@@ -78,7 +86,7 @@ class HttpJsonCallableFactoryTest {
           ApiMethodDescriptor.newBuilder()
               .setFullMethodName(invalidName)
               .setHttpMethod(HttpMethods.POST)
-              .setRequestFormatter(Mockito.mock(HttpRequestFormatter.class))
+              .setRequestFormatter(createMockRequestFormatter())
               .setResponseParser(Mockito.mock(HttpResponseParser.class))
               .build();
 
