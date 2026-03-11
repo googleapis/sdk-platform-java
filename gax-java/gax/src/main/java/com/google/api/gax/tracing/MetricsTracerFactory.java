@@ -31,6 +31,7 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
 
@@ -66,6 +67,7 @@ public class MetricsTracerFactory implements ApiTracerFactory {
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
+    Preconditions.checkNotNull(operationType, "operationType cannot be null.");
     MetricsTracer metricsTracer =
         new MetricsTracer(
             MethodName.of(spanName.getClientName(), spanName.getMethodName()), metricsRecorder);

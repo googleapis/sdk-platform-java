@@ -50,9 +50,11 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.concurrent.CancellationException;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -104,6 +106,24 @@ class TracedClientStreamingCallableTest {
       verify(tracerFactory, times(1))
           .newTracer(parentTracer, SPAN_NAME, OperationType.ClientStreaming);
     }
+  }
+
+  @Test
+  void testOperationTypeIsSet() {
+    init(true);
+    ApiTracerContext contextWithWrongType =
+        TRACER_CONTEXT.toBuilder().setOperationType(OperationType.Unary).build();
+
+    innerCallable = new FakeClientCallable();
+    tracedCallable =
+        new TracedClientStreamingCallable<>(innerCallable, tracerFactory, contextWithWrongType);
+
+    tracedCallable.clientStreamingCall(new FakeStreamObserver(), FakeCallContext.createDefault());
+
+    ArgumentCaptor<ApiTracerContext> contextCaptor =
+        ArgumentCaptor.forClass(ApiTracerContext.class);
+    verify(tracerFactory).newTracer(any(ApiTracer.class), contextCaptor.capture());
+    assertThat(contextCaptor.getValue().operationType()).isEqualTo(OperationType.ClientStreaming);
   }
 
   @ParameterizedTest

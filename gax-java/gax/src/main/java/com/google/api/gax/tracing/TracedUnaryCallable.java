@@ -68,7 +68,8 @@ public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<Requ
       ApiTracerContext apiTracerContext) {
     this.innerCallable = innerCallable;
     this.tracerFactory = tracerFactory;
-    this.apiTracerContext = apiTracerContext;
+    this.apiTracerContext =
+        apiTracerContext.toBuilder().setOperationType(OperationType.Unary).build();
     this.spanName = SpanName.of(apiTracerContext);
   }
 

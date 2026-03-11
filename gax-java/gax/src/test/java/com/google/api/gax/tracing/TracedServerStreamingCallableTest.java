@@ -40,7 +40,6 @@ import static org.mockito.Mockito.when;
 
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.CancelledException;
-import com.google.api.gax.rpc.LibraryMetadata;
 import com.google.api.gax.rpc.ResponseObserver;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.StatusCode.Code;
@@ -49,8 +48,8 @@ import com.google.api.gax.rpc.testing.FakeStatusCode;
 import com.google.api.gax.rpc.testing.MockStreamingApi.MockResponseObserver;
 import com.google.api.gax.rpc.testing.MockStreamingApi.MockServerStreamingCall;
 import com.google.api.gax.rpc.testing.MockStreamingApi.MockServerStreamingCallable;
-import com.google.api.gax.tracing.ApiTracerContext.Transport;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -60,16 +59,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class TracedServerStreamingCallableTest {
   private static final SpanName SPAN_NAME = SpanName.of("FakeClient", "FakeRpc");
-  private static final ApiTracerContext TRACER_CONTEXT =
-      ApiTracerContext.newBuilder()
-          .setFullMethodName("FakeClient/FakeRpc")
-          .setTransport(Transport.GRPC)
-          .setLibraryMetadata(LibraryMetadata.empty())
-          .setOperationType(OperationType.ServerStreaming)
-          .build();
 
   @Mock private ApiTracerFactory tracerFactory;
   @Mock private ApiTracer tracer;
+  @Mock private ApiTracerContext tracerContext;
+  @Mock private ApiTracerContext.Builder tracerContextBuilder;
 
   private MockServerStreamingCallable<String, String> innerCallable;
   private TracedServerStreamingCallable<String, String> tracedCallable;
@@ -81,10 +75,14 @@ class TracedServerStreamingCallableTest {
     innerCallable = new MockServerStreamingCallable<>();
     // Wire the mock tracer factory
     if (useContext) {
+      when(tracerContext.toBuilder()).thenReturn(tracerContextBuilder);
+      when(tracerContextBuilder.setOperationType(any())).thenReturn(tracerContextBuilder);
+      when(tracerContextBuilder.build()).thenReturn(tracerContext);
       when(tracerFactory.newTracer(any(ApiTracer.class), any(ApiTracerContext.class)))
           .thenReturn(tracer);
+      when(tracerContext.fullMethodName()).thenReturn("FakeClient/FakeRpc");
       tracedCallable =
-          new TracedServerStreamingCallable<>(innerCallable, tracerFactory, TRACER_CONTEXT);
+          new TracedServerStreamingCallable<>(innerCallable, tracerFactory, tracerContext);
     } else {
       when(tracerFactory.newTracer(
               any(ApiTracer.class), any(SpanName.class), eq(OperationType.ServerStreaming)))
@@ -102,11 +100,19 @@ class TracedServerStreamingCallableTest {
     init(useContext);
     tracedCallable.call("test", responseObserver, callContext);
     if (useContext) {
-      verify(tracerFactory, times(1)).newTracer(parentTracer, TRACER_CONTEXT);
+      verify(tracerFactory, times(1)).newTracer(parentTracer, tracerContext);
     } else {
       verify(tracerFactory, times(1))
           .newTracer(parentTracer, SPAN_NAME, OperationType.ServerStreaming);
     }
+  }
+
+  @Test
+  void testOperationTypeIsSet() {
+    init(true);
+    tracedCallable.call("test", responseObserver, callContext);
+
+    verify(tracerContextBuilder).setOperationType(OperationType.ServerStreaming);
   }
 
   @ParameterizedTest
@@ -189,7 +195,7 @@ class TracedServerStreamingCallableTest {
     // Recreate the tracedCallable using the new inner callable
     if (useContext) {
       tracedCallable =
-          new TracedServerStreamingCallable<>(innerCallable, tracerFactory, TRACER_CONTEXT);
+          new TracedServerStreamingCallable<>(innerCallable, tracerFactory, tracerContext);
     } else {
       tracedCallable = new TracedServerStreamingCallable<>(innerCallable, tracerFactory, SPAN_NAME);
     }
