@@ -63,6 +63,24 @@ public interface ApiTracerFactory {
   ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType);
 
   /**
+   * Create a new {@link ApiTracer} that will be a child of the current context.
+   *
+   * @param parent the parent of this tracer
+   * @param tracerContext the method-definition-specific tracer context
+   */
+  default ApiTracer newTracer(ApiTracer parent, ApiTracerContext tracerContext) {
+    SpanName spanName = SpanName.of(tracerContext);
+    return newTracer(parent, spanName, tracerContext.operationType());
+  }
+
+  /**
+   * @return the {@link ApiTracerContext} for this factory
+   */
+  default ApiTracerContext getApiTracerContext() {
+    return ApiTracerContext.empty();
+  }
+
+  /**
    * Returns a new {@link ApiTracerFactory} that will use the provided context to infer attributes
    * for all tracers created by the factory.
    *

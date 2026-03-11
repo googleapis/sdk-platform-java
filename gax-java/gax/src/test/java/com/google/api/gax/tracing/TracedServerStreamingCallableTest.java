@@ -49,9 +49,10 @@ import com.google.api.gax.rpc.testing.MockStreamingApi.MockResponseObserver;
 import com.google.api.gax.rpc.testing.MockStreamingApi.MockServerStreamingCall;
 import com.google.api.gax.rpc.testing.MockStreamingApi.MockServerStreamingCallable;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -61,6 +62,8 @@ class TracedServerStreamingCallableTest {
 
   @Mock private ApiTracerFactory tracerFactory;
   @Mock private ApiTracer tracer;
+  @Mock private ApiTracerContext tracerContext;
+  @Mock private ApiTracerContext.Builder tracerContextBuilder;
 
   private MockServerStreamingCallable<String, String> innerCallable;
   private TracedServerStreamingCallable<String, String> tracedCallable;
@@ -68,30 +71,54 @@ class TracedServerStreamingCallableTest {
   private ApiCallContext callContext;
   @Mock private ApiTracer parentTracer;
 
-  @BeforeEach
-  void setUp() {
-    // Wire the mock tracer factory
-    when(tracerFactory.newTracer(
-            any(ApiTracer.class), any(SpanName.class), eq(OperationType.ServerStreaming)))
-        .thenReturn(tracer);
+  void init(boolean useContext) {
     innerCallable = new MockServerStreamingCallable<>();
+    // Wire the mock tracer factory
+    if (useContext) {
+      when(tracerContext.toBuilder()).thenReturn(tracerContextBuilder);
+      when(tracerContextBuilder.setOperationType(any())).thenReturn(tracerContextBuilder);
+      when(tracerContextBuilder.build()).thenReturn(tracerContext);
+      when(tracerFactory.newTracer(any(ApiTracer.class), any(ApiTracerContext.class)))
+          .thenReturn(tracer);
+      when(tracerContext.fullMethodName()).thenReturn("FakeClient/FakeRpc");
+      tracedCallable =
+          new TracedServerStreamingCallable<>(innerCallable, tracerFactory, tracerContext);
+    } else {
+      when(tracerFactory.newTracer(
+              any(ApiTracer.class), any(SpanName.class), eq(OperationType.ServerStreaming)))
+          .thenReturn(tracer);
+      tracedCallable = new TracedServerStreamingCallable<>(innerCallable, tracerFactory, SPAN_NAME);
+    }
 
     responseObserver = new MockResponseObserver<>(true);
     callContext = FakeCallContext.createDefault().withTracer(parentTracer);
-
-    // Build the system under test
-    tracedCallable = new TracedServerStreamingCallable<>(innerCallable, tracerFactory, SPAN_NAME);
   }
 
-  @Test
-  void testTracerCreated() {
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testTracerCreated(boolean useContext) {
+    init(useContext);
     tracedCallable.call("test", responseObserver, callContext);
-    verify(tracerFactory, times(1))
-        .newTracer(parentTracer, SPAN_NAME, OperationType.ServerStreaming);
+    if (useContext) {
+      verify(tracerFactory, times(1)).newTracer(parentTracer, tracerContext);
+    } else {
+      verify(tracerFactory, times(1))
+          .newTracer(parentTracer, SPAN_NAME, OperationType.ServerStreaming);
+    }
   }
 
   @Test
-  void testResponseNotify() {
+  void testOperationTypeIsSet() {
+    init(true);
+    tracedCallable.call("test", responseObserver, callContext);
+
+    verify(tracerContextBuilder).setOperationType(OperationType.ServerStreaming);
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testResponseNotify(boolean useContext) {
+    init(useContext);
     tracedCallable.call("test", responseObserver, callContext);
 
     MockServerStreamingCall<String, String> innerCall = innerCallable.popLastCall();
@@ -103,8 +130,10 @@ class TracedServerStreamingCallableTest {
     verify(tracer, times(2)).responseReceived();
   }
 
-  @Test
-  void testOperationCancelled() {
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testOperationCancelled(boolean useContext) {
+    init(useContext);
     tracedCallable.call("test", responseObserver, callContext);
     responseObserver.getController().cancel();
 
@@ -119,8 +148,10 @@ class TracedServerStreamingCallableTest {
     verify(tracer, times(1)).operationCancelled();
   }
 
-  @Test
-  void testOperationFinish() {
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testOperationFinish(boolean useContext) {
+    init(useContext);
     tracedCallable.call("test", responseObserver, callContext);
 
     MockServerStreamingCall<String, String> innerCall = innerCallable.popLastCall();
@@ -130,8 +161,10 @@ class TracedServerStreamingCallableTest {
     verify(tracer, times(1)).operationSucceeded();
   }
 
-  @Test
-  void testOperationFail() {
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void testOperationFail(boolean useContext) {
+    init(useContext);
     RuntimeException expectedError = new RuntimeException("expected error");
 
     tracedCallable.call("test", responseObserver, callContext);
@@ -143,9 +176,11 @@ class TracedServerStreamingCallableTest {
     verify(tracer, times(1)).operationFailed(expectedError);
   }
 
-  @Test
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
   @SuppressWarnings("unchecked")
-  void testSyncError() {
+  void testSyncError(boolean useContext) {
+    init(useContext);
     RuntimeException expectedError = new RuntimeException("expected error");
 
     // Create a broken inner callable
@@ -158,7 +193,12 @@ class TracedServerStreamingCallableTest {
             any(ApiCallContext.class));
 
     // Recreate the tracedCallable using the new inner callable
-    tracedCallable = new TracedServerStreamingCallable<>(innerCallable, tracerFactory, SPAN_NAME);
+    if (useContext) {
+      tracedCallable =
+          new TracedServerStreamingCallable<>(innerCallable, tracerFactory, tracerContext);
+    } else {
+      tracedCallable = new TracedServerStreamingCallable<>(innerCallable, tracerFactory, SPAN_NAME);
+    }
 
     try {
       tracedCallable.call("test", responseObserver, callContext);
