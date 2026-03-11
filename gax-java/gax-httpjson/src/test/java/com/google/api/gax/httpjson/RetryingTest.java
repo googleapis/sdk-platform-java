@@ -55,6 +55,7 @@ import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.rpc.UnknownException;
+import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.UncheckedExecutionException;
@@ -67,6 +68,12 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 class RetryingTest {
+  private static HttpRequestFormatter createMockRequestFormatter() {
+    HttpRequestFormatter formatter = Mockito.mock(HttpRequestFormatter.class);
+    PathTemplate template = PathTemplate.create("/test/path/template");
+    Mockito.when(formatter.getPathTemplate()).thenReturn(template);
+    return formatter;
+  }
 
   @SuppressWarnings("unchecked")
   private final UnaryCallable<Integer, Integer> callInt = Mockito.mock(UnaryCallable.class);
@@ -75,7 +82,7 @@ class RetryingTest {
       ApiMethodDescriptor.newBuilder()
           .setFullMethodName("google.cloud.v1.Fake/FakeMethodForRequestMutator")
           .setHttpMethod(HttpMethods.POST)
-          .setRequestFormatter(Mockito.mock(HttpRequestFormatter.class))
+          .setRequestFormatter(createMockRequestFormatter())
           .setResponseParser(Mockito.mock(HttpResponseParser.class))
           .build();
 
