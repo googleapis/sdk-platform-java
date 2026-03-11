@@ -33,6 +33,7 @@ package com.google.api.gax.tracing;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Preconditions;
 
 /**
  * A {@link ApiTracerFactory} to build instances of {@link SpanTracer}.
@@ -83,6 +84,9 @@ public class SpanTracerFactory implements ApiTracerFactory {
     if (mergedContext.transport() == ApiTracerContext.Transport.GRPC) {
       attemptSpanName = mergedContext.fullMethodName();
     } else {
+      Preconditions.checkNotNull(mergedContext.httpMethod(), "HTTP method cannot be null");
+      Preconditions.checkNotNull(
+          mergedContext.httpPathTemplate(), "HTTP path template cannot be null");
       attemptSpanName =
           String.format("%s %s", mergedContext.httpMethod(), mergedContext.httpPathTemplate());
     }
