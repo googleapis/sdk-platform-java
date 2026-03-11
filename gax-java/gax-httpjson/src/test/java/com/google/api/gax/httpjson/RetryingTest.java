@@ -68,6 +68,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 class RetryingTest {
+
   @SuppressWarnings("unchecked")
   private final UnaryCallable<Integer, Integer> callInt = Mockito.mock(UnaryCallable.class);
 
