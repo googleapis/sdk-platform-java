@@ -156,7 +156,8 @@ class ITOtelTracing {
           spans.stream()
               .filter(span -> span.getName().equals("POST v1beta1/echo:echo"))
               .findFirst()
-              .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
+              .orElseThrow(
+                  () -> new AssertionError("Attempt span 'POST v1beta1/echo:echo' not found"));
       assertThat(attemptSpan.getKind()).isEqualTo(SpanKind.CLIENT);
       assertThat(
               attemptSpan
