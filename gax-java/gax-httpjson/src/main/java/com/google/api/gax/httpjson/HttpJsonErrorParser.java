@@ -80,6 +80,10 @@ public class HttpJsonErrorParser {
       JSON_PARSER.merge(errorElement.toString(), statusBuilder);
       Status status = statusBuilder.build();
 
+      if (status.getDetailsCount() == 0) {
+        return null;
+      }
+
       ErrorDetails.Builder errorDetailsBuilder = ErrorDetails.builder();
       errorDetailsBuilder.setRawErrorMessages(status.getDetailsList());
       return errorDetailsBuilder.build();

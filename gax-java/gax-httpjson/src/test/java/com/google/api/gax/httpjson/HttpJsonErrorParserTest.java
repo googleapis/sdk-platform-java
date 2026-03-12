@@ -58,8 +58,8 @@ class HttpJsonErrorParserTest {
 
     ErrorDetails errorDetails = HttpJsonErrorParser.parseErrorDetails(payload);
     assertThat(errorDetails).isNotNull();
-    assertThat(errorDetails.getRawErrorMessages()).hasSize(1);
-    ErrorInfo errorInfo = (ErrorInfo) errorDetails.getRawErrorMessages().get(0);
+    ErrorInfo errorInfo = errorDetails.getErrorInfo();
+    assertThat(errorInfo).isNotNull();
     assertThat(errorInfo.getReason()).isEqualTo("SERVICE_DISABLED");
     assertThat(errorInfo.getDomain()).isEqualTo("googleapis.com");
     assertThat(errorInfo.getMetadataMap().get("service")).isEqualTo("pubsub.googleapis.com");
@@ -80,7 +80,7 @@ class HttpJsonErrorParserTest {
 
     ErrorDetails errorDetails = HttpJsonErrorParser.parseErrorDetails(payload);
     assertThat(errorDetails).isNotNull();
-    assertThat(errorDetails.getRawErrorMessages()).hasSize(1);
+    assertThat(errorDetails.getRetryInfo()).isNotNull();
   }
 
   @Test
