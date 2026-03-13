@@ -1063,7 +1063,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT));
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createClassConstructor(service, methodSettingsMemberVarExprs, typeStore));
-    javaMethods.add(createGetLibraryMetadataMethod(context));
+    javaMethods.add(createGetLibraryMetadataMethod(context, service));
     return javaMethods;
   }
 
@@ -2107,7 +2107,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         .build();
   }
 
-  private MethodDefinition createGetLibraryMetadataMethod(GapicContext context) {
+  private MethodDefinition createGetLibraryMetadataMethod(GapicContext context, Service service) {
     TypeNode returnType = FIXED_TYPESTORE.get("LibraryMetadata");
     MethodInvocationExpr libraryMetadataBuilderExpr =
         MethodInvocationExpr.builder()
@@ -2132,6 +2132,22 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
               .setArguments(ValueExpr.withValue(StringObjectValue.withValue(context.repo())))
               .build();
     }
+
+    libraryMetadataBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(libraryMetadataBuilderExpr)
+            .setMethodName("setLibraryVersion")
+            .setArguments(
+                VariableExpr.builder()
+                    .setStaticReferenceType(
+                        TypeNode.withReference(
+                            VaporReference.builder()
+                                .setName("Version")
+                                .setPakkage(service.pakkage())
+                                .build()))
+                    .setVariable(Variable.builder().setName("VERSION").setType(TypeNode.STRING).build())
+                    .build())
+            .build();
 
     Expr returnExpr =
         MethodInvocationExpr.builder()
@@ -2313,38 +2329,43 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       TypeStore typeStore,
       boolean isBatchingSettings,
       final boolean isSettingsBuilder) {
-    Function<Class<?>, TypeNode> typeMakerFn =
-        clz -> TypeNode.withReference(ConcreteReference.withClazz(clz));
     // Default: No streaming.
     TypeNode callSettingsType =
         method.isPaged()
-            ? typeMakerFn.apply(
-                isSettingsBuilder ? PagedCallSettings.Builder.class : PagedCallSettings.class)
-            : typeMakerFn.apply(
-                isSettingsBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class);
+            ? TypeNode.withReference(
+                ConcreteReference.withClazz(
+                    isSettingsBuilder ? PagedCallSettings.Builder.class : PagedCallSettings.class))
+            : TypeNode.withReference(
+                ConcreteReference.withClazz(
+                    isSettingsBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class));
     if (isBatchingSettings) {
       callSettingsType =
-          typeMakerFn.apply(
-              isSettingsBuilder ? BatchingCallSettings.Builder.class : BatchingCallSettings.class);
+          TypeNode.withReference(
+              ConcreteReference.withClazz(
+                  isSettingsBuilder
+                      ? BatchingCallSettings.Builder.class
+                      : BatchingCallSettings.class));
     }
 
     // Streaming takes precedence over paging, as per the monolith's existing behavior.
     switch (method.stream()) {
       case SERVER:
         callSettingsType =
-            typeMakerFn.apply(
-                isSettingsBuilder
-                    ? ServerStreamingCallSettings.Builder.class
-                    : ServerStreamingCallSettings.class);
+            TypeNode.withReference(
+                ConcreteReference.withClazz(
+                    isSettingsBuilder
+                        ? ServerStreamingCallSettings.Builder.class
+                        : ServerStreamingCallSettings.class));
         break;
       case CLIENT:
       // Fall through.
       case BIDI:
         callSettingsType =
-            typeMakerFn.apply(
-                isSettingsBuilder
-                    ? StreamingCallSettings.Builder.class
-                    : StreamingCallSettings.class);
+            TypeNode.withReference(
+                ConcreteReference.withClazz(
+                    isSettingsBuilder
+                        ? StreamingCallSettings.Builder.class
+                        : StreamingCallSettings.class));
         break;
       case NONE:
       // Fall through.

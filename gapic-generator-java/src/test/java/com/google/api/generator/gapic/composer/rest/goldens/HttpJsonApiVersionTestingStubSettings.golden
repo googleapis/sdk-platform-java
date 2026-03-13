@@ -18,6 +18,7 @@ import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.version.test.EchoRequest;
 import com.google.api.version.test.EchoResponse;
+import com.google.api.version.test.Version;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -172,7 +173,7 @@ public class EchoWithVersionStubSettings extends StubSettings<EchoWithVersionStu
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setLibraryVersion(Version.VERSION).build();
   }
 
   /** Builder for EchoWithVersionStubSettings. */

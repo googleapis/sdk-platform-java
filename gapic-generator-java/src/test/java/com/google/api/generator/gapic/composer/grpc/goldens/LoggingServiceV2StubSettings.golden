@@ -51,6 +51,7 @@ import com.google.logging.v2.ListMonitoredResourceDescriptorsResponse;
 import com.google.logging.v2.LogEntry;
 import com.google.logging.v2.TailLogEntriesRequest;
 import com.google.logging.v2.TailLogEntriesResponse;
+import com.google.logging.v2.Version;
 import com.google.logging.v2.WriteLogEntriesRequest;
 import com.google.logging.v2.WriteLogEntriesResponse;
 import com.google.protobuf.Empty;
@@ -512,7 +513,10 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder()
+        .setArtifactName("com.google.cloud:google-cloud-logging")
+        .setLibraryVersion(Version.VERSION)
+        .build();
   }
 
   /** Builder for LoggingServiceV2StubSettings. */

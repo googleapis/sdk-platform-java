@@ -25,6 +25,7 @@ import com.google.showcase.v1beta1.EnumRequest;
 import com.google.showcase.v1beta1.EnumResponse;
 import com.google.showcase.v1beta1.RepeatRequest;
 import com.google.showcase.v1beta1.RepeatResponse;
+import com.google.showcase.v1beta1.Version;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.Generated;
@@ -225,7 +226,7 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setLibraryVersion(Version.VERSION).build();
   }
 
   /** Builder for ComplianceStubSettings. */

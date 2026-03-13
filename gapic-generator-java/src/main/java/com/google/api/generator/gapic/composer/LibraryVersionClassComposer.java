@@ -15,19 +15,22 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
-import com.google.api.generator.engine.ast.Expr;
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.ExprStatement;
-import com.google.api.generator.engine.ast.FieldDefinition;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.Variable;
+import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import java.util.Arrays;
-import java.util.List;
 
 public class LibraryVersionClassComposer {
   private static final LibraryVersionClassComposer INSTANCE = new LibraryVersionClassComposer();
@@ -42,33 +45,34 @@ public class LibraryVersionClassComposer {
     String packageName = service.pakkage();
     String className = "Version";
 
-    // {x-version-update-start:[artifact]:current}
-    // public static String VERSION = "0.0.0-SNAPSHOT";
-    // {x-version-update-end}
-
     String artifact = context.artifact();
     String artifactId = artifact;
     if (artifact != null && artifact.contains(":")) {
       artifactId = artifact.split(":")[1];
     }
 
-    FieldDefinition versionField =
-        FieldDefinition.builder()
-            .setScope(ScopeNode.PUBLIC)
-            .setIsStatic(true)
-            .setIsFinal(true)
-            .setType(TypeNode.STRING)
-            .setName("VERSION")
-            .setAssignmentExpr(Expr.withValue("0.0.0-SNAPSHOT"))
+    VariableExpr versionVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(TypeNode.STRING).setName("VERSION").build());
+    AssignmentExpr versionAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                versionVarExpr.toBuilder()
+                    .setIsDecl(true)
+                    .setScope(ScopeNode.PUBLIC)
+                    .setIsStatic(true)
+                    .setIsFinal(true)
+                    .build())
+            .setValueExpr(ValueExpr.withValue(StringObjectValue.withValue("0.0.0-SNAPSHOT")))
             .build();
 
     ClassDefinition classDef =
         ClassDefinition.builder()
-            .setPackageName(packageName)
+            .setPackageString(packageName)
             .setAnnotations(
                 Arrays.asList(
                     AnnotationNode.builder()
-                        .setType(TypeNode.withReference(com.google.api.core.InternalApi.class))
+                        .setType(TypeNode.withReference(ConcreteReference.withClazz(com.google.api.core.InternalApi.class)))
                         .setDescription("For internal use only")
                         .build()))
             .setScope(ScopeNode.PUBLIC)
@@ -79,33 +83,9 @@ public class LibraryVersionClassComposer {
                     CommentStatement.withComment(
                         LineComment.withComment(
                             String.format("{x-version-update-start:%s:current}", artifactId))),
-                    ExprStatement.withExpr(versionField.assignmentExpr()),
+                    ExprStatement.withExpr(versionAssignmentExpr),
                     CommentStatement.withComment(LineComment.withComment("{x-version-update-end}"))))
             .build();
-
-    // Re-evaluating the class definition because I need to include the field itself,
-    // but the engine's ClassDefinition handles fields separately.
-    // However, I need the comments around the field.
-
-    classDef =
-        ClassDefinition.builder()
-            .setPackageName(packageName)
-            .setAnnotations(
-                Arrays.asList(
-                    AnnotationNode.builder()
-                        .setType(TypeNode.withReference(com.google.api.core.InternalApi.class))
-                        .setDescription("For internal use only")
-                        .build()))
-            .setScope(ScopeNode.PUBLIC)
-            .setIsFinal(true)
-            .setName(className)
-            .setFields(Arrays.asList(versionField))
-            .build();
-
-    // Since I can't easily put comments around fields in the current engine,
-    // I will try to see if I can use statements or just accept standard field generation for now
-    // if the engine doesn't support comments on fields.
-    // Actually, looking at the requested template, it's a field.
 
     return GapicClass.create(GapicClass.Kind.MAIN, classDef);
   }

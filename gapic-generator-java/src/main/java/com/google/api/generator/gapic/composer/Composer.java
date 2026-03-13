@@ -69,6 +69,7 @@ public class Composer {
     clazzes.addAll(generateClientSettingsClasses(context));
     clazzes.addAll(generateMockClasses(context, context.services()));
     clazzes.addAll(generateTestClasses(context));
+    clazzes.addAll(generateVersionClasses(context));
     return clazzes;
   }
 
@@ -195,6 +196,19 @@ public class Composer {
             });
 
     return clazzes;
+  }
+
+  public static List<GapicClass> generateVersionClasses(GapicContext context) {
+    return context.services().stream()
+        .map(Service::pakkage)
+        .distinct()
+        .map(
+            p -> {
+              Service service =
+                  context.services().stream().filter(s -> s.pakkage().equals(p)).findFirst().get();
+              return LibraryVersionClassComposer.instance().generate(context, service);
+            })
+        .collect(Collectors.toList());
   }
 
   @VisibleForTesting
