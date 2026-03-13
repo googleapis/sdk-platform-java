@@ -139,9 +139,9 @@ class ITOtelTracing {
       // {x-version-update-start:gapic-showcase:current}
       assertThat(
               attemptSpan
-                      .getAttributes()
-                      .get(AttributeKey.stringKey(ObservabilityAttributes.VERSION_ATTRIBUTE)))
-              .isEqualTo("0.0.0-SNAPSHOT");
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.VERSION_ATTRIBUTE)))
+          .isEqualTo("0.0.0-SNAPSHOT");
       // {x-version-update-end}
     }
   }
@@ -188,9 +188,9 @@ class ITOtelTracing {
       // {x-version-update-start:gapic-showcase:current}
       assertThat(
               attemptSpan
-                      .getAttributes()
-                      .get(AttributeKey.stringKey(ObservabilityAttributes.VERSION_ATTRIBUTE)))
-              .isEqualTo("0.0.0-SNAPSHOT");
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.VERSION_ATTRIBUTE)))
+          .isEqualTo("0.0.0-SNAPSHOT");
       // {x-version-update-end}
     }
   }
