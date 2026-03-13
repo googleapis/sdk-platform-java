@@ -1,5 +1,28 @@
 # Changelog
 
+## [2.68.0](https://github.com/googleapis/sdk-platform-java/compare/v2.67.0...v2.68.0) (2026-03-13)
+
+
+### Features
+
+* Add client request duration metric. ([#4132](https://github.com/googleapis/sdk-platform-java/issues/4132)) ([6a76397](https://github.com/googleapis/sdk-platform-java/commit/6a763979c2c5427f0a7ba23708fb7948520662d8))
+* **generator:** add extra allowed modules that will not be removed from the monorepo if they are present ([#4124](https://github.com/googleapis/sdk-platform-java/issues/4124)) ([774fe6e](https://github.com/googleapis/sdk-platform-java/commit/774fe6ede6bf25e150fb405dfe3bac9d85e21169))
+* **o11y:** introduce `gcp.client.repo` and `gcp.client.artifact` attributes ([#4120](https://github.com/googleapis/sdk-platform-java/issues/4120)) ([105f644](https://github.com/googleapis/sdk-platform-java/commit/105f644209cb78845a423d949cb7633a86d07868))
+* **o11y:** Introduce `rpc.system.name` and `rpc.method` in gRPC ([#4121](https://github.com/googleapis/sdk-platform-java/issues/4121)) ([7ab6d2e](https://github.com/googleapis/sdk-platform-java/commit/7ab6d2e5784f264558b7aca6f23e771361dbea3a))
+* **o11y:** introduce server.port attribute ([#4128](https://github.com/googleapis/sdk-platform-java/issues/4128)) ([56aa343](https://github.com/googleapis/sdk-platform-java/commit/56aa3438393e1992bb8f688291fb12030ec9bc0e))
+
+
+### Bug Fixes
+
+* add null checks for ApiTracerFactory in ClientContext ([#4122](https://github.com/googleapis/sdk-platform-java/issues/4122)) ([4b3dbe2](https://github.com/googleapis/sdk-platform-java/commit/4b3dbe29b32dd0fba6c7a5f4a08fafa2798eeca5))
+* suppress warnings in generated projects for non-idiomatic durations ([#4119](https://github.com/googleapis/sdk-platform-java/issues/4119)) ([4206e6e](https://github.com/googleapis/sdk-platform-java/commit/4206e6ed7546d6b8330dcb8dc29179e59677ccd3))
+* Use ServiceName + MethodName as the regex for Otel ([#2543](https://github.com/googleapis/sdk-platform-java/issues/2543)) ([b9ae73f](https://github.com/googleapis/sdk-platform-java/commit/b9ae73fba59ba32e9688d11c2b3db51fe0d68d8d))
+
+
+### Documentation
+
+* **hermetic_build:** fix config field name in readme ([#4130](https://github.com/googleapis/sdk-platform-java/issues/4130)) ([a0c8f67](https://github.com/googleapis/sdk-platform-java/commit/a0c8f67f5a425d9a365b8e451b18add2c5947a11))
+
 ## [2.67.0](https://github.com/googleapis/sdk-platform-java/compare/v2.66.1...v2.67.0) (2026-02-18)
 
 
