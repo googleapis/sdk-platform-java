@@ -33,6 +33,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.gax.rpc.ErrorDetails;
 import com.google.rpc.ErrorInfo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /** Tests for {@link HttpJsonErrorParser}. */
@@ -85,24 +86,25 @@ class HttpJsonErrorParserTest {
 
   @Test
   void parseErrorDetails_emptyPayload() {
-    assertThat(HttpJsonErrorParser.parseErrorDetails("")).isNull();
-    assertThat(HttpJsonErrorParser.parseErrorDetails(null)).isNull();
+    assertThat(HttpJsonErrorParser.parseErrorDetails("").getErrorInfo()).isNull();
+    assertThat(HttpJsonErrorParser.parseErrorDetails(null).getErrorInfo()).isNull();
   }
 
   @Test
   void parseErrorDetails_invalidJson() {
-    assertThat(HttpJsonErrorParser.parseErrorDetails("{invalid")).isNull();
+    Assertions.assertThrows(
+        RuntimeException.class, () -> HttpJsonErrorParser.parseErrorDetails("{invalid"));
   }
 
   @Test
   void parseErrorDetails_noErrorObject() {
     String payload = "{\"foo\": \"bar\"}";
-    assertThat(HttpJsonErrorParser.parseErrorDetails(payload)).isNull();
+    assertThat(HttpJsonErrorParser.parseErrorDetails(payload).getErrorInfo()).isNull();
   }
 
   @Test
   void parseErrorDetails_noDetails() {
     String payload = "{\"error\": {}}";
-    assertThat(HttpJsonErrorParser.parseErrorDetails(payload)).isNull();
+    assertThat(HttpJsonErrorParser.parseErrorDetails(payload).getErrorInfo()).isNull();
   }
 }
