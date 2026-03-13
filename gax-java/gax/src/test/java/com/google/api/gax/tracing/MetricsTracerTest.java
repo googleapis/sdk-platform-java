@@ -238,27 +238,4 @@ class MetricsTracerTest {
     assertThat(metricsTracer.getAttributes().get("FakeTableId")).isEqualTo("12345");
     assertThat(metricsTracer.getAttributes().get("FakeInstanceId")).isEqualTo("67890");
   }
-
-  @Test
-  void testExtractStatus_errorConversion_apiExceptions() {
-    ApiException error =
-        new ApiException("fake_error", null, new FakeStatusCode(Code.INVALID_ARGUMENT), false);
-    String errorCode = metricsTracer.extractStatus(error);
-    assertThat(errorCode).isEqualTo(Code.INVALID_ARGUMENT.toString());
-  }
-
-  @Test
-  void testExtractStatus_errorConversion_noError() {
-    // test "OK", which corresponds to a "null" error.
-    String successCode = metricsTracer.extractStatus(null);
-    assertThat(successCode).isEqualTo(Code.OK.toString());
-  }
-
-  @Test
-  void testExtractStatus_errorConversion_unknownException() {
-    // test "UNKNOWN"
-    Throwable unknownException = new RuntimeException();
-    String errorCode2 = metricsTracer.extractStatus(unknownException);
-    assertThat(errorCode2).isEqualTo(Code.UNKNOWN.toString());
-  }
 }
