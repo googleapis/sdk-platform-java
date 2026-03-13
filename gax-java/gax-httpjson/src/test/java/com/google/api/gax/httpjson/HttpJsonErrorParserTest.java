@@ -107,4 +107,18 @@ class HttpJsonErrorParserTest {
     String payload = "{\"error\": {}}";
     assertThat(HttpJsonErrorParser.parseErrorDetails(payload).getErrorInfo()).isNull();
   }
+
+  @Test
+  void parseErrorDetails_garbageInError() {
+    String payload = "{\"error\": \"not-an-object\"}";
+    Assertions.assertThrows(
+        RuntimeException.class, () -> HttpJsonErrorParser.parseErrorDetails(payload));
+  }
+
+  @Test
+  void parseErrorDetails_arrayInError() {
+    String payload = "{\"error\": []}";
+    Assertions.assertThrows(
+        RuntimeException.class, () -> HttpJsonErrorParser.parseErrorDetails(payload));
+  }
 }
