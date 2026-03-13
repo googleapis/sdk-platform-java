@@ -56,7 +56,8 @@ import java.util.logging.Logger;
  * Utility for parsing Google Cloud error responses from JSON.
  *
  * <p>This parser extracts {@link ErrorDetails} from a standard Google Cloud error response JSON
- * payload, which typically contains a top-level "error" object with a "details" list.
+ * payload as defined in <a href="https://google.aip.dev/193#http11-json-representation">AIP-193</a>.
+ * The payload typically contains a top-level "error" object with a "details" list.
  */
 @InternalApi
 class HttpJsonErrorParser {
