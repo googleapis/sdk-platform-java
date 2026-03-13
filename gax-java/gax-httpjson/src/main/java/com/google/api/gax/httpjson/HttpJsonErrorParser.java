@@ -50,7 +50,7 @@ import com.google.rpc.RequestInfo;
 import com.google.rpc.ResourceInfo;
 import com.google.rpc.RetryInfo;
 import com.google.rpc.Status;
-import java.util.logging.Logger;
+
 
 /**
  * Utility for parsing Google Cloud error responses from JSON.
@@ -62,7 +62,7 @@ import java.util.logging.Logger;
  */
 @InternalApi
 class HttpJsonErrorParser {
-  private static final Logger LOGGER = Logger.getLogger(HttpJsonErrorParser.class.getName());
+
   private static final TypeRegistry STANDARD_ERROR_TYPES =
       TypeRegistry.newBuilder()
           .add(ErrorInfo.getDescriptor())
