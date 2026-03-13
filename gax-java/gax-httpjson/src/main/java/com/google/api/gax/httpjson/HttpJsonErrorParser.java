@@ -101,6 +101,10 @@ class HttpJsonErrorParser {
       }
 
       JsonElement errorElement = root.get("error");
+      if (!errorElement.isJsonObject()) {
+        return ErrorDetails.builder().build();
+      }
+
       Status.Builder statusBuilder = Status.newBuilder();
       JSON_PARSER.merge(errorElement.toString(), statusBuilder);
       Status status = statusBuilder.build();
