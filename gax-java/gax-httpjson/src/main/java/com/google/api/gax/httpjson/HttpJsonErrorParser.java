@@ -80,48 +80,44 @@ class HttpJsonErrorParser {
       JsonFormat.parser().ignoringUnknownFields().usingTypeRegistry(STANDARD_ERROR_TYPES);
 
   /**
-   * Parses the given JSON error payload into {@link ErrorDetails}.
+   * Parses the given JSON error payload into {@link Status}.
    *
    * @param errorJson The JSON string representing a Google Cloud error response.
-   * @return An {@link ErrorDetails} object containing the parsed error information. Returns an
-   *     empty {@link ErrorDetails} if the input is null, empty, or invalid.
+   * @return A {@link Status} message containing the parsed error information. Returns {@link
+   *     Status#getDefaultInstance()} if the input is null, empty, or invalid.
    */
-  static ErrorDetails parseErrorDetails(String errorJson) {
+  static Status parseStatus(String errorJson) {
     if (errorJson == null || errorJson.isEmpty()) {
-      return ErrorDetails.builder().build();
+      return Status.getDefaultInstance();
     }
 
     JsonElement jsonElement;
     try {
       jsonElement = JsonParser.parseString(errorJson);
     } catch (JsonSyntaxException e) {
-      return ErrorDetails.builder().build();
+      return Status.getDefaultInstance();
     }
 
     if (!jsonElement.isJsonObject()) {
-      return ErrorDetails.builder().build();
+      return Status.getDefaultInstance();
     }
     JsonObject root = jsonElement.getAsJsonObject();
     if (!root.has("error")) {
-      return ErrorDetails.builder().build();
+      return Status.getDefaultInstance();
     }
 
     JsonElement errorElement = root.get("error");
     if (!errorElement.isJsonObject()) {
-      return ErrorDetails.builder().build();
+      return Status.getDefaultInstance();
     }
 
     Status.Builder statusBuilder = Status.newBuilder();
     try {
       JSON_PARSER.merge(errorElement.toString(), statusBuilder);
     } catch (InvalidProtocolBufferException e) {
-      // Return empty details on parsing failure
-      return ErrorDetails.builder().build();
+      return Status.getDefaultInstance();
     }
 
-    Status status = statusBuilder.build();
-    ErrorDetails.Builder errorDetailsBuilder = ErrorDetails.builder();
-    errorDetailsBuilder.setRawErrorMessages(status.getDetailsList());
-    return errorDetailsBuilder.build();
+    return statusBuilder.build();
   }
 }

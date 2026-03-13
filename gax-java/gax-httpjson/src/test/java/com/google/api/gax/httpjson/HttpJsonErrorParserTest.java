@@ -39,10 +39,13 @@ import org.junit.jupiter.api.Test;
 class HttpJsonErrorParserTest {
 
   @Test
-  void parseErrorDetails_success() {
+  void parseStatus_success() {
     String payload =
         "{\n"
             + "  \"error\": {\n"
+            + "    \"code\": 401,\n"
+            + "    \"message\": \"Request is missing required authentication credential.\",\n"
+            + "    \"status\": \"UNAUTHENTICATED\",\n"
             + "    \"details\": [\n"
             + "      {\n"
             + "        \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n"
@@ -56,8 +59,14 @@ class HttpJsonErrorParserTest {
             + "  }\n"
             + "}";
 
-    ErrorDetails errorDetails = HttpJsonErrorParser.parseErrorDetails(payload);
-    assertThat(errorDetails).isNotNull();
+    com.google.rpc.Status status = HttpJsonErrorParser.parseStatus(payload);
+    assertThat(status).isNotNull();
+    assertThat(status.getCode()).isEqualTo(401);
+    assertThat(status.getMessage())
+        .isEqualTo("Request is missing required authentication credential.");
+
+    ErrorDetails errorDetails =
+        ErrorDetails.builder().setRawErrorMessages(status.getDetailsList()).build();
     ErrorInfo errorInfo = errorDetails.getErrorInfo();
     assertThat(errorInfo).isNotNull();
     assertThat(errorInfo.getReason()).isEqualTo("SERVICE_DISABLED");
@@ -66,7 +75,7 @@ class HttpJsonErrorParserTest {
   }
 
   @Test
-  void parseErrorDetails_noErrorInfo() {
+  void parseStatus_noErrorInfo() {
     String payload =
         "{\n"
             + "  \"error\": {\n"
@@ -78,43 +87,50 @@ class HttpJsonErrorParserTest {
             + "  }\n"
             + "}";
 
-    ErrorDetails errorDetails = HttpJsonErrorParser.parseErrorDetails(payload);
-    assertThat(errorDetails).isNotNull();
+    com.google.rpc.Status status = HttpJsonErrorParser.parseStatus(payload);
+    assertThat(status).isNotNull();
+    ErrorDetails errorDetails =
+        ErrorDetails.builder().setRawErrorMessages(status.getDetailsList()).build();
     assertThat(errorDetails.getRetryInfo()).isNotNull();
   }
 
   @Test
-  void parseErrorDetails_emptyPayload() {
-    assertThat(HttpJsonErrorParser.parseErrorDetails("").getErrorInfo()).isNull();
-    assertThat(HttpJsonErrorParser.parseErrorDetails(null).getErrorInfo()).isNull();
+  void parseStatus_emptyPayload() {
+    assertThat(HttpJsonErrorParser.parseStatus("")).isEqualTo(com.google.rpc.Status.getDefaultInstance());
+    assertThat(HttpJsonErrorParser.parseStatus(null)).isEqualTo(com.google.rpc.Status.getDefaultInstance());
   }
 
   @Test
-  void parseErrorDetails_invalidJson() {
-    assertThat(HttpJsonErrorParser.parseErrorDetails("{invalid").getErrorInfo()).isNull();
+  void parseStatus_invalidJson() {
+    assertThat(HttpJsonErrorParser.parseStatus("{invalid"))
+        .isEqualTo(com.google.rpc.Status.getDefaultInstance());
   }
 
   @Test
-  void parseErrorDetails_noErrorObject() {
+  void parseStatus_noErrorObject() {
     String payload = "{\"foo\": \"bar\"}";
-    assertThat(HttpJsonErrorParser.parseErrorDetails(payload).getErrorInfo()).isNull();
+    assertThat(HttpJsonErrorParser.parseStatus(payload))
+        .isEqualTo(com.google.rpc.Status.getDefaultInstance());
   }
 
   @Test
-  void parseErrorDetails_noDetails() {
+  void parseStatus_noDetails() {
     String payload = "{\"error\": {}}";
-    assertThat(HttpJsonErrorParser.parseErrorDetails(payload).getErrorInfo()).isNull();
+    assertThat(HttpJsonErrorParser.parseStatus(payload))
+        .isEqualTo(com.google.rpc.Status.getDefaultInstance());
   }
 
   @Test
-  void parseErrorDetails_garbageInError() {
+  void parseStatus_garbageInError() {
     String payload = "{\"error\": \"not-an-object\"}";
-    assertThat(HttpJsonErrorParser.parseErrorDetails(payload).getErrorInfo()).isNull();
+    assertThat(HttpJsonErrorParser.parseStatus(payload))
+        .isEqualTo(com.google.rpc.Status.getDefaultInstance());
   }
 
   @Test
-  void parseErrorDetails_arrayInError() {
+  void parseStatus_arrayInError() {
     String payload = "{\"error\": []}";
-    assertThat(HttpJsonErrorParser.parseErrorDetails(payload).getErrorInfo()).isNull();
+    assertThat(HttpJsonErrorParser.parseStatus(payload))
+        .isEqualTo(com.google.rpc.Status.getDefaultInstance());
   }
 }
