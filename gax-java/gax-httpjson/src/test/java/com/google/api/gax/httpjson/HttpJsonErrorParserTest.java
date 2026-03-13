@@ -33,7 +33,6 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.gax.rpc.ErrorDetails;
 import com.google.rpc.ErrorInfo;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /** Tests for {@link HttpJsonErrorParser}. */
