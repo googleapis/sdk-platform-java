@@ -29,38 +29,36 @@
  */
 package com.google.api.gax.tracing;
 
-import com.google.api.gax.rpc.ApiException;
-import com.google.api.gax.rpc.StatusCode;
-import com.google.common.base.Preconditions;
-import io.opentelemetry.api.common.Attributes;
-import io.opentelemetry.api.common.AttributesBuilder;
-import java.util.Map;
-import java.util.concurrent.CancellationException;
-import javax.annotation.Nullable;
+import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Mockito.mock;
 
-class ObservabilityUtils {
+import io.opentelemetry.api.OpenTelemetry;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-  /** Function to extract the status of the error as a string */
-  static String extractStatus(@Nullable Throwable error) {
-    final String statusString;
+class GoldenSignalsMetricsTracerFactoryTest {
 
-    if (error == null) {
-      return StatusCode.Code.OK.toString();
-    } else if (error instanceof CancellationException) {
-      statusString = StatusCode.Code.CANCELLED.toString();
-    } else if (error instanceof ApiException) {
-      statusString = ((ApiException) error).getStatusCode().getCode().toString();
-    } else {
-      statusString = StatusCode.Code.UNKNOWN.toString();
-    }
+  private GoldenSignalsMetricsTracerFactory tracerFactory;
 
-    return statusString;
+  @BeforeEach
+  void setUp() {
+    tracerFactory = new GoldenSignalsMetricsTracerFactory(OpenTelemetry.noop());
   }
 
-  static Attributes toOtelAttributes(Map<String, String> attributes) {
-    Preconditions.checkNotNull(attributes, "Attributes map cannot be null");
-    AttributesBuilder attributesBuilder = Attributes.builder();
-    attributes.forEach(attributesBuilder::put);
-    return attributesBuilder.build();
+  @Test
+  void newTracer_createsTracer_successfully() {
+    tracerFactory.withContext(ApiTracerContext.empty());
+    ApiTracer actual =
+        tracerFactory.newTracer(
+            mock(ApiTracer.class), mock(SpanName.class), ApiTracerFactory.OperationType.Unary);
+    assertThat(actual).isInstanceOf(GoldenSignalsMetricsTracer.class);
+  }
+
+  @Test
+  void newTracer_createsBaseTracer_ifMetricsRecorderIsNull() {
+    ApiTracer actual =
+        tracerFactory.newTracer(
+            mock(ApiTracer.class), mock(SpanName.class), ApiTracerFactory.OperationType.Unary);
+    assertThat(actual).isInstanceOf(BaseApiTracer.class);
   }
 }

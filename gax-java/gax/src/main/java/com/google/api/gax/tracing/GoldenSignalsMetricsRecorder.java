@@ -32,6 +32,8 @@ package com.google.api.gax.tracing;
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.metrics.DoubleHistogram;
 import io.opentelemetry.api.metrics.Meter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,6 +47,10 @@ class GoldenSignalsMetricsRecorder {
   static final String CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION =
       "Measures the total time taken for a logical client request, including any retries, backoff, and pre/post-processing";
 
+  static final List<Double> BOUNDARIES =
+      Arrays.asList(
+          0.0, 0.0001, 0.0005, 0.0010, 0.005, 0.010, 0.050, 0.100, 0.5, 1.0, 5.0, 10.0, 60.0, 300.0,
+          900.0, 3600.0);
   final DoubleHistogram clientRequestDurationRecorder;
 
   GoldenSignalsMetricsRecorder(OpenTelemetry openTelemetry, String libraryName) {
@@ -55,6 +61,7 @@ class GoldenSignalsMetricsRecorder {
             .histogramBuilder(CLIENT_REQUEST_DURATION_METRIC_NAME)
             .setDescription(CLIENT_REQUEST_DURATION_METRIC_DESCRIPTION)
             .setUnit("s")
+            .setExplicitBucketBoundariesAdvice(BOUNDARIES)
             .build();
   }
 

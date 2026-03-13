@@ -29,38 +29,43 @@
  */
 package com.google.api.gax.tracing;
 
-import com.google.api.gax.rpc.ApiException;
-import com.google.api.gax.rpc.StatusCode;
-import com.google.common.base.Preconditions;
-import io.opentelemetry.api.common.Attributes;
-import io.opentelemetry.api.common.AttributesBuilder;
-import java.util.Map;
-import java.util.concurrent.CancellationException;
-import javax.annotation.Nullable;
+import com.google.api.core.BetaApi;
+import com.google.api.core.InternalApi;
+import io.opentelemetry.api.OpenTelemetry;
 
-class ObservabilityUtils {
+/**
+ * A {@link ApiTracerFactory} to build instances of {@link GoldenSignalsMetricsTracer}.
+ *
+ * <p>This class is expected to be initialized once during client initialization.
+ */
+@BetaApi
+@InternalApi
+public class GoldenSignalsMetricsTracerFactory implements ApiTracerFactory {
 
-  /** Function to extract the status of the error as a string */
-  static String extractStatus(@Nullable Throwable error) {
-    final String statusString;
+  private ApiTracerContext apiTracerContext;
+  private final OpenTelemetry openTelemetry;
+  private GoldenSignalsMetricsRecorder metricsRecorder;
 
-    if (error == null) {
-      return StatusCode.Code.OK.toString();
-    } else if (error instanceof CancellationException) {
-      statusString = StatusCode.Code.CANCELLED.toString();
-    } else if (error instanceof ApiException) {
-      statusString = ((ApiException) error).getStatusCode().getCode().toString();
-    } else {
-      statusString = StatusCode.Code.UNKNOWN.toString();
-    }
-
-    return statusString;
+  public GoldenSignalsMetricsTracerFactory(OpenTelemetry openTelemetry) {
+    this.openTelemetry = openTelemetry;
   }
 
-  static Attributes toOtelAttributes(Map<String, String> attributes) {
-    Preconditions.checkNotNull(attributes, "Attributes map cannot be null");
-    AttributesBuilder attributesBuilder = Attributes.builder();
-    attributes.forEach(attributesBuilder::put);
-    return attributesBuilder.build();
+  @Override
+  public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
+    if (metricsRecorder == null) {
+      // This should never happen, in case it happens, create a no-op api tracer to not block
+      // regular requests.
+      return new BaseApiTracer();
+    }
+    return new GoldenSignalsMetricsTracer(metricsRecorder);
+  }
+
+  @Override
+  public ApiTracerFactory withContext(ApiTracerContext context) {
+    this.apiTracerContext = context;
+    this.metricsRecorder =
+        new GoldenSignalsMetricsRecorder(
+            openTelemetry, apiTracerContext.libraryMetadata().artifactName());
+    return this;
   }
 }

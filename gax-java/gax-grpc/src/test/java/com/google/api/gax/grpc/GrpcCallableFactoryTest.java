@@ -157,7 +157,7 @@ class GrpcCallableFactoryTest {
             .setResponseMarshaller(Mockito.mock(Marshaller.class))
             .build();
 
-    SpanName actualSpanName = GrpcCallableFactory.getSpanName(descriptor);
+    SpanName actualSpanName = SpanName.of(GrpcCallableFactory.getApiTracerContext(descriptor));
     assertThat(actualSpanName).isEqualTo(SpanName.of("Bigtable", "ReadRows"));
   }
 
@@ -172,7 +172,7 @@ class GrpcCallableFactoryTest {
             .setResponseMarshaller(Mockito.mock(Marshaller.class))
             .build();
 
-    SpanName actualSpanName = GrpcCallableFactory.getSpanName(descriptor);
+    SpanName actualSpanName = SpanName.of(GrpcCallableFactory.getApiTracerContext(descriptor));
     assertThat(actualSpanName).isEqualTo(SpanName.of("UnqualifiedService", "ReadRows"));
   }
 
@@ -192,7 +192,7 @@ class GrpcCallableFactoryTest {
 
       IllegalArgumentException actualError = null;
       try {
-        SpanName spanName = GrpcCallableFactory.getSpanName(descriptor);
+        SpanName spanName = SpanName.of(GrpcCallableFactory.getApiTracerContext(descriptor));
         Truth.assertWithMessage(
                 "Invalid method descriptor should not have a valid span name: %s should not generate the spanName: %s",
                 invalidName, spanName)
