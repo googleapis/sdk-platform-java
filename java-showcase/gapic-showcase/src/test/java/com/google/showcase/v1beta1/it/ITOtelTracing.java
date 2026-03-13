@@ -185,6 +185,11 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.REPO_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_REPO);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.ARTIFACT_ATTRIBUTE)))
+          .isEqualTo(SHOWCASE_ARTIFACT);
       // {x-version-update-start:gapic-showcase:current}
       assertThat(
               attemptSpan
