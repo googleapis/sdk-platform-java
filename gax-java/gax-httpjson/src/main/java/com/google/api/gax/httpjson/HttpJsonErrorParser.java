@@ -35,6 +35,7 @@ import com.google.api.gax.rpc.ErrorDetails;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.TypeRegistry;
 import com.google.protobuf.util.JsonFormat;
@@ -94,28 +95,37 @@ class HttpJsonErrorParser {
       return ErrorDetails.builder().build();
     }
 
+    JsonElement jsonElement;
     try {
-      JsonObject root = JsonParser.parseString(errorJson).getAsJsonObject();
-      if (!root.has("error")) {
-        return ErrorDetails.builder().build();
-      }
-
-      JsonElement errorElement = root.get("error");
-      if (!errorElement.isJsonObject()) {
-        return ErrorDetails.builder().build();
-      }
-
-      Status.Builder statusBuilder = Status.newBuilder();
-      JSON_PARSER.merge(errorElement.toString(), statusBuilder);
-      Status status = statusBuilder.build();
-
-      ErrorDetails.Builder errorDetailsBuilder = ErrorDetails.builder();
-      errorDetailsBuilder.setRawErrorMessages(status.getDetailsList());
-      return errorDetailsBuilder.build();
-    } catch (InvalidProtocolBufferException e) {
-      throw new RuntimeException("Failed to parse Google Cloud error response", e);
-    } catch (Exception e) {
-      throw new RuntimeException("Unexpected error during Google Cloud error parsing", e);
+      jsonElement = JsonParser.parseString(errorJson);
+    } catch (JsonSyntaxException e) {
+      return ErrorDetails.builder().build();
     }
+
+    if (!jsonElement.isJsonObject()) {
+      return ErrorDetails.builder().build();
+    }
+    JsonObject root = jsonElement.getAsJsonObject();
+    if (!root.has("error")) {
+      return ErrorDetails.builder().build();
+    }
+
+    JsonElement errorElement = root.get("error");
+    if (!errorElement.isJsonObject()) {
+      return ErrorDetails.builder().build();
+    }
+
+    Status.Builder statusBuilder = Status.newBuilder();
+    try {
+      JSON_PARSER.merge(errorElement.toString(), statusBuilder);
+    } catch (InvalidProtocolBufferException e) {
+      // Return empty details on parsing failure
+      return ErrorDetails.builder().build();
+    }
+
+    Status status = statusBuilder.build();
+    ErrorDetails.Builder errorDetailsBuilder = ErrorDetails.builder();
+    errorDetailsBuilder.setRawErrorMessages(status.getDetailsList());
+    return errorDetailsBuilder.build();
   }
 }

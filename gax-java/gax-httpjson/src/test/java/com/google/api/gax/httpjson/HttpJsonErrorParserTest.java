@@ -92,8 +92,7 @@ class HttpJsonErrorParserTest {
 
   @Test
   void parseErrorDetails_invalidJson() {
-    Assertions.assertThrows(
-        RuntimeException.class, () -> HttpJsonErrorParser.parseErrorDetails("{invalid"));
+    assertThat(HttpJsonErrorParser.parseErrorDetails("{invalid").getErrorInfo()).isNull();
   }
 
   @Test
