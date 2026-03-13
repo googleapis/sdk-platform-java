@@ -96,8 +96,10 @@ class HttpJsonErrorParserTest {
 
   @Test
   void parseStatus_emptyPayload() {
-    assertThat(HttpJsonErrorParser.parseStatus("")).isEqualTo(com.google.rpc.Status.getDefaultInstance());
-    assertThat(HttpJsonErrorParser.parseStatus(null)).isEqualTo(com.google.rpc.Status.getDefaultInstance());
+    assertThat(HttpJsonErrorParser.parseStatus(""))
+        .isEqualTo(com.google.rpc.Status.getDefaultInstance());
+    assertThat(HttpJsonErrorParser.parseStatus(null))
+        .isEqualTo(com.google.rpc.Status.getDefaultInstance());
   }
 
   @Test
