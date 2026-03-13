@@ -51,7 +51,6 @@ import com.google.rpc.ResourceInfo;
 import com.google.rpc.RetryInfo;
 import com.google.rpc.Status;
 
-
 /**
  * Utility for parsing Google Cloud error responses from JSON.
  *
