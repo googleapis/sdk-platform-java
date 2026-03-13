@@ -72,7 +72,9 @@ public class LibraryVersionClassComposer {
             .setAnnotations(
                 Arrays.asList(
                     AnnotationNode.builder()
-                        .setType(TypeNode.withReference(ConcreteReference.withClazz(com.google.api.core.InternalApi.class)))
+                        .setType(
+                            TypeNode.withReference(
+                                ConcreteReference.withClazz(com.google.api.core.InternalApi.class)))
                         .setDescription("For internal use only")
                         .build()))
             .setScope(ScopeNode.PUBLIC)
@@ -84,7 +86,8 @@ public class LibraryVersionClassComposer {
                         LineComment.withComment(
                             String.format("{x-version-update-start:%s:current}", artifactId))),
                     ExprStatement.withExpr(versionAssignmentExpr),
-                    CommentStatement.withComment(LineComment.withComment("{x-version-update-end}"))))
+                    CommentStatement.withComment(
+                        LineComment.withComment("{x-version-update-end}"))))
             .build();
 
     return GapicClass.create(GapicClass.Kind.MAIN, classDef);

@@ -27,22 +27,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 class LibraryVersionClassComposerTest {
   static Stream<Arguments> data() {
     return Stream.of(
-        Arguments.of(
-            "LoggingVersion",
-            GrpcTestProtoLoader.instance().parseLogging(),
-            0),
-        Arguments.of(
-            "EchoVersion",
-            GrpcTestProtoLoader.instance().parseShowcaseEcho(),
-            0));
+        Arguments.of("LoggingVersion", GrpcTestProtoLoader.instance().parseLogging(), 0),
+        Arguments.of("EchoVersion", GrpcTestProtoLoader.instance().parseShowcaseEcho(), 0));
   }
 
   @ParameterizedTest
   @MethodSource("data")
-  void generateVersionClasses(
-      String name,
-      GapicContext context,
-      int serviceIndex) {
+  void generateVersionClasses(String name, GapicContext context, int serviceIndex) {
     Service service = context.services().get(serviceIndex);
     GapicClass clazz = LibraryVersionClassComposer.instance().generate(context, service);
 

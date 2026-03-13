@@ -200,14 +200,10 @@ public class Composer {
 
   public static List<GapicClass> generateVersionClasses(GapicContext context) {
     return context.services().stream()
-        .map(Service::pakkage)
-        .distinct()
-        .map(
-            p -> {
-              Service service =
-                  context.services().stream().filter(s -> s.pakkage().equals(p)).findFirst().get();
-              return LibraryVersionClassComposer.instance().generate(context, service);
-            })
+        .collect(Collectors.toMap(Service::pakkage, s -> s, (s1, s2) -> s1))
+        .values()
+        .stream()
+        .map(service -> LibraryVersionClassComposer.instance().generate(context, service))
         .collect(Collectors.toList());
   }
 

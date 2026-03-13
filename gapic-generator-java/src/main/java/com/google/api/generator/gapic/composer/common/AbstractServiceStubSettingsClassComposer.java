@@ -2145,7 +2145,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                                 .setName("Version")
                                 .setPakkage(service.pakkage())
                                 .build()))
-                    .setVariable(Variable.builder().setName("VERSION").setType(TypeNode.STRING).build())
+                    .setVariable(
+                        Variable.builder().setName("VERSION").setType(TypeNode.STRING).build())
                     .build())
             .build();
 
