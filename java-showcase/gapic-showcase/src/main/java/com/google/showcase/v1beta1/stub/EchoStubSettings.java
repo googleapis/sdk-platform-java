@@ -81,6 +81,7 @@ import com.google.showcase.v1beta1.PagedExpandLegacyRequest;
 import com.google.showcase.v1beta1.PagedExpandRequest;
 import com.google.showcase.v1beta1.PagedExpandResponse;
 import com.google.showcase.v1beta1.PagedExpandResponseList;
+import com.google.showcase.v1beta1.Version;
 import com.google.showcase.v1beta1.WaitMetadata;
 import com.google.showcase.v1beta1.WaitRequest;
 import com.google.showcase.v1beta1.WaitResponse;
@@ -588,6 +589,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     return LibraryMetadata.newBuilder()
         .setArtifactName("com.google.cloud:gapic-showcase")
         .setRepository("googleapis/sdk-platform-java")
+        .setLibraryVersion(Version.VERSION)
         .build();
   }
 

@@ -75,6 +75,7 @@ import com.google.showcase.v1beta1.Session;
 import com.google.showcase.v1beta1.Test;
 import com.google.showcase.v1beta1.VerifyTestRequest;
 import com.google.showcase.v1beta1.VerifyTestResponse;
+import com.google.showcase.v1beta1.Version;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.Generated;
@@ -502,6 +503,7 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
     return LibraryMetadata.newBuilder()
         .setArtifactName("com.google.cloud:gapic-showcase")
         .setRepository("googleapis/sdk-platform-java")
+        .setLibraryVersion(Version.VERSION)
         .build();
   }
 

@@ -71,6 +71,7 @@ import com.google.showcase.v1beta1.Sequence;
 import com.google.showcase.v1beta1.SequenceReport;
 import com.google.showcase.v1beta1.StreamingSequence;
 import com.google.showcase.v1beta1.StreamingSequenceReport;
+import com.google.showcase.v1beta1.Version;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
@@ -390,6 +391,7 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
     return LibraryMetadata.newBuilder()
         .setArtifactName("com.google.cloud:gapic-showcase")
         .setRepository("googleapis/sdk-platform-java")
+        .setLibraryVersion(Version.VERSION)
         .build();
   }
 

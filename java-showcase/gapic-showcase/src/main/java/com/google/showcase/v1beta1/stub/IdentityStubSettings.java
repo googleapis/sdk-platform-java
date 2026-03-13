@@ -67,6 +67,7 @@ import com.google.showcase.v1beta1.ListUsersRequest;
 import com.google.showcase.v1beta1.ListUsersResponse;
 import com.google.showcase.v1beta1.UpdateUserRequest;
 import com.google.showcase.v1beta1.User;
+import com.google.showcase.v1beta1.Version;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
@@ -419,6 +420,7 @@ public class IdentityStubSettings extends StubSettings<IdentityStubSettings> {
     return LibraryMetadata.newBuilder()
         .setArtifactName("com.google.cloud:gapic-showcase")
         .setRepository("googleapis/sdk-platform-java")
+        .setLibraryVersion(Version.VERSION)
         .build();
   }
 
