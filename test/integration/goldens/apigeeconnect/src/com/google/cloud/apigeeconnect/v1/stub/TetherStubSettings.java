@@ -35,6 +35,7 @@ import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.cloud.apigeeconnect.v1.EgressRequest;
 import com.google.cloud.apigeeconnect.v1.EgressResponse;
+import com.google.cloud.apigeeconnect.v1.Version;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -195,7 +196,7 @@ public class TetherStubSettings extends StubSettings<TetherStubSettings> {
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setLibraryVersion(Version.VERSION).build();
   }
 
   /** Builder for TetherStubSettings. */

@@ -47,6 +47,7 @@ import com.google.bigtable.v2.ReadRowsRequest;
 import com.google.bigtable.v2.ReadRowsResponse;
 import com.google.bigtable.v2.SampleRowKeysRequest;
 import com.google.bigtable.v2.SampleRowKeysResponse;
+import com.google.cloud.bigtable.data.v2.Version;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -261,7 +262,7 @@ public class BigtableStubSettings extends StubSettings<BigtableStubSettings> {
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setLibraryVersion(Version.VERSION).build();
   }
 
   /** Builder for BigtableStubSettings. */

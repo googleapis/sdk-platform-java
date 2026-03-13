@@ -34,6 +34,7 @@ import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.cloud.compute.v1small.GetRegionOperationRequest;
 import com.google.cloud.compute.v1small.Operation;
+import com.google.cloud.compute.v1small.Version;
 import com.google.cloud.compute.v1small.WaitRegionOperationRequest;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -206,7 +207,7 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setLibraryVersion(Version.VERSION).build();
   }
 
   /** Builder for RegionOperationsStubSettings. */

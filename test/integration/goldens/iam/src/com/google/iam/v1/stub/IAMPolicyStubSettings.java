@@ -41,6 +41,7 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
+import com.google.iam.v1.Version;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
@@ -210,7 +211,7 @@ public class IAMPolicyStubSettings extends StubSettings<IAMPolicyStubSettings> {
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setLibraryVersion(Version.VERSION).build();
   }
 
   /** Builder for IAMPolicyStubSettings. */

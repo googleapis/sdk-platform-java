@@ -48,6 +48,7 @@ import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.apigeeconnect.v1.Connection;
 import com.google.cloud.apigeeconnect.v1.ListConnectionsRequest;
 import com.google.cloud.apigeeconnect.v1.ListConnectionsResponse;
+import com.google.cloud.apigeeconnect.v1.Version;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -296,7 +297,7 @@ public class ConnectionServiceStubSettings extends StubSettings<ConnectionServic
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setLibraryVersion(Version.VERSION).build();
   }
 
   /** Builder for ConnectionServiceStubSettings. */

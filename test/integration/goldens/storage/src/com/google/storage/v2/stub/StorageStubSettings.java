@@ -97,6 +97,7 @@ import com.google.storage.v2.StartResumableWriteResponse;
 import com.google.storage.v2.UpdateBucketRequest;
 import com.google.storage.v2.UpdateHmacKeyRequest;
 import com.google.storage.v2.UpdateObjectRequest;
+import com.google.storage.v2.Version;
 import com.google.storage.v2.WriteObjectRequest;
 import com.google.storage.v2.WriteObjectResponse;
 import java.io.IOException;
@@ -699,7 +700,7 @@ public class StorageStubSettings extends StubSettings<StorageStubSettings> {
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setLibraryVersion(Version.VERSION).build();
   }
 
   /** Builder for StorageStubSettings. */

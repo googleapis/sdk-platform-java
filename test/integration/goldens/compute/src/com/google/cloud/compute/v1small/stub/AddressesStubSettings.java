@@ -55,6 +55,7 @@ import com.google.cloud.compute.v1small.DeleteAddressRequest;
 import com.google.cloud.compute.v1small.InsertAddressRequest;
 import com.google.cloud.compute.v1small.ListAddressesRequest;
 import com.google.cloud.compute.v1small.Operation;
+import com.google.cloud.compute.v1small.Version;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -404,7 +405,7 @@ public class AddressesStubSettings extends StubSettings<AddressesStubSettings> {
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setLibraryVersion(Version.VERSION).build();
   }
 
   /** Builder for AddressesStubSettings. */

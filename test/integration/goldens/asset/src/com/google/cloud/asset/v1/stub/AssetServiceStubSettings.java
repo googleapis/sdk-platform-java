@@ -90,6 +90,7 @@ import com.google.cloud.asset.v1.SearchAllResourcesRequest;
 import com.google.cloud.asset.v1.SearchAllResourcesResponse;
 import com.google.cloud.asset.v1.UpdateFeedRequest;
 import com.google.cloud.asset.v1.UpdateSavedQueryRequest;
+import com.google.cloud.asset.v1.Version;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -729,7 +730,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setLibraryVersion(Version.VERSION).build();
   }
 
   /** Builder for AssetServiceStubSettings. */

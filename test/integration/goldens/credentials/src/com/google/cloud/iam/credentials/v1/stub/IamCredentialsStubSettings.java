@@ -44,6 +44,7 @@ import com.google.cloud.iam.credentials.v1.SignBlobRequest;
 import com.google.cloud.iam.credentials.v1.SignBlobResponse;
 import com.google.cloud.iam.credentials.v1.SignJwtRequest;
 import com.google.cloud.iam.credentials.v1.SignJwtResponse;
+import com.google.cloud.iam.credentials.v1.Version;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -259,7 +260,7 @@ public class IamCredentialsStubSettings extends StubSettings<IamCredentialsStubS
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setLibraryVersion(Version.VERSION).build();
   }
 
   /** Builder for IamCredentialsStubSettings. */

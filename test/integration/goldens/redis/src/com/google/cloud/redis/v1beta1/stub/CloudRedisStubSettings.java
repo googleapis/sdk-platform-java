@@ -63,6 +63,7 @@ import com.google.cloud.redis.v1beta1.ListInstancesResponse;
 import com.google.cloud.redis.v1beta1.RescheduleMaintenanceRequest;
 import com.google.cloud.redis.v1beta1.UpdateInstanceRequest;
 import com.google.cloud.redis.v1beta1.UpgradeInstanceRequest;
+import com.google.cloud.redis.v1beta1.Version;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -481,7 +482,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setLibraryVersion(Version.VERSION).build();
   }
 
   /** Builder for CloudRedisStubSettings. */
