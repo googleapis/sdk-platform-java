@@ -1,0 +1,12 @@
+package com.google.showcase.v1beta1;
+
+import com.google.api.core.InternalApi;
+import javax.annotation.Generated;
+
+@InternalApi("For internal use only")
+@Generated("by gapic-generator-java")
+public final class Version {
+  // {x-version-update-start:showcase:current}
+  public static final String VERSION = "0.0.0-SNAPSHOT";
+  // {x-version-update-end}
+}
