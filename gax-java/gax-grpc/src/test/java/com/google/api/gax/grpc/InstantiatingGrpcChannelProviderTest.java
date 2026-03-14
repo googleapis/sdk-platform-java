@@ -235,7 +235,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         builder -> {
           throw new UnsupportedOperationException();
         };
-    Map<String, ?> directPathServiceConfig = ImmutableMap.of("loadbalancingConfig", "pick_first");
+    Map<String, ?> directPathServiceConfig = ImmutableMap.of("loadBalancingConfig", "pick_first");
     List<InstantiatingGrpcChannelProvider.HardBoundTokenTypes> hardBoundTokenTypes =
         new ArrayList<>();
     hardBoundTokenTypes.add(InstantiatingGrpcChannelProvider.HardBoundTokenTypes.ALTS);
