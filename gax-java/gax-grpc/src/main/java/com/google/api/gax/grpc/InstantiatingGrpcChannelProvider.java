@@ -1437,7 +1437,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     ImmutableMap<String, Object> grpcLbPolicy =
         ImmutableMap.<String, Object>of("grpclb", childPolicy);
 
-    return ImmutableMap.<String, Object>of("loadBalancingConfig", ImmutableList.of(grpcLbPolicy));
+    return ImmutableMap.<String, Object>of(
+        "loadBalancingConfig", ImmutableList.of(grpcLbPolicy, pickFirstStrategy));
   }
 
   private static void validateEndpoint(String endpoint) {
