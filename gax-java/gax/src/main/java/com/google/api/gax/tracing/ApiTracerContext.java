@@ -38,17 +38,6 @@ import com.google.common.base.Strings;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
-//gcp.client.service [consistent across T4 spans]
-//gcp.client.version [consistent across T4 spans]
-//        rpc.system.name (e.g., grpc, http) [consistent across T4 spans]
-//        rpc.response.status_code (for gRPC and HTTP) [from last T4 span]
-//        rpc.method (for gRPC and HTTP) [from the last T4 span]
-//url.domain [consistent across T4 spans]
-//        url.template (for HTTP) [from the first T4 span]
-//        http.response.status_code (for HTTP) [from the last T4 span]
-//server.address [from the last T4 span]
-//server.port [from the last T4 span]
-//        error.type (if the overall T3 operation failed)
 
 /**
  * A context object that contains information used to infer attributes that are common for all
@@ -147,12 +136,15 @@ public abstract class ApiTracerContext {
   @Nullable
   public abstract OperationType operationType();
 
+  /** The service name of a client (e.g. "bigtable", "spanner"). */
   @Nullable
   public abstract String serviceName();
 
+  /** The url domain of the request (e.g. "pubsub.googleapis.com"). */
   @Nullable
   public abstract String urlDomain();
 
+  /** The url template of the request (e.g. /v1/{name}:access). */
   @Nullable
   public abstract String urlTemplate();
 
@@ -185,20 +177,29 @@ public abstract class ApiTracerContext {
     return attributes;
   }
 
-  Map<String, String> getMetricsAttributes() {
-    Map<String, String> attributes = new HashMap<>();
-    if (serverAddress() != null) {
+  Map<String, Object> getMetricsAttributes() {
+    Map<String, Object> attributes = new HashMap<>();
+    if (!Strings.isNullOrEmpty(serverAddress())) {
       attributes.put(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, serverAddress());
     }
-    if (serviceName() != null) {
-      attributes.put("gcp.client.service", serviceName());
+    if (serverPort() != null) {
+      attributes.put(ObservabilityAttributes.SERVER_PORT_ATTRIBUTE, serverPort());
     }
-    if (transport() == HTTP) {
-      if (urlDomain() != null) {
-        attributes.put("url.domain", serviceName());
+    if (!Strings.isNullOrEmpty(serviceName())) {
+      attributes.put(ObservabilityAttributes.GCP_CLIENT_SERVICE_ATTRIBUTE, serviceName());
+    }
+    if (!Strings.isNullOrEmpty(rpcSystemName())) {
+      attributes.put(ObservabilityAttributes.RPC_SYSTEM_NAME_ATTRIBUTE, rpcSystemName());
+    }
+    if (!Strings.isNullOrEmpty(fullMethodName())) {
+      attributes.put(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE, fullMethodName());
+    }
+    if (transport() == Transport.HTTP) {
+      if (!Strings.isNullOrEmpty(urlDomain())) {
+        attributes.put(ObservabilityAttributes.URL_DOMAIN_ATTRIBUTE, urlDomain());
       }
-      if (serviceName() != null) {
-        attributes.put("url.template", serviceName());
+      if (!Strings.isNullOrEmpty(urlTemplate())) {
+        attributes.put(ObservabilityAttributes.URL_TEMPLATE_ATTRIBUTE, urlTemplate());
       }
     }
     return attributes;
@@ -230,6 +231,15 @@ public abstract class ApiTracerContext {
     if (other.operationType() != null) {
       builder.setOperationType(other.operationType());
     }
+    if (other.serviceName() != null) {
+      builder.setServiceName(other.serviceName());
+    }
+    if (other.urlDomain() != null) {
+      builder.setUrlDomain(other.urlDomain());
+    }
+    if (other.urlTemplate() != null) {
+      builder.setUrlTemplate(other.urlTemplate());
+    }
     return builder.build();
   }
 
@@ -256,6 +266,12 @@ public abstract class ApiTracerContext {
     public abstract Builder setOperationType(@Nullable OperationType operationType);
 
     public abstract Builder setServerPort(@Nullable Integer serverPort);
+
+    public abstract Builder setServiceName(@Nullable String serviceName);
+
+    public abstract Builder setUrlDomain(@Nullable String urlDomain);
+
+    public abstract Builder setUrlTemplate(@Nullable String urlTemplate);
 
     public abstract ApiTracerContext build();
   }

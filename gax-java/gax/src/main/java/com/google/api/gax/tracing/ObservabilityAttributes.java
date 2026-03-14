@@ -64,4 +64,13 @@ public class ObservabilityAttributes {
    * gRPC status code (e.g., "OK", "INTERNAL").
    */
   public static final String RPC_RESPONSE_STATUS_ATTRIBUTE = "rpc.response.status_code";
+
+  /** The service name of a client (e.g. "bigtable", "spanner"). */
+  public static final String GCP_CLIENT_SERVICE_ATTRIBUTE = "gcp.client.service";
+
+  /** The url domain of the request (e.g. "pubsub.googleapis.com"). */
+  public static final String URL_DOMAIN_ATTRIBUTE = "url.domain";
+
+  /** The url template of the request (e.g. /v1/{name}:access). */
+  public static final String URL_TEMPLATE_ATTRIBUTE = "url.template";
 }
