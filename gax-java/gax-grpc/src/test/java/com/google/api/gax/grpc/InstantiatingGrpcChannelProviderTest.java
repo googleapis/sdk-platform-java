@@ -235,7 +235,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         builder -> {
           throw new UnsupportedOperationException();
         };
-    Map<String, ?> directPathServiceConfig = ImmutableMap.of("loadbalancingConfig", "grpclb");
+    Map<String, ?> directPathServiceConfig = ImmutableMap.of("loadbalancingConfig", "pick_first");
     List<InstantiatingGrpcChannelProvider.HardBoundTokenTypes> hardBoundTokenTypes =
         new ArrayList<>();
     hardBoundTokenTypes.add(InstantiatingGrpcChannelProvider.HardBoundTokenTypes.ALTS);
@@ -547,14 +547,9 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     ImmutableMap<String, ?> defaultServiceConfig = provider.directPathServiceConfig;
 
     List<Map<String, ?>> lbConfigs = getAsObjectList(defaultServiceConfig, "loadBalancingConfig");
-    assertThat(lbConfigs).hasSize(2);
+    assertThat(lbConfigs).hasSize(1);
     Map<String, ?> lbConfig = lbConfigs.get(0);
-    Map<String, ?> grpclb = getAsObject(lbConfig, "grpclb");
-    List<Map<String, ?>> childPolicies = getAsObjectList(grpclb, "childPolicy");
-    assertThat(childPolicies).hasSize(1);
-    Map<String, ?> childPolicy = childPolicies.get(0);
-    assertThat(childPolicy.keySet()).containsExactly("pick_first");
-    assertThat(lbConfigs.get(1).keySet()).containsExactly("pick_first");
+    assertThat(lbConfig.keySet()).containsExactly("pick_first");
   }
 
   @Nullable
@@ -600,10 +595,10 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     ImmutableMap<String, Object> childPolicy =
         ImmutableMap.<String, Object>of(
             "childPolicy", ImmutableList.of(pickFirstStrategy), "foo", "bar");
-    ImmutableMap<String, Object> grpcLbPolicy =
-        ImmutableMap.<String, Object>of("grpclb", childPolicy);
+    ImmutableMap<String, Object> customLbPolicy =
+        ImmutableMap.<String, Object>of("my_custom_lb", childPolicy);
     Map<String, Object> passedServiceConfig = new HashMap<>();
-    passedServiceConfig.put("loadBalancingConfig", ImmutableList.of(grpcLbPolicy));
+    passedServiceConfig.put("loadBalancingConfig", ImmutableList.of(customLbPolicy));
 
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
