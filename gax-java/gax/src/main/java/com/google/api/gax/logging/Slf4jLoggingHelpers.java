@@ -114,10 +114,11 @@ class Slf4jLoggingHelpers {
     LoggingUtils.executeWithTryCatch(
         () -> {
           Logger logger = loggerProvider.getLogger();
-          if (logger.isInfoEnabled()) {
+          boolean isV2 = LoggingUtils.isLoggingV2Enabled();
+          if (!isV2 && logger.isInfoEnabled()) {
             logDataBuilder.responseStatus(status);
           }
-          if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
+          if (!isV2 && logger.isInfoEnabled() && !logger.isDebugEnabled()) {
             Map<String, Object> responseData = logDataBuilder.build().toMapResponse();
             Slf4jUtils.log(logger, Level.INFO, responseData, "Received response");
           }

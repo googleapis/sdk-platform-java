@@ -36,11 +36,50 @@ import java.util.Map;
 @InternalApi
 public class LoggingUtils {
 
-  private static boolean loggingEnabled = isLoggingEnabled();
   static final String GOOGLE_SDK_JAVA_LOGGING = "GOOGLE_SDK_JAVA_LOGGING";
+  static final String GOOGLE_SDK_JAVA_LOGGING_V2 = "GOOGLE_SDK_JAVA_LOGGING_V2";
 
-  static boolean isLoggingEnabled() {
-    String enableLogging = System.getenv(GOOGLE_SDK_JAVA_LOGGING);
+  private static boolean loggingEnabled = checkLoggingEnabled(GOOGLE_SDK_JAVA_LOGGING);
+  private static boolean loggingV2Enabled = checkLoggingEnabled(GOOGLE_SDK_JAVA_LOGGING_V2);
+
+  /**
+   * Returns whether client-side logging is enabled (V1 or V2).
+   *
+   * @return true if logging is enabled, false otherwise.
+   */
+  public static boolean isLoggingEnabled() {
+    return loggingEnabled || loggingV2Enabled;
+  }
+
+  /**
+   * Returns whether client-side logging V2 (Actionable Errors) is enabled.
+   *
+   * @return true if V2 logging is enabled, false otherwise.
+   */
+  public static boolean isLoggingV2Enabled() {
+    return loggingV2Enabled;
+  }
+
+  /**
+   * Sets whether client-side logging is enabled. Visible for testing.
+   *
+   * @param enabled true to enable logging, false to disable.
+   */
+  public static void setLoggingEnabled(boolean enabled) {
+    loggingEnabled = enabled;
+  }
+
+  /**
+   * Sets whether client-side logging V2 is enabled. Visible for testing.
+   *
+   * @param enabled true to enable logging, false to disable.
+   */
+  public static void setLoggingV2Enabled(boolean enabled) {
+    loggingV2Enabled = enabled;
+  }
+
+  private static boolean checkLoggingEnabled(String envVar) {
+    String enableLogging = System.getenv(envVar);
     return "true".equalsIgnoreCase(enableLogging);
   }
 
@@ -123,6 +162,26 @@ public class LoggingUtils {
       RespT message, LogData.Builder logDataBuilder, LoggerProvider loggerProvider) {
     if (loggingEnabled) {
       Slf4jLoggingHelpers.logRequest(message, logDataBuilder, loggerProvider);
+    }
+  }
+
+  /**
+   * Logs an actionable error message with structured context at a specific log level.
+   *
+   * @param logContext A map containing the structured logging context (e.g., RPC service, method,
+   *     error details).
+   * @param loggerProvider The provider used to obtain the logger.
+   * @param level The slf4j level to log the actionable error at.
+   * @param message The human-readable error message.
+   */
+  public static void logActionableError(
+      Map<String, Object> logContext,
+      LoggerProvider loggerProvider,
+      org.slf4j.event.Level level,
+      String message) {
+    if (loggingV2Enabled) {
+      org.slf4j.Logger logger = loggerProvider.getLogger();
+      Slf4jUtils.log(logger, level, logContext, message);
     }
   }
 
