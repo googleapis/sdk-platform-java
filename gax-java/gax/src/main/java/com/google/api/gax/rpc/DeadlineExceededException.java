@@ -49,4 +49,13 @@ public class DeadlineExceededException extends ApiException {
       Throwable cause, StatusCode statusCode, boolean retryable, ErrorDetails errorDetails) {
     super(cause, statusCode, retryable, errorDetails);
   }
+
+  public DeadlineExceededException(
+      String message,
+      Throwable cause,
+      StatusCode statusCode,
+      boolean retryable,
+      ErrorDetails errorDetails) {
+    super(message, cause, statusCode, retryable, errorDetails);
+  }
 }

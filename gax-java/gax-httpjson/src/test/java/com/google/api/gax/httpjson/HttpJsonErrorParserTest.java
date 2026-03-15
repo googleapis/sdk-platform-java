@@ -61,7 +61,7 @@ class HttpJsonErrorParserTest {
 
     com.google.rpc.Status status = HttpJsonErrorParser.parseStatus(payload);
     assertThat(status).isNotNull();
-    assertThat(status.getCode()).isEqualTo(401);
+    assertThat(status.getCode()).isEqualTo(16);
     assertThat(status.getMessage())
         .isEqualTo("Request is missing required authentication credential.");
 
@@ -134,5 +134,41 @@ class HttpJsonErrorParserTest {
     String payload = "{\"error\": []}";
     assertThat(HttpJsonErrorParser.parseStatus(payload))
         .isEqualTo(com.google.rpc.Status.getDefaultInstance());
+  }
+
+  @Test
+  void parseStatus_withHttpCodeAndGrpcStatusString() {
+    // AIP-193 standard JSON mapping typically includes the HTTP code in "code"
+    // and the gRPC status string in "status". Let's verify what JsonFormat actually extracts
+    // to the `com.google.rpc.Status` proto when both are present.
+    String payload =
+        "{\n"
+            + "  \"error\": {\n"
+            + "    \"code\": 403,\n"
+            + "    \"status\": \"PERMISSION_DENIED\",\n"
+            + "    \"message\": \"The caller does not have permission\"\n"
+            + "  }\n"
+            + "}";
+
+    com.google.rpc.Status status = HttpJsonErrorParser.parseStatus(payload);
+
+    // In Protobuf, com.google.rpc.Status ONLY has `int32 code = 1;` and `string message = 2;`
+    // It does NOT have a `status` field. Because we use `.ignoringUnknownFields()` in the parser,
+    // the "status": "PERMISSION_DENIED" string is completely thrown away natively.
+    // However, our parser manually intercepts the 'status' string to override the gRPC integer.
+    // So we expect 7 (PERMISSION_DENIED), not 403!
+    assertThat(status.getCode()).isEqualTo(7);
+    assertThat(status.getMessage()).isEqualTo("The caller does not have permission");
+  }
+
+  @Test
+  void parseStatus_withOnlyStatusString() {
+    String payload = "{\n" + "  \"error\": {\n" + "    \"status\": \"NOT_FOUND\"\n" + "  }\n" + "}";
+
+    com.google.rpc.Status status = HttpJsonErrorParser.parseStatus(payload);
+
+    // Because "code" is missing, JsonFormat sets it to 0 (OK). But our manual override
+    // sees "status": "NOT_FOUND" and correctly maps it to 5.
+    assertThat(status.getCode()).isEqualTo(5);
   }
 }
