@@ -2330,43 +2330,38 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       TypeStore typeStore,
       boolean isBatchingSettings,
       final boolean isSettingsBuilder) {
+    Function<Class<?>, TypeNode> typeMakerFn =
+        clz -> TypeNode.withReference(ConcreteReference.withClazz(clz));
     // Default: No streaming.
     TypeNode callSettingsType =
         method.isPaged()
-            ? TypeNode.withReference(
-                ConcreteReference.withClazz(
-                    isSettingsBuilder ? PagedCallSettings.Builder.class : PagedCallSettings.class))
-            : TypeNode.withReference(
-                ConcreteReference.withClazz(
-                    isSettingsBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class));
+            ? typeMakerFn.apply(
+                isSettingsBuilder ? PagedCallSettings.Builder.class : PagedCallSettings.class)
+            : typeMakerFn.apply(
+                isSettingsBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class);
     if (isBatchingSettings) {
       callSettingsType =
-          TypeNode.withReference(
-              ConcreteReference.withClazz(
-                  isSettingsBuilder
-                      ? BatchingCallSettings.Builder.class
-                      : BatchingCallSettings.class));
+          typeMakerFn.apply(
+              isSettingsBuilder ? BatchingCallSettings.Builder.class : BatchingCallSettings.class);
     }
 
     // Streaming takes precedence over paging, as per the monolith's existing behavior.
     switch (method.stream()) {
       case SERVER:
         callSettingsType =
-            TypeNode.withReference(
-                ConcreteReference.withClazz(
-                    isSettingsBuilder
-                        ? ServerStreamingCallSettings.Builder.class
-                        : ServerStreamingCallSettings.class));
+            typeMakerFn.apply(
+                isSettingsBuilder
+                    ? ServerStreamingCallSettings.Builder.class
+                    : ServerStreamingCallSettings.class);
         break;
       case CLIENT:
       // Fall through.
       case BIDI:
         callSettingsType =
-            TypeNode.withReference(
-                ConcreteReference.withClazz(
-                    isSettingsBuilder
-                        ? StreamingCallSettings.Builder.class
-                        : StreamingCallSettings.class));
+            typeMakerFn.apply(
+                isSettingsBuilder
+                    ? StreamingCallSettings.Builder.class
+                    : StreamingCallSettings.class);
         break;
       case NONE:
       // Fall through.
