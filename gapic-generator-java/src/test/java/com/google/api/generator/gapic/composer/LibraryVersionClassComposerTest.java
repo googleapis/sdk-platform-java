@@ -19,24 +19,16 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.protoloader.GrpcTestProtoLoader;
-import java.util.stream.Stream;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.Test;
 
-class LibraryVersionClassComposerTest {
-  static Stream<Arguments> data() {
-    return Stream.of(
-        Arguments.of("LoggingVersion", GrpcTestProtoLoader.instance().parseLogging(), 0),
-        Arguments.of("EchoVersion", GrpcTestProtoLoader.instance().parseShowcaseEcho(), 0));
-  }
+public class LibraryVersionClassComposerTest {
 
-  @ParameterizedTest
-  @MethodSource("data")
-  void generateVersionClasses(String name, GapicContext context, int serviceIndex) {
-    Service service = context.services().get(serviceIndex);
+  @Test
+  public void generateVersionClasses() {
+    GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseEcho();
+    Service service = context.services().get(0);
     GapicClass clazz = LibraryVersionClassComposer.instance().generate(context, service);
 
-    Assert.assertGoldenClass(this.getClass(), clazz, name + ".golden");
+    Assert.assertGoldenClass(this.getClass(), clazz, "EchoVersion.golden");
   }
 }

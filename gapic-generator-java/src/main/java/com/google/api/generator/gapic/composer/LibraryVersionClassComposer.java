@@ -42,7 +42,7 @@ public class LibraryVersionClassComposer {
   }
 
   public GapicClass generate(GapicContext context, Service service) {
-    String packageName = service.pakkage();
+    String packageName = service.pakkage() + ".stub";
     String className = "Version";
 
     String artifact = context.artifact();
@@ -77,7 +77,7 @@ public class LibraryVersionClassComposer {
                                 ConcreteReference.withClazz(com.google.api.core.InternalApi.class)))
                         .setDescription("For internal use only")
                         .build()))
-            .setScope(ScopeNode.PUBLIC)
+            .setScope(ScopeNode.LOCAL)
             .setIsFinal(true)
             .setName(className)
             .setStatements(
