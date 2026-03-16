@@ -529,7 +529,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().setLibraryVersion(Version.VERSION).build();
+    return LibraryMetadata.newBuilder().setVersion(Version.VERSION).build();
   }
 
   /** Builder for LoggingServiceV2StubSettings. */

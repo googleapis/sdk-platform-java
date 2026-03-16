@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.google.cloud.example.library.v1;
+package com.google.storage.v2.stub;
 
 import com.google.api.core.InternalApi;
 
 @InternalApi("For internal use only")
-public final class Version {
+final class Version {
   // {x-version-update-start:null:current}
   public static final String VERSION = "0.0.0-SNAPSHOT";
   // {x-version-update-end}

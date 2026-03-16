@@ -567,7 +567,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().setLibraryVersion(Version.VERSION).build();
+    return LibraryMetadata.newBuilder().setVersion(Version.VERSION).build();
   }
 
   /** Builder for PublisherStubSettings. */
