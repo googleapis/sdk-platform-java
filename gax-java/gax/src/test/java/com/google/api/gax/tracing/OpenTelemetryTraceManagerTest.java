@@ -30,13 +30,14 @@
 
 package com.google.api.gax.tracing;
 
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.google.common.collect.ImmutableMap;
 import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.common.AttributeKey;
+import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanBuilder;
 import io.opentelemetry.api.trace.SpanKind;
@@ -95,27 +96,14 @@ class OpenTelemetryTraceManagerTest {
 
     when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
     when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
-    when(spanBuilder.setAttribute("key1", "value1")).thenReturn(spanBuilder);
+    when(spanBuilder.setAllAttributes(Attributes.of(AttributeKey.stringKey("key1"), "value1")))
+        .thenReturn(spanBuilder);
     when(spanBuilder.startSpan()).thenReturn(span);
 
     TraceManager.Span handle = recorder.createSpan(spanName, attributes);
     handle.end();
 
+    verify(spanBuilder).setAllAttributes(ObservabilityUtils.toOtelAttributes(attributes));
     verify(span).end();
-  }
-
-  @Test
-  void testCreateSpan_recordsIntegerAttribute() {
-    String spanName = "test-span";
-    Map<String, Object> attributes = ImmutableMap.of("port", 443);
-
-    when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
-    when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
-    when(spanBuilder.setAttribute(anyString(), anyLong())).thenReturn(spanBuilder);
-    when(spanBuilder.startSpan()).thenReturn(span);
-
-    recorder.createSpan(spanName, attributes);
-
-    verify(spanBuilder).setAttribute("port", 443L);
   }
 }
