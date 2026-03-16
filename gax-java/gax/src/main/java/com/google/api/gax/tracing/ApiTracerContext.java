@@ -179,13 +179,8 @@ public abstract class ApiTracerContext {
             ObservabilityAttributes.ARTIFACT_ATTRIBUTE, libraryMetadata().artifactName());
       }
     }
-    if (transport() == Transport.GRPC) {
-      if (!Strings.isNullOrEmpty(fullMethodName())) {
-        attributes.put(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE, fullMethodName());
-      }
-      if (Strings.isNullOrEmpty(fullMethodName())) {
-        attributes.put(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE, fullMethodName());
-      }
+    if (transport() == Transport.GRPC && !Strings.isNullOrEmpty(fullMethodName())) {
+      attributes.put(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE, fullMethodName());
     }
     if (transport() == Transport.HTTP && !Strings.isNullOrEmpty(httpMethod())) {
       attributes.put(ObservabilityAttributes.HTTP_METHOD_ATTRIBUTE, httpMethod());
