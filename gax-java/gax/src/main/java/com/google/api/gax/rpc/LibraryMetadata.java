@@ -73,14 +73,14 @@ public abstract class LibraryMetadata {
    * @return the version, or {@code null} if not set
    */
   @Nullable
-  public abstract String libraryVersion();
+  public abstract String version();
 
   public static LibraryMetadata empty() {
     return newBuilder().build();
   }
 
   public boolean isEmpty() {
-    return repository() == null && artifactName() == null && libraryVersion() == null;
+    return repository() == null && artifactName() == null && version() == null;
   }
 
   public static LibraryMetadata.Builder newBuilder() {
@@ -93,7 +93,7 @@ public abstract class LibraryMetadata {
 
     public abstract Builder setArtifactName(@Nullable String artifactName);
 
-    public abstract Builder setLibraryVersion(@Nullable String libraryVersion);
+    public abstract Builder setVersion(@Nullable String libraryVersion);
 
     public abstract LibraryMetadata build();
   }

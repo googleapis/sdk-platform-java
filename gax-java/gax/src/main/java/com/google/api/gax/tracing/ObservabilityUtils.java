@@ -31,7 +31,6 @@ package com.google.api.gax.tracing;
 
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.StatusCode;
-import com.google.common.base.Preconditions;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.common.AttributesBuilder;
 import java.util.Map;
@@ -57,10 +56,19 @@ class ObservabilityUtils {
     return statusString;
   }
 
-  static Attributes toOtelAttributes(Map<String, String> attributes) {
-    Preconditions.checkNotNull(attributes, "Attributes map cannot be null");
+  static Attributes toOtelAttributes(Map<String, Object> attributes) {
     AttributesBuilder attributesBuilder = Attributes.builder();
-    attributes.forEach(attributesBuilder::put);
+    if (attributes == null) {
+      return attributesBuilder.build();
+    }
+    attributes.forEach(
+        (k, v) -> {
+          if (v instanceof String) {
+            attributesBuilder.put(k, (String) v);
+          } else if (v instanceof Integer) {
+            attributesBuilder.put(k, (long) (Integer) v);
+          }
+        });
     return attributesBuilder.build();
   }
 }

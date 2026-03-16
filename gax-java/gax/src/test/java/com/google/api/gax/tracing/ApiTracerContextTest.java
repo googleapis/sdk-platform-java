@@ -76,8 +76,7 @@ class ApiTracerContextTest {
 
   @Test
   void testGetAttemptAttributes_version() {
-    LibraryMetadata libraryMetadata =
-        LibraryMetadata.newBuilder().setLibraryVersion("1.2.3").build();
+    LibraryMetadata libraryMetadata = LibraryMetadata.newBuilder().setVersion("1.2.3").build();
     ApiTracerContext context =
         ApiTracerContext.newBuilder().setLibraryMetadata(libraryMetadata).build();
     Map<String, Object> attributes = context.getAttemptAttributes();
@@ -136,11 +135,7 @@ class ApiTracerContextTest {
   @Test
   void testGetAttemptAttributes_emptyStrings() {
     LibraryMetadata libraryMetadata =
-        LibraryMetadata.newBuilder()
-            .setRepository("")
-            .setArtifactName("")
-            .setLibraryVersion("")
-            .build();
+        LibraryMetadata.newBuilder().setRepository("").setArtifactName("").setVersion("").build();
     ApiTracerContext context =
         ApiTracerContext.newBuilder()
             .setLibraryMetadata(libraryMetadata)
@@ -149,6 +144,125 @@ class ApiTracerContextTest {
     Map<String, Object> attributes = context.getAttemptAttributes();
 
     assertThat(attributes).isEmpty();
+  }
+
+  @Test
+  void testGetMetricsAttributes_serverPort() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setServerPort(8080)
+            .build();
+    Map<String, Object> attributes = context.getMetricsAttributes();
+
+    assertThat(attributes).containsEntry(ObservabilityAttributes.SERVER_PORT_ATTRIBUTE, 8080);
+  }
+
+  @Test
+  void testGetMetricsAttributes_rpcSystemName() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .build();
+    Map<String, Object> attributes = context.getMetricsAttributes();
+
+    assertThat(attributes).containsEntry(ObservabilityAttributes.RPC_SYSTEM_NAME_ATTRIBUTE, "grpc");
+  }
+
+  @Test
+  void testGetMetricsAttributes_fullMethodName() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setFullMethodName("google.pubsub.v1.Publisher/Publish")
+            .build();
+    Map<String, Object> attributes = context.getMetricsAttributes();
+
+    assertThat(attributes)
+        .containsEntry(
+            ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE,
+            "google.pubsub.v1.Publisher/Publish");
+  }
+
+  @Test
+  void testGetMetricsAttributes_serverAddress() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setServerAddress("test-metrics-address")
+            .build();
+    Map<String, Object> attributes = context.getMetricsAttributes();
+
+    assertThat(attributes)
+        .containsEntry(ObservabilityAttributes.SERVER_ADDRESS_ATTRIBUTE, "test-metrics-address");
+  }
+
+  @Test
+  void testGetMetricsAttributes_serviceName() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setServiceName("test-service")
+            .build();
+    Map<String, Object> attributes = context.getMetricsAttributes();
+
+    assertThat(attributes)
+        .containsEntry(ObservabilityAttributes.GCP_CLIENT_SERVICE_ATTRIBUTE, "test-service");
+  }
+
+  @Test
+  void testGetMetricsAttributes_urlDomain() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.HTTP)
+            .setUrlDomain("test-domain.com")
+            .build();
+    Map<String, Object> attributes = context.getMetricsAttributes();
+
+    assertThat(attributes)
+        .containsEntry(ObservabilityAttributes.URL_DOMAIN_ATTRIBUTE, "test-domain.com");
+  }
+
+  @Test
+  void testGetMetricsAttributes_urlTemplate() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.HTTP)
+            .setUrlTemplate("/v1/test/{template}")
+            .build();
+    Map<String, Object> attributes = context.getMetricsAttributes();
+
+    assertThat(attributes)
+        .containsEntry(ObservabilityAttributes.URL_TEMPLATE_ATTRIBUTE, "/v1/test/{template}");
+  }
+
+  @Test
+  void testGetMetricsAttributes_urlDomain_notHttp() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .setUrlDomain("test-domain.com")
+            .build();
+    Map<String, Object> attributes = context.getMetricsAttributes();
+
+    assertThat(attributes).doesNotContainKey(ObservabilityAttributes.URL_DOMAIN_ATTRIBUTE);
+  }
+
+  @Test
+  void testGetMetricsAttributes_urlTemplate_notHttp() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .setUrlTemplate("/v1/test/{template}")
+            .build();
+    Map<String, Object> attributes = context.getMetricsAttributes();
+
+    assertThat(attributes).doesNotContainKey(ObservabilityAttributes.URL_TEMPLATE_ATTRIBUTE);
   }
 
   @Test
