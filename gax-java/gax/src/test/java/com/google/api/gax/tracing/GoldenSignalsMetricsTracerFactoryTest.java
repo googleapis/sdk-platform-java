@@ -29,12 +29,14 @@
  */
 package com.google.api.gax.tracing;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.Mockito.mock;
-
 import io.opentelemetry.api.OpenTelemetry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class GoldenSignalsMetricsTracerFactoryTest {
 
@@ -59,6 +61,26 @@ class GoldenSignalsMetricsTracerFactoryTest {
     ApiTracer actual =
         tracerFactory.newTracer(
             mock(ApiTracer.class), mock(SpanName.class), ApiTracerFactory.OperationType.Unary);
+    assertThat(actual).isInstanceOf(BaseApiTracer.class);
+  }
+
+  @Test
+  void newTracer_shouldMergeApiTracerContext() {
+    ApiTracerContext clientLevelTracerContext = mock(ApiTracerContext.class, RETURNS_DEEP_STUBS);
+    ApiTracerContext methodLevelTracerContext = mock(ApiTracerContext.class);
+    when(clientLevelTracerContext.libraryMetadata().artifactName()).thenReturn("does not matter");
+    when(clientLevelTracerContext.merge(methodLevelTracerContext)).thenReturn(clientLevelTracerContext);
+
+    tracerFactory.withContext(clientLevelTracerContext);
+    ApiTracer actual = tracerFactory.newTracer(mock(ApiTracer.class), methodLevelTracerContext);
+
+    assertThat(actual).isInstanceOf(GoldenSignalsMetricsTracer.class);
+  }
+
+  @Test
+  void newTracer1_createsBaseTracer_ifMetricsRecorderIsNull() {
+    ApiTracer actual = tracerFactory.newTracer(mock(ApiTracer.class), mock(ApiTracerContext.class));
+
     assertThat(actual).isInstanceOf(BaseApiTracer.class);
   }
 }
