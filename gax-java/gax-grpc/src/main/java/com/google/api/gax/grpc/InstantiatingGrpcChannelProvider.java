@@ -693,13 +693,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return s2aChannelCredentials;
   }
 
-  private ManagedChannel createSingleChannel() throws IOException {
-    GrpcHeaderInterceptor headerInterceptor =
-        new GrpcHeaderInterceptor(headersWithDuplicatesRemoved);
-
-    GrpcMetadataHandlerInterceptor metadataHandlerInterceptor =
-        new GrpcMetadataHandlerInterceptor();
-
+  @InternalApi("For internal use by google-cloud-java clients only")
+  public ManagedChannelBuilder<?> createChannelBuilder() throws IOException {
     int colon = endpoint.lastIndexOf(':');
     if (colon < 0) {
       throw new IllegalStateException("invalid endpoint - should have been validated: " + endpoint);
@@ -775,8 +770,19 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       // See https://github.com/googleapis/gapic-generator/issues/2816
       builder.disableServiceConfigLookUp();
     }
-    builder =
-        builder
+    return builder;
+  }
+
+  @InternalApi("For internal use by google-cloud-java clients only")
+  public ManagedChannelBuilder<?> createDecoratedChannelBuilder() throws IOException {
+    GrpcHeaderInterceptor headerInterceptor =
+        new GrpcHeaderInterceptor(headersWithDuplicatesRemoved);
+
+    GrpcMetadataHandlerInterceptor metadataHandlerInterceptor =
+        new GrpcMetadataHandlerInterceptor();
+
+    ManagedChannelBuilder<?> builder =
+        createChannelBuilder()
             .intercept(new GrpcChannelUUIDInterceptor())
             .intercept(new GrpcLoggingInterceptor())
             .intercept(headerInterceptor)
@@ -805,6 +811,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     if (channelConfigurator != null) {
       builder = channelConfigurator.apply(builder);
     }
+
+    return builder;
+  }
+
+  private ManagedChannel createSingleChannel() throws IOException {
+    ManagedChannelBuilder<?> builder = createDecoratedChannelBuilder();
 
     ManagedChannel managedChannel = builder.build();
     if (channelPrimer != null) {
