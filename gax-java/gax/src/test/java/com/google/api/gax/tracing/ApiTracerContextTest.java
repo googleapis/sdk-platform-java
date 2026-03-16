@@ -141,6 +141,20 @@ class ApiTracerContextTest {
   }
 
   @Test
+  void testGetAttemptAttributes_httpPathTemplate() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.HTTP)
+            .setHttpPathTemplate("the-template")
+            .build();
+    Map<String, Object> attributes = context.getAttemptAttributes();
+
+    assertThat(attributes)
+        .containsEntry(ObservabilityAttributes.HTTP_URL_TEMPLATE_ATTRIBUTE, "the-template");
+  }
+
+  @Test
   void testGetAttemptAttributes_empty() {
     ApiTracerContext context = ApiTracerContext.empty();
     Map<String, Object> attributes = context.getAttemptAttributes();

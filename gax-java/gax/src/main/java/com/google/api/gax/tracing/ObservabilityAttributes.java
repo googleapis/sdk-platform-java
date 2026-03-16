@@ -62,6 +62,9 @@ public class ObservabilityAttributes {
   /** The HTTP method of the request (e.g., "GET"). Only used in HTTP transport. */
   public static final String HTTP_METHOD_ATTRIBUTE = "http.request.method";
 
+  /** The HTTP method of the request (e.g., "GET"). Only used in HTTP transport. */
+  public static final String HTTP_URL_TEMPLATE_ATTRIBUTE = "url.template";
+
   /**
    * The error codes of the request. The value will be the string representation of the canonical
    * gRPC status code (e.g., "OK", "INTERNAL").

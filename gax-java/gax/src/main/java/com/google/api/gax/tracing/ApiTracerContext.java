@@ -182,8 +182,13 @@ public abstract class ApiTracerContext {
     if (transport() == Transport.GRPC && !Strings.isNullOrEmpty(fullMethodName())) {
       attributes.put(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE, fullMethodName());
     }
-    if (transport() == Transport.HTTP && !Strings.isNullOrEmpty(httpMethod())) {
-      attributes.put(ObservabilityAttributes.HTTP_METHOD_ATTRIBUTE, httpMethod());
+    if (transport() == Transport.HTTP) {
+      if (!Strings.isNullOrEmpty(httpMethod())) {
+        attributes.put(ObservabilityAttributes.HTTP_METHOD_ATTRIBUTE, httpMethod());
+      }
+      if (!Strings.isNullOrEmpty(httpPathTemplate())) {
+        attributes.put(ObservabilityAttributes.HTTP_URL_TEMPLATE_ATTRIBUTE, httpPathTemplate());
+      }
     }
     return attributes;
   }

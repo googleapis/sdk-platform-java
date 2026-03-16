@@ -189,6 +189,11 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.HTTP_METHOD_ATTRIBUTE)))
           .isEqualTo("POST");
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.HTTP_URL_TEMPLATE_ATTRIBUTE)))
+          .isEqualTo("v1beta1/echo:echo");
     }
   }
 }
