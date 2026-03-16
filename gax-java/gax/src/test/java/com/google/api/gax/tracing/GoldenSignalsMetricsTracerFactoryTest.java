@@ -48,7 +48,7 @@ class GoldenSignalsMetricsTracerFactoryTest {
   }
 
   @Test
-  void newTracer_createsTracer_successfully() {
+  void newTracerWithSpanName_shouldCreateTracer_ifMetricsRecorderIsNotNull() {
     tracerFactory.withContext(ApiTracerContext.empty());
     ApiTracer actual =
         tracerFactory.newTracer(
@@ -57,7 +57,7 @@ class GoldenSignalsMetricsTracerFactoryTest {
   }
 
   @Test
-  void newTracer_createsBaseTracer_ifMetricsRecorderIsNull() {
+  void newTracerWithSpanName_shouldCreateBaseTracer_ifMetricsRecorderIsNull() {
     ApiTracer actual =
         tracerFactory.newTracer(
             mock(ApiTracer.class), mock(SpanName.class), ApiTracerFactory.OperationType.Unary);
@@ -65,7 +65,7 @@ class GoldenSignalsMetricsTracerFactoryTest {
   }
 
   @Test
-  void newTracer_shouldMergeApiTracerContext() {
+  void newTracerWithApiTracerContext_shouldMergeApiTracerContext() {
     ApiTracerContext clientLevelTracerContext = mock(ApiTracerContext.class, RETURNS_DEEP_STUBS);
     ApiTracerContext methodLevelTracerContext = mock(ApiTracerContext.class);
     when(clientLevelTracerContext.libraryMetadata().artifactName()).thenReturn("does not matter");
@@ -79,7 +79,7 @@ class GoldenSignalsMetricsTracerFactoryTest {
   }
 
   @Test
-  void newTracer1_createsBaseTracer_ifMetricsRecorderIsNull() {
+  void newTracerWithApiTracerContext_shouldCreateBaseTracer_ifMetricsRecorderIsNull() {
     ApiTracer actual = tracerFactory.newTracer(mock(ApiTracer.class), mock(ApiTracerContext.class));
 
     assertThat(actual).isInstanceOf(BaseApiTracer.class);
