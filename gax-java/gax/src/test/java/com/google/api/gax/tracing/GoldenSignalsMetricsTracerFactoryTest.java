@@ -29,14 +29,14 @@
  */
 package com.google.api.gax.tracing;
 
-import io.opentelemetry.api.OpenTelemetry;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Answers.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import io.opentelemetry.api.OpenTelemetry;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class GoldenSignalsMetricsTracerFactoryTest {
 
@@ -69,7 +69,8 @@ class GoldenSignalsMetricsTracerFactoryTest {
     ApiTracerContext clientLevelTracerContext = mock(ApiTracerContext.class, RETURNS_DEEP_STUBS);
     ApiTracerContext methodLevelTracerContext = mock(ApiTracerContext.class);
     when(clientLevelTracerContext.libraryMetadata().artifactName()).thenReturn("does not matter");
-    when(clientLevelTracerContext.merge(methodLevelTracerContext)).thenReturn(clientLevelTracerContext);
+    when(clientLevelTracerContext.merge(methodLevelTracerContext))
+        .thenReturn(clientLevelTracerContext);
 
     tracerFactory.withContext(clientLevelTracerContext);
     ApiTracer actual = tracerFactory.newTracer(mock(ApiTracer.class), methodLevelTracerContext);
