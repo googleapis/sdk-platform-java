@@ -19,7 +19,6 @@ This is a bit of a hack (imported from original synthtool library).
 
 import pathlib
 
-
 _tracked_paths = []
 
 

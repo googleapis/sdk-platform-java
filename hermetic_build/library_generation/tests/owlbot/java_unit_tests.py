@@ -95,7 +95,7 @@ class JavaUnitTests(unittest.TestCase):
             # use os.walk because glob ignores hidden directories
             for dirpath, _, filenames in os.walk(workdir):
                 for file in filenames:
-                    (_, ext) = os.path.splitext(file)
+                    _, ext = os.path.splitext(file)
                     if ext == ".xml":
                         assert_valid_xml(os.path.join(dirpath, file))
                     elif ext == ".yaml" or ext == ".yml":
