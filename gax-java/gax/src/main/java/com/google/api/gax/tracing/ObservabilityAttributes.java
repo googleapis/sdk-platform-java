@@ -62,7 +62,9 @@ public class ObservabilityAttributes {
   /** The HTTP method of the request (e.g., "GET"). Only used in HTTP transport. */
   public static final String HTTP_METHOD_ATTRIBUTE = "http.request.method";
 
-  /** The HTTP method of the request (e.g., "GET"). Only used in HTTP transport. */
+  /**
+   * The HTTP URL template of the request (e.g. "/v1/{name}:access"). Only used in HTTP transport.
+   */
   public static final String HTTP_URL_TEMPLATE_ATTRIBUTE = "url.template";
 
   /**
