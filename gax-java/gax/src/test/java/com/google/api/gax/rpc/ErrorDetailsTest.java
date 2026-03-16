@@ -189,6 +189,28 @@ class ErrorDetailsTest {
   }
 
   @Test
+  void unpackList_shouldReturnEmptyListIfRawErrorMessagesIsNull() {
+    errorDetails = ErrorDetails.builder().setRawErrorMessages(null).build();
+    Truth.assertThat(errorDetails.unpackList(ErrorInfo.class)).isEmpty();
+  }
+
+  @Test
+  void getErrorInfoList_shouldUnpackAllErrorInfoProtoMessages() {
+    ErrorInfo errorInfo2 =
+        ErrorInfo.newBuilder().setDomain("googleapis.com").setReason("ANOTHER_REASON").build();
+
+    errorDetails =
+        ErrorDetails.builder()
+            .setRawErrorMessages(
+                ImmutableList.of(Any.pack(ERROR_INFO), Any.pack(DEBUG_INFO), Any.pack(errorInfo2)))
+            .build();
+
+    Truth.assertThat(errorDetails.getErrorInfoList())
+        .containsExactly(ERROR_INFO, errorInfo2)
+        .inOrder();
+  }
+
+  @Test
   void retryInfo_shouldUnpackRetryInfoProtoMessage() {
     Truth.assertThat(errorDetails.getRetryInfo()).isEqualTo(RETRY_INFO);
   }

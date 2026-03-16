@@ -44,6 +44,8 @@ import com.google.rpc.QuotaFailure;
 import com.google.rpc.RequestInfo;
 import com.google.rpc.ResourceInfo;
 import com.google.rpc.RetryInfo;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nullable;
 
@@ -58,6 +60,14 @@ public abstract class ErrorDetails {
   @Nullable
   public ErrorInfo getErrorInfo() {
     return unpack(ErrorInfo.class);
+  }
+
+  /**
+   * This returns all occurrences of ErrorInfo. A single error response may contain multiple
+   * ErrorInfo messages.
+   */
+  public List<ErrorInfo> getErrorInfoList() {
+    return unpackList(ErrorInfo.class);
   }
 
   /**
@@ -171,5 +181,27 @@ public abstract class ErrorDetails {
       }
     }
     return null;
+  }
+
+  @VisibleForTesting
+  <T extends Message> List<T> unpackList(Class<T> errorTypeClazz) {
+    List<Any> rawErrorMessages = getRawErrorMessages();
+    if (rawErrorMessages == null) {
+      return Collections.emptyList();
+    }
+    List<T> unpackedMessages = new ArrayList<>();
+    for (Any detail : rawErrorMessages) {
+      if (detail.is(errorTypeClazz)) {
+        try {
+          unpackedMessages.add(detail.unpack(errorTypeClazz));
+        } catch (InvalidProtocolBufferException e) {
+          throw new ProtocolBufferParsingException(
+              String.format(
+                  "Failed to unpack %s from raw error messages", errorTypeClazz.getSimpleName()),
+              e);
+        }
+      }
+    }
+    return Collections.unmodifiableList(unpackedMessages);
   }
 }
