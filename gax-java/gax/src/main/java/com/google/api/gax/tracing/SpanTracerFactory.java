@@ -84,8 +84,8 @@ public class SpanTracerFactory implements ApiTracerFactory {
       // gRPC Uses the full method name as span name.
       attemptSpanName = mergedContext.fullMethodName();
     } else if (mergedContext.httpMethod() == null || mergedContext.httpPathTemplate() == null) {
-      // HTTP method name without necessary components is simply a blank string.
-      attemptSpanName = "";
+      // HTTP method name without necessary components defaults to the full method name
+      attemptSpanName = mergedContext.fullMethodName();
     } else {
       // We construct the span name with HTTP method and path template.
       attemptSpanName =

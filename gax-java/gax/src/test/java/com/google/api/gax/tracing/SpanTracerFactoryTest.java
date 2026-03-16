@@ -24,8 +24,8 @@
  * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
  * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 package com.google.api.gax.tracing;
@@ -221,6 +221,23 @@ class SpanTracerFactoryTest {
     tracer.attemptStarted(null, 1);
 
     verify(traceManager).createSpan(eq(expectedSpanName), anyMap());
+  }
+
+  @Test
+  void testNewTracer_withContext_http_noHttpMethodOrPathTemplate_usesFullMethodName() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setFullMethodName("google.cloud.v1.Service.Method")
+            .setTransport(Transport.HTTP)
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .build();
+
+    SpanTracerFactory factory = new SpanTracerFactory(traceManager);
+    ApiTracer tracer = factory.newTracer(null, context);
+
+    tracer.attemptStarted(null, 1);
+
+    verify(traceManager).createSpan(eq("google.cloud.v1.Service.Method"), anyMap());
   }
 
   @Test
