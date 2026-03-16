@@ -72,6 +72,11 @@ public class OpenTelemetryTraceManager implements TraceManager {
     }
 
     @Override
+    public void addAttribute(String key, String value) {
+      span.setAttribute(key, value);
+    }
+
+    @Override
     public void end() {
       span.end();
     }

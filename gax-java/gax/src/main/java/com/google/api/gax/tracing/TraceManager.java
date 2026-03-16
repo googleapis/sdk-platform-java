@@ -45,6 +45,8 @@ public interface TraceManager {
   Span createSpan(String name, Map<String, Object> attributes);
 
   interface Span {
+    void addAttribute(String key, String value);
+
     void end();
   }
 }

@@ -39,6 +39,105 @@ import javax.annotation.Nullable;
 
 class ObservabilityUtils {
 
+  enum ErrorType {
+    CLIENT_TIMEOUT,
+    CLIENT_CONNECTION_ERROR,
+    CLIENT_REQUEST_ERROR,
+    CLIENT_REQUEST_BODY_ERROR,
+    CLIENT_RESPONSE_DECODE_ERROR,
+    CLIENT_REDIRECT_ERROR,
+    CLIENT_AUTHENTICATION_ERROR,
+    CLIENT_UNKNOWN_ERROR,
+    INTERNAL;
+
+    @Override
+    public String toString() {
+      return name();
+    }
+  }
+
+  /**
+   * Function to extract the {@link ObservabilityAttributes#ERROR_TYPE_ATTRIBUTE } attribute from a
+   * Throwable
+   */
+  static String extractErrorType(@Nullable Throwable error) {
+    if (error == null) {
+      return null;
+    }
+
+    if (error instanceof ApiException) {
+      ApiException apiException = (ApiException) error;
+
+      // 1. Check for ErrorInfo.reason
+      String reason = apiException.getReason();
+      if (reason != null && !reason.isEmpty()) {
+        return reason;
+      }
+
+      // 2. Specific Server Error Code
+      if (apiException.getStatusCode() != null) {
+        Object transportCode = apiException.getStatusCode().getTransportCode();
+        if (transportCode instanceof Integer) {
+          // HTTP Status Code
+          return String.valueOf(transportCode);
+        } else if (apiException.getStatusCode().getCode() != null) {
+          // gRPC Status Code name
+          return apiException.getStatusCode().getCode().name();
+        }
+      }
+    }
+
+    // 3. Client-Side Network/Operational Errors
+    String exceptionName = error.getClass().getSimpleName();
+
+    if (error instanceof java.util.concurrent.TimeoutException
+        || error instanceof java.net.SocketTimeoutException
+        || exceptionName.equals("WatchdogTimeoutException")) {
+      return ErrorType.CLIENT_TIMEOUT.toString();
+    }
+
+    if (error instanceof java.net.ConnectException
+        || error instanceof java.net.UnknownHostException
+        || error instanceof java.nio.channels.UnresolvedAddressException
+        || exceptionName.equals("ConnectException")) {
+      return ErrorType.CLIENT_CONNECTION_ERROR.toString();
+    }
+
+    if (exceptionName.contains("CredentialsException")
+        || exceptionName.contains("AuthenticationException")) {
+      return ErrorType.CLIENT_AUTHENTICATION_ERROR.toString();
+    }
+
+    if (exceptionName.contains("ProtocolBufferParsingException")
+        || exceptionName.contains("DecodeException")) {
+      return ErrorType.CLIENT_RESPONSE_DECODE_ERROR.toString();
+    }
+
+    if (exceptionName.contains("RedirectException")) {
+      return ErrorType.CLIENT_REDIRECT_ERROR.toString();
+    }
+
+    if (exceptionName.contains("RequestBodyException")) {
+      return ErrorType.CLIENT_REQUEST_BODY_ERROR.toString();
+    }
+
+    if (exceptionName.contains("RequestException")) {
+      return ErrorType.CLIENT_REQUEST_ERROR.toString();
+    }
+
+    if (exceptionName.contains("UnknownClientException")) {
+      return ErrorType.CLIENT_UNKNOWN_ERROR.toString();
+    }
+
+    // 4. Language-specific error type fallback
+    if (exceptionName != null && !exceptionName.isEmpty()) {
+      return exceptionName;
+    }
+
+    // 5. Internal Fallback
+    return ErrorType.INTERNAL.toString();
+  }
+
   /** Function to extract the status of the error as a string */
   static String extractStatus(@Nullable Throwable error) {
     final String statusString;

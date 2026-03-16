@@ -31,11 +31,15 @@
 package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 
+import com.google.api.gax.rpc.StatusCode.Code;
+import com.google.api.gax.rpc.UnavailableException;
 import com.google.api.gax.tracing.ObservabilityAttributes;
 import com.google.api.gax.tracing.OpenTelemetryTraceManager;
 import com.google.api.gax.tracing.SpanTracer;
 import com.google.api.gax.tracing.SpanTracerFactory;
+import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
@@ -183,6 +187,70 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.ARTIFACT_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_ARTIFACT);
+    }
+  }
+
+  @Test
+  void testTracing_failedEcho_grpc_recordsErrorType() throws Exception {
+    SpanTracerFactory tracingFactory =
+        new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
+
+    try (EchoClient client =
+        TestClientInitializer.createGrpcEchoClientOpentelemetry(tracingFactory)) {
+
+      EchoRequest echoRequest =
+          EchoRequest.newBuilder()
+              .setError(Status.newBuilder().setCode(Code.UNAVAILABLE.ordinal()).build())
+              .build();
+
+      assertThrows(UnavailableException.class, () -> client.echo(echoRequest));
+
+      List<SpanData> spans = spanExporter.getFinishedSpanItems();
+      assertThat(spans).isNotEmpty();
+
+      SpanData attemptSpan =
+          spans.stream()
+              .filter(span -> span.getName().equals("google.showcase.v1beta1.Echo/Echo"))
+              .findFirst()
+              .orElseThrow(() -> new AssertionError("Incorrect span name"));
+
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)))
+          .isEqualTo("UNAVAILABLE");
+    }
+  }
+
+  @Test
+  void testTracing_failedEcho_httpjson_recordsErrorType() throws Exception {
+    SpanTracerFactory tracingFactory =
+        new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
+
+    try (EchoClient client =
+        TestClientInitializer.createHttpJsonEchoClientOpentelemetry(tracingFactory)) {
+
+      EchoRequest echoRequest =
+          EchoRequest.newBuilder()
+              .setError(Status.newBuilder().setCode(Code.UNAVAILABLE.ordinal()).build())
+              .build();
+
+      assertThrows(UnavailableException.class, () -> client.echo(echoRequest));
+
+      List<SpanData> spans = spanExporter.getFinishedSpanItems();
+      assertThat(spans).isNotEmpty();
+
+      SpanData attemptSpan =
+          spans.stream()
+              .filter(span -> span.getName().equals("Echo/Echo/attempt"))
+              .findFirst()
+              .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
+
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)))
+          .isEqualTo("503"); // For HTTP/JSON, the transport code 503 is used for UNAVAILABLE
     }
   }
 }

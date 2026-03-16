@@ -35,7 +35,15 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.google.api.gax.rpc.ApiException;
+import com.google.api.gax.rpc.ErrorDetails;
+import com.google.api.gax.rpc.StatusCode;
+import com.google.common.collect.ImmutableList;
+import com.google.protobuf.Any;
+import com.google.rpc.ErrorInfo;
+import java.net.ConnectException;
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -76,4 +84,260 @@ class SpanTracerTest {
     assertThat(attributesCaptor.getValue())
         .containsEntry(SpanTracer.LANGUAGE_ATTRIBUTE, SpanTracer.DEFAULT_LANGUAGE);
   }
+
+  @Test
+  void testAttemptFailed_errorInfoReason() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    ErrorInfo errorInfo = ErrorInfo.newBuilder().setReason("RATE_LIMIT_EXCEEDED").build();
+    ErrorDetails errorDetails =
+        ErrorDetails.builder().setRawErrorMessages(ImmutableList.of(Any.pack(errorInfo))).build();
+    Throwable cause = new Throwable("message");
+
+    ApiException apiException =
+        new ApiException(
+            cause,
+            new StatusCode() {
+              @Override
+              public Code getCode() {
+                return Code.UNAVAILABLE;
+              }
+
+              @Override
+              public Object getTransportCode() {
+                return null;
+              }
+            },
+            true,
+            errorDetails);
+
+    tracer.attemptFailedRetriesExhausted(apiException);
+
+    verify(attemptHandle)
+        .addAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "RATE_LIMIT_EXCEEDED");
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptFailed_specificServerErrorCodeGrpc() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    ApiException apiException =
+        new ApiException(
+            "message",
+            null,
+            new StatusCode() {
+              @Override
+              public Code getCode() {
+                return Code.PERMISSION_DENIED;
+              }
+
+              @Override
+              public Object getTransportCode() {
+                return "PERMISSION_DENIED";
+              }
+            },
+            true);
+
+    tracer.attemptFailedRetriesExhausted(apiException);
+
+    verify(attemptHandle)
+        .addAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "PERMISSION_DENIED");
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptFailed_specificServerErrorCodeHttp() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    ApiException apiException =
+        new ApiException(
+            "message",
+            null,
+            new StatusCode() {
+              @Override
+              public Code getCode() {
+                return Code.PERMISSION_DENIED;
+              }
+
+              @Override
+              public Object getTransportCode() {
+                return 403;
+              }
+            },
+            true);
+
+    tracer.attemptFailedRetriesExhausted(apiException);
+
+    verify(attemptHandle).addAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "403");
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptFailed_clientTimeout() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    tracer.attemptFailedRetriesExhausted(new TimeoutException("timed out"));
+
+    verify(attemptHandle)
+        .addAttribute(
+            ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
+            ObservabilityUtils.ErrorType.CLIENT_TIMEOUT.toString());
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptFailed_clientConnectionError() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    tracer.attemptFailedRetriesExhausted(new ConnectException("connection failed"));
+
+    verify(attemptHandle)
+        .addAttribute(
+            ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
+            ObservabilityUtils.ErrorType.CLIENT_CONNECTION_ERROR.toString());
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptFailed_clientAuthenticationError() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    tracer.attemptFailedRetriesExhausted(new CredentialsException());
+
+    verify(attemptHandle)
+        .addAttribute(
+            ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
+            ObservabilityUtils.ErrorType.CLIENT_AUTHENTICATION_ERROR.toString());
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptFailed_clientResponseDecodeError() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    tracer.attemptFailedRetriesExhausted(new DecodeException());
+
+    verify(attemptHandle)
+        .addAttribute(
+            ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
+            ObservabilityUtils.ErrorType.CLIENT_RESPONSE_DECODE_ERROR.toString());
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptFailed_clientRedirectError() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    tracer.attemptFailedRetriesExhausted(new RedirectException());
+
+    verify(attemptHandle)
+        .addAttribute(
+            ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
+            ObservabilityUtils.ErrorType.CLIENT_REDIRECT_ERROR.toString());
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptFailed_clientRequestBodyError() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    tracer.attemptFailedRetriesExhausted(new RequestBodyException());
+
+    verify(attemptHandle)
+        .addAttribute(
+            ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
+            ObservabilityUtils.ErrorType.CLIENT_REQUEST_BODY_ERROR.toString());
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptFailed_clientRequestError() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    tracer.attemptFailedRetriesExhausted(new RequestException());
+
+    verify(attemptHandle)
+        .addAttribute(
+            ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
+            ObservabilityUtils.ErrorType.CLIENT_REQUEST_ERROR.toString());
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptFailed_clientUnknownError() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    tracer.attemptFailedRetriesExhausted(new UnknownClientException());
+
+    verify(attemptHandle)
+        .addAttribute(
+            ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
+            ObservabilityUtils.ErrorType.CLIENT_UNKNOWN_ERROR.toString());
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptFailed_languageSpecificFallback() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    tracer.attemptFailedRetriesExhausted(new IllegalStateException("illegal state"));
+
+    verify(attemptHandle)
+        .addAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "IllegalStateException");
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptFailed_internalFallback() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    tracer.attemptFailedRetriesExhausted(new Throwable() {});
+
+    // For an anonymous inner class Throwable, getSimpleName() is empty string, which triggers the
+    // fallback
+    verify(attemptHandle)
+        .addAttribute(
+            ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
+            ObservabilityUtils.ErrorType.INTERNAL.toString());
+    verify(attemptHandle).end();
+  }
+
+  private static class CredentialsException extends RuntimeException {}
+
+  private static class DecodeException extends RuntimeException {}
+
+  private static class RedirectException extends RuntimeException {}
+
+  private static class RequestBodyException extends RuntimeException {}
+
+  private static class RequestException extends RuntimeException {}
+
+  private static class UnknownClientException extends RuntimeException {}
 }

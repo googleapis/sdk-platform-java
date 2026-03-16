@@ -73,4 +73,10 @@ public class ObservabilityAttributes {
 
   /** The url template of the request (e.g. /v1/{name}:access). */
   public static final String URL_TEMPLATE_ATTRIBUTE = "url.template";
+
+  /**
+   * The specific error type. Value will be google.rpc.ErrorInfo.reason, a specific Server Error
+   * Code, Client-Side Network/Operational Error (e.g., CLIENT_TIMEOUT) or internal fallback.
+   */
+  public static final String ERROR_TYPE_ATTRIBUTE = "error.type";
 }
