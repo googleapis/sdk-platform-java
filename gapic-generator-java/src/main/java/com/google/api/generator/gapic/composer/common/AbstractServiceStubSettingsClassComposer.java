@@ -2136,7 +2136,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     libraryMetadataBuilderExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(libraryMetadataBuilderExpr)
-            .setMethodName("setLibraryVersion")
+            .setMethodName("setVersion")
             .setArguments(
                 VariableExpr.builder()
                     .setStaticReferenceType(
