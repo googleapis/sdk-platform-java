@@ -68,7 +68,7 @@ public abstract class LibraryMetadata {
   /**
    * Returns the version of the client library.
    *
-   * <p>Example: "2.74.1-SNAPSHOT". This maps to the {@code gcp.client.version} attribute.
+   * <p>Example: {@code "2.74.1"}. This maps to the {@code gcp.client.version} attribute.
    *
    * @return the version, or {@code null} if not set
    */
