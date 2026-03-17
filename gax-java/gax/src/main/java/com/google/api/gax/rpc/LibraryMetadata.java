@@ -65,6 +65,9 @@ public abstract class LibraryMetadata {
   @Nullable
   public abstract String artifactName();
 
+  @Nullable
+  public abstract String version();
+
   public static LibraryMetadata empty() {
     return newBuilder().build();
   }
@@ -82,6 +85,8 @@ public abstract class LibraryMetadata {
     public abstract Builder setRepository(@Nullable String repository);
 
     public abstract Builder setArtifactName(@Nullable String artifactName);
+
+    public abstract Builder setVersion(@Nullable String version);
 
     public abstract LibraryMetadata build();
   }

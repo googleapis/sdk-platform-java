@@ -48,26 +48,23 @@ import java.util.concurrent.TimeUnit;
 class GoldenSignalsMetricsTracer implements ApiTracer {
   private final Stopwatch clientRequestTimer;
   private final GoldenSignalsMetricsRecorder metricsRecorder;
-  private final Map<String, String> attributes = new HashMap<>();
+  private final Map<String, Object> attributes;
 
-  /**
-   * Creates the following instruments for the following metrics:
-   *
-   * <ul>
-   *   <li>Client Request Duration: Histogram
-   * </ul>
-   *
-   * @param metricsRecorder OpenTelemetry
-   */
-  GoldenSignalsMetricsTracer(GoldenSignalsMetricsRecorder metricsRecorder) {
+  GoldenSignalsMetricsTracer(
+      GoldenSignalsMetricsRecorder metricsRecorder, ApiTracerContext apiTracerContext) {
     this.clientRequestTimer = Stopwatch.createStarted();
     this.metricsRecorder = metricsRecorder;
+    this.attributes = apiTracerContext.getMetricsAttributes();
   }
 
   @VisibleForTesting
-  GoldenSignalsMetricsTracer(GoldenSignalsMetricsRecorder metricsRecorder, Ticker ticker) {
+  GoldenSignalsMetricsTracer(
+      GoldenSignalsMetricsRecorder metricsRecorder,
+      ApiTracerContext apiTracerContext,
+      Ticker ticker) {
     this.clientRequestTimer = Stopwatch.createStarted(ticker);
     this.metricsRecorder = metricsRecorder;
+    this.attributes = new HashMap<>(apiTracerContext.getMetricsAttributes());
   }
 
   /**

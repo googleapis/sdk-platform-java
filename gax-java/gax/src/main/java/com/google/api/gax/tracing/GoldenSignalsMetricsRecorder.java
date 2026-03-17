@@ -65,7 +65,7 @@ class GoldenSignalsMetricsRecorder {
             .build();
   }
 
-  void recordOperationLatency(double operationLatency, Map<String, String> attributes) {
+  void recordOperationLatency(double operationLatency, Map<String, Object> attributes) {
     clientRequestDurationRecorder.record(
         operationLatency, ObservabilityUtils.toOtelAttributes(attributes));
   }

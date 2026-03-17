@@ -195,6 +195,17 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
+     * [Free product listings on UCP
+     * checkout](https://developers.google.com/merchant/ucp).
+     * </pre>
+     *
+     * <code>FREE_LISTINGS_UCP_CHECKOUT = 19;</code>
+     */
+    FREE_LISTINGS_UCP_CHECKOUT(19),
+    /**
+     *
+     *
+     * <pre>
      * [Free local product
      * listings](https://support.google.com/merchants/answer/9825611).
      * </pre>
@@ -213,6 +224,16 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>FREE_LOCAL_VEHICLE_LISTINGS = 9;</code>
      */
     FREE_LOCAL_VEHICLE_LISTINGS(9),
+    /**
+     *
+     *
+     * <pre>
+     * [Youtube Affiliate](https://support.google.com/youtube/answer/13376398).
+     * </pre>
+     *
+     * <code>YOUTUBE_AFFILIATE = 18;</code>
+     */
+    YOUTUBE_AFFILIATE(18),
     /**
      *
      *
@@ -244,6 +265,39 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>LOCAL_CLOUD_RETAIL = 12;</code>
      */
     LOCAL_CLOUD_RETAIL(12),
+    /**
+     *
+     *
+     * <pre>
+     * [Product
+     * Reviews](https://support.google.com/merchants/answer/14620732).
+     * </pre>
+     *
+     * <code>PRODUCT_REVIEWS = 15;</code>
+     */
+    PRODUCT_REVIEWS(15),
+    /**
+     *
+     *
+     * <pre>
+     * [Merchant
+     * Reviews](https://developers.google.com/merchant-review-feeds).
+     * </pre>
+     *
+     * <code>MERCHANT_REVIEWS = 16;</code>
+     */
+    MERCHANT_REVIEWS(16),
+    /**
+     *
+     *
+     * <pre>
+     * YouTube Checkout
+     * .
+     * </pre>
+     *
+     * <code>YOUTUBE_CHECKOUT = 17;</code>
+     */
+    YOUTUBE_CHECKOUT(17),
     UNRECOGNIZED(-1),
     ;
 
@@ -377,6 +431,18 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
+     * [Free product listings on UCP
+     * checkout](https://developers.google.com/merchant/ucp).
+     * </pre>
+     *
+     * <code>FREE_LISTINGS_UCP_CHECKOUT = 19;</code>
+     */
+    public static final int FREE_LISTINGS_UCP_CHECKOUT_VALUE = 19;
+
+    /**
+     *
+     *
+     * <pre>
      * [Free local product
      * listings](https://support.google.com/merchants/answer/9825611).
      * </pre>
@@ -396,6 +462,17 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>FREE_LOCAL_VEHICLE_LISTINGS = 9;</code>
      */
     public static final int FREE_LOCAL_VEHICLE_LISTINGS_VALUE = 9;
+
+    /**
+     *
+     *
+     * <pre>
+     * [Youtube Affiliate](https://support.google.com/youtube/answer/13376398).
+     * </pre>
+     *
+     * <code>YOUTUBE_AFFILIATE = 18;</code>
+     */
+    public static final int YOUTUBE_AFFILIATE_VALUE = 18;
 
     /**
      *
@@ -430,6 +507,42 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>LOCAL_CLOUD_RETAIL = 12;</code>
      */
     public static final int LOCAL_CLOUD_RETAIL_VALUE = 12;
+
+    /**
+     *
+     *
+     * <pre>
+     * [Product
+     * Reviews](https://support.google.com/merchants/answer/14620732).
+     * </pre>
+     *
+     * <code>PRODUCT_REVIEWS = 15;</code>
+     */
+    public static final int PRODUCT_REVIEWS_VALUE = 15;
+
+    /**
+     *
+     *
+     * <pre>
+     * [Merchant
+     * Reviews](https://developers.google.com/merchant-review-feeds).
+     * </pre>
+     *
+     * <code>MERCHANT_REVIEWS = 16;</code>
+     */
+    public static final int MERCHANT_REVIEWS_VALUE = 16;
+
+    /**
+     *
+     *
+     * <pre>
+     * YouTube Checkout
+     * .
+     * </pre>
+     *
+     * <code>YOUTUBE_CHECKOUT = 17;</code>
+     */
+    public static final int YOUTUBE_CHECKOUT_VALUE = 17;
 
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
@@ -475,16 +588,26 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
           return VEHICLE_INVENTORY_ADS;
         case 7:
           return FREE_LISTINGS;
+        case 19:
+          return FREE_LISTINGS_UCP_CHECKOUT;
         case 8:
           return FREE_LOCAL_LISTINGS;
         case 9:
           return FREE_LOCAL_VEHICLE_LISTINGS;
+        case 18:
+          return YOUTUBE_AFFILIATE;
         case 10:
           return YOUTUBE_SHOPPING;
         case 11:
           return CLOUD_RETAIL;
         case 12:
           return LOCAL_CLOUD_RETAIL;
+        case 15:
+          return PRODUCT_REVIEWS;
+        case 16:
+          return MERCHANT_REVIEWS;
+        case 17:
+          return YOUTUBE_CHECKOUT;
         default:
           return null;
       }
