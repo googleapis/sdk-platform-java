@@ -135,7 +135,7 @@ class HttpJsonErrorParserTest {
     assertThat(HttpJsonErrorParser.parseStatus(payload))
         .isEqualTo(com.google.rpc.Status.getDefaultInstance());
   }
-
+}
   @Test
   void parseStatus_withHttpCodeAndGrpcStatusString() {
     // AIP-193 standard JSON mapping typically includes the HTTP code in "code"

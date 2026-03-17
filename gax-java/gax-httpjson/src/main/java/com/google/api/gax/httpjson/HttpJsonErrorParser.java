@@ -117,21 +117,6 @@ class HttpJsonErrorParser {
       return Status.getDefaultInstance();
     }
 
-    // AIP-193 specifies that the 'status' field contains the gRPC status as a string.
-    // The 'code' field typically contains the HTTP status code, which JsonFormat natively
-    // maps into the Builder's 'code' field. To ensure the resulting com.google.rpc.Status
-    // has the correct gRPC integer code, we override it using the 'status' string if present.
-    if (errorElement.getAsJsonObject().has("status")) {
-      try {
-        String statusStr = errorElement.getAsJsonObject().get("status").getAsString();
-        com.google.rpc.Code rpcCode = com.google.rpc.Code.valueOf(statusStr);
-        statusBuilder.setCode(rpcCode.getNumber());
-      } catch (IllegalArgumentException | UnsupportedOperationException e) {
-        // Ignore if the status string doesn't match a known google.rpc.Code enum value,
-        // or if it isn't a string.
-      }
-    }
-
     return statusBuilder.build();
   }
 }
