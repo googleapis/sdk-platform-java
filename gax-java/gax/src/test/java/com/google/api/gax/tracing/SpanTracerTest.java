@@ -330,6 +330,23 @@ class SpanTracerTest {
     verify(attemptHandle).end();
   }
 
+  @Test
+  void testAttemptFailed_internalFallback_nullError() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+
+    tracer.attemptFailedRetriesExhausted(null);
+
+    // For an anonymous inner class Throwable, getSimpleName() is empty string, which triggers the
+    // fallback
+    verify(attemptHandle)
+        .addAttribute(
+            ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
+            ErrorTypeUtil.ErrorType.INTERNAL.toString());
+    verify(attemptHandle).end();
+  }
+
   private static class TestGoogleAuthException extends RuntimeException {}
 
   private static class RedirectException extends RuntimeException {

@@ -107,11 +107,8 @@ public class SpanTracer implements ApiTracer {
 
   private void recordErrorAndEndAttempt(Throwable error) {
     if (attemptHandle != null) {
-      if (error != null) {
-        attemptHandle.addAttribute(
-            ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
-            ObservabilityUtils.extractErrorType(error));
-      }
+      attemptHandle.addAttribute(
+          ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, ObservabilityUtils.extractErrorType(error));
       endAttempt();
     }
   }

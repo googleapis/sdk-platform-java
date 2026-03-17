@@ -88,6 +88,7 @@ public class ErrorTypeUtil {
    *         <li>{@code CLIENT_REDIRECT_ERROR}: Problem handling HTTP redirects.
    *         <li>{@code CLIENT_AUTHENTICATION_ERROR}: Error during credential acquisition or
    *             application.
+   *         <li>{@code CLIENT_UNKNOWN_ERROR}: For all other errors unknown to the client.
    *       </ul>
    *   <li><b>Language-specific error type:</b> The class or struct name of the exception or error
    *       if available. This must be low-cardinality, meaning it returns the short name of the
@@ -103,7 +104,8 @@ public class ErrorTypeUtil {
    */
   public static String extractErrorType(@Nullable Throwable error) {
     if (error == null) {
-      return null;
+      // No information about the error; we default to INTERNAL.
+      return ErrorType.INTERNAL.toString();
     }
 
     // 1. & 2. Extract error info reason or server status code

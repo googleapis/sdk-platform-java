@@ -41,48 +41,8 @@ class ObservabilityUtils {
 
   /**
    * Extracts a low-cardinality string representing the specific classification of the error to be
-   * used in the {@link ObservabilityAttributes#ERROR_TYPE_ATTRIBUTE} attribute.
-   *
-   * <p>This value is determined based on the following priority:
-   *
-   * <ol>
-   *   <li><b>{@code google.rpc.ErrorInfo.reason}:</b> If the error response from the service
-   *       includes {@code google.rpc.ErrorInfo} details, the reason field (e.g.,
-   *       "RATE_LIMIT_EXCEEDED", "SERVICE_DISABLED") will be used. This offers the most precise
-   *       error cause.
-   *   <li><b>Specific Server Error Code:</b> If no {@code ErrorInfo.reason} is available, but a
-   *       server error code was received:
-   *       <ul>
-   *         <li>For HTTP: The HTTP status code (e.g., "403", "503").
-   *         <li>For gRPC: The gRPC status code name (e.g., "PERMISSION_DENIED", "UNAVAILABLE").
-   *       </ul>
-   *   <li><b>Client-Side Network/Operational Errors:</b> For errors occurring within the client
-   *       library or network stack, mapping to specific enum representations from {@link
-   *       ErrorTypeUtil.ErrorType}:
-   *       <ul>
-   *         <li>{@code CLIENT_TIMEOUT}: A client-configured timeout was reached.
-   *         <li>{@code CLIENT_CONNECTION_ERROR}: Failure to establish the network connection (DNS,
-   *             TCP, TLS).
-   *         <li>{@code CLIENT_REQUEST_ERROR}: Client-side issue forming or sending the request.
-   *         <li>{@code CLIENT_REQUEST_BODY_ERROR}: Error streaming the request body.
-   *         <li>{@code CLIENT_RESPONSE_DECODE_ERROR}: Client-side error decoding the response body.
-   *         <li>{@code CLIENT_REDIRECT_ERROR}: Problem handling HTTP redirects.
-   *         <li>{@code CLIENT_AUTHENTICATION_ERROR}: Error during credential acquisition or
-   *             application.
-   *         <li>{@code CLIENT_UNKNOWN_ERROR}: Other unclassified client-side network or protocol
-   *             errors.
-   *       </ul>
-   *   <li><b>Language-specific error type:</b> The class or struct name of the exception or error
-   *       if available. This must be low-cardinality, meaning it returns the short name of the
-   *       exception class (e.g. {@code "IllegalStateException"}) rather than its message.
-   *   <li><b>Internal Fallback:</b> If the error doesn't fit any of the above categories, {@code
-   *       "INTERNAL"} will be used, indicating an unexpected issue within the client library's own
-   *       logic.
-   * </ol>
-   *
-   * @param error the Throwable from which to extract the error type string.
-   * @return a low-cardinality string representing the specific error type, or {@code null} if the
-   *     provided error is {@code null}.
+   * used in the {@link ObservabilityAttributes#ERROR_TYPE_ATTRIBUTE} attribute. See {@link
+   * ErrorTypeUtil#extractErrorType} for extended documentation.
    */
   static String extractErrorType(@Nullable Throwable error) {
     return ErrorTypeUtil.extractErrorType(error);
