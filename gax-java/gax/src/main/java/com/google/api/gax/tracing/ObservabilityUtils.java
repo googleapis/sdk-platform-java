@@ -142,6 +142,7 @@ class ObservabilityUtils {
       return null;
     }
 
+    // 1. & 2. Extract error info reason or server status code
     if (error instanceof ApiException) {
       String errorType = extractFromApiException((ApiException) error);
       if (errorType != null) {
@@ -149,6 +150,7 @@ class ObservabilityUtils {
       }
     }
 
+    // 3. Attempt client side error
     String clientError = getClientSideError(error);
     if (clientError != null) {
       return clientError;
