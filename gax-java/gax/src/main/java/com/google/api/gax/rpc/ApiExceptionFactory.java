@@ -83,7 +83,7 @@ public class ApiExceptionFactory {
 
   public static ApiException createException(
       Throwable cause, StatusCode statusCode, boolean retryable, ErrorDetails errorDetails) {
-    return createException(null, cause, statusCode, retryable, errorDetails);
+    return createException(cause == null ? null : cause.toString(), cause, statusCode, retryable, errorDetails);
   }
 
   public static ApiException createException(

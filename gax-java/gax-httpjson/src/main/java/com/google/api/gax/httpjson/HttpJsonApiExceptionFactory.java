@@ -62,6 +62,10 @@ class HttpJsonApiExceptionFactory {
       ErrorDetails errorDetails =
           ErrorDetails.builder().setRawErrorMessages(status.getDetailsList()).build();
 
+      if (message == null) {
+        message = throwable.toString();
+      }
+
       return ApiExceptionFactory.createException(
           message, throwable, statusCode, canRetry, errorDetails);
     } else if (throwable instanceof HttpJsonStatusRuntimeException) {
