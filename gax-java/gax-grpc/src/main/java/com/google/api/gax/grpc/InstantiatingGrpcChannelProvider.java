@@ -1434,7 +1434,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   private static ImmutableMap<String, ?> getDefaultDirectPathServiceConfig() {
-    // When channel pooling is enabled, force the pick_first grpclb strategy.
+    // When channel pooling is enabled, force the pick_first strategy.
     // This is necessary to avoid the multiplicative effect of creating channel pool with
     // `poolSize` number of `ManagedChannel`s, each with a `subSetting` number of number of
     // subchannels.
@@ -1443,13 +1443,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     ImmutableMap<String, Object> pickFirstStrategy =
         ImmutableMap.<String, Object>of("pick_first", ImmutableMap.of());
 
-    ImmutableMap<String, Object> childPolicy =
-        ImmutableMap.<String, Object>of("childPolicy", ImmutableList.of(pickFirstStrategy));
-
-    ImmutableMap<String, Object> grpcLbPolicy =
-        ImmutableMap.<String, Object>of("grpclb", childPolicy);
-
-    return ImmutableMap.<String, Object>of("loadBalancingConfig", ImmutableList.of(grpcLbPolicy));
+    return ImmutableMap.<String, Object>of(
+        "loadBalancingConfig", ImmutableList.of(pickFirstStrategy));
   }
 
   private static void validateEndpoint(String endpoint) {
