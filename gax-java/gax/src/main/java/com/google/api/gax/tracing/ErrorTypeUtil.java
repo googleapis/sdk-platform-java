@@ -30,14 +30,10 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.gax.rpc.ApiException;
-import com.google.api.gax.rpc.WatchdogTimeoutException;
 import com.google.common.base.Strings;
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-import java.nio.channels.UnresolvedAddressException;
+import com.google.common.collect.ImmutableSet;
+import java.util.Set;
 import javax.annotation.Nullable;
-import javax.net.ssl.SSLHandshakeException;
 
 public class ErrorTypeUtil {
 
@@ -57,6 +53,26 @@ public class ErrorTypeUtil {
       return name();
     }
   }
+
+  private static final Set<String> JSON_DECODING_EXCEPTION_CLASS_NAMES =
+      ImmutableSet.of(
+          "com.google.gson.JsonSyntaxException",
+          "com.google.gson.JsonParseException",
+          "com.fasterxml.jackson.databind.JsonMappingException",
+          "com.fasterxml.jackson.core.JsonParseException");
+
+  private static final Set<String> AUTHENTICATION_EXCEPTION_CLASS_NAMES =
+      ImmutableSet.of("com.google.auth.oauth2.GoogleAuthException");
+
+  private static final Set<String> CLIENT_TIMEOUT_EXCEPTION_CLASS_NAMES =
+      ImmutableSet.of(
+          "java.net.SocketTimeoutException", "com.google.api.gax.rpc.WatchdogTimeoutException");
+  private static final Set<String> CLIENT_CONNECTION_EXCEPTIONS =
+      ImmutableSet.of(
+          "java.net.ConnectException",
+          "java.net.UnknownHostException",
+          "javax.net.ssl.SSLHandshakeException",
+          "java.nio.channels.UnresolvedAddressException");
 
   /**
    * Extracts a low-cardinality string representing the specific classification of the error to be
@@ -206,7 +222,7 @@ public class ErrorTypeUtil {
    * @return true if the error is a client timeout, false otherwise.
    */
   private static boolean isClientTimeout(Throwable e) {
-    return e instanceof SocketTimeoutException || e instanceof WatchdogTimeoutException;
+    return hasErrorNameInCauseChain(e, CLIENT_TIMEOUT_EXCEPTION_CLASS_NAMES);
   }
 
   /**
@@ -217,10 +233,7 @@ public class ErrorTypeUtil {
    * @return true if the error is a client connection error, false otherwise.
    */
   private static boolean isClientConnectionError(Throwable e) {
-    return e instanceof ConnectException
-        || e instanceof UnknownHostException
-        || e instanceof SSLHandshakeException
-        || e instanceof UnresolvedAddressException;
+    return hasErrorNameInCauseChain(e, CLIENT_CONNECTION_EXCEPTIONS);
   }
 
   /**
@@ -231,9 +244,7 @@ public class ErrorTypeUtil {
    * @return true if the error is a client response decode error, false otherwise.
    */
   private static boolean isClientResponseDecodeError(Throwable e) {
-    return e.getClass().getName().contains("Json")
-        || e.getClass().getName().contains("Gson")
-        || (e.getCause() != null && e.getCause().getClass().getName().contains("Gson"));
+    return hasErrorNameInCauseChain(e, JSON_DECODING_EXCEPTION_CLASS_NAMES);
   }
 
   /**
@@ -255,7 +266,7 @@ public class ErrorTypeUtil {
    * @return true if the error is a client authentication error, false otherwise.
    */
   private static boolean isClientAuthenticationError(Throwable e) {
-    return e.getClass().getName().contains("GoogleAuthException");
+    return hasErrorNameInCauseChain(e, AUTHENTICATION_EXCEPTION_CLASS_NAMES);
   }
 
   /**
@@ -267,7 +278,7 @@ public class ErrorTypeUtil {
    * @return true if the error is a client request body error, false otherwise.
    */
   private static boolean isRequestBodyError(Throwable e) {
-    return e.getClass().getName().contains("RestSerializationException");
+    return hasErrorNameInCauseChain(e, ImmutableSet.of("RestSerializationException"));
   }
 
   /**
@@ -280,5 +291,23 @@ public class ErrorTypeUtil {
    */
   private static boolean isClientUnknownError(Throwable e) {
     return e.getClass().getName().toLowerCase().contains("unknown");
+  }
+
+  /**
+   * Recursively checks the throwable and its cause chain for any of the specified error name.
+   *
+   * @param t The Throwable to check.
+   * @param errorClassNames A set of fully qualified class names to check against.
+   * @return true if an error from the set is found in the cause chain, false otherwise.
+   */
+  private static boolean hasErrorNameInCauseChain(Throwable t, Set<String> errorClassNames) {
+    Throwable current = t;
+    while (current != null) {
+      if (errorClassNames.contains(current.getClass().getName())) {
+        return true;
+      }
+      current = current.getCause();
+    }
+    return false;
   }
 }

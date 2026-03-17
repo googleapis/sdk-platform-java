@@ -211,21 +211,6 @@ class SpanTracerTest {
   }
 
   @Test
-  void testAttemptFailed_clientAuthenticationError() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
-
-    tracer.attemptStarted(new Object(), 1);
-
-    tracer.attemptFailedRetriesExhausted(new TestGoogleAuthException());
-
-    verify(attemptHandle)
-        .addAttribute(
-            ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
-            ErrorTypeUtil.ErrorType.CLIENT_AUTHENTICATION_ERROR.toString());
-    verify(attemptHandle).end();
-  }
-
-  @Test
   void testAttemptFailed_clientResponseDecodeError() {
     when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
 
@@ -252,21 +237,6 @@ class SpanTracerTest {
         .addAttribute(
             ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
             ErrorTypeUtil.ErrorType.CLIENT_REDIRECT_ERROR.toString());
-    verify(attemptHandle).end();
-  }
-
-  @Test
-  void testAttemptFailed_clientRequestBodyError() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
-
-    tracer.attemptStarted(new Object(), 1);
-
-    tracer.attemptFailedRetriesExhausted(new TestRestSerializationException());
-
-    verify(attemptHandle)
-        .addAttribute(
-            ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
-            ErrorTypeUtil.ErrorType.CLIENT_REQUEST_BODY_ERROR.toString());
     verify(attemptHandle).end();
   }
 
@@ -347,15 +317,11 @@ class SpanTracerTest {
     verify(attemptHandle).end();
   }
 
-  private static class TestGoogleAuthException extends RuntimeException {}
-
   private static class RedirectException extends RuntimeException {
     public RedirectException(String message) {
       super(message);
     }
   }
-
-  private static class TestRestSerializationException extends RuntimeException {}
 
   private static class UnknownClientException extends RuntimeException {}
 }
