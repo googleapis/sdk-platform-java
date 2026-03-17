@@ -30,14 +30,33 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.gax.rpc.ApiException;
-import com.google.api.gax.rpc.StatusCode;
-import io.opentelemetry.api.common.Attributes;
-import io.opentelemetry.api.common.AttributesBuilder;
-import java.util.Map;
-import java.util.concurrent.CancellationException;
+import com.google.api.gax.rpc.WatchdogTimeoutException;
+import com.google.common.base.Strings;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.nio.channels.UnresolvedAddressException;
 import javax.annotation.Nullable;
+import javax.net.ssl.SSLHandshakeException;
 
-class ObservabilityUtils {
+public class ErrorTypeUtil {
+
+  enum ErrorType {
+    CLIENT_TIMEOUT,
+    CLIENT_CONNECTION_ERROR,
+    CLIENT_REQUEST_ERROR,
+    CLIENT_REQUEST_BODY_ERROR,
+    CLIENT_RESPONSE_DECODE_ERROR,
+    CLIENT_REDIRECT_ERROR,
+    CLIENT_AUTHENTICATION_ERROR,
+    CLIENT_UNKNOWN_ERROR,
+    INTERNAL;
+
+    @Override
+    public String toString() {
+      return name();
+    }
+  }
 
   /**
    * Extracts a low-cardinality string representing the specific classification of the error to be
@@ -58,7 +77,7 @@ class ObservabilityUtils {
    *       </ul>
    *   <li><b>Client-Side Network/Operational Errors:</b> For errors occurring within the client
    *       library or network stack, mapping to specific enum representations from {@link
-   *       ErrorTypeUtil.ErrorType}:
+   *       ErrorType}:
    *       <ul>
    *         <li>{@code CLIENT_TIMEOUT}: A client-configured timeout was reached.
    *         <li>{@code CLIENT_CONNECTION_ERROR}: Failure to establish the network connection (DNS,
@@ -84,40 +103,109 @@ class ObservabilityUtils {
    * @return a low-cardinality string representing the specific error type, or {@code null} if the
    *     provided error is {@code null}.
    */
-  static String extractErrorType(@Nullable Throwable error) {
-    return ErrorTypeUtil.extractErrorType(error);
-  }
-
-  /** Function to extract the status of the error as a string */
-  static String extractStatus(@Nullable Throwable error) {
-    final String statusString;
-
+  public static String extractErrorType(@Nullable Throwable error) {
     if (error == null) {
-      return StatusCode.Code.OK.toString();
-    } else if (error instanceof CancellationException) {
-      statusString = StatusCode.Code.CANCELLED.toString();
-    } else if (error instanceof ApiException) {
-      statusString = ((ApiException) error).getStatusCode().getCode().toString();
-    } else {
-      statusString = StatusCode.Code.UNKNOWN.toString();
+      return null;
     }
 
-    return statusString;
+    // 1. & 2. Extract error info reason or server status code
+    if (error instanceof ApiException) {
+      String errorType = extractFromApiException((ApiException) error);
+      if (errorType != null) {
+        return errorType;
+      }
+    }
+
+    // 3. Attempt client side error
+    String clientError = getClientSideError(error);
+    if (clientError != null) {
+      return clientError;
+    }
+
+    // 4. Language-specific error type fallback
+    String exceptionName = error.getClass().getSimpleName();
+    if (!Strings.isNullOrEmpty(exceptionName)) {
+      return exceptionName;
+    }
+
+    // 5. Internal Fallback
+    return ErrorType.INTERNAL.toString();
   }
 
-  static Attributes toOtelAttributes(Map<String, Object> attributes) {
-    AttributesBuilder attributesBuilder = Attributes.builder();
-    if (attributes == null) {
-      return attributesBuilder.build();
+  @Nullable
+  private static String extractFromApiException(ApiException apiException) {
+    // 1. Check for ErrorInfo.reason
+    String reason = apiException.getReason();
+    if (!Strings.isNullOrEmpty(reason)) {
+      return reason;
     }
-    attributes.forEach(
-        (k, v) -> {
-          if (v instanceof String) {
-            attributesBuilder.put(k, (String) v);
-          } else if (v instanceof Integer) {
-            attributesBuilder.put(k, (long) (Integer) v);
-          }
-        });
-    return attributesBuilder.build();
+
+    // 2. Specific Server Error Code
+    if (apiException.getStatusCode() != null) {
+      Object transportCode = apiException.getStatusCode().getTransportCode();
+      if (transportCode instanceof Integer) {
+        // HTTP Status Code
+        return String.valueOf(transportCode);
+      } else if (apiException.getStatusCode().getCode() != null) {
+        // gRPC Status Code name
+        return apiException.getStatusCode().getCode().name();
+      }
+    }
+    return null;
+  }
+
+  @Nullable
+  private static String getClientSideError(Throwable error) {
+    if (isClientTimeout(error)) {
+      return ErrorType.CLIENT_TIMEOUT.toString();
+    }
+    if (isClientConnectionError(error)) {
+      return ErrorType.CLIENT_CONNECTION_ERROR.toString();
+    }
+    if (isClientAuthenticationError(error)) {
+      return ErrorType.CLIENT_AUTHENTICATION_ERROR.toString();
+    }
+    if (isClientResponseDecodeError(error)) {
+      return ErrorType.CLIENT_RESPONSE_DECODE_ERROR.toString();
+    }
+    if (isClientRedirectError(error)) {
+      return ErrorType.CLIENT_REDIRECT_ERROR.toString();
+    }
+    if (error instanceof IllegalArgumentException) { // This covers CLIENT_REQUEST_ERROR
+      return ErrorType.CLIENT_REQUEST_ERROR.toString();
+    }
+    if (error.getClass().getSimpleName().contains("RequestBodyException")) {
+      return ErrorType.CLIENT_REQUEST_BODY_ERROR.toString();
+    }
+    if (error.getClass().getSimpleName().contains("UnknownClientException")) {
+      return ErrorType.CLIENT_UNKNOWN_ERROR.toString();
+    }
+
+    return null;
+  }
+
+  private static boolean isClientTimeout(Throwable e) {
+    return e instanceof SocketTimeoutException || e instanceof WatchdogTimeoutException;
+  }
+
+  private static boolean isClientConnectionError(Throwable e) {
+    return e instanceof ConnectException
+        || e instanceof UnknownHostException
+        || e instanceof SSLHandshakeException
+        || e instanceof UnresolvedAddressException;
+  }
+
+  private static boolean isClientResponseDecodeError(Throwable e) {
+    return e.getClass().getName().contains("Json")
+        || e.getClass().getName().contains("Gson")
+        || (e.getCause() != null && e.getCause().getClass().getName().contains("Gson"));
+  }
+
+  private static boolean isClientRedirectError(Throwable e) {
+    return e.getMessage() != null && e.getMessage().contains("redirect");
+  }
+
+  private static boolean isClientAuthenticationError(Throwable e) {
+    return e.getClass().getName().contains("GoogleAuthException");
   }
 }

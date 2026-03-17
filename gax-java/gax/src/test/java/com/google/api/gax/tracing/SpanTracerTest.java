@@ -39,11 +39,12 @@ import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.ErrorDetails;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.common.collect.ImmutableList;
+import com.google.gson.JsonSyntaxException;
 import com.google.protobuf.Any;
 import com.google.rpc.ErrorInfo;
 import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.util.Map;
-import java.util.concurrent.TimeoutException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -185,12 +186,12 @@ class SpanTracerTest {
 
     tracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptFailedRetriesExhausted(new TimeoutException("timed out"));
+    tracer.attemptFailedRetriesExhausted(new SocketTimeoutException());
 
     verify(attemptHandle)
         .addAttribute(
             ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
-            ObservabilityUtils.ErrorType.CLIENT_TIMEOUT.toString());
+            ErrorTypeUtil.ErrorType.CLIENT_TIMEOUT.toString());
     verify(attemptHandle).end();
   }
 
@@ -205,7 +206,7 @@ class SpanTracerTest {
     verify(attemptHandle)
         .addAttribute(
             ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
-            ObservabilityUtils.ErrorType.CLIENT_CONNECTION_ERROR.toString());
+            ErrorTypeUtil.ErrorType.CLIENT_CONNECTION_ERROR.toString());
     verify(attemptHandle).end();
   }
 
@@ -215,12 +216,12 @@ class SpanTracerTest {
 
     tracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptFailedRetriesExhausted(new CredentialsException());
+    tracer.attemptFailedRetriesExhausted(new TestGoogleAuthException());
 
     verify(attemptHandle)
         .addAttribute(
             ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
-            ObservabilityUtils.ErrorType.CLIENT_AUTHENTICATION_ERROR.toString());
+            ErrorTypeUtil.ErrorType.CLIENT_AUTHENTICATION_ERROR.toString());
     verify(attemptHandle).end();
   }
 
@@ -230,12 +231,12 @@ class SpanTracerTest {
 
     tracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptFailedRetriesExhausted(new DecodeException());
+    tracer.attemptFailedRetriesExhausted(new JsonSyntaxException("bad json"));
 
     verify(attemptHandle)
         .addAttribute(
             ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
-            ObservabilityUtils.ErrorType.CLIENT_RESPONSE_DECODE_ERROR.toString());
+            ErrorTypeUtil.ErrorType.CLIENT_RESPONSE_DECODE_ERROR.toString());
     verify(attemptHandle).end();
   }
 
@@ -245,12 +246,12 @@ class SpanTracerTest {
 
     tracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptFailedRetriesExhausted(new RedirectException());
+    tracer.attemptFailedRetriesExhausted(new RedirectException("redirect failed"));
 
     verify(attemptHandle)
         .addAttribute(
             ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
-            ObservabilityUtils.ErrorType.CLIENT_REDIRECT_ERROR.toString());
+            ErrorTypeUtil.ErrorType.CLIENT_REDIRECT_ERROR.toString());
     verify(attemptHandle).end();
   }
 
@@ -265,7 +266,7 @@ class SpanTracerTest {
     verify(attemptHandle)
         .addAttribute(
             ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
-            ObservabilityUtils.ErrorType.CLIENT_REQUEST_BODY_ERROR.toString());
+            ErrorTypeUtil.ErrorType.CLIENT_REQUEST_BODY_ERROR.toString());
     verify(attemptHandle).end();
   }
 
@@ -275,12 +276,12 @@ class SpanTracerTest {
 
     tracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptFailedRetriesExhausted(new RequestException());
+    tracer.attemptFailedRetriesExhausted(new IllegalArgumentException());
 
     verify(attemptHandle)
         .addAttribute(
             ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
-            ObservabilityUtils.ErrorType.CLIENT_REQUEST_ERROR.toString());
+            ErrorTypeUtil.ErrorType.CLIENT_REQUEST_ERROR.toString());
     verify(attemptHandle).end();
   }
 
@@ -295,7 +296,7 @@ class SpanTracerTest {
     verify(attemptHandle)
         .addAttribute(
             ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
-            ObservabilityUtils.ErrorType.CLIENT_UNKNOWN_ERROR.toString());
+            ErrorTypeUtil.ErrorType.CLIENT_UNKNOWN_ERROR.toString());
     verify(attemptHandle).end();
   }
 
@@ -325,19 +326,19 @@ class SpanTracerTest {
     verify(attemptHandle)
         .addAttribute(
             ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
-            ObservabilityUtils.ErrorType.INTERNAL.toString());
+            ErrorTypeUtil.ErrorType.INTERNAL.toString());
     verify(attemptHandle).end();
   }
 
-  private static class CredentialsException extends RuntimeException {}
+  private static class TestGoogleAuthException extends RuntimeException {}
 
-  private static class DecodeException extends RuntimeException {}
-
-  private static class RedirectException extends RuntimeException {}
+  private static class RedirectException extends RuntimeException {
+    public RedirectException(String message) {
+      super(message);
+    }
+  }
 
   private static class RequestBodyException extends RuntimeException {}
-
-  private static class RequestException extends RuntimeException {}
 
   private static class UnknownClientException extends RuntimeException {}
 }
