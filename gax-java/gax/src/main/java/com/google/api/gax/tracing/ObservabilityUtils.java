@@ -31,8 +31,12 @@ package com.google.api.gax.tracing;
 
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.StatusCode;
+import com.google.common.base.Strings;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.common.AttributesBuilder;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CancellationException;
 import javax.annotation.Nullable;
@@ -55,6 +59,38 @@ class ObservabilityUtils {
       return name();
     }
   }
+
+  private static final List<Class<? extends Throwable>> CLIENT_TIMEOUT_CLASSES =
+      Arrays.asList(
+          java.util.concurrent.TimeoutException.class, java.net.SocketTimeoutException.class);
+  private static final List<String> CLIENT_TIMEOUT_NAMES =
+      Collections.singletonList("WatchdogTimeoutException");
+
+  private static final List<Class<? extends Throwable>> CLIENT_CONNECTION_ERROR_CLASSES =
+      Arrays.asList(
+          java.net.ConnectException.class,
+          java.net.UnknownHostException.class,
+          java.nio.channels.UnresolvedAddressException.class);
+  private static final List<String> CLIENT_CONNECTION_ERROR_NAMES =
+      Collections.singletonList("ConnectException");
+
+  private static final List<String> CLIENT_AUTH_ERROR_SUBSTRINGS =
+      Arrays.asList("CredentialsException", "AuthenticationException");
+
+  private static final List<String> CLIENT_RESPONSE_DECODE_ERROR_SUBSTRINGS =
+      Arrays.asList("ProtocolBufferParsingException", "DecodeException");
+
+  private static final List<String> CLIENT_REDIRECT_ERROR_SUBSTRINGS =
+      Collections.singletonList("RedirectException");
+
+  private static final List<String> CLIENT_REQUEST_BODY_ERROR_SUBSTRINGS =
+      Collections.singletonList("RequestBodyException");
+
+  private static final List<String> CLIENT_REQUEST_ERROR_SUBSTRINGS =
+      Collections.singletonList("RequestException");
+
+  private static final List<String> CLIENT_UNKNOWN_ERROR_SUBSTRINGS =
+      Collections.singletonList("UnknownClientException");
 
   /**
    * Extracts a low-cardinality string representing the specific classification of the error to be
@@ -107,76 +143,104 @@ class ObservabilityUtils {
     }
 
     if (error instanceof ApiException) {
-      ApiException apiException = (ApiException) error;
-
-      // 1. Check for ErrorInfo.reason
-      String reason = apiException.getReason();
-      if (reason != null && !reason.isEmpty()) {
-        return reason;
-      }
-
-      // 2. Specific Server Error Code
-      if (apiException.getStatusCode() != null) {
-        Object transportCode = apiException.getStatusCode().getTransportCode();
-        if (transportCode instanceof Integer) {
-          // HTTP Status Code
-          return String.valueOf(transportCode);
-        } else if (apiException.getStatusCode().getCode() != null) {
-          // gRPC Status Code name
-          return apiException.getStatusCode().getCode().name();
-        }
+      String errorType = extractFromApiException((ApiException) error);
+      if (errorType != null) {
+        return errorType;
       }
     }
 
-    // 3. Client-Side Network/Operational Errors
-    String exceptionName = error.getClass().getSimpleName();
-
-    if (error instanceof java.util.concurrent.TimeoutException
-        || error instanceof java.net.SocketTimeoutException
-        || exceptionName.equals("WatchdogTimeoutException")) {
-      return ErrorType.CLIENT_TIMEOUT.toString();
-    }
-
-    if (error instanceof java.net.ConnectException
-        || error instanceof java.net.UnknownHostException
-        || error instanceof java.nio.channels.UnresolvedAddressException
-        || exceptionName.equals("ConnectException")) {
-      return ErrorType.CLIENT_CONNECTION_ERROR.toString();
-    }
-
-    if (exceptionName.contains("CredentialsException")
-        || exceptionName.contains("AuthenticationException")) {
-      return ErrorType.CLIENT_AUTHENTICATION_ERROR.toString();
-    }
-
-    if (exceptionName.contains("ProtocolBufferParsingException")
-        || exceptionName.contains("DecodeException")) {
-      return ErrorType.CLIENT_RESPONSE_DECODE_ERROR.toString();
-    }
-
-    if (exceptionName.contains("RedirectException")) {
-      return ErrorType.CLIENT_REDIRECT_ERROR.toString();
-    }
-
-    if (exceptionName.contains("RequestBodyException")) {
-      return ErrorType.CLIENT_REQUEST_BODY_ERROR.toString();
-    }
-
-    if (exceptionName.contains("RequestException")) {
-      return ErrorType.CLIENT_REQUEST_ERROR.toString();
-    }
-
-    if (exceptionName.contains("UnknownClientException")) {
-      return ErrorType.CLIENT_UNKNOWN_ERROR.toString();
+    String clientError = getClientSideError(error);
+    if (clientError != null) {
+      return clientError;
     }
 
     // 4. Language-specific error type fallback
+    String exceptionName = error.getClass().getSimpleName();
     if (exceptionName != null && !exceptionName.isEmpty()) {
       return exceptionName;
     }
 
     // 5. Internal Fallback
     return ErrorType.INTERNAL.toString();
+  }
+
+  @Nullable
+  private static String extractFromApiException(ApiException apiException) {
+    // 1. Check for ErrorInfo.reason
+    String reason = apiException.getReason();
+    if (!Strings.isNullOrEmpty(reason)) {
+      return reason;
+    }
+
+    // 2. Specific Server Error Code
+    if (apiException.getStatusCode() != null) {
+      Object transportCode = apiException.getStatusCode().getTransportCode();
+      if (transportCode instanceof Integer) {
+        // HTTP Status Code
+        return String.valueOf(transportCode);
+      } else if (apiException.getStatusCode().getCode() != null) {
+        // gRPC Status Code name
+        return apiException.getStatusCode().getCode().name();
+      }
+    }
+    return null;
+  }
+
+  @Nullable
+  private static String getClientSideError(Throwable error) {
+    if (isInstanceof(error, CLIENT_TIMEOUT_CLASSES)) {
+      return ErrorType.CLIENT_TIMEOUT.toString();
+    }
+    if (isInstanceof(error, CLIENT_CONNECTION_ERROR_CLASSES)) {
+      return ErrorType.CLIENT_CONNECTION_ERROR.toString();
+    }
+
+    String exceptionName = error.getClass().getSimpleName();
+
+    if (CLIENT_TIMEOUT_NAMES.contains(exceptionName)) {
+      return ErrorType.CLIENT_TIMEOUT.toString();
+    }
+    if (CLIENT_CONNECTION_ERROR_NAMES.contains(exceptionName)) {
+      return ErrorType.CLIENT_CONNECTION_ERROR.toString();
+    }
+    if (nameContains(exceptionName, CLIENT_AUTH_ERROR_SUBSTRINGS)) {
+      return ErrorType.CLIENT_AUTHENTICATION_ERROR.toString();
+    }
+    if (nameContains(exceptionName, CLIENT_RESPONSE_DECODE_ERROR_SUBSTRINGS)) {
+      return ErrorType.CLIENT_RESPONSE_DECODE_ERROR.toString();
+    }
+    if (nameContains(exceptionName, CLIENT_REDIRECT_ERROR_SUBSTRINGS)) {
+      return ErrorType.CLIENT_REDIRECT_ERROR.toString();
+    }
+    if (nameContains(exceptionName, CLIENT_REQUEST_BODY_ERROR_SUBSTRINGS)) {
+      return ErrorType.CLIENT_REQUEST_BODY_ERROR.toString();
+    }
+    if (nameContains(exceptionName, CLIENT_REQUEST_ERROR_SUBSTRINGS)) {
+      return ErrorType.CLIENT_REQUEST_ERROR.toString();
+    }
+    if (nameContains(exceptionName, CLIENT_UNKNOWN_ERROR_SUBSTRINGS)) {
+      return ErrorType.CLIENT_UNKNOWN_ERROR.toString();
+    }
+
+    return null;
+  }
+
+  private static boolean isInstanceof(Throwable error, List<Class<? extends Throwable>> classes) {
+    for (Class<? extends Throwable> clazz : classes) {
+      if (clazz.isInstance(error)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private static boolean nameContains(String name, List<String> substrings) {
+    for (String sub : substrings) {
+      if (name.contains(sub)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /** Function to extract the status of the error as a string */
