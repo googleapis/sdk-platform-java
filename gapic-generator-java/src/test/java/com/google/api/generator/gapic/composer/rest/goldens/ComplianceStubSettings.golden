@@ -25,7 +25,6 @@ import com.google.showcase.v1beta1.EnumRequest;
 import com.google.showcase.v1beta1.EnumResponse;
 import com.google.showcase.v1beta1.RepeatRequest;
 import com.google.showcase.v1beta1.RepeatResponse;
-import com.google.showcase.v1beta1.Version;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.Generated;

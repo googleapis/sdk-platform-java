@@ -2143,7 +2143,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                         TypeNode.withReference(
                             VaporReference.builder()
                                 .setName("Version")
-                                .setPakkage(service.pakkage())
+                                .setPakkage(String.format("%s.stub", service.pakkage()))
                                 .build()))
                     .setVariable(
                         Variable.builder().setName("VERSION").setType(TypeNode.STRING).build())

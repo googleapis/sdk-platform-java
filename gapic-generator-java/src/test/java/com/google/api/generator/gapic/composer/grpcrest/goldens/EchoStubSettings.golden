@@ -51,7 +51,6 @@ import com.google.showcase.grpcrest.v1beta1.Object;
 import com.google.showcase.grpcrest.v1beta1.PagedExpandRequest;
 import com.google.showcase.grpcrest.v1beta1.PagedExpandResponse;
 import com.google.showcase.grpcrest.v1beta1.UpdateCaseRequest;
-import com.google.showcase.grpcrest.v1beta1.Version;
 import com.google.showcase.grpcrest.v1beta1.WaitMetadata;
 import com.google.showcase.grpcrest.v1beta1.WaitRequest;
 import com.google.showcase.grpcrest.v1beta1.WaitResponse;

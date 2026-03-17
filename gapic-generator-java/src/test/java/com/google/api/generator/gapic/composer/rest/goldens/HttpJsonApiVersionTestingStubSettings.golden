@@ -18,7 +18,6 @@ import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.version.test.EchoRequest;
 import com.google.api.version.test.EchoResponse;
-import com.google.api.version.test.Version;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;

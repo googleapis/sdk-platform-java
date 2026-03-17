@@ -51,7 +51,6 @@ import com.google.logging.v2.ListMonitoredResourceDescriptorsResponse;
 import com.google.logging.v2.LogEntry;
 import com.google.logging.v2.TailLogEntriesRequest;
 import com.google.logging.v2.TailLogEntriesResponse;
-import com.google.logging.v2.Version;
 import com.google.logging.v2.WriteLogEntriesRequest;
 import com.google.logging.v2.WriteLogEntriesResponse;
 import com.google.protobuf.Empty;

@@ -54,7 +54,6 @@ import com.google.pubsub.v1.PublishRequest;
 import com.google.pubsub.v1.PublishResponse;
 import com.google.pubsub.v1.Topic;
 import com.google.pubsub.v1.UpdateTopicRequest;
-import com.google.pubsub.v1.Version;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
