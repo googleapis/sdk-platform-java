@@ -41,7 +41,6 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
-import com.google.iam.v1.Version;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;

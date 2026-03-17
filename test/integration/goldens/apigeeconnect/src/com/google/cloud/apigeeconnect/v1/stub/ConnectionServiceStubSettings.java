@@ -48,7 +48,6 @@ import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.apigeeconnect.v1.Connection;
 import com.google.cloud.apigeeconnect.v1.ListConnectionsRequest;
 import com.google.cloud.apigeeconnect.v1.ListConnectionsResponse;
-import com.google.cloud.apigeeconnect.v1.Version;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;

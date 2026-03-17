@@ -90,7 +90,6 @@ import com.google.cloud.asset.v1.SearchAllResourcesRequest;
 import com.google.cloud.asset.v1.SearchAllResourcesResponse;
 import com.google.cloud.asset.v1.UpdateFeedRequest;
 import com.google.cloud.asset.v1.UpdateSavedQueryRequest;
-import com.google.cloud.asset.v1.Version;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
