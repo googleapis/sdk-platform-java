@@ -101,7 +101,7 @@ class OpenTelemetryMetricsRecorderTest {
   void testAttemptCountRecorder_recordsAttributes() {
     Map<String, String> attributes = getAttributes(Code.OK);
 
-    Attributes otelAttributes = ObservabilityUtils.toOtelAttributes(attributes);
+    Attributes otelAttributes = OpenTelemetryMetricsRecorder.toOtelAttributes(attributes);
     otelMetricsRecorder.recordAttemptCount(1, attributes);
 
     verify(attemptCountRecorder).add(1, otelAttributes);
@@ -112,7 +112,7 @@ class OpenTelemetryMetricsRecorderTest {
   void testAttemptLatencyRecorder_recordsAttributes() {
     Map<String, String> attributes = getAttributes(Code.NOT_FOUND);
 
-    Attributes otelAttributes = ObservabilityUtils.toOtelAttributes(attributes);
+    Attributes otelAttributes = OpenTelemetryMetricsRecorder.toOtelAttributes(attributes);
     otelMetricsRecorder.recordAttemptLatency(1.1, attributes);
 
     verify(attemptLatencyRecorder).record(1.1, otelAttributes);
@@ -123,7 +123,7 @@ class OpenTelemetryMetricsRecorderTest {
   void testOperationCountRecorder_recordsAttributes() {
     Map<String, String> attributes = getAttributes(Code.OK);
 
-    Attributes otelAttributes = ObservabilityUtils.toOtelAttributes(attributes);
+    Attributes otelAttributes = OpenTelemetryMetricsRecorder.toOtelAttributes(attributes);
     otelMetricsRecorder.recordOperationCount(1, attributes);
 
     verify(operationCountRecorder).add(1, otelAttributes);
@@ -134,7 +134,7 @@ class OpenTelemetryMetricsRecorderTest {
   void testOperationLatencyRecorder_recordsAttributes() {
     Map<String, String> attributes = getAttributes(Code.INVALID_ARGUMENT);
 
-    Attributes otelAttributes = ObservabilityUtils.toOtelAttributes(attributes);
+    Attributes otelAttributes = OpenTelemetryMetricsRecorder.toOtelAttributes(attributes);
     otelMetricsRecorder.recordOperationLatency(1.7, attributes);
 
     verify(operationLatencyRecorder).record(1.7, otelAttributes);

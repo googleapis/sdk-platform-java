@@ -48,6 +48,7 @@ public class GoldenSignalsMetricsTracerFactory implements ApiTracerFactory {
 
   public GoldenSignalsMetricsTracerFactory(OpenTelemetry openTelemetry) {
     this.openTelemetry = openTelemetry;
+    this.apiTracerContext = ApiTracerContext.empty();
   }
 
   @Override
@@ -57,7 +58,7 @@ public class GoldenSignalsMetricsTracerFactory implements ApiTracerFactory {
       // regular requests.
       return new BaseApiTracer();
     }
-    return new GoldenSignalsMetricsTracer(metricsRecorder);
+    return new GoldenSignalsMetricsTracer(metricsRecorder, apiTracerContext);
   }
 
   @Override

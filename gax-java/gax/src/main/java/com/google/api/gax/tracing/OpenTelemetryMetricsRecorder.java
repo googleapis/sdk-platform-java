@@ -33,7 +33,10 @@ package com.google.api.gax.tracing;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.GaxProperties;
+import com.google.common.base.Preconditions;
 import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.common.Attributes;
+import io.opentelemetry.api.common.AttributesBuilder;
 import io.opentelemetry.api.metrics.DoubleHistogram;
 import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.api.metrics.Meter;
@@ -112,7 +115,7 @@ public class OpenTelemetryMetricsRecorder implements MetricsRecorder {
    */
   @Override
   public void recordAttemptLatency(double attemptLatency, Map<String, String> attributes) {
-    attemptLatencyRecorder.record(attemptLatency, ObservabilityUtils.toOtelAttributes(attributes));
+    attemptLatencyRecorder.record(attemptLatency, toOtelAttributes(attributes));
   }
 
   /**
@@ -125,7 +128,7 @@ public class OpenTelemetryMetricsRecorder implements MetricsRecorder {
    */
   @Override
   public void recordAttemptCount(long count, Map<String, String> attributes) {
-    attemptCountRecorder.add(count, ObservabilityUtils.toOtelAttributes(attributes));
+    attemptCountRecorder.add(count, toOtelAttributes(attributes));
   }
 
   /**
@@ -137,8 +140,7 @@ public class OpenTelemetryMetricsRecorder implements MetricsRecorder {
    */
   @Override
   public void recordOperationLatency(double operationLatency, Map<String, String> attributes) {
-    operationLatencyRecorder.record(
-        operationLatency, ObservabilityUtils.toOtelAttributes(attributes));
+    operationLatencyRecorder.record(operationLatency, toOtelAttributes(attributes));
   }
 
   /**
@@ -151,6 +153,13 @@ public class OpenTelemetryMetricsRecorder implements MetricsRecorder {
    */
   @Override
   public void recordOperationCount(long count, Map<String, String> attributes) {
-    operationCountRecorder.add(count, ObservabilityUtils.toOtelAttributes(attributes));
+    operationCountRecorder.add(count, toOtelAttributes(attributes));
+  }
+
+  static Attributes toOtelAttributes(Map<String, String> attributes) {
+    Preconditions.checkNotNull(attributes, "Attributes map cannot be null");
+    AttributesBuilder attributesBuilder = Attributes.builder();
+    attributes.forEach(attributesBuilder::put);
+    return attributesBuilder.build();
   }
 }

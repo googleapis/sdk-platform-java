@@ -153,6 +153,67 @@ public final class Destination extends com.google.protobuf.GeneratedMessage
      * <code>YOUTUBE_SHOPPING = 6;</code>
      */
     YOUTUBE_SHOPPING(6),
+    /**
+     *
+     *
+     * <pre>
+     * Youtube shopping checkout.
+     * </pre>
+     *
+     * <code>YOUTUBE_SHOPPING_CHECKOUT = 7;</code>
+     */
+    YOUTUBE_SHOPPING_CHECKOUT(7),
+    /**
+     *
+     *
+     * <pre>
+     * [Youtube Affiliate](https://support.google.com/youtube/answer/13376398).
+     * </pre>
+     *
+     * <code>YOUTUBE_AFFILIATE = 8;</code>
+     */
+    YOUTUBE_AFFILIATE(8),
+    /**
+     *
+     *
+     * <pre>
+     * [Free vehicle
+     * listings](https://support.google.com/merchants/answer/11189169).
+     * </pre>
+     *
+     * <code>FREE_VEHICLE_LISTINGS = 9;</code>
+     */
+    FREE_VEHICLE_LISTINGS(9),
+    /**
+     *
+     *
+     * <pre>
+     * [Vehicle ads](https://support.google.com/merchants/answer/11189169).
+     * </pre>
+     *
+     * <code>VEHICLE_ADS = 10;</code>
+     */
+    VEHICLE_ADS(10),
+    /**
+     *
+     *
+     * <pre>
+     * [Cloud retail](https://cloud.google.com/solutions/retail).
+     * </pre>
+     *
+     * <code>CLOUD_RETAIL = 11;</code>
+     */
+    CLOUD_RETAIL(11),
+    /**
+     *
+     *
+     * <pre>
+     * [Local cloud retail](https://cloud.google.com/solutions/retail).
+     * </pre>
+     *
+     * <code>LOCAL_CLOUD_RETAIL = 12;</code>
+     */
+    LOCAL_CLOUD_RETAIL(12),
     UNRECOGNIZED(-1),
     ;
 
@@ -245,6 +306,73 @@ public final class Destination extends com.google.protobuf.GeneratedMessage
      */
     public static final int YOUTUBE_SHOPPING_VALUE = 6;
 
+    /**
+     *
+     *
+     * <pre>
+     * Youtube shopping checkout.
+     * </pre>
+     *
+     * <code>YOUTUBE_SHOPPING_CHECKOUT = 7;</code>
+     */
+    public static final int YOUTUBE_SHOPPING_CHECKOUT_VALUE = 7;
+
+    /**
+     *
+     *
+     * <pre>
+     * [Youtube Affiliate](https://support.google.com/youtube/answer/13376398).
+     * </pre>
+     *
+     * <code>YOUTUBE_AFFILIATE = 8;</code>
+     */
+    public static final int YOUTUBE_AFFILIATE_VALUE = 8;
+
+    /**
+     *
+     *
+     * <pre>
+     * [Free vehicle
+     * listings](https://support.google.com/merchants/answer/11189169).
+     * </pre>
+     *
+     * <code>FREE_VEHICLE_LISTINGS = 9;</code>
+     */
+    public static final int FREE_VEHICLE_LISTINGS_VALUE = 9;
+
+    /**
+     *
+     *
+     * <pre>
+     * [Vehicle ads](https://support.google.com/merchants/answer/11189169).
+     * </pre>
+     *
+     * <code>VEHICLE_ADS = 10;</code>
+     */
+    public static final int VEHICLE_ADS_VALUE = 10;
+
+    /**
+     *
+     *
+     * <pre>
+     * [Cloud retail](https://cloud.google.com/solutions/retail).
+     * </pre>
+     *
+     * <code>CLOUD_RETAIL = 11;</code>
+     */
+    public static final int CLOUD_RETAIL_VALUE = 11;
+
+    /**
+     *
+     *
+     * <pre>
+     * [Local cloud retail](https://cloud.google.com/solutions/retail).
+     * </pre>
+     *
+     * <code>LOCAL_CLOUD_RETAIL = 12;</code>
+     */
+    public static final int LOCAL_CLOUD_RETAIL_VALUE = 12;
+
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
         throw new java.lang.IllegalArgumentException(
@@ -283,6 +411,18 @@ public final class Destination extends com.google.protobuf.GeneratedMessage
           return FREE_LOCAL_LISTINGS;
         case 6:
           return YOUTUBE_SHOPPING;
+        case 7:
+          return YOUTUBE_SHOPPING_CHECKOUT;
+        case 8:
+          return YOUTUBE_AFFILIATE;
+        case 9:
+          return FREE_VEHICLE_LISTINGS;
+        case 10:
+          return VEHICLE_ADS;
+        case 11:
+          return CLOUD_RETAIL;
+        case 12:
+          return LOCAL_CLOUD_RETAIL;
         default:
           return null;
       }

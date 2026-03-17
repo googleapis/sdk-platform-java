@@ -30,7 +30,6 @@
 package com.google.api.gax.tracing;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.StatusCode;
@@ -68,12 +67,12 @@ class ObservabilityUtilsTest {
   }
 
   @Test
-  void testToOtelAttributes_correctConversion() {
+  void testToOtelAttributes_shouldMapStringAttributes() {
     String attribute1 = "attribute_1";
     String attribute2 = "attribute_2";
     String attribute1Value = "Today is a good day";
     String attribute2Value = "Does not matter";
-    Map<String, String> attributes =
+    Map<String, Object> attributes =
         ImmutableMap.of(attribute1, attribute1Value, attribute2, attribute2Value);
 
     Attributes otelAttributes = ObservabilityUtils.toOtelAttributes(attributes);
@@ -85,9 +84,24 @@ class ObservabilityUtilsTest {
   }
 
   @Test
-  void testToOtelAttributes_nullInput() {
-    Throwable thrown =
-        assertThrows(NullPointerException.class, () -> ObservabilityUtils.toOtelAttributes(null));
-    Truth.assertThat(thrown).hasMessageThat().contains("Attributes map cannot be null");
+  void testToOtelAttributes_shouldMapIntAttributes() {
+    String attribute1 = "attribute_1";
+    String attribute2 = "attribute_2";
+    int attribute1Value = 23;
+    int attribute2Value = 81;
+    Map<String, Object> attributes =
+        ImmutableMap.of(attribute1, attribute1Value, attribute2, attribute2Value);
+
+    Attributes otelAttributes = ObservabilityUtils.toOtelAttributes(attributes);
+
+    Truth.assertThat(otelAttributes.get(AttributeKey.longKey(attribute1)))
+        .isEqualTo((long) attribute1Value);
+    Truth.assertThat(otelAttributes.get(AttributeKey.longKey(attribute2)))
+        .isEqualTo((long) attribute2Value);
+  }
+
+  @Test
+  void testToOtelAttributes_shouldReturnEmptyAttributes_nullInput() {
+    assertThat(ObservabilityUtils.toOtelAttributes(null)).isEqualTo(Attributes.empty());
   }
 }

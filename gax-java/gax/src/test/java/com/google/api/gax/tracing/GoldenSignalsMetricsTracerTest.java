@@ -68,7 +68,9 @@ class GoldenSignalsMetricsTracerTest {
     ticker = new FakeTicker();
     tracer =
         new GoldenSignalsMetricsTracer(
-            new GoldenSignalsMetricsRecorder(openTelemetry, ARTIFACT_NAME), ticker);
+            new GoldenSignalsMetricsRecorder(openTelemetry, ARTIFACT_NAME),
+            ApiTracerContext.empty(),
+            ticker);
   }
 
   @Test
