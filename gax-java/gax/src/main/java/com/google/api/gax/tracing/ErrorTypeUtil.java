@@ -132,6 +132,13 @@ public class ErrorTypeUtil {
     return ErrorType.INTERNAL.toString();
   }
 
+  /**
+   * Extracts the error type from an ApiException. This method prioritizes the ErrorInfo reason,
+   * then the transport-specific status code (HTTP or gRPC).
+   *
+   * @param apiException The ApiException to extract the error type from.
+   * @return A string representing the error type, or null if no specific type can be determined.
+   */
   @Nullable
   private static String extractFromApiException(ApiException apiException) {
     // 1. Check for ErrorInfo.reason
@@ -154,6 +161,13 @@ public class ErrorTypeUtil {
     return null;
   }
 
+  /**
+   * Determines the client-side error type based on the provided Throwable. This method checks for
+   * various network and client-specific exceptions.
+   *
+   * @param error The Throwable to analyze.
+   * @return A string representing the client-side error type, or null if not matched.
+   */
   @Nullable
   private static String getClientSideError(Throwable error) {
     if (isClientTimeout(error)) {
@@ -171,7 +185,8 @@ public class ErrorTypeUtil {
     if (isClientRedirectError(error)) {
       return ErrorType.CLIENT_REDIRECT_ERROR.toString();
     }
-    if (error instanceof IllegalArgumentException) { // This covers CLIENT_REQUEST_ERROR
+    // This covers CLIENT_REQUEST_ERROR for general illegal arguments in client requests.
+    if (error instanceof IllegalArgumentException) {
       return ErrorType.CLIENT_REQUEST_ERROR.toString();
     }
     if (isRequestBodyError(error)) {
@@ -183,10 +198,24 @@ public class ErrorTypeUtil {
     return null;
   }
 
+  /**
+   * Checks if the given Throwable represents a client-side timeout error. This includes socket
+   * timeouts and GAX-specific watchdog timeouts.
+   *
+   * @param e The Throwable to check.
+   * @return true if the error is a client timeout, false otherwise.
+   */
   private static boolean isClientTimeout(Throwable e) {
     return e instanceof SocketTimeoutException || e instanceof WatchdogTimeoutException;
   }
 
+  /**
+   * Checks if the given Throwable represents a client-side connection error. This includes issues
+   * with establishing connections, unknown hosts, SSL handshakes, and unresolved addresses.
+   *
+   * @param e The Throwable to check.
+   * @return true if the error is a client connection error, false otherwise.
+   */
   private static boolean isClientConnectionError(Throwable e) {
     return e instanceof ConnectException
         || e instanceof UnknownHostException
@@ -194,24 +223,61 @@ public class ErrorTypeUtil {
         || e instanceof UnresolvedAddressException;
   }
 
+  /**
+   * Checks if the given Throwable represents a client-side response decoding error. This is
+   * identified by exceptions related to JSON or Gson parsing, either directly or as a cause.
+   *
+   * @param e The Throwable to check.
+   * @return true if the error is a client response decode error, false otherwise.
+   */
   private static boolean isClientResponseDecodeError(Throwable e) {
     return e.getClass().getName().contains("Json")
         || e.getClass().getName().contains("Gson")
         || (e.getCause() != null && e.getCause().getClass().getName().contains("Gson"));
   }
 
+  /**
+   * Checks if the given Throwable represents a client-side redirect error. This is identified by
+   * the presence of "redirect" in the exception message.
+   *
+   * @param e The Throwable to check.
+   * @return true if the error is a client redirect error, false otherwise.
+   */
   private static boolean isClientRedirectError(Throwable e) {
     return e.getMessage() != null && e.getMessage().contains("redirect");
   }
 
+  /**
+   * Checks if the given Throwable represents a client-side authentication error. This is identified
+   * by exceptions related to the auth library.
+   *
+   * @param e The Throwable to check.
+   * @return true if the error is a client authentication error, false otherwise.
+   */
   private static boolean isClientAuthenticationError(Throwable e) {
     return e.getClass().getName().contains("GoogleAuthException");
   }
 
+  /**
+   * Checks if the given Throwable represents a client-side request body error. This is specifically
+   * mapped to RestSerializationException from httpjson, which indicates issues during the
+   * serialization of the request body for REST calls.
+   *
+   * @param e The Throwable to check.
+   * @return true if the error is a client request body error, false otherwise.
+   */
   private static boolean isRequestBodyError(Throwable e) {
     return e.getClass().getName().contains("RestSerializationException");
   }
 
+  /**
+   * Checks if the given Throwable represents an unknown client-side error. This is a general
+   * fallback for exceptions whose class name contains "unknown", indicating an unclassified
+   * client-side issue.
+   *
+   * @param e The Throwable to check.
+   * @return true if the error is an unknown client error, false otherwise.
+   */
   private static boolean isClientUnknownError(Throwable e) {
     return e.getClass().getName().toLowerCase().contains("unknown");
   }
