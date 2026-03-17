@@ -88,8 +88,6 @@ public class ErrorTypeUtil {
    *         <li>{@code CLIENT_REDIRECT_ERROR}: Problem handling HTTP redirects.
    *         <li>{@code CLIENT_AUTHENTICATION_ERROR}: Error during credential acquisition or
    *             application.
-   *         <li>{@code CLIENT_UNKNOWN_ERROR}: Other unclassified client-side network or protocol
-   *             errors.
    *       </ul>
    *   <li><b>Language-specific error type:</b> The class or struct name of the exception or error
    *       if available. This must be low-cardinality, meaning it returns the short name of the
@@ -174,13 +172,12 @@ public class ErrorTypeUtil {
     if (error instanceof IllegalArgumentException) { // This covers CLIENT_REQUEST_ERROR
       return ErrorType.CLIENT_REQUEST_ERROR.toString();
     }
-    if (error.getClass().getSimpleName().contains("RequestBodyException")) {
+    if (isRequestBodyError(error)) {
       return ErrorType.CLIENT_REQUEST_BODY_ERROR.toString();
     }
-    if (error.getClass().getSimpleName().contains("UnknownClientException")) {
+    if (isClientUnknownError(error)) {
       return ErrorType.CLIENT_UNKNOWN_ERROR.toString();
     }
-
     return null;
   }
 
@@ -207,5 +204,13 @@ public class ErrorTypeUtil {
 
   private static boolean isClientAuthenticationError(Throwable e) {
     return e.getClass().getName().contains("GoogleAuthException");
+  }
+
+  private static boolean isRequestBodyError(Throwable e) {
+    return e.getClass().getName().contains("RestSerializationException");
+  }
+
+  private static boolean isClientUnknownError(Throwable e) {
+    return e.getClass().getName().toLowerCase().contains("unknown");
   }
 }

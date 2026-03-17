@@ -261,7 +261,7 @@ class SpanTracerTest {
 
     tracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptFailedRetriesExhausted(new RequestBodyException());
+    tracer.attemptFailedRetriesExhausted(new TestRestSerializationException());
 
     verify(attemptHandle)
         .addAttribute(
@@ -338,7 +338,7 @@ class SpanTracerTest {
     }
   }
 
-  private static class RequestBodyException extends RuntimeException {}
+  private static class TestRestSerializationException extends RuntimeException {}
 
   private static class UnknownClientException extends RuntimeException {}
 }
