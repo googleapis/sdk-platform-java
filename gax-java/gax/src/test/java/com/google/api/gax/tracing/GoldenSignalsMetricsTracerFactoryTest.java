@@ -31,8 +31,7 @@ package com.google.api.gax.tracing;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import io.opentelemetry.api.OpenTelemetry;
 import org.junit.jupiter.api.BeforeEach;
@@ -75,6 +74,7 @@ class GoldenSignalsMetricsTracerFactoryTest {
     tracerFactory.withContext(clientLevelTracerContext);
     ApiTracer actual = tracerFactory.newTracer(mock(ApiTracer.class), methodLevelTracerContext);
 
+    verify(clientLevelTracerContext).merge(methodLevelTracerContext);
     assertThat(actual).isInstanceOf(GoldenSignalsMetricsTracer.class);
   }
 
