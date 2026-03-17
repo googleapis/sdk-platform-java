@@ -42,13 +42,13 @@ import io.opentelemetry.api.OpenTelemetry;
 @InternalApi
 public class GoldenSignalsMetricsTracerFactory implements ApiTracerFactory {
 
-  private ApiTracerContext apiTracerContext;
+  private ApiTracerContext clientLevelTracerContext;
   private final OpenTelemetry openTelemetry;
   private GoldenSignalsMetricsRecorder metricsRecorder;
 
   public GoldenSignalsMetricsTracerFactory(OpenTelemetry openTelemetry) {
     this.openTelemetry = openTelemetry;
-    this.apiTracerContext = ApiTracerContext.empty();
+    this.clientLevelTracerContext = ApiTracerContext.empty();
   }
 
   @Override
@@ -58,15 +58,26 @@ public class GoldenSignalsMetricsTracerFactory implements ApiTracerFactory {
       // regular requests.
       return new BaseApiTracer();
     }
-    return new GoldenSignalsMetricsTracer(metricsRecorder, apiTracerContext);
+    return new GoldenSignalsMetricsTracer(metricsRecorder, clientLevelTracerContext);
+  }
+
+  @Override
+  public ApiTracer newTracer(ApiTracer parent, ApiTracerContext methodLevelTracerContext) {
+    if (metricsRecorder == null) {
+      // This should never happen, in case it happens, create a no-op api tracer to not block
+      // regular requests.
+      return new BaseApiTracer();
+    }
+    ApiTracerContext mergedTracerContext = clientLevelTracerContext.merge(methodLevelTracerContext);
+    return new GoldenSignalsMetricsTracer(metricsRecorder, mergedTracerContext);
   }
 
   @Override
   public ApiTracerFactory withContext(ApiTracerContext context) {
-    this.apiTracerContext = context;
+    this.clientLevelTracerContext = context;
     this.metricsRecorder =
         new GoldenSignalsMetricsRecorder(
-            openTelemetry, apiTracerContext.libraryMetadata().artifactName());
+            openTelemetry, clientLevelTracerContext.libraryMetadata().artifactName());
     return this;
   }
 }
