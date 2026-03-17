@@ -77,6 +77,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.logging.Handler;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
@@ -645,6 +646,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
       testLogDirectPathMisconfig_AttemptDirectPathNotSetAndAttemptDirectPathXdsSetViaBuilder_warns()
           throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.setLevel(Level.FINE);
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =
         createChannelProviderBuilderForDirectPathLogTests()
@@ -662,6 +664,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   void testLogDirectPathMisconfig_AttemptDirectPathNotSetAndAttemptDirectPathXdsSetViaEnv_warns()
       throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.setLevel(Level.FINE);
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
 
     InstantiatingGrpcChannelProvider provider =
@@ -679,6 +682,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   @Test
   void testLogDirectPathMisconfig_shouldNotLogInTheBuilder() {
     FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.setLevel(Level.FINE);
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider.newBuilder()
         .setAttemptDirectPathXds()
@@ -693,6 +697,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   @Test
   void testLogDirectPathMisconfigWrongCredential() throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.setLevel(Level.FINE);
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
@@ -719,6 +724,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   @Test
   void testLogDirectPathMisconfigNotOnGCE() throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.setLevel(Level.FINE);
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
