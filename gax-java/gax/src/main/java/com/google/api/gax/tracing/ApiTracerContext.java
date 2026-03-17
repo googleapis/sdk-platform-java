@@ -136,6 +136,26 @@ public abstract class ApiTracerContext {
   @Nullable
   public abstract OperationType operationType();
 
+  /**
+   * Returns the HTTP method used for the RPC, in case the RPC is an HttpJson method.
+   *
+   * <p>Example: {@code PATCH}.
+   *
+   * @return the HTTP method, or {@code null} if not set
+   */
+  @Nullable
+  abstract String httpMethod();
+
+  /**
+   * Returns the HTTP path template used for the RPC, in case the RPC is an HttpJson method.
+   *
+   * <p>Example: {@code /users/{user_id}/get}.
+   *
+   * @return the HTTP path template, or {@code null} if not set
+   */
+  @Nullable
+  abstract String httpPathTemplate();
+
   /** The service name of a client (e.g. "bigtable", "spanner"). */
   @Nullable
   public abstract String serviceName();
@@ -143,10 +163,6 @@ public abstract class ApiTracerContext {
   /** The url domain of the request (e.g. "pubsub.googleapis.com"). */
   @Nullable
   public abstract String urlDomain();
-
-  /** The url template of the request (e.g. /v1/{name}:access). */
-  @Nullable
-  public abstract String urlTemplate();
 
   /**
    * @return a map of attributes to be included in attempt-level spans
@@ -177,6 +193,14 @@ public abstract class ApiTracerContext {
     if (transport() == Transport.GRPC && !Strings.isNullOrEmpty(fullMethodName())) {
       attributes.put(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE, fullMethodName());
     }
+    if (transport() == Transport.HTTP) {
+      if (!Strings.isNullOrEmpty(httpMethod())) {
+        attributes.put(ObservabilityAttributes.HTTP_METHOD_ATTRIBUTE, httpMethod());
+      }
+      if (!Strings.isNullOrEmpty(httpPathTemplate())) {
+        attributes.put(ObservabilityAttributes.HTTP_URL_TEMPLATE_ATTRIBUTE, httpPathTemplate());
+      }
+    }
     return attributes;
   }
 
@@ -201,8 +225,8 @@ public abstract class ApiTracerContext {
       if (!Strings.isNullOrEmpty(urlDomain())) {
         attributes.put(ObservabilityAttributes.URL_DOMAIN_ATTRIBUTE, urlDomain());
       }
-      if (!Strings.isNullOrEmpty(urlTemplate())) {
-        attributes.put(ObservabilityAttributes.URL_TEMPLATE_ATTRIBUTE, urlTemplate());
+      if (!Strings.isNullOrEmpty(httpPathTemplate())) {
+        attributes.put(ObservabilityAttributes.URL_TEMPLATE_ATTRIBUTE, httpPathTemplate());
       }
     }
     return attributes;
@@ -231,17 +255,20 @@ public abstract class ApiTracerContext {
     if (other.transport() != null) {
       builder.setTransport(other.transport());
     }
+    if (!Strings.isNullOrEmpty(other.httpMethod())) {
+      builder.setHttpMethod(other.httpMethod());
+    }
+    if (!Strings.isNullOrEmpty(other.httpPathTemplate())) {
+      builder.setHttpPathTemplate(other.httpPathTemplate());
+    }
     if (other.operationType() != null) {
       builder.setOperationType(other.operationType());
     }
-    if (other.serviceName() != null) {
+    if (!Strings.isNullOrEmpty(other.serviceName())) {
       builder.setServiceName(other.serviceName());
     }
-    if (other.urlDomain() != null) {
+    if (!Strings.isNullOrEmpty(other.urlDomain())) {
       builder.setUrlDomain(other.urlDomain());
-    }
-    if (other.urlTemplate() != null) {
-      builder.setUrlTemplate(other.urlTemplate());
     }
     return builder.build();
   }
@@ -270,11 +297,13 @@ public abstract class ApiTracerContext {
 
     public abstract Builder setServerPort(@Nullable Integer serverPort);
 
+    public abstract Builder setHttpMethod(@Nullable String httpMethod);
+
+    public abstract Builder setHttpPathTemplate(@Nullable String rawString);
+
     public abstract Builder setServiceName(@Nullable String serviceName);
 
     public abstract Builder setUrlDomain(@Nullable String urlDomain);
-
-    public abstract Builder setUrlTemplate(@Nullable String urlTemplate);
 
     public abstract ApiTracerContext build();
   }

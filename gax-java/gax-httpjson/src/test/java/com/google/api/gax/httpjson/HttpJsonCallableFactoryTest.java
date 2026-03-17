@@ -33,7 +33,9 @@ import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 
 import com.google.api.client.http.HttpMethods;
+import com.google.api.gax.tracing.ApiTracerContext;
 import com.google.api.gax.tracing.SpanName;
+import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import java.util.List;
@@ -43,8 +45,15 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 class HttpJsonCallableFactoryTest {
+  private HttpRequestFormatter createMockRequestFormatter() {
+    HttpRequestFormatter formatter = Mockito.mock(HttpRequestFormatter.class);
+    PathTemplate template = PathTemplate.create("/test/path/template");
+    Mockito.when(formatter.getPathTemplate()).thenReturn(template);
+    return formatter;
+  }
+
   @Test
-  void testGetSpanName() {
+  void testGetApiTracerContext() {
     Map<String, SpanName> validNames =
         ImmutableMap.of(
             "google.cloud.service.v1.CoolService/CoolRPC", SpanName.of("CoolService", "CoolRPC"),
@@ -56,17 +65,19 @@ class HttpJsonCallableFactoryTest {
           ApiMethodDescriptor.newBuilder()
               .setFullMethodName(entry.getKey())
               .setHttpMethod(HttpMethods.POST)
-              .setRequestFormatter(Mockito.mock(HttpRequestFormatter.class))
+              .setRequestFormatter(createMockRequestFormatter())
               .setResponseParser(Mockito.mock(HttpResponseParser.class))
               .build();
 
-      SpanName actualSpanName = HttpJsonCallableFactory.getSpanName(descriptor);
-      assertThat(actualSpanName).isEqualTo(entry.getValue());
+      ApiTracerContext context = HttpJsonCallableFactory.getApiTracerContext(descriptor);
+      SpanName actual = SpanName.of(context);
+      assertThat(actual.getClientName()).isEqualTo(entry.getValue().getClientName());
+      assertThat(actual.getMethodName()).isEqualTo(entry.getValue().getMethodName());
     }
   }
 
   @Test
-  void testGetSpanNameInvalid() {
+  void testGetApiTracerContextInvalid() {
     List<String> invalidNames = ImmutableList.of("no_split", ".no_client");
 
     for (String invalidName : invalidNames) {
@@ -75,16 +86,16 @@ class HttpJsonCallableFactoryTest {
           ApiMethodDescriptor.newBuilder()
               .setFullMethodName(invalidName)
               .setHttpMethod(HttpMethods.POST)
-              .setRequestFormatter(Mockito.mock(HttpRequestFormatter.class))
+              .setRequestFormatter(createMockRequestFormatter())
               .setResponseParser(Mockito.mock(HttpResponseParser.class))
               .build();
 
       IllegalArgumentException actualError = null;
       try {
-        SpanName spanName = HttpJsonCallableFactory.getSpanName(descriptor);
+        ApiTracerContext context = HttpJsonCallableFactory.getApiTracerContext(descriptor);
+        SpanName.of(context);
         assertWithMessage(
-                "Invalid method descriptor should not have a valid span name: %s should not generate the spanName: %s",
-                invalidName, spanName)
+                "Invalid method descriptor should not have a valid client name: %s", invalidName)
             .fail();
       } catch (IllegalArgumentException e) {
         actualError = e;

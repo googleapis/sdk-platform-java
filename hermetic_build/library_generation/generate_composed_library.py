@@ -27,6 +27,7 @@ contains the necessary folders and files, specifically:
   - A "grafeas" folder found in the googleapis/googleapis repository
 Note: googleapis repo is found in https://github.com/googleapis/googleapis.
 """
+
 import os
 from pathlib import Path
 from typing import List

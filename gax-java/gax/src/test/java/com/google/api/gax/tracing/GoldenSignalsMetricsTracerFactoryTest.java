@@ -30,7 +30,8 @@
 package com.google.api.gax.tracing;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.*;
 
 import io.opentelemetry.api.OpenTelemetry;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,7 +47,7 @@ class GoldenSignalsMetricsTracerFactoryTest {
   }
 
   @Test
-  void newTracer_createsTracer_successfully() {
+  void newTracerWithSpanName_shouldCreateTracer_ifMetricsRecorderIsNotNull() {
     tracerFactory.withContext(ApiTracerContext.empty());
     ApiTracer actual =
         tracerFactory.newTracer(
@@ -55,10 +56,32 @@ class GoldenSignalsMetricsTracerFactoryTest {
   }
 
   @Test
-  void newTracer_createsBaseTracer_ifMetricsRecorderIsNull() {
+  void newTracerWithSpanName_shouldCreateBaseTracer_ifMetricsRecorderIsNull() {
     ApiTracer actual =
         tracerFactory.newTracer(
             mock(ApiTracer.class), mock(SpanName.class), ApiTracerFactory.OperationType.Unary);
+    assertThat(actual).isInstanceOf(BaseApiTracer.class);
+  }
+
+  @Test
+  void newTracerWithApiTracerContext_shouldMergeApiTracerContext() {
+    ApiTracerContext clientLevelTracerContext = mock(ApiTracerContext.class, RETURNS_DEEP_STUBS);
+    ApiTracerContext methodLevelTracerContext = mock(ApiTracerContext.class);
+    when(clientLevelTracerContext.libraryMetadata().artifactName()).thenReturn("does not matter");
+    when(clientLevelTracerContext.merge(methodLevelTracerContext))
+        .thenReturn(clientLevelTracerContext);
+
+    tracerFactory.withContext(clientLevelTracerContext);
+    ApiTracer actual = tracerFactory.newTracer(mock(ApiTracer.class), methodLevelTracerContext);
+
+    verify(clientLevelTracerContext).merge(methodLevelTracerContext);
+    assertThat(actual).isInstanceOf(GoldenSignalsMetricsTracer.class);
+  }
+
+  @Test
+  void newTracerWithApiTracerContext_shouldCreateBaseTracer_ifMetricsRecorderIsNull() {
+    ApiTracer actual = tracerFactory.newTracer(mock(ApiTracer.class), mock(ApiTracerContext.class));
+
     assertThat(actual).isInstanceOf(BaseApiTracer.class);
   }
 }

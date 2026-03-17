@@ -161,9 +161,10 @@ class ITOtelTracing {
 
       SpanData attemptSpan =
           spans.stream()
-              .filter(span -> span.getName().equals("Echo/Echo/attempt"))
+              .filter(span -> span.getName().equals("POST v1beta1/echo:echo"))
               .findFirst()
-              .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
+              .orElseThrow(
+                  () -> new AssertionError("Attempt span 'POST v1beta1/echo:echo' not found"));
       assertThat(attemptSpan.getKind()).isEqualTo(SpanKind.CLIENT);
       assertThat(
               attemptSpan
@@ -190,6 +191,16 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.ARTIFACT_ATTRIBUTE)))
           .isEqualTo(SHOWCASE_ARTIFACT);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.HTTP_METHOD_ATTRIBUTE)))
+          .isEqualTo("POST");
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.HTTP_URL_TEMPLATE_ATTRIBUTE)))
+          .isEqualTo("v1beta1/echo:echo");
     }
   }
 }
