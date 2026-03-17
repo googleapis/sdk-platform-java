@@ -67,7 +67,6 @@ import com.google.showcase.v1beta1.ListUsersRequest;
 import com.google.showcase.v1beta1.ListUsersResponse;
 import com.google.showcase.v1beta1.UpdateUserRequest;
 import com.google.showcase.v1beta1.User;
-import com.google.showcase.v1beta1.Version;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;

@@ -89,7 +89,6 @@ import com.google.showcase.v1beta1.StreamBlurbsRequest;
 import com.google.showcase.v1beta1.StreamBlurbsResponse;
 import com.google.showcase.v1beta1.UpdateBlurbRequest;
 import com.google.showcase.v1beta1.UpdateRoomRequest;
-import com.google.showcase.v1beta1.Version;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;

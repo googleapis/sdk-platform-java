@@ -71,7 +71,6 @@ import com.google.showcase.v1beta1.Sequence;
 import com.google.showcase.v1beta1.SequenceReport;
 import com.google.showcase.v1beta1.StreamingSequence;
 import com.google.showcase.v1beta1.StreamingSequenceReport;
-import com.google.showcase.v1beta1.Version;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
