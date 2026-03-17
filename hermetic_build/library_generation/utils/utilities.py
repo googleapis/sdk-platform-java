@@ -170,6 +170,24 @@ def prepare_repo(
     )
 
 
+def get_library_repository(
+    config: GenerationConfig, library: LibraryConfig, language: str = "java"
+):
+    """
+    Obtains the repository identifier (e.g. googleapis/java-bigtable) depending on
+    whether it's a monorepo (google-cloud-java or sdk-platform-java if has common-protos) or not.
+
+    :return: string representing the repository
+    """
+    if config.contains_common_protos():
+        repo = SDK_PLATFORM_JAVA
+    elif config.is_monorepo():
+        repo = "googleapis/google-cloud-java"
+    else:
+        repo = f"googleapis/{language}-{library.get_library_name()}"
+    return repo
+
+
 def generate_postprocessing_prerequisite_files(
     config: GenerationConfig,
     library: LibraryConfig,
@@ -191,14 +209,9 @@ def generate_postprocessing_prerequisite_files(
     :param language: programming language of the library
     :return: None
     """
+    repo = get_library_repository(config, library)
     library_name = library.get_library_name()
     artifact_id = library.get_artifact_id()
-    if config.contains_common_protos():
-        repo = SDK_PLATFORM_JAVA
-    elif config.is_monorepo():
-        repo = "googleapis/google-cloud-java"
-    else:
-        repo = f"googleapis/{language}-{library_name}"
     api_id = (
         library.api_id if library.api_id else f"{library.api_shortname}.googleapis.com"
     )

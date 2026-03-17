@@ -96,6 +96,7 @@ public final class OpencensusTracerFactory extends BaseApiTracerFactory {
   /** {@inheritDoc } */
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
+    Preconditions.checkNotNull(operationType, "operationType cannot be null.");
     // Default to the current in context span. This is used for outermost tracers that inherit
     // the caller's parent span.
     Span parentSpan = internalTracer.getCurrentSpan();

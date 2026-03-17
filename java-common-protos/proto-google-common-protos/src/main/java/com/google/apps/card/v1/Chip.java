@@ -245,7 +245,7 @@ public final class Chip extends com.google.protobuf.GeneratedMessage
    * <code>bool enabled = 4 [deprecated = true];</code>
    *
    * @deprecated google.apps.card.v1.Chip.enabled is deprecated. See
-   *     google/apps/card/v1/card.proto;l=2425
+   *     google/apps/card/v1/card.proto;l=2445
    * @return The enabled.
    */
   @java.lang.Override
@@ -1310,7 +1310,7 @@ public final class Chip extends com.google.protobuf.GeneratedMessage
      * <code>bool enabled = 4 [deprecated = true];</code>
      *
      * @deprecated google.apps.card.v1.Chip.enabled is deprecated. See
-     *     google/apps/card/v1/card.proto;l=2425
+     *     google/apps/card/v1/card.proto;l=2445
      * @return The enabled.
      */
     @java.lang.Override
@@ -1331,7 +1331,7 @@ public final class Chip extends com.google.protobuf.GeneratedMessage
      * <code>bool enabled = 4 [deprecated = true];</code>
      *
      * @deprecated google.apps.card.v1.Chip.enabled is deprecated. See
-     *     google/apps/card/v1/card.proto;l=2425
+     *     google/apps/card/v1/card.proto;l=2445
      * @param value The enabled to set.
      * @return This builder for chaining.
      */
@@ -1356,7 +1356,7 @@ public final class Chip extends com.google.protobuf.GeneratedMessage
      * <code>bool enabled = 4 [deprecated = true];</code>
      *
      * @deprecated google.apps.card.v1.Chip.enabled is deprecated. See
-     *     google/apps/card/v1/card.proto;l=2425
+     *     google/apps/card/v1/card.proto;l=2445
      * @return This builder for chaining.
      */
     @java.lang.Deprecated

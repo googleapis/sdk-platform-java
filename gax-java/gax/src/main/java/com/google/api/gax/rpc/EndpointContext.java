@@ -40,6 +40,7 @@ import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
+import com.google.common.net.HostAndPort;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -132,6 +133,11 @@ public abstract class EndpointContext {
   abstract String resolvedUniverseDomain();
 
   public abstract String resolvedEndpoint();
+
+  public abstract String resolvedServerAddress();
+
+  @Nullable
+  public abstract Integer resolvedServerPort();
 
   public abstract Builder toBuilder();
 
@@ -228,6 +234,10 @@ public abstract class EndpointContext {
 
     public abstract Builder setResolvedEndpoint(String resolvedEndpoint);
 
+    public abstract Builder setResolvedServerAddress(String serverAddress);
+
+    public abstract Builder setResolvedServerPort(Integer serverPort);
+
     public abstract Builder setResolvedUniverseDomain(String resolvedUniverseDomain);
 
     abstract Builder setUseS2A(boolean useS2A);
@@ -258,6 +268,8 @@ public abstract class EndpointContext {
     abstract boolean usingGDCH();
 
     abstract String resolvedUniverseDomain();
+
+    abstract String resolvedEndpoint();
 
     abstract EndpointContext autoBuild();
 
@@ -382,6 +394,42 @@ public abstract class EndpointContext {
       return mtlsEndpoint().contains(Credentials.GOOGLE_DEFAULT_UNIVERSE);
     }
 
+    private String parseServerAddress(String endpoint) {
+      if (endpoint.isEmpty()) {
+        return endpoint;
+      }
+      HostAndPort hostAndPort = parseServerHostAndPort(endpoint);
+      if (hostAndPort == null) {
+        return null;
+      }
+      return hostAndPort.getHost();
+    }
+
+    private Integer parseServerPort(String endpoint) {
+      if (endpoint.isEmpty()) {
+        return null;
+      }
+      HostAndPort hostAndPort = parseServerHostAndPort(endpoint);
+      if (!hostAndPort.hasPort()) {
+        return null;
+      }
+      return hostAndPort.getPort();
+    }
+
+    private HostAndPort parseServerHostAndPort(String endpoint) {
+      String hostPort = endpoint;
+      if (hostPort.contains("://")) {
+        // Strip the scheme if present. HostAndPort doesn't support schemes.
+        hostPort = hostPort.substring(hostPort.indexOf("://") + 3);
+      }
+      try {
+        return HostAndPort.fromString(hostPort);
+      } catch (IllegalArgumentException e) {
+        // Fallback for cases HostAndPort can't handle.
+        return null;
+      }
+    }
+
     // Default to port 443 for HTTPS. Using HTTP requires explicitly setting the endpoint
     private String buildEndpointTemplate(String serviceName, String resolvedUniverseDomain) {
       return serviceName + "." + resolvedUniverseDomain + ":443";
@@ -416,7 +464,10 @@ public abstract class EndpointContext {
     public EndpointContext build() throws IOException {
       // The Universe Domain is used to resolve the Endpoint. It should be resolved first
       setResolvedUniverseDomain(determineUniverseDomain());
-      setResolvedEndpoint(determineEndpoint());
+      String endpoint = determineEndpoint();
+      setResolvedEndpoint(endpoint);
+      setResolvedServerAddress(parseServerAddress(resolvedEndpoint()));
+      setResolvedServerPort(parseServerPort(resolvedEndpoint()));
       setUseS2A(shouldUseS2A());
       return autoBuild();
     }

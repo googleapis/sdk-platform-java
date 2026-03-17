@@ -33,7 +33,6 @@ package com.google.api.gax.tracing;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.GaxProperties;
-import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.common.Attributes;
@@ -157,8 +156,7 @@ public class OpenTelemetryMetricsRecorder implements MetricsRecorder {
     operationCountRecorder.add(count, toOtelAttributes(attributes));
   }
 
-  @VisibleForTesting
-  Attributes toOtelAttributes(Map<String, String> attributes) {
+  static Attributes toOtelAttributes(Map<String, String> attributes) {
     Preconditions.checkNotNull(attributes, "Attributes map cannot be null");
     AttributesBuilder attributesBuilder = Attributes.builder();
     attributes.forEach(attributesBuilder::put);

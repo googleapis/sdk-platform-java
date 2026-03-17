@@ -693,13 +693,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return s2aChannelCredentials;
   }
 
-  private ManagedChannel createSingleChannel() throws IOException {
-    GrpcHeaderInterceptor headerInterceptor =
-        new GrpcHeaderInterceptor(headersWithDuplicatesRemoved);
-
-    GrpcMetadataHandlerInterceptor metadataHandlerInterceptor =
-        new GrpcMetadataHandlerInterceptor();
-
+  @InternalApi("For internal use by google-cloud-java clients only")
+  public ManagedChannelBuilder<?> createChannelBuilder() throws IOException {
     int colon = endpoint.lastIndexOf(':');
     if (colon < 0) {
       throw new IllegalStateException("invalid endpoint - should have been validated: " + endpoint);
@@ -775,8 +770,19 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       // See https://github.com/googleapis/gapic-generator/issues/2816
       builder.disableServiceConfigLookUp();
     }
-    builder =
-        builder
+    return builder;
+  }
+
+  @InternalApi("For internal use by google-cloud-java clients only")
+  public ManagedChannelBuilder<?> createDecoratedChannelBuilder() throws IOException {
+    GrpcHeaderInterceptor headerInterceptor =
+        new GrpcHeaderInterceptor(headersWithDuplicatesRemoved);
+
+    GrpcMetadataHandlerInterceptor metadataHandlerInterceptor =
+        new GrpcMetadataHandlerInterceptor();
+
+    ManagedChannelBuilder<?> builder =
+        createChannelBuilder()
             .intercept(new GrpcChannelUUIDInterceptor())
             .intercept(new GrpcLoggingInterceptor())
             .intercept(headerInterceptor)
@@ -805,6 +811,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     if (channelConfigurator != null) {
       builder = channelConfigurator.apply(builder);
     }
+
+    return builder;
+  }
+
+  private ManagedChannel createSingleChannel() throws IOException {
+    ManagedChannelBuilder<?> builder = createDecoratedChannelBuilder();
 
     ManagedChannel managedChannel = builder.build();
     if (channelPrimer != null) {
@@ -1422,7 +1434,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   private static ImmutableMap<String, ?> getDefaultDirectPathServiceConfig() {
-    // When channel pooling is enabled, force the pick_first grpclb strategy.
+    // When channel pooling is enabled, force the pick_first strategy.
     // This is necessary to avoid the multiplicative effect of creating channel pool with
     // `poolSize` number of `ManagedChannel`s, each with a `subSetting` number of number of
     // subchannels.
@@ -1431,13 +1443,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     ImmutableMap<String, Object> pickFirstStrategy =
         ImmutableMap.<String, Object>of("pick_first", ImmutableMap.of());
 
-    ImmutableMap<String, Object> childPolicy =
-        ImmutableMap.<String, Object>of("childPolicy", ImmutableList.of(pickFirstStrategy));
-
-    ImmutableMap<String, Object> grpcLbPolicy =
-        ImmutableMap.<String, Object>of("grpclb", childPolicy);
-
-    return ImmutableMap.<String, Object>of("loadBalancingConfig", ImmutableList.of(grpcLbPolicy));
+    return ImmutableMap.<String, Object>of(
+        "loadBalancingConfig", ImmutableList.of(pickFirstStrategy));
   }
 
   private static void validateEndpoint(String endpoint) {

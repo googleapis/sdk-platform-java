@@ -144,7 +144,7 @@ public interface ChipOrBuilder
    * <code>bool enabled = 4 [deprecated = true];</code>
    *
    * @deprecated google.apps.card.v1.Chip.enabled is deprecated. See
-   *     google/apps/card/v1/card.proto;l=2425
+   *     google/apps/card/v1/card.proto;l=2445
    * @return The enabled.
    */
   @java.lang.Deprecated
