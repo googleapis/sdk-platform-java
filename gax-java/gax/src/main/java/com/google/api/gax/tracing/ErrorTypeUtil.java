@@ -55,11 +55,7 @@ public class ErrorTypeUtil {
   }
 
   private static final Set<String> JSON_DECODING_EXCEPTION_CLASS_NAMES =
-      ImmutableSet.of(
-          "com.google.gson.JsonSyntaxException",
-          "com.google.gson.JsonParseException",
-          "com.fasterxml.jackson.databind.JsonMappingException",
-          "com.fasterxml.jackson.core.JsonParseException");
+      ImmutableSet.of("com.google.gson.JsonSyntaxException", "com.google.gson.JsonParseException");
 
   private static final Set<String> AUTHENTICATION_EXCEPTION_CLASS_NAMES =
       ImmutableSet.of("com.google.auth.oauth2.GoogleAuthException");
