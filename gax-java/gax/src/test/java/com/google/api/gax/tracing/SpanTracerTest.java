@@ -76,4 +76,90 @@ class SpanTracerTest {
     assertThat(attributesCaptor.getValue())
         .containsEntry(SpanTracer.LANGUAGE_ATTRIBUTE, SpanTracer.DEFAULT_LANGUAGE);
   }
+
+  @Test
+  void testAttemptStarted_retryAttributes_grpc() {
+    ApiTracerContext grpcContext =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .build();
+    SpanTracer grpcTracer = new SpanTracer(recorder, grpcContext, ATTEMPT_SPAN_NAME);
+
+    // First attempt, no retry attribute
+    grpcTracer.attemptStarted(new Object(), 0);
+    ArgumentCaptor<Map> attributesCaptor = ArgumentCaptor.forClass(Map.class);
+    verify(recorder).createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
+    assertThat(attributesCaptor.getValue())
+        .doesNotContainKey(ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE);
+    assertThat(attributesCaptor.getValue())
+        .doesNotContainKey(ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE);
+
+    // First retry
+    grpcTracer.attemptStarted(new Object(), 0);
+    verify(recorder, org.mockito.Mockito.times(2))
+        .createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
+    Map<String, Object> capturedAttributes = (Map<String, Object>) attributesCaptor.getValue();
+    assertThat(capturedAttributes)
+        .containsEntry(ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE, 1L);
+    assertThat(capturedAttributes)
+        .doesNotContainKey(ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE);
+
+    // N-th retry
+    grpcTracer.attemptStarted(new Object(), 0);
+    grpcTracer.attemptStarted(new Object(), 0);
+    grpcTracer.attemptStarted(new Object(), 0);
+    grpcTracer.attemptStarted(new Object(), 0);
+    verify(recorder, org.mockito.Mockito.times(6))
+        .createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
+    capturedAttributes = (Map<String, Object>) attributesCaptor.getValue();
+    assertThat(capturedAttributes)
+        .containsEntry(ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE, 5L);
+    assertThat(capturedAttributes)
+        .doesNotContainKey(ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE);
+  }
+
+  @Test
+  void testAttemptStarted_retryAttributes_http() {
+    ApiTracerContext httpContext =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.HTTP)
+            .build();
+    SpanTracer httpTracer = new SpanTracer(recorder, httpContext, ATTEMPT_SPAN_NAME);
+    ArgumentCaptor<Map> attributesCaptor = ArgumentCaptor.forClass(Map.class);
+
+    // First attempt, no retry attribute
+    httpTracer.attemptStarted(new Object(), 0);
+    verify(recorder, org.mockito.Mockito.times(1))
+        .createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
+    Map<String, Object> capturedAttributes = (Map<String, Object>) attributesCaptor.getValue();
+    assertThat(capturedAttributes)
+        .doesNotContainKey(ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE);
+    assertThat(capturedAttributes)
+        .doesNotContainKey(ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE);
+
+    // First retry
+    httpTracer.attemptStarted(new Object(), 0);
+    verify(recorder, org.mockito.Mockito.times(2))
+        .createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
+    capturedAttributes = (Map<String, Object>) attributesCaptor.getValue();
+    assertThat(capturedAttributes)
+        .doesNotContainKey(ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE);
+    assertThat(capturedAttributes)
+        .containsEntry(ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE, 1L);
+
+    // N-th retry
+    httpTracer.attemptStarted(new Object(), 0);
+    httpTracer.attemptStarted(new Object(), 0);
+    httpTracer.attemptStarted(new Object(), 0);
+    httpTracer.attemptStarted(new Object(), 0);
+    verify(recorder, org.mockito.Mockito.times(6))
+        .createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
+    capturedAttributes = (Map<String, Object>) attributesCaptor.getValue();
+    assertThat(capturedAttributes)
+        .doesNotContainKey(ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE);
+    assertThat(capturedAttributes)
+        .containsEntry(ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE, 5L);
+  }
 }

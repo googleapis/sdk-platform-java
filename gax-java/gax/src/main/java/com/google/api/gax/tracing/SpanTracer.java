@@ -52,6 +52,7 @@ public class SpanTracer implements ApiTracer {
   private final String attemptSpanName;
   private final ApiTracerContext apiTracerContext;
   private TraceManager.Span attemptHandle;
+  private long resendCount;
 
   /**
    * Creates a new instance of {@code SpanTracer}.
@@ -65,6 +66,7 @@ public class SpanTracer implements ApiTracer {
     this.attemptSpanName = attemptSpanName;
     this.apiTracerContext = apiTracerContext;
     this.attemptAttributes = new HashMap<>();
+    this.resendCount = 0;
     buildAttributes();
   }
 
@@ -76,12 +78,45 @@ public class SpanTracer implements ApiTracer {
   @Override
   public void attemptStarted(Object request, int attemptNumber) {
     Map<String, Object> attemptAttributes = new HashMap<>(this.attemptAttributes);
+
+    if (this.resendCount > 0) {
+      ApiTracerContext.Transport transport = apiTracerContext.transport();
+      if (transport == ApiTracerContext.Transport.GRPC) {
+        attemptAttributes.put(
+            ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE, this.resendCount);
+      } else if (transport == ApiTracerContext.Transport.HTTP) {
+        attemptAttributes.put(
+            ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE, this.resendCount);
+      }
+    }
+
     // Start the specific attempt span with the operation span as parent
     this.attemptHandle = traceManager.createSpan(attemptSpanName, attemptAttributes);
+    this.resendCount++;
   }
 
   @Override
   public void attemptSucceeded() {
+    endAttempt();
+  }
+
+  @Override
+  public void attemptCancelled() {
+    endAttempt();
+  }
+
+  @Override
+  public void attemptFailedDuration(Throwable error, java.time.Duration delay) {
+    endAttempt();
+  }
+
+  @Override
+  public void attemptFailedRetriesExhausted(Throwable error) {
+    endAttempt();
+  }
+
+  @Override
+  public void attemptPermanentFailure(Throwable error) {
     endAttempt();
   }
 
