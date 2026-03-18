@@ -106,7 +106,9 @@
         "/^org.junit/"
       ],
       "groupName": "Testing Libraries",
-      "enabled": true
+      "enabled": true,
+      "semanticCommitType": "test",
+      "semanticCommitScope": "deps"
     },
     {
       "matchPackageNames": [
@@ -116,7 +118,9 @@
         "/^org.sonatype.plugins:/"
       ],
       "groupName": "Maven Plugins",
-      "enabled": true
+      "enabled": true,
+      "semanticCommitType": "build",
+      "semanticCommitScope": "deps"
     },
     {
       "matchManagers": [
@@ -148,7 +152,9 @@
       "matchPackageNames": [
         "com.google.cloud:google-cloud-shared-config"
       ],
-      "enabled": true
+      "enabled": true,
+      "semanticCommitType": "build",
+      "semanticCommitScope": "deps"
     },
     {
       "matchManagers": [
