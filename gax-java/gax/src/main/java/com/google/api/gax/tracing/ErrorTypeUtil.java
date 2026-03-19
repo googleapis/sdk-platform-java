@@ -55,20 +55,31 @@ public class ErrorTypeUtil {
   }
 
   private static final Set<String> JSON_DECODING_EXCEPTION_CLASS_NAMES =
-      ImmutableSet.of("com.google.gson.JsonSyntaxException", "com.google.gson.JsonParseException");
+      ImmutableSet.of(
+          "com.google.gson.JsonSyntaxException",
+          "com.google.gson.JsonParseException",
+          "com.fasterxml.jackson.core.JsonParseException",
+          "com.fasterxml.jackson.databind.exc.MismatchedInputException");
 
   private static final Set<String> AUTHENTICATION_EXCEPTION_CLASS_NAMES =
-      ImmutableSet.of("com.google.auth.oauth2.GoogleAuthException");
+      ImmutableSet.of(
+          "com.google.auth.oauth2.GoogleAuthException", "java.security.GeneralSecurityException");
 
   private static final Set<String> CLIENT_TIMEOUT_EXCEPTION_CLASS_NAMES =
       ImmutableSet.of(
-          "java.net.SocketTimeoutException", "com.google.api.gax.rpc.WatchdogTimeoutException");
+          "java.net.SocketTimeoutException",
+          "com.google.api.gax.rpc.WatchdogTimeoutException",
+          "io.netty.handler.timeout.ReadTimeoutException",
+          "io.netty.handler.timeout.WriteTimeoutException");
+
   private static final Set<String> CLIENT_CONNECTION_EXCEPTIONS =
       ImmutableSet.of(
           "java.net.ConnectException",
           "java.net.UnknownHostException",
           "javax.net.ssl.SSLHandshakeException",
-          "java.nio.channels.UnresolvedAddressException");
+          "java.nio.channels.UnresolvedAddressException",
+          "java.net.NoRouteToHostException",
+          "java.net.BindException");
 
   /**
    * Extracts a low-cardinality string representing the specific classification of the error to be
@@ -274,7 +285,8 @@ public class ErrorTypeUtil {
    * @return true if the error is a client request body error, false otherwise.
    */
   private static boolean isRequestBodyError(Throwable e) {
-    return hasErrorNameInCauseChain(e, ImmutableSet.of("RestSerializationException"));
+    return hasErrorNameInCauseChain(
+        e, ImmutableSet.of("com.google.api.gax.httpjson.RestSerializationException"));
   }
 
   /**
