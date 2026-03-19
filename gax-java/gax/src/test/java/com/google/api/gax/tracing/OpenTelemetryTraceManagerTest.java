@@ -106,4 +106,38 @@ class OpenTelemetryTraceManagerTest {
     verify(spanBuilder).setAllAttributes(ObservabilityUtils.toOtelAttributes(attributes));
     verify(span).end();
   }
+
+  @Test
+  void testSetAttribute_long() {
+    TraceManager.Span handle = createTestSpan();
+
+    handle.setAttribute("longKey", 123L);
+    verify(span).setAttribute("longKey", 123L);
+  }
+
+  @Test
+  void testSetAttribute_string() {
+    TraceManager.Span handle = createTestSpan();
+
+    handle.setAttribute("stringKey", "stringValue");
+    verify(span).setAttribute("stringKey", "stringValue");
+  }
+
+  @Test
+  void testSetAttribute_other() {
+    TraceManager.Span handle = createTestSpan();
+
+    // Test other (Boolean)
+    handle.setAttribute("boolKey", true);
+    verify(span).setAttribute("boolKey", "true");
+  }
+
+  private TraceManager.Span createTestSpan() {
+    String spanName = "test-span";
+    when(tracer.spanBuilder(spanName)).thenReturn(spanBuilder);
+    when(spanBuilder.setSpanKind(SpanKind.CLIENT)).thenReturn(spanBuilder);
+    when(spanBuilder.startSpan()).thenReturn(span);
+
+    return recorder.createSpan(spanName, null);
+  }
 }
