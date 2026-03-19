@@ -44,6 +44,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.GenericData;
+import com.google.api.gax.tracing.ApiTracer;
 import com.google.auth.Credentials;
 import com.google.auth.http.HttpCredentialsAdapter;
 import com.google.auto.value.AutoValue;
@@ -111,6 +112,12 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       if (cancelled) {
         return;
       }
+
+      ApiTracer tracer = httpJsonCallOptions.getTracer();
+      if (tracer != null) {
+        tracer.requestSent(httpRequest.getContent().getLength());
+      }
+
       httpResponse = httpRequest.execute();
 
       // Check if already cancelled before trying to construct and read the response

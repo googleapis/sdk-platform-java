@@ -34,7 +34,9 @@ import com.google.api.gax.httpjson.ApiMethodDescriptor.MethodType;
 import com.google.api.gax.httpjson.HttpRequestRunnable.ResultListener;
 import com.google.api.gax.httpjson.HttpRequestRunnable.RunnableResult;
 import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.tracing.ApiTracer;
 import com.google.common.base.Preconditions;
+import com.google.common.io.CountingInputStream;
 import com.google.errorprone.annotations.concurrent.GuardedBy;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -117,6 +119,9 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
 
   @GuardedBy("lock")
   private ProtoMessageJsonStreamIterator responseStreamIterator;
+
+  @GuardedBy("lock")
+  private CountingInputStream responseCountingStream;
 
   @GuardedBy("lock")
   private volatile boolean closed;
@@ -400,14 +405,19 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       return true;
     }
 
+    if (responseCountingStream == null) {
+      responseCountingStream = new CountingInputStream(runnableResult.getResponseContent());
+    }
+
     boolean allMessagesConsumed;
     Reader responseReader;
+    long responseBodySizeStart = responseCountingStream.getCount();
     if (methodDescriptor.getType() == MethodType.SERVER_STREAMING) {
       // Lazily initialize responseStreamIterator in case if it is a server streaming response
       if (responseStreamIterator == null) {
         responseStreamIterator =
             new ProtoMessageJsonStreamIterator(
-                new InputStreamReader(runnableResult.getResponseContent(), StandardCharsets.UTF_8));
+                new InputStreamReader(responseCountingStream, StandardCharsets.UTF_8));
       }
       if (responseStreamIterator.hasNext()) {
         responseReader = responseStreamIterator.next();
@@ -419,8 +429,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       // from the client to check if there is anything else left in the stream).
       allMessagesConsumed = !responseStreamIterator.hasNext();
     } else {
-      responseReader =
-          new InputStreamReader(runnableResult.getResponseContent(), StandardCharsets.UTF_8);
+      responseReader = new InputStreamReader(responseCountingStream, StandardCharsets.UTF_8);
       // Unary calls have only one message in their response, so we should be ready to close
       // immediately after delivering a single response message.
       allMessagesConsumed = true;
@@ -428,6 +437,12 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
 
     ResponseT message =
         methodDescriptor.getResponseParser().parse(responseReader, callOptions.getTypeRegistry());
+    long responseBodySizeEnd = responseCountingStream.getCount();
+
+    ApiTracer tracer = callOptions.getTracer();
+    if (tracer != null) {
+      tracer.responseReceived(responseBodySizeEnd - responseBodySizeStart);
+    }
     pendingNotifications.offer(new OnMessageNotificationTask<>(listener, message));
 
     return allMessagesConsumed;
