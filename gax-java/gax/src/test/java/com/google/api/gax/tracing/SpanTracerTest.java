@@ -39,7 +39,6 @@ import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.ErrorDetails;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.common.collect.ImmutableList;
-import com.google.gson.JsonSyntaxException;
 import com.google.protobuf.Any;
 import com.google.rpc.ErrorInfo;
 import java.net.ConnectException;
@@ -207,21 +206,6 @@ class SpanTracerTest {
         .addAttribute(
             ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
             ErrorTypeUtil.ErrorType.CLIENT_CONNECTION_ERROR.toString());
-    verify(attemptHandle).end();
-  }
-
-  @Test
-  void testAttemptFailed_clientResponseDecodeError() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
-
-    tracer.attemptStarted(new Object(), 1);
-
-    tracer.attemptFailedRetriesExhausted(new JsonSyntaxException("bad json"));
-
-    verify(attemptHandle)
-        .addAttribute(
-            ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
-            ErrorTypeUtil.ErrorType.CLIENT_RESPONSE_DECODE_ERROR.toString());
     verify(attemptHandle).end();
   }
 

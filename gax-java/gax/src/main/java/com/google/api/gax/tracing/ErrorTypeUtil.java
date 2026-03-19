@@ -30,14 +30,25 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.gax.rpc.ApiException;
+import com.google.api.gax.rpc.DeadlineExceededException;
+import com.google.api.gax.rpc.WatchdogTimeoutException;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
+import java.io.FileNotFoundException;
+import java.net.BindException;
+import java.net.ConnectException;
+import java.net.NoRouteToHostException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.nio.channels.UnresolvedAddressException;
+import java.security.GeneralSecurityException;
 import java.util.Set;
 import javax.annotation.Nullable;
+import javax.net.ssl.SSLHandshakeException;
 
 public class ErrorTypeUtil {
 
-  enum ErrorType {
+  public enum ErrorType {
     CLIENT_TIMEOUT,
     CLIENT_CONNECTION_ERROR,
     CLIENT_REQUEST_ERROR,
@@ -54,32 +65,23 @@ public class ErrorTypeUtil {
     }
   }
 
-  private static final Set<String> JSON_DECODING_EXCEPTION_CLASS_NAMES =
-      ImmutableSet.of(
-          "com.google.gson.JsonSyntaxException",
-          "com.google.gson.JsonParseException",
-          "com.fasterxml.jackson.core.JsonParseException",
-          "com.fasterxml.jackson.databind.exc.MismatchedInputException");
+  private static final Set<Class<? extends Throwable>> AUTHENTICATION_EXCEPTION_CLASSES =
+      ImmutableSet.of(GeneralSecurityException.class, FileNotFoundException.class);
 
-  private static final Set<String> AUTHENTICATION_EXCEPTION_CLASS_NAMES =
+  private static final Set<Class<? extends Throwable>> CLIENT_TIMEOUT_EXCEPTION_CLASSES =
       ImmutableSet.of(
-          "com.google.auth.oauth2.GoogleAuthException", "java.security.GeneralSecurityException");
+          SocketTimeoutException.class,
+          WatchdogTimeoutException.class,
+          DeadlineExceededException.class);
 
-  private static final Set<String> CLIENT_TIMEOUT_EXCEPTION_CLASS_NAMES =
+  private static final Set<Class<? extends Throwable>> CLIENT_CONNECTION_EXCEPTIONS =
       ImmutableSet.of(
-          "java.net.SocketTimeoutException",
-          "com.google.api.gax.rpc.WatchdogTimeoutException",
-          "io.netty.handler.timeout.ReadTimeoutException",
-          "io.netty.handler.timeout.WriteTimeoutException");
-
-  private static final Set<String> CLIENT_CONNECTION_EXCEPTIONS =
-      ImmutableSet.of(
-          "java.net.ConnectException",
-          "java.net.UnknownHostException",
-          "javax.net.ssl.SSLHandshakeException",
-          "java.nio.channels.UnresolvedAddressException",
-          "java.net.NoRouteToHostException",
-          "java.net.BindException");
+          ConnectException.class,
+          UnknownHostException.class,
+          SSLHandshakeException.class,
+          UnresolvedAddressException.class,
+          NoRouteToHostException.class,
+          BindException.class);
 
   /**
    * Extracts a low-cardinality string representing the specific classification of the error to be
@@ -92,26 +94,15 @@ public class ErrorTypeUtil {
    *       includes {@code google.rpc.ErrorInfo} details, the reason field (e.g.,
    *       "RATE_LIMIT_EXCEEDED", "SERVICE_DISABLED") will be used. This offers the most precise
    *       error cause.
-   *   <li><b>Specific Server Error Code:</b> If no {@code ErrorInfo.reason} is available, but a
-   *       server error code was received:
+   *   <li><b>Client-Side Network/Operational Errors:</b> For errors occurring within the client
+   *       library or network stack, mapping to specific enum representations from {@link
+   *       ErrorType}. This includes checking the cause chain for diagnostic markers (e.g., {@code
+   *       ConnectException} or {@code SocketTimeoutException}).
+   *   <li><b>Specific Server Error Code:</b> If no {@code ErrorInfo.reason} is available and it is
+   *       not a client-side failure, but a server error code was received:
    *       <ul>
    *         <li>For HTTP: The HTTP status code (e.g., "403", "503").
    *         <li>For gRPC: The gRPC status code name (e.g., "PERMISSION_DENIED", "UNAVAILABLE").
-   *       </ul>
-   *   <li><b>Client-Side Network/Operational Errors:</b> For errors occurring within the client
-   *       library or network stack, mapping to specific enum representations from {@link
-   *       ErrorType}:
-   *       <ul>
-   *         <li>{@code CLIENT_TIMEOUT}: A client-configured timeout was reached.
-   *         <li>{@code CLIENT_CONNECTION_ERROR}: Failure to establish the network connection (DNS,
-   *             TCP, TLS).
-   *         <li>{@code CLIENT_REQUEST_ERROR}: Client-side issue forming or sending the request.
-   *         <li>{@code CLIENT_REQUEST_BODY_ERROR}: Error streaming the request body.
-   *         <li>{@code CLIENT_RESPONSE_DECODE_ERROR}: Client-side error decoding the response body.
-   *         <li>{@code CLIENT_REDIRECT_ERROR}: Problem handling HTTP redirects.
-   *         <li>{@code CLIENT_AUTHENTICATION_ERROR}: Error during credential acquisition or
-   *             application.
-   *         <li>{@code CLIENT_UNKNOWN_ERROR}: For all other errors unknown to the client.
    *       </ul>
    *   <li><b>Language-specific error type:</b> The class or struct name of the exception or error
    *       if available. This must be low-cardinality, meaning it returns the short name of the
@@ -131,18 +122,26 @@ public class ErrorTypeUtil {
       return ErrorType.INTERNAL.toString();
     }
 
-    // 1. & 2. Extract error info reason or server status code
+    // 1. Extract error info reason (most specific server-side info)
     if (error instanceof ApiException) {
-      String errorType = extractFromApiException((ApiException) error);
-      if (errorType != null) {
-        return errorType;
+      String reason = ((ApiException) error).getReason();
+      if (!Strings.isNullOrEmpty(reason)) {
+        return reason;
       }
     }
 
-    // 3. Attempt client side error
+    // 2. Attempt client side error (includes checking cause chains)
     String clientError = getClientSideError(error);
     if (clientError != null) {
       return clientError;
+    }
+
+    // 3. Extract server status code if available
+    if (error instanceof ApiException) {
+      String errorCode = extractServerErrorCode((ApiException) error);
+      if (errorCode != null) {
+        return errorCode;
+      }
     }
 
     // 4. Language-specific error type fallback
@@ -156,21 +155,13 @@ public class ErrorTypeUtil {
   }
 
   /**
-   * Extracts the error type from an ApiException. This method prioritizes the ErrorInfo reason,
-   * then the transport-specific status code (HTTP or gRPC).
+   * Extracts the server error code from an ApiException.
    *
-   * @param apiException The ApiException to extract the error type from.
-   * @return A string representing the error type, or null if no specific type can be determined.
+   * @param apiException The ApiException to extract the error code from.
+   * @return A string representing the error code, or null if no specific code can be determined.
    */
   @Nullable
-  private static String extractFromApiException(ApiException apiException) {
-    // 1. Check for ErrorInfo.reason
-    String reason = apiException.getReason();
-    if (!Strings.isNullOrEmpty(reason)) {
-      return reason;
-    }
-
-    // 2. Specific Server Error Code
+  private static String extractServerErrorCode(ApiException apiException) {
     if (apiException.getStatusCode() != null) {
       Object transportCode = apiException.getStatusCode().getTransportCode();
       if (transportCode instanceof Integer) {
@@ -202,18 +193,12 @@ public class ErrorTypeUtil {
     if (isClientAuthenticationError(error)) {
       return ErrorType.CLIENT_AUTHENTICATION_ERROR.toString();
     }
-    if (isClientResponseDecodeError(error)) {
-      return ErrorType.CLIENT_RESPONSE_DECODE_ERROR.toString();
-    }
     if (isClientRedirectError(error)) {
       return ErrorType.CLIENT_REDIRECT_ERROR.toString();
     }
     // This covers CLIENT_REQUEST_ERROR for general illegal arguments in client requests.
     if (error instanceof IllegalArgumentException) {
       return ErrorType.CLIENT_REQUEST_ERROR.toString();
-    }
-    if (isRequestBodyError(error)) {
-      return ErrorType.CLIENT_REQUEST_BODY_ERROR.toString();
     }
     if (isClientUnknownError(error)) {
       return ErrorType.CLIENT_UNKNOWN_ERROR.toString();
@@ -229,7 +214,7 @@ public class ErrorTypeUtil {
    * @return true if the error is a client timeout, false otherwise.
    */
   private static boolean isClientTimeout(Throwable e) {
-    return hasErrorNameInCauseChain(e, CLIENT_TIMEOUT_EXCEPTION_CLASS_NAMES);
+    return hasErrorClassInCauseChain(e, CLIENT_TIMEOUT_EXCEPTION_CLASSES);
   }
 
   /**
@@ -240,18 +225,7 @@ public class ErrorTypeUtil {
    * @return true if the error is a client connection error, false otherwise.
    */
   private static boolean isClientConnectionError(Throwable e) {
-    return hasErrorNameInCauseChain(e, CLIENT_CONNECTION_EXCEPTIONS);
-  }
-
-  /**
-   * Checks if the given Throwable represents a client-side response decoding error. This is
-   * identified by exceptions related to JSON or Gson parsing, either directly or as a cause.
-   *
-   * @param e The Throwable to check.
-   * @return true if the error is a client response decode error, false otherwise.
-   */
-  private static boolean isClientResponseDecodeError(Throwable e) {
-    return hasErrorNameInCauseChain(e, JSON_DECODING_EXCEPTION_CLASS_NAMES);
+    return hasErrorClassInCauseChain(e, CLIENT_CONNECTION_EXCEPTIONS);
   }
 
   /**
@@ -273,20 +247,7 @@ public class ErrorTypeUtil {
    * @return true if the error is a client authentication error, false otherwise.
    */
   private static boolean isClientAuthenticationError(Throwable e) {
-    return hasErrorNameInCauseChain(e, AUTHENTICATION_EXCEPTION_CLASS_NAMES);
-  }
-
-  /**
-   * Checks if the given Throwable represents a client-side request body error. This is specifically
-   * mapped to RestSerializationException from httpjson, which indicates issues during the
-   * serialization of the request body for REST calls.
-   *
-   * @param e The Throwable to check.
-   * @return true if the error is a client request body error, false otherwise.
-   */
-  private static boolean isRequestBodyError(Throwable e) {
-    return hasErrorNameInCauseChain(
-        e, ImmutableSet.of("com.google.api.gax.httpjson.RestSerializationException"));
+    return hasErrorClassInCauseChain(e, AUTHENTICATION_EXCEPTION_CLASSES);
   }
 
   /**
@@ -302,17 +263,20 @@ public class ErrorTypeUtil {
   }
 
   /**
-   * Recursively checks the throwable and its cause chain for any of the specified error name.
+   * Recursively checks the throwable and its cause chain for any of the specified error classes.
    *
    * @param t The Throwable to check.
-   * @param errorClassNames A set of fully qualified class names to check against.
+   * @param errorClasses A set of class objects to check against.
    * @return true if an error from the set is found in the cause chain, false otherwise.
    */
-  private static boolean hasErrorNameInCauseChain(Throwable t, Set<String> errorClassNames) {
+  private static boolean hasErrorClassInCauseChain(
+      Throwable t, Set<Class<? extends Throwable>> errorClasses) {
     Throwable current = t;
     while (current != null) {
-      if (errorClassNames.contains(current.getClass().getName())) {
-        return true;
+      for (Class<? extends Throwable> errorClass : errorClasses) {
+        if (errorClass.isInstance(current)) {
+          return true;
+        }
       }
       current = current.getCause();
     }

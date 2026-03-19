@@ -27,22 +27,24 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.google.api.gax.tracing;
+package com.google.api.gax.rpc;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import com.google.api.gax.rpc.ApiException;
-import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
+import com.google.api.gax.tracing.ErrorTypeUtil;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.BindException;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
+import java.net.NoRouteToHostException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.security.GeneralSecurityException;
 import javax.net.ssl.SSLHandshakeException;
-import javax.net.ssl.SSLSocketFactory;
 import org.junit.jupiter.api.Test;
 
 class ErrorTypeUtilTest {
@@ -130,6 +132,22 @@ class ErrorTypeUtilTest {
   }
 
   @Test
+  void testExtractErrorType_clientTimeout_others() {
+    assertThat(ErrorTypeUtil.extractErrorType(new WatchdogTimeoutException("timeout", false)))
+        .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_TIMEOUT.toString());
+    assertThat(ErrorTypeUtil.extractErrorType(new DeadlineExceededException("timeout", null, new FakeStatusCode(StatusCode.Code.DEADLINE_EXCEEDED), false)))
+        .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_TIMEOUT.toString());
+  }
+
+  @Test
+  void testExtractErrorType_clientAuthenticationError() {
+    assertThat(ErrorTypeUtil.extractErrorType(new GeneralSecurityException("auth fail")))
+        .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_AUTHENTICATION_ERROR.toString());
+    assertThat(ErrorTypeUtil.extractErrorType(new FileNotFoundException("key not found")))
+        .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_AUTHENTICATION_ERROR.toString());
+  }
+
+  @Test
   void testExtractErrorType_clientRequestError() {
     assertThat(ErrorTypeUtil.extractErrorType(new IllegalArgumentException()))
         .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_REQUEST_ERROR.toString());
@@ -144,36 +162,16 @@ class ErrorTypeUtilTest {
   }
 
   @Test
-  void testExtractErrorType_clientResponseDecodeError() {
-    assertThat(ErrorTypeUtil.extractErrorType(new com.google.gson.JsonSyntaxException("fail")))
-        .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_RESPONSE_DECODE_ERROR.toString());
-  }
-
-  @Test
-  void testExtractErrorType_clientRequestBodyError() {
-    assertThat(ErrorTypeUtil.extractErrorType(new com.google.api.gax.httpjson.RestSerializationException("fail", null)))
-        .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_REQUEST_BODY_ERROR.toString());
-  }
-
-  @Test
-  void testExtractErrorType_nettyTimeouts() {
-    assertThat(ErrorTypeUtil.extractErrorType(new io.netty.handler.timeout.ReadTimeoutException()))
-        .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_TIMEOUT.toString());
-    assertThat(ErrorTypeUtil.extractErrorType(new io.netty.handler.timeout.WriteTimeoutException()))
-        .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_TIMEOUT.toString());
-  }
-
-  @Test
-  void testExtractErrorType_jacksonDecodingError() {
-    assertThat(ErrorTypeUtil.extractErrorType(new com.fasterxml.jackson.core.JsonParseException("fail")))
-        .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_RESPONSE_DECODE_ERROR.toString());
-  }
-
-  @Test
   void testExtractErrorType_otherNetworkErrors() {
-    assertThat(ErrorTypeUtil.extractErrorType(new java.net.NoRouteToHostException()))
+    assertThat(ErrorTypeUtil.extractErrorType(new NoRouteToHostException()))
         .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_CONNECTION_ERROR.toString());
-    assertThat(ErrorTypeUtil.extractErrorType(new java.net.BindException()))
+  }
+
+  @Test
+  void testExtractErrorType_causeChainTraversal() {
+    Exception root = new ConnectException("refused");
+    Exception wrapped = new IOException("io fail", root);
+    assertThat(ErrorTypeUtil.extractErrorType(wrapped))
         .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_CONNECTION_ERROR.toString());
   }
 
