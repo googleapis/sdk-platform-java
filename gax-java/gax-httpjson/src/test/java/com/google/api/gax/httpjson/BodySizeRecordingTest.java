@@ -38,7 +38,6 @@ import com.google.api.gax.rpc.ResponseObserver;
 import com.google.api.gax.rpc.StreamController;
 import com.google.auth.Credentials;
 import com.google.protobuf.Field;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -89,17 +88,17 @@ class BodySizeRecordingTest {
   private TestApiTracer tracer;
 
   @BeforeAll
-  public static void initialize() {
+  static void initialize() {
     executorService = Executors.newFixedThreadPool(2);
   }
 
   @AfterAll
-  public static void destroy() {
+  static void destroy() {
     executorService.shutdownNow();
   }
 
   @BeforeEach
-  void setUp() throws IOException {
+  void setUp() {
     channel =
         ManagedHttpJsonChannel.newBuilder()
             .setEndpoint("google.com:443")
@@ -189,7 +188,9 @@ class BodySizeRecordingTest {
         request,
         new ResponseObserver<Field>() {
           @Override
-          public void onStart(StreamController controller) {}
+          public void onStart(StreamController controller) {
+            // no behavior needed
+          }
 
           @Override
           public void onResponse(Field response) {
