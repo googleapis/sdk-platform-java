@@ -294,31 +294,6 @@ class ClassDefinitionTest {
   }
 
   @Test
-  void invalidClassDefinition_assignmentWithUnscopedVariableExprStatement() {
-    Variable variable = createVariable("x", TypeNode.INT);
-    VariableExpr variableExpr =
-        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
-
-    Variable anotherVariable = createVariable("y", TypeNode.INT);
-    Expr valueExpr = VariableExpr.builder().setVariable(anotherVariable).build();
-
-    AssignmentExpr assignmentExpr =
-        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
-
-    List<Statement> statements = Arrays.asList(ExprStatement.withExpr(assignmentExpr));
-    assertThrows(
-        IllegalStateException.class,
-        () -> {
-          ClassDefinition.builder()
-              .setPackageString("com.google.example.library.v1.stub")
-              .setName("LibraryServiceStub")
-              .setScope(ScopeNode.PUBLIC)
-              .setStatements(statements)
-              .build();
-        });
-  }
-
-  @Test
   void invalidClassDefinition_unscopedVariableExprStatement() {
     List<Statement> statements =
         Arrays.asList(

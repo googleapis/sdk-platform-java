@@ -59,7 +59,7 @@ public class LibraryVersionClassComposer {
             .setVariableExpr(
                 versionVarExpr.toBuilder()
                     .setIsDecl(true)
-                    .setScope(ScopeNode.PUBLIC)
+                    .setScope(ScopeNode.LOCAL)
                     .setIsStatic(true)
                     .setIsFinal(true)
                     .build())
