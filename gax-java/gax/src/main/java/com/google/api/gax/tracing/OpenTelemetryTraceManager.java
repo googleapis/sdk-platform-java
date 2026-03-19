@@ -80,8 +80,6 @@ public class OpenTelemetryTraceManager implements TraceManager {
     public void setAttribute(String key, Object value) {
       if (value instanceof Long) {
         span.setAttribute(key, (Long) value);
-      } else if (value instanceof Integer) {
-        span.setAttribute(key, ((Integer) value).longValue());
       } else if (value instanceof String) {
         span.setAttribute(key, (String) value);
       } else {

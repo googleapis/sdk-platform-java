@@ -111,7 +111,6 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       if (cancelled) {
         return;
       }
-
       httpResponse = httpRequest.execute();
 
       // Check if already cancelled before trying to construct and read the response

@@ -201,28 +201,6 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.HTTP_URL_TEMPLATE_ATTRIBUTE)))
           .isEqualTo("v1beta1/echo:echo");
-    }
-  }
-
-  @Test
-  void testTracing_httpjson_bodySizes() throws Exception {
-    SpanTracerFactory tracingFactory =
-        new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
-
-    try (EchoClient client =
-        TestClientInitializer.createHttpJsonEchoClientOpentelemetry(tracingFactory)) {
-
-      client.echo(EchoRequest.newBuilder().setContent("tracing-test").build());
-
-      List<SpanData> spans = spanExporter.getFinishedSpanItems();
-      assertThat(spans).isNotEmpty();
-
-      SpanData attemptSpan =
-          spans.stream()
-              .filter(span -> span.getName().equals("Echo/Echo/attempt"))
-              .findFirst()
-              .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
-
       assertThat(
               attemptSpan
                   .getAttributes()

@@ -408,15 +408,6 @@ public class OpencensusTracer extends BaseApiTracer {
 
   /** {@inheritDoc} */
   @Override
-  public void responseReceived(long responseSize) {
-    responseReceived();
-    span.putAttribute(
-        ObservabilityAttributes.HTTP_RESPONSE_BODY_SIZE,
-        AttributeValue.longAttributeValue(responseSize));
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public void requestSent() {
     attemptSentMessages.incrementAndGet();
     totalSentMessages.incrementAndGet();
