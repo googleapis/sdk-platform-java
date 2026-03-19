@@ -441,7 +441,10 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
 
     ApiTracer tracer = callOptions.getTracer();
     if (tracer != null) {
-      tracer.responseReceived(responseBodySizeEnd - responseBodySizeStart);
+      if (methodDescriptor.getType() == MethodType.SERVER_STREAMING) {
+        tracer.responseReceived();
+      }
+      tracer.recordResponseSize(responseBodySizeEnd - responseBodySizeStart);
     }
     pendingNotifications.offer(new OnMessageNotificationTask<>(listener, message));
 

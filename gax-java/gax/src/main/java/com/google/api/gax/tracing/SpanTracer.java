@@ -86,7 +86,7 @@ public class SpanTracer implements ApiTracer {
   }
 
   @Override
-  public void responseReceived(long responseSize) {
+  public void recordResponseSize(long responseSize) {
     if (attemptHandle != null) {
       attemptHandle.setAttribute(ObservabilityAttributes.HTTP_RESPONSE_BODY_SIZE, responseSize);
     }

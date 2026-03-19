@@ -86,7 +86,7 @@ public class TestApiTracer implements ApiTracer {
   }
 
   @Override
-  public void responseReceived(long responseSize) {
+  public void recordResponseSize(long responseSize) {
     responseReceivedSize.addAndGet(responseSize);
   }
 }

@@ -180,7 +180,7 @@ public interface ApiTracer {
   ;
 
   /** Adds an annotation that a streaming response has been received with size. */
-  default void responseReceived(long responseSize) {}
+  default void recordResponseSize(long responseSize) {}
   ;
 
   /** Adds an annotation that a streaming request has been sent. */
