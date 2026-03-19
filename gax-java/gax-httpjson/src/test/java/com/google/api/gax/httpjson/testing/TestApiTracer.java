@@ -45,6 +45,7 @@ public class TestApiTracer implements ApiTracer {
   private final AtomicInteger attemptsFailed = new AtomicInteger();
   private final AtomicBoolean retriesExhausted = new AtomicBoolean(false);
   private final AtomicLong responseReceivedSize = new AtomicLong();
+  private final AtomicInteger responsesReceived = new AtomicInteger();
 
   public TestApiTracer() {}
 
@@ -62,6 +63,10 @@ public class TestApiTracer implements ApiTracer {
 
   public long getResponseReceivedSize() {
     return responseReceivedSize.get();
+  }
+
+  public int getResponsesReceived() {
+    return responsesReceived.get();
   }
 
   @Override
@@ -83,6 +88,11 @@ public class TestApiTracer implements ApiTracer {
   public void attemptFailedRetriesExhausted(Throwable error) {
     attemptsFailed.incrementAndGet();
     retriesExhausted.set(true);
+  }
+
+  @Override
+  public void responseReceived() {
+    responsesReceived.incrementAndGet();
   }
 
   @Override

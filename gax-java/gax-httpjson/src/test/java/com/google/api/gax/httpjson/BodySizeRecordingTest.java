@@ -38,6 +38,7 @@ import com.google.api.gax.rpc.ResponseObserver;
 import com.google.api.gax.rpc.StreamController;
 import com.google.auth.Credentials;
 import com.google.protobuf.Field;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -142,6 +143,8 @@ class BodySizeRecordingTest {
     String expectedResponseBody = ProtoRestSerializer.create().toBody("*", response, false);
     long expectedResponseSize = expectedResponseBody.getBytes("UTF-8").length;
     assertThat(tracer.getResponseReceivedSize()).isEqualTo(expectedResponseSize);
+    // Unary calls should NOT call responseReceived() (reserved for streaming)
+    assertThat(tracer.getResponsesReceived()).isEqualTo(0);
   }
 
   @Test
@@ -218,9 +221,11 @@ class BodySizeRecordingTest {
     String resp1Json = methodServerStreaming.getResponseParser().serialize(response1);
     String resp2Json = methodServerStreaming.getResponseParser().serialize(response2);
     long expectedTotalResponseSize =
-        ("[" + resp1Json + "," + resp2Json + "]").getBytes("UTF-8").length;
+        ("[" + resp1Json + "," + resp2Json + "]").getBytes(StandardCharsets.UTF_8).length;
 
     assertThat(tracer.getResponseReceivedSize()).isEqualTo(expectedTotalResponseSize);
+    // Server-streaming calls should call responseReceived() for EACH message
+    assertThat(tracer.getResponsesReceived()).isEqualTo(2);
     streamingChannel.shutdownNow();
   }
 }
