@@ -60,6 +60,18 @@ public class ApiException extends RuntimeException {
     this.errorDetails = errorDetails;
   }
 
+  public ApiException(
+      String message,
+      Throwable cause,
+      StatusCode statusCode,
+      boolean retryable,
+      ErrorDetails errorDetails) {
+    super(message, cause);
+    this.statusCode = Preconditions.checkNotNull(statusCode);
+    this.retryable = retryable;
+    this.errorDetails = errorDetails;
+  }
+
   /** Returns whether the failed request can be retried. */
   public boolean isRetryable() {
     return retryable;

@@ -441,43 +441,47 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   // builder or createSingleChannel, only in getTransportChannel which creates the first channel
   // for a client.
   private void logDirectPathMisconfig() {
-    if (isDirectPathXdsEnabled()) {
-      if (!isDirectPathEnabled()) {
-        // This misconfiguration occurs when Direct Path xDS is enabled, but Direct Path is not
-        // Direct Path xDS can be enabled two ways: via environment variable or via builder.
-        // Case 1: Direct Path is only enabled via xDS env var. We will _warn_ the user that this is
-        // a misconfiguration if they intended to set the env var.
-        if (isDirectPathXdsEnabledViaEnv()) {
-          LOG.log(
-              Level.WARNING,
-              "Env var "
-                  + DIRECT_PATH_ENV_ENABLE_XDS
-                  + " was found and set to TRUE, but DirectPath was not enabled for this client. If this is intended for "
-                  + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
-        }
-        // Case 2: Direct Path xDS was enabled via Builder. Direct Path Traffic Director must be set
-        // (enabled with `setAttemptDirectPath(true)`) along with xDS.
-        // Here we warn the user about this.
-        else if (isDirectPathXdsEnabledViaBuilderOption()) {
-          LOG.log(
-              Level.WARNING,
-              "DirectPath is misconfigured. The DirectPath XDS option was set, but the attemptDirectPath option was not. Please set both the attemptDirectPath and attemptDirectPathXds options.");
-        }
-      } else {
-        // Case 3: credential is not correctly set
-        if (!isCredentialDirectPathCompatible()) {
-          LOG.log(
-              Level.WARNING,
-              "DirectPath is misconfigured. Please make sure the credential is an instance of "
-                  + ComputeEngineCredentials.class.getName()
-                  + " .");
-        }
-        // Case 4: not running on GCE
-        if (!isOnComputeEngine()) {
-          LOG.log(
-              Level.WARNING,
-              "DirectPath is misconfigured. DirectPath is only available in a GCE environment.");
-        }
+    if (!isDirectPathXdsEnabled()) {
+      return;
+    }
+
+    Level level = isOnComputeEngine() ? Level.WARNING : Level.FINE;
+
+    if (!isDirectPathEnabled()) {
+      // This misconfiguration occurs when Direct Path xDS is enabled, but Direct Path is not
+      // Direct Path xDS can be enabled two ways: via environment variable or via builder.
+      // Case 1: Direct Path is only enabled via xDS env var. We will _warn_ the user that this is
+      // a misconfiguration if they intended to set the env var.
+      if (isDirectPathXdsEnabledViaEnv()) {
+        LOG.log(
+            level,
+            "Env var "
+                + DIRECT_PATH_ENV_ENABLE_XDS
+                + " was found and set to TRUE, but DirectPath was not enabled for this client. If this is intended for "
+                + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
+      }
+      // Case 2: Direct Path xDS was enabled via Builder. Direct Path Traffic Director must be set
+      // (enabled with `setAttemptDirectPath(true)`) along with xDS.
+      // Here we warn the user about this.
+      else if (isDirectPathXdsEnabledViaBuilderOption()) {
+        LOG.log(
+            level,
+            "DirectPath is misconfigured. The DirectPath XDS option was set, but the attemptDirectPath option was not. Please set both the attemptDirectPath and attemptDirectPathXds options.");
+      }
+    } else {
+      // Case 3: credential is not correctly set
+      if (!isCredentialDirectPathCompatible()) {
+        LOG.log(
+            level,
+            "DirectPath is misconfigured. Please make sure the credential is an instance of "
+                + ComputeEngineCredentials.class.getName()
+                + " .");
+      }
+      // Case 4: not running on GCE
+      if (!isOnComputeEngine()) {
+        LOG.log(
+            level,
+            "DirectPath is misconfigured. DirectPath is only available in a GCE environment.");
       }
     }
   }
@@ -1434,7 +1438,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   private static ImmutableMap<String, ?> getDefaultDirectPathServiceConfig() {
-    // When channel pooling is enabled, force the pick_first grpclb strategy.
+    // When channel pooling is enabled, force the pick_first strategy.
     // This is necessary to avoid the multiplicative effect of creating channel pool with
     // `poolSize` number of `ManagedChannel`s, each with a `subSetting` number of number of
     // subchannels.
@@ -1443,13 +1447,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     ImmutableMap<String, Object> pickFirstStrategy =
         ImmutableMap.<String, Object>of("pick_first", ImmutableMap.of());
 
-    ImmutableMap<String, Object> childPolicy =
-        ImmutableMap.<String, Object>of("childPolicy", ImmutableList.of(pickFirstStrategy));
-
-    ImmutableMap<String, Object> grpcLbPolicy =
-        ImmutableMap.<String, Object>of("grpclb", childPolicy);
-
-    return ImmutableMap.<String, Object>of("loadBalancingConfig", ImmutableList.of(grpcLbPolicy));
+    return ImmutableMap.<String, Object>of(
+        "loadBalancingConfig", ImmutableList.of(pickFirstStrategy));
   }
 
   private static void validateEndpoint(String endpoint) {

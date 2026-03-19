@@ -17,7 +17,6 @@ from typing import Optional
 from common.model.gapic_config import GapicConfig
 from common.model.gapic_inputs import GapicInputs
 
-
 MAVEN_COORDINATE_SEPARATOR = ":"
 
 

@@ -32,9 +32,11 @@ package com.google.api.gax.httpjson;
 import com.google.api.client.http.HttpResponseException;
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.ApiExceptionFactory;
+import com.google.api.gax.rpc.ErrorDetails;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.common.collect.ImmutableSet;
+import com.google.rpc.Status;
 import java.util.Set;
 import java.util.concurrent.CancellationException;
 
@@ -51,7 +53,21 @@ class HttpJsonApiExceptionFactory {
       StatusCode statusCode = HttpJsonStatusCode.of(e.getStatusCode());
       boolean canRetry = retryableCodes.contains(statusCode.getCode());
       String message = e.getStatusMessage();
-      return createApiException(throwable, statusCode, message, canRetry);
+      Status status = HttpJsonErrorParser.parseStatus(e.getContent());
+
+      if (!status.getMessage().isEmpty()) {
+        message = status.getMessage();
+      }
+
+      ErrorDetails errorDetails =
+          ErrorDetails.builder().setRawErrorMessages(status.getDetailsList()).build();
+
+      if (message == null) {
+        message = throwable.toString();
+      }
+
+      return ApiExceptionFactory.createException(
+          message, throwable, statusCode, canRetry, errorDetails);
     } else if (throwable instanceof HttpJsonStatusRuntimeException) {
       HttpJsonStatusRuntimeException e = (HttpJsonStatusRuntimeException) throwable;
       StatusCode statusCode = HttpJsonStatusCode.of(e.getStatusCode());

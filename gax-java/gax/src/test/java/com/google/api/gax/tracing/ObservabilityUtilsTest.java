@@ -84,6 +84,20 @@ class ObservabilityUtilsTest {
   }
 
   @Test
+  void testToOtelAttributes_urlTemplateAttribute() {
+    String urlTemplateValue = "/blogs/{blog}/posts/{post}";
+    Map<String, Object> attributes =
+        ImmutableMap.of(ObservabilityAttributes.HTTP_URL_TEMPLATE_ATTRIBUTE, urlTemplateValue);
+
+    Attributes otelAttributes = ObservabilityUtils.toOtelAttributes(attributes);
+
+    Truth.assertThat(
+            otelAttributes.get(
+                AttributeKey.stringKey(ObservabilityAttributes.HTTP_URL_TEMPLATE_ATTRIBUTE)))
+        .isEqualTo(urlTemplateValue);
+  }
+
+  @Test
   void testToOtelAttributes_shouldMapIntAttributes() {
     String attribute1 = "attribute_1";
     String attribute2 = "attribute_2";

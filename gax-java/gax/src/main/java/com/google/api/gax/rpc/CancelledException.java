@@ -44,4 +44,13 @@ public class CancelledException extends ApiException {
       Throwable cause, StatusCode statusCode, boolean retryable, ErrorDetails errorDetails) {
     super(cause, statusCode, retryable, errorDetails);
   }
+
+  public CancelledException(
+      String message,
+      Throwable cause,
+      StatusCode statusCode,
+      boolean retryable,
+      ErrorDetails errorDetails) {
+    super(message, cause, statusCode, retryable, errorDetails);
+  }
 }

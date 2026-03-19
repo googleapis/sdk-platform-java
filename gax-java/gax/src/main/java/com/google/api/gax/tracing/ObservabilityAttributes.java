@@ -53,11 +53,22 @@ public class ObservabilityAttributes {
   /** The artifact name of the client library (e.g., "google-cloud-vision"). */
   public static final String ARTIFACT_ATTRIBUTE = "gcp.client.artifact";
 
+  /** The version of the client library (e.g., "1.2.3"). */
+  public static final String VERSION_ATTRIBUTE = "gcp.client.version";
+
   /** The full RPC method name, including package, service, and method. */
   public static final String GRPC_RPC_METHOD_ATTRIBUTE = "rpc.method";
 
   /** The RPC system name, e.g. 'grpc' or 'http'. */
   public static final String RPC_SYSTEM_NAME_ATTRIBUTE = "rpc.system.name";
+
+  /** The HTTP method of the request (e.g., "GET"). Only used in HTTP transport. */
+  public static final String HTTP_METHOD_ATTRIBUTE = "http.request.method";
+
+  /**
+   * The HTTP URL template of the request (e.g. "/v1/{name}:access"). Only used in HTTP transport.
+   */
+  public static final String HTTP_URL_TEMPLATE_ATTRIBUTE = "url.template";
 
   /**
    * The error codes of the request. The value will be the string representation of the canonical

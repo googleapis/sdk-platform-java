@@ -21,6 +21,7 @@ deep-remove-regex:
 
 deep-preserve-regex:
 - "/gapic-showcase/src/test"
+- "/gapic-showcase/src/main/java/com/google/showcase/v1beta1/Version.java"
 
 deep-copy-regex:
 - source: "/schema/google/showcase/(v.*)/.*-java/proto-.*/src"
