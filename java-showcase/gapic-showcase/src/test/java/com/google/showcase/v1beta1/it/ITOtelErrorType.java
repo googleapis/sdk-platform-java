@@ -61,14 +61,21 @@ import io.opentelemetry.sdk.testing.exporter.InMemorySpanExporter;
 import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import io.opentelemetry.sdk.trace.data.SpanData;
 import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.BindException;
+import java.net.ConnectException;
+import java.net.NoRouteToHostException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.net.URI;
+import java.nio.channels.UnresolvedAddressException;
 import java.security.GeneralSecurityException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
+import javax.net.ssl.SSLHandshakeException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -98,6 +105,63 @@ class ITOtelErrorType {
     GlobalOpenTelemetry.resetForTest();
   }
 
+  private void verifyErrorTypeAttribute(String expectedErrorType) {
+    List<SpanData> spans = spanExporter.getFinishedSpanItems();
+    assertThat(spans).isNotEmpty();
+
+    SpanData errorSpan =
+        spans.stream()
+            .filter(
+                span ->
+                    span.getAttributes()
+                            .get(
+                                AttributeKey.stringKey(
+                                    ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE))
+                        != null)
+            .findFirst()
+            .orElseThrow(() -> new AssertionError("Span with error.type not found"));
+
+    assertThat(
+            errorSpan
+                .getAttributes()
+                .get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)))
+        .isEqualTo(expectedErrorType);
+  }
+
+  private EchoClient createInterceptorClient(Throwable toThrow) throws IOException {
+    SpanTracerFactory tracingFactory =
+        new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
+
+    ClientInterceptor interceptor =
+        new ClientInterceptor() {
+          @Override
+          public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(
+              MethodDescriptor<ReqT, RespT> method, CallOptions callOptions, Channel next) {
+            if (toThrow instanceof RuntimeException) {
+              throw (RuntimeException) toThrow;
+            } else {
+              throw new RuntimeException(toThrow);
+            }
+          }
+        };
+
+    EchoSettings grpcEchoSettings =
+        EchoSettings.newBuilder()
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .setInterceptorProvider(() -> ImmutableList.of(interceptor))
+                    .build())
+            .setEndpoint(TestClientInitializer.DEFAULT_GRPC_ENDPOINT)
+            .build();
+
+    EchoStubSettings.Builder echoStubSettingsBuilder =
+        (EchoStubSettings.Builder) grpcEchoSettings.getStubSettings().toBuilder();
+    echoStubSettingsBuilder.setTracerFactory(tracingFactory);
+
+    return EchoClient.create(echoStubSettingsBuilder.build().createStub());
+  }
+
   @Test
   void testTracing_failedEcho_grpc_recordsErrorType() throws Exception {
     SpanTracerFactory tracingFactory =
@@ -112,21 +176,7 @@ class ITOtelErrorType {
               .build();
 
       assertThrows(UnavailableException.class, () -> client.echo(echoRequest));
-
-      List<SpanData> spans = spanExporter.getFinishedSpanItems();
-      assertThat(spans).isNotEmpty();
-
-      SpanData attemptSpan =
-          spans.stream()
-              .filter(span -> span.getName().equals("google.showcase.v1beta1.Echo/Echo"))
-              .findFirst()
-              .orElseThrow(() -> new AssertionError("Incorrect span name"));
-
-      assertThat(
-              attemptSpan
-                  .getAttributes()
-                  .get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)))
-          .isEqualTo("UNAVAILABLE");
+      verifyErrorTypeAttribute("UNAVAILABLE");
     }
   }
 
@@ -144,34 +194,19 @@ class ITOtelErrorType {
               .build();
 
       assertThrows(UnavailableException.class, () -> client.echo(echoRequest));
-
-      List<SpanData> spans = spanExporter.getFinishedSpanItems();
-      assertThat(spans).isNotEmpty();
-
-      SpanData attemptSpan =
-          spans.stream()
-              .filter(span -> span.getName().equals("Echo/Echo/attempt"))
-              .findFirst()
-              .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
-
-      assertThat(
-              attemptSpan
-                  .getAttributes()
-                  .get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)))
-          .isEqualTo("503"); // For HTTP/JSON, the transport code 503 is used for UNAVAILABLE
+      verifyErrorTypeAttribute("503");
     }
   }
 
   @Test
   void testTracing_clientConnectionError_ConnectException_grpc() throws Exception {
-    SpanTracerFactory tracingFactory =
-        new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
-
     int port;
     try (ServerSocket socket = new ServerSocket(0)) {
       port = socket.getLocalPort();
-    } // Port is now free but was recently used, likely to be refused.
+    }
 
+    SpanTracerFactory tracingFactory =
+        new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
     EchoSettings grpcEchoSettings =
         EchoSettings.newBuilder()
             .setTransportChannelProvider(
@@ -184,8 +219,6 @@ class ITOtelErrorType {
     EchoStubSettings.Builder echoStubSettingsBuilder =
         (EchoStubSettings.Builder) grpcEchoSettings.getStubSettings().toBuilder();
     echoStubSettingsBuilder.setTracerFactory(tracingFactory);
-
-    // Disable retries to fail fast
     echoStubSettingsBuilder
         .echoSettings()
         .setRetrySettings(
@@ -195,21 +228,7 @@ class ITOtelErrorType {
 
     try (EchoClient client = EchoClient.create(echoStubSettingsBuilder.build().createStub())) {
       assertThrows(UnavailableException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
-
-      List<SpanData> spans = spanExporter.getFinishedSpanItems();
-      assertThat(spans).isNotEmpty();
-
-      SpanData errorSpan =
-          spans.stream()
-              .filter(span -> span.getAttributes().get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)) != null)
-              .findFirst()
-              .orElseThrow(() -> new AssertionError("Span with error.type not found"));
-
-      assertThat(
-              errorSpan
-                  .getAttributes()
-                  .get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)))
-          .isEqualTo("CLIENT_CONNECTION_ERROR");
+      verifyErrorTypeAttribute("CLIENT_CONNECTION_ERROR");
     }
   }
 
@@ -217,7 +236,6 @@ class ITOtelErrorType {
   void testTracing_clientConnectionError_UnknownHost_grpc() throws Exception {
     SpanTracerFactory tracingFactory =
         new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
-
     EchoSettings grpcEchoSettings =
         EchoSettings.newBuilder()
             .setTransportChannelProvider(
@@ -237,32 +255,57 @@ class ITOtelErrorType {
 
     try (EchoClient client = EchoClient.create(echoStubSettingsBuilder.build().createStub())) {
       assertThrows(UnavailableException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
-
-      List<SpanData> spans = spanExporter.getFinishedSpanItems();
-      assertThat(spans).isNotEmpty();
-
-      SpanData errorSpan =
-          spans.stream()
-              .filter(span -> span.getAttributes().get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)) != null)
-              .findFirst()
-              .orElseThrow(() -> new AssertionError("Span with error.type not found"));
-
-      assertThat(
-              errorSpan
-                  .getAttributes()
-                  .get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)))
-          .isEqualTo("CLIENT_CONNECTION_ERROR");
+      verifyErrorTypeAttribute("CLIENT_CONNECTION_ERROR");
     }
   }
 
   @Test
-  void testTracing_clientTimeout_grpc() throws Exception {
+  void testTracing_clientConnectionError_SSLHandshakeException_grpc() throws Exception {
+    try (EchoClient client = createInterceptorClient(new SSLHandshakeException("Mock SSL failure"))) {
+      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      verifyErrorTypeAttribute("CLIENT_CONNECTION_ERROR");
+    }
+  }
+
+  @Test
+  void testTracing_clientConnectionError_UnresolvedAddressException_grpc() throws Exception {
+    try (EchoClient client = createInterceptorClient(new UnresolvedAddressException())) {
+      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      verifyErrorTypeAttribute("CLIENT_CONNECTION_ERROR");
+    }
+  }
+
+  @Test
+  void testTracing_clientConnectionError_NoRouteToHostException_grpc() throws Exception {
+    try (EchoClient client = createInterceptorClient(new NoRouteToHostException())) {
+      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      verifyErrorTypeAttribute("CLIENT_CONNECTION_ERROR");
+    }
+  }
+
+  @Test
+  void testTracing_clientConnectionError_BindException_grpc() throws Exception {
+    try (EchoClient client = createInterceptorClient(new BindException())) {
+      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      verifyErrorTypeAttribute("CLIENT_CONNECTION_ERROR");
+    }
+  }
+
+  @Test
+  void testTracing_clientTimeout_SocketTimeoutException_grpc() throws Exception {
+    try (EchoClient client = createInterceptorClient(new SocketTimeoutException())) {
+      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      verifyErrorTypeAttribute("CLIENT_TIMEOUT");
+    }
+  }
+
+  @Test
+  void testTracing_clientTimeout_DeadlineExceededException_grpc() throws Exception {
     SpanTracerFactory tracingFactory =
         new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
 
     try (ServerSocket serverSocket = new ServerSocket(0)) {
       int port = serverSocket.getLocalPort();
-      // Start a thread to accept the connection but do nothing else (causing timeout)
       Thread serverThread = new Thread(() -> {
         try {
           try (Socket ignored = serverSocket.accept()) {
@@ -284,8 +327,6 @@ class ITOtelErrorType {
       EchoStubSettings.Builder echoStubSettingsBuilder =
           (EchoStubSettings.Builder) grpcEchoSettings.getStubSettings().toBuilder();
       echoStubSettingsBuilder.setTracerFactory(tracingFactory);
-      
-      // Set a very short timeout to trigger CLIENT_TIMEOUT
       echoStubSettingsBuilder.echoSettings().setRetrySettings(
           echoStubSettingsBuilder.echoSettings().getRetrySettings().toBuilder()
               .setTotalTimeoutDuration(Duration.ofMillis(100))
@@ -297,21 +338,7 @@ class ITOtelErrorType {
 
       try (EchoClient client = EchoClient.create(echoStubSettingsBuilder.build().createStub())) {
         assertThrows(DeadlineExceededException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
-
-        List<SpanData> spans = spanExporter.getFinishedSpanItems();
-        assertThat(spans).isNotEmpty();
-
-        SpanData errorSpan =
-            spans.stream()
-                .filter(span -> span.getAttributes().get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)) != null)
-                .findFirst()
-                .orElseThrow(() -> new AssertionError("Span with error.type not found"));
-
-        assertThat(
-                errorSpan
-                    .getAttributes()
-                    .get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)))
-            .isEqualTo("CLIENT_TIMEOUT");
+        verifyErrorTypeAttribute("CLIENT_TIMEOUT");
       } finally {
         serverThread.join();
       }
@@ -319,71 +346,19 @@ class ITOtelErrorType {
   }
 
   @Test
-  void testTracing_clientRequestError_grpc() throws Exception {
-    SpanTracerFactory tracingFactory =
-        new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
-
-    ClientInterceptor interceptor = new ClientInterceptor() {
-        @Override
-        public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(MethodDescriptor<ReqT, RespT> method, CallOptions callOptions, Channel next) {
-            throw new IllegalArgumentException("Mock request error");
-        }
-    };
-
-    EchoSettings grpcEchoSettings =
-        EchoSettings.newBuilder()
-            .setTransportChannelProvider(
-                EchoSettings.defaultGrpcTransportProviderBuilder()
-                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                    .setInterceptorProvider(() -> ImmutableList.of(interceptor))
-                    .build())
-            .setEndpoint(TestClientInitializer.DEFAULT_GRPC_ENDPOINT)
-            .build();
-
-    EchoStubSettings.Builder echoStubSettingsBuilder =
-        (EchoStubSettings.Builder) grpcEchoSettings.getStubSettings().toBuilder();
-    echoStubSettingsBuilder.setTracerFactory(tracingFactory);
-
-    try (EchoClient client = EchoClient.create(echoStubSettingsBuilder.build().createStub())) {
-      assertThrows(IllegalArgumentException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
-
-      List<SpanData> spans = spanExporter.getFinishedSpanItems();
-      assertThat(spans).isNotEmpty();
-
-      SpanData errorSpan =
-          spans.stream()
-              .filter(span -> span.getAttributes().get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)) != null)
-              .findFirst()
-              .orElseThrow(() -> new AssertionError("Span with error.type not found"));
-
-      assertThat(
-              errorSpan
-                  .getAttributes()
-                  .get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)))
-          .isEqualTo("CLIENT_REQUEST_ERROR");
-    }
-  }
-
-  @Test
-  void testTracing_clientAuthenticationError_grpc() throws Exception {
-    SpanTracerFactory tracingFactory =
-        new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
-
+  void testTracing_clientAuthenticationError_GeneralSecurityException_grpc() throws Exception {
     Credentials credentials = new Credentials() {
-        @Override
-        public String getAuthenticationType() { return "mock"; }
-        @Override
-        public Map<String, List<String>> getRequestMetadata(URI uri) throws IOException {
+        @Override public String getAuthenticationType() { return "mock"; }
+        @Override public Map<String, List<String>> getRequestMetadata(URI uri) throws IOException {
             throw new IOException("Mock auth failure", new GeneralSecurityException("Root cause"));
         }
-        @Override
-        public boolean hasRequestMetadata() { return true; }
-        @Override
-        public boolean hasRequestMetadataOnly() { return true; }
-        @Override
-        public void refresh() throws IOException {}
+        @Override public boolean hasRequestMetadata() { return true; }
+        @Override public boolean hasRequestMetadataOnly() { return true; }
+        @Override public void refresh() throws IOException {}
     };
 
+    SpanTracerFactory tracingFactory =
+        new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
     EchoSettings grpcEchoSettings =
         EchoSettings.newBuilder()
             .setCredentialsProvider(FixedCredentialsProvider.create(credentials))
@@ -400,21 +375,41 @@ class ITOtelErrorType {
 
     try (EchoClient client = EchoClient.create(echoStubSettingsBuilder.build().createStub())) {
       assertThrows(Exception.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      verifyErrorTypeAttribute("CLIENT_AUTHENTICATION_ERROR");
+    }
+  }
 
-      List<SpanData> spans = spanExporter.getFinishedSpanItems();
-      assertThat(spans).isNotEmpty();
+  @Test
+  void testTracing_clientAuthenticationError_FileNotFoundException_grpc() throws Exception {
+    try (EchoClient client = createInterceptorClient(new FileNotFoundException("Key not found"))) {
+      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      verifyErrorTypeAttribute("CLIENT_AUTHENTICATION_ERROR");
+    }
+  }
 
-      SpanData errorSpan =
-          spans.stream()
-              .filter(span -> span.getAttributes().get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)) != null)
-              .findFirst()
-              .orElseThrow(() -> new AssertionError("Span with error.type not found"));
+  @Test
+  void testTracing_clientRequestError_IllegalArgumentException_grpc() throws Exception {
+    try (EchoClient client = createInterceptorClient(new IllegalArgumentException("Mock request error"))) {
+      assertThrows(IllegalArgumentException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      verifyErrorTypeAttribute("CLIENT_REQUEST_ERROR");
+    }
+  }
 
-      assertThat(
-              errorSpan
-                  .getAttributes()
-                  .get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)))
-          .isEqualTo("CLIENT_AUTHENTICATION_ERROR");
+  @Test
+  void testTracing_clientRedirectError_grpc() throws Exception {
+    try (EchoClient client = createInterceptorClient(new RuntimeException("Too many redirects"))) {
+      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      verifyErrorTypeAttribute("CLIENT_REDIRECT_ERROR");
+    }
+  }
+
+  @Test
+  void testTracing_clientUnknownError_grpc() throws Exception {
+    // Creating a custom exception class whose name contains "Unknown"
+    class MyUnknownException extends RuntimeException {}
+    try (EchoClient client = createInterceptorClient(new MyUnknownException())) {
+      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      verifyErrorTypeAttribute("CLIENT_UNKNOWN_ERROR");
     }
   }
 }
