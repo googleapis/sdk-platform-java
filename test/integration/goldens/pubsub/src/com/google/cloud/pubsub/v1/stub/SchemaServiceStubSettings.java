@@ -429,7 +429,7 @@ public class SchemaServiceStubSettings extends StubSettings<SchemaServiceStubSet
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setVersion(Version.VERSION).build();
   }
 
   /** Builder for SchemaServiceStubSettings. */

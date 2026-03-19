@@ -296,7 +296,7 @@ public class ConnectionServiceStubSettings extends StubSettings<ConnectionServic
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setVersion(Version.VERSION).build();
   }
 
   /** Builder for ConnectionServiceStubSettings. */
