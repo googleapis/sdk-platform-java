@@ -33,7 +33,6 @@ package com.google.api.gax.tracing;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -209,7 +208,7 @@ class SpanTracerFactoryTest {
 
     tracerInstance.attemptStarted(null, 1);
 
-    verify(tracer).spanBuilder(eq("google.cloud.v1.Service/Method"));
+    verify(tracer).spanBuilder("google.cloud.v1.Service/Method");
   }
 
   @ParameterizedTest
@@ -235,7 +234,7 @@ class SpanTracerFactoryTest {
 
     tracerInstance.attemptStarted(null, 1);
 
-    verify(tracer).spanBuilder(eq(expectedSpanName));
+    verify(tracer).spanBuilder(expectedSpanName);
   }
 
   @Test
@@ -252,7 +251,7 @@ class SpanTracerFactoryTest {
 
     tracerInstance.attemptStarted(null, 1);
 
-    verify(tracer).spanBuilder(eq("google.cloud.v1.Service.Method"));
+    verify(tracer).spanBuilder("google.cloud.v1.Service.Method");
   }
 
   @Test
@@ -263,7 +262,7 @@ class SpanTracerFactoryTest {
 
     tracerInstance.attemptStarted(null, 1);
 
-    verify(tracer).spanBuilder(eq("Service/Method/attempt"));
+    verify(tracer).spanBuilder("Service/Method/attempt");
   }
 
   @Test

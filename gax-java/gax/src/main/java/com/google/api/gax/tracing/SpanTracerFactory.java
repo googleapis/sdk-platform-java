@@ -73,8 +73,7 @@ public class SpanTracerFactory implements ApiTracerFactory {
     // feature is developed.
     String attemptSpanName = spanName.getClientName() + "/" + spanName.getMethodName() + "/attempt";
 
-    SpanTracer spanTracer = new SpanTracer(tracer, this.apiTracerContext, attemptSpanName);
-    return spanTracer;
+    return new SpanTracer(tracer, this.apiTracerContext, attemptSpanName);
   }
 
   @Override

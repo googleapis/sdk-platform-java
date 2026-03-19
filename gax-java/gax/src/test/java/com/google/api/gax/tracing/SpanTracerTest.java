@@ -32,7 +32,6 @@ package com.google.api.gax.tracing;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -70,8 +69,8 @@ class SpanTracerTest {
     spanTracer.attemptStarted(new Object(), 1);
     spanTracer.attemptSucceeded();
 
-    verify(tracer).spanBuilder(eq(ATTEMPT_SPAN_NAME));
-    verify(spanBuilder).setSpanKind(eq(SpanKind.CLIENT));
+    verify(tracer).spanBuilder(ATTEMPT_SPAN_NAME);
+    verify(spanBuilder).setSpanKind(SpanKind.CLIENT);
     verify(span).end();
   }
 
