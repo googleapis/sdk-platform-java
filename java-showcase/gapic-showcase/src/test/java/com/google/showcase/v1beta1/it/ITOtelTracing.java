@@ -58,7 +58,6 @@ import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import io.opentelemetry.sdk.trace.data.SpanData;
 import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -254,21 +253,27 @@ class ITOtelTracing {
     assertThat(spans).hasSize(attempts); // Expect exactly one span for the successful retry
 
     // This single span represents the successful retry, which has resend_count=1
-    for (int resendCount = 1; resendCount < attempts; resendCount++) {
-      Optional<SpanData> found =
-          spans.stream()
-              .filter(
-                  span ->
-                      span.getAttributes()
-                          .asMap()
-                          .getOrDefault(
-                              AttributeKey.longKey(
-                                  ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE),
-                              -1L)
-                          .equals(1L))
-              .findFirst();
-      assertThat(found).isPresent();
-    }
+    // The first attempt has no resend_count. The subsequent retries will have a resend_count,
+    // starting from 1.
+    List<Long> resendCounts =
+        spans.stream()
+            .map(
+                span ->
+                    (Long)
+                        span.getAttributes()
+                            .asMap()
+                            .get(
+                                AttributeKey.longKey(
+                                    ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE)))
+            .filter(java.util.Objects::nonNull)
+            .sorted()
+            .collect(java.util.stream.Collectors.toList());
+
+    List<Long> expectedCounts =
+        java.util.stream.LongStream.range(1, attempts)
+            .boxed()
+            .collect(java.util.stream.Collectors.toList());
+    assertThat(resendCounts).containsExactlyElementsIn(expectedCounts).inOrder();
   }
 
   @Test
@@ -323,20 +328,26 @@ class ITOtelTracing {
     assertThat(spans).hasSize(attempts); // Expect exactly one span for the successful retry
 
     // This single span represents the successful retry, which has resend_count=1
-    for (int resendCount = 1; resendCount < attempts; resendCount++) {
-      Optional<SpanData> found =
-          spans.stream()
-              .filter(
-                  span ->
-                      span.getAttributes()
-                          .asMap()
-                          .getOrDefault(
-                              AttributeKey.longKey(
-                                  ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE),
-                              -1L)
-                          .equals(1L))
-              .findFirst();
-      assertThat(found).isPresent();
-    }
+    // The first attempt has no resend_count. The subsequent retries will have a resend_count,
+    // starting from 1.
+    List<Long> resendCounts =
+        spans.stream()
+            .map(
+                span ->
+                    (Long)
+                        span.getAttributes()
+                            .asMap()
+                            .get(
+                                AttributeKey.longKey(
+                                    ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE)))
+            .filter(java.util.Objects::nonNull)
+            .sorted()
+            .collect(java.util.stream.Collectors.toList());
+
+    List<Long> expectedCounts =
+        java.util.stream.LongStream.range(1, attempts)
+            .boxed()
+            .collect(java.util.stream.Collectors.toList());
+    assertThat(resendCounts).containsExactlyElementsIn(expectedCounts).inOrder();
   }
 }
