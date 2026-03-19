@@ -115,6 +115,9 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
 
       ApiTracer tracer = httpJsonCallOptions.getTracer();
       if (tracer != null) {
+        // If the request is using transport encoding (e.g. gzip), this should be the compressed
+        // size. getContent().getLength() returns the length of the content which would be the
+        // compressed size if transport encoding is used.
         tracer.requestSent(httpRequest.getContent().getLength());
       }
 

@@ -185,4 +185,36 @@ class ITOtelTracing {
           .isEqualTo(SHOWCASE_ARTIFACT);
     }
   }
+
+  @Test
+  void testTracing_httpjson_bodySizes() throws Exception {
+    SpanTracerFactory tracingFactory =
+        new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
+
+    try (EchoClient client =
+        TestClientInitializer.createHttpJsonEchoClientOpentelemetry(tracingFactory)) {
+
+      client.echo(EchoRequest.newBuilder().setContent("tracing-test").build());
+
+      List<SpanData> spans = spanExporter.getFinishedSpanItems();
+      assertThat(spans).isNotEmpty();
+
+      SpanData attemptSpan =
+          spans.stream()
+              .filter(span -> span.getName().equals("Echo/Echo/attempt"))
+              .findFirst()
+              .orElseThrow(() -> new AssertionError("Attempt span 'Echo/Echo/attempt' not found"));
+
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.longKey(ObservabilityAttributes.HTTP_REQUEST_BODY_SIZE)))
+          .isAtLeast(1L);
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.longKey(ObservabilityAttributes.HTTP_RESPONSE_BODY_SIZE)))
+          .isAtLeast(1L);
+    }
+  }
 }
