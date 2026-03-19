@@ -44,7 +44,6 @@ public class TestApiTracer implements ApiTracer {
   private final AtomicInteger attemptsStarted = new AtomicInteger();
   private final AtomicInteger attemptsFailed = new AtomicInteger();
   private final AtomicBoolean retriesExhausted = new AtomicBoolean(false);
-  private final AtomicLong requestSentSize = new AtomicLong();
   private final AtomicLong responseReceivedSize = new AtomicLong();
 
   public TestApiTracer() {}
@@ -59,10 +58,6 @@ public class TestApiTracer implements ApiTracer {
 
   public AtomicBoolean getRetriesExhausted() {
     return retriesExhausted;
-  }
-
-  public long getRequestSentSize() {
-    return requestSentSize.get();
   }
 
   public long getResponseReceivedSize() {
@@ -88,11 +83,6 @@ public class TestApiTracer implements ApiTracer {
   public void attemptFailedRetriesExhausted(Throwable error) {
     attemptsFailed.incrementAndGet();
     retriesExhausted.set(true);
-  }
-
-  @Override
-  public void requestSent(long requestSize) {
-    requestSentSize.addAndGet(requestSize);
   }
 
   @Override

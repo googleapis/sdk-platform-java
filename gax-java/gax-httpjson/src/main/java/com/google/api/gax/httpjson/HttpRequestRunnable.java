@@ -44,7 +44,6 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.GenericData;
-import com.google.api.gax.tracing.ApiTracer;
 import com.google.auth.Credentials;
 import com.google.auth.http.HttpCredentialsAdapter;
 import com.google.auto.value.AutoValue;
@@ -111,14 +110,6 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       // Check if already cancelled before sending the request;
       if (cancelled) {
         return;
-      }
-
-      ApiTracer tracer = httpJsonCallOptions.getTracer();
-      if (tracer != null) {
-        // If the request is using transport encoding (e.g. gzip), this should be the compressed
-        // size. getContent().getLength() returns the length of the content which would be the
-        // compressed size if transport encoding is used.
-        tracer.requestSent(httpRequest.getContent().getLength());
       }
 
       httpResponse = httpRequest.execute();

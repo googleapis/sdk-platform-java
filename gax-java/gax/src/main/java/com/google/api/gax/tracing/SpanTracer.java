@@ -86,13 +86,6 @@ public class SpanTracer implements ApiTracer {
   }
 
   @Override
-  public void requestSent(long requestSize) {
-    if (attemptHandle != null) {
-      attemptHandle.setAttribute(ObservabilityAttributes.HTTP_REQUEST_BODY_SIZE, requestSize);
-    }
-  }
-
-  @Override
   public void responseReceived(long responseSize) {
     if (attemptHandle != null) {
       attemptHandle.setAttribute(ObservabilityAttributes.HTTP_RESPONSE_BODY_SIZE, responseSize);

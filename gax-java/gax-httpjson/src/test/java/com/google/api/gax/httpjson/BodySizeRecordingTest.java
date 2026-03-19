@@ -138,13 +138,6 @@ class BodySizeRecordingTest {
 
     callable.futureCall(request, callContext).get();
 
-    // Verify request size
-    // The request body should be Field with number=42 (name is cleared in extractor)
-    // HttpRequestRunnable re-serializes it compactly.
-    String expectedRequestBody = "{\"number\":42}";
-    long expectedRequestSize = expectedRequestBody.getBytes("UTF-8").length;
-    assertThat(tracer.getRequestSentSize()).isEqualTo(expectedRequestSize);
-
     // Verify response size
     // MockHttpService uses ProtoRestSerializer which pretty-prints.
     String expectedResponseBody = ProtoRestSerializer.create().toBody("*", response, false);
@@ -218,11 +211,6 @@ class BodySizeRecordingTest {
     latch.await(10, TimeUnit.SECONDS);
 
     assertThat(receivedResponses).hasSize(2);
-
-    // Verify request size
-    String expectedRequestBody = "{\"number\":42}";
-    long expectedRequestSize = expectedRequestBody.getBytes("UTF-8").length;
-    assertThat(tracer.getRequestSentSize()).isEqualTo(expectedRequestSize);
 
     // Verify response size
     // MockHttpService server-streaming response construction adds [ ] and ,

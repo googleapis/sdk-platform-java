@@ -150,11 +150,6 @@ public class BaseApiTracer implements ApiTracer {
   }
 
   @Override
-  public void requestSent(long requestSize) {
-    // noop
-  }
-
-  @Override
   public void batchRequestSent(long elementCount, long requestSize) {
     // noop
   }

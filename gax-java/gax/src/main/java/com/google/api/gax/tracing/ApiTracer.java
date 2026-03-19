@@ -187,10 +187,6 @@ public interface ApiTracer {
   default void requestSent() {}
   ;
 
-  /** Adds an annotation that a streaming request has been sent with size. */
-  default void requestSent(long requestSize) {}
-  ;
-
   /**
    * Adds an annotation that a batch of writes has been flushed.
    *

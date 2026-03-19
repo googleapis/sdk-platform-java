@@ -424,15 +424,6 @@ public class OpencensusTracer extends BaseApiTracer {
 
   /** {@inheritDoc} */
   @Override
-  public void requestSent(long requestSize) {
-    requestSent();
-    span.putAttribute(
-        ObservabilityAttributes.HTTP_REQUEST_BODY_SIZE,
-        AttributeValue.longAttributeValue(requestSize));
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public void batchRequestSent(long elementCount, long requestSize) {
     span.putAttribute("batch count", AttributeValue.longAttributeValue(elementCount));
     span.putAttribute("batch size", AttributeValue.longAttributeValue(requestSize));

@@ -208,11 +208,6 @@ class ITOtelTracing {
       assertThat(
               attemptSpan
                   .getAttributes()
-                  .get(AttributeKey.longKey(ObservabilityAttributes.HTTP_REQUEST_BODY_SIZE)))
-          .isAtLeast(1L);
-      assertThat(
-              attemptSpan
-                  .getAttributes()
                   .get(AttributeKey.longKey(ObservabilityAttributes.HTTP_RESPONSE_BODY_SIZE)))
           .isAtLeast(1L);
     }
