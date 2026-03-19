@@ -46,5 +46,7 @@ public interface TraceManager {
 
   interface Span {
     void end();
+
+    void setAttribute(String key, Object value);
   }
 }
