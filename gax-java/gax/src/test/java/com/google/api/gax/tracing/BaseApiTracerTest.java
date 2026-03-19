@@ -159,4 +159,11 @@ public class BaseApiTracerTest {
     tracer.batchRequestSent(10, 100);
     // No-op, so nothing to verify.
   }
+
+  @Test
+  public void testRecordResponseSize() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.recordResponseSize(10);
+    // No-op, so nothing to verify.
+  }
 }
