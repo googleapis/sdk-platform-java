@@ -32,14 +32,14 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.SpanBuilder;
+import io.opentelemetry.api.trace.SpanKind;
+import io.opentelemetry.api.trace.Tracer;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * An implementation of {@link ApiTracer} that uses a {@link TraceManager} to record traces. This
- * implementation is agnostic to the specific {@link TraceManager} in order to allow extensions that
- * interact with other backends.
- */
+/** An implementation of {@link ApiTracer} that uses OpenTelemetry to record traces. */
 @BetaApi
 @InternalApi
 public class SpanTracer implements ApiTracer {
@@ -47,21 +47,21 @@ public class SpanTracer implements ApiTracer {
 
   public static final String DEFAULT_LANGUAGE = "Java";
 
-  private final TraceManager traceManager;
+  private final Tracer tracer;
   private final Map<String, Object> attemptAttributes;
   private final String attemptSpanName;
   private final ApiTracerContext apiTracerContext;
-  private TraceManager.Span attemptHandle;
+  private Span attemptSpan;
 
   /**
    * Creates a new instance of {@code SpanTracer}.
    *
-   * @param traceManager the {@link TraceManager} to use for recording spans
+   * @param tracer the {@link Tracer} to use for recording spans
+   * @param apiTracerContext the {@link ApiTracerContext} to use for recording spans
    * @param attemptSpanName the name of the individual attempt spans
    */
-  public SpanTracer(
-      TraceManager traceManager, ApiTracerContext apiTracerContext, String attemptSpanName) {
-    this.traceManager = traceManager;
+  public SpanTracer(Tracer tracer, ApiTracerContext apiTracerContext, String attemptSpanName) {
+    this.tracer = tracer;
     this.attemptSpanName = attemptSpanName;
     this.apiTracerContext = apiTracerContext;
     this.attemptAttributes = new HashMap<>();
@@ -75,9 +75,14 @@ public class SpanTracer implements ApiTracer {
 
   @Override
   public void attemptStarted(Object request, int attemptNumber) {
-    Map<String, Object> attemptAttributes = new HashMap<>(this.attemptAttributes);
-    // Start the specific attempt span with the operation span as parent
-    this.attemptHandle = traceManager.createSpan(attemptSpanName, attemptAttributes);
+    SpanBuilder spanBuilder = tracer.spanBuilder(attemptSpanName);
+
+    // Attempt spans are of the CLIENT kind
+    spanBuilder.setSpanKind(SpanKind.CLIENT);
+
+    spanBuilder.setAllAttributes(ObservabilityUtils.toOtelAttributes(this.attemptAttributes));
+
+    this.attemptSpan = spanBuilder.startSpan();
   }
 
   @Override
@@ -86,9 +91,9 @@ public class SpanTracer implements ApiTracer {
   }
 
   private void endAttempt() {
-    if (attemptHandle != null) {
-      attemptHandle.end();
-      attemptHandle = null;
+    if (attemptSpan != null) {
+      attemptSpan.end();
+      attemptSpan = null;
     }
   }
 }
