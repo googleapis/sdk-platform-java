@@ -172,7 +172,6 @@ public abstract class ApiTracerContext {
   @Nullable
   public abstract String destinationResourceName();
 
-
   /**
    * @return a map of attributes to be included in attempt-level spans
    */
@@ -327,7 +326,6 @@ public abstract class ApiTracerContext {
     public abstract Builder setUrlTemplate(@Nullable String urlTemplate);
 
     public abstract Builder setDestinationResourceName(@Nullable String destinationResourceName);
-
 
     public abstract ApiTracerContext build();
   }
