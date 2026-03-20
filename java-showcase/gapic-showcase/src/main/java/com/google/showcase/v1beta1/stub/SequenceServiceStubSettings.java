@@ -390,6 +390,7 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
     return LibraryMetadata.newBuilder()
         .setArtifactName("com.google.cloud:gapic-showcase")
         .setRepository("googleapis/sdk-platform-java")
+        .setVersion(Version.VERSION)
         .build();
   }
 

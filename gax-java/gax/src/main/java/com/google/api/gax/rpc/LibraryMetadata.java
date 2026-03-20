@@ -65,6 +65,13 @@ public abstract class LibraryMetadata {
   @Nullable
   public abstract String artifactName();
 
+  /**
+   * Returns the version of the client library.
+   *
+   * <p>Example: {@code "2.74.1"}. This maps to the {@code gcp.client.version} attribute.
+   *
+   * @return the version, or {@code null} if not set
+   */
   @Nullable
   public abstract String version();
 
@@ -73,7 +80,7 @@ public abstract class LibraryMetadata {
   }
 
   public boolean isEmpty() {
-    return repository() == null && artifactName() == null;
+    return repository() == null && artifactName() == null && version() == null;
   }
 
   public static LibraryMetadata.Builder newBuilder() {
@@ -86,7 +93,7 @@ public abstract class LibraryMetadata {
 
     public abstract Builder setArtifactName(@Nullable String artifactName);
 
-    public abstract Builder setVersion(@Nullable String version);
+    public abstract Builder setVersion(@Nullable String libraryVersion);
 
     public abstract LibraryMetadata build();
   }

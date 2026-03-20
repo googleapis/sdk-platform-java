@@ -203,9 +203,6 @@ public abstract class ClassDefinition implements AstNode {
                 expr instanceof AssignmentExpr,
                 "Class expression statement must be assignment or variable declaration");
             VariableExpr variableExpr = ((AssignmentExpr) expr).variableExpr();
-            Preconditions.checkState(
-                !variableExpr.scope().equals(ScopeNode.LOCAL),
-                "Class variable in assignment statement cannot have a local scope");
           }
         }
       }
