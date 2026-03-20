@@ -149,7 +149,8 @@ public class SpanTracer implements ApiTracer {
   }
 
   /**
-   * Safely parses the content length Object representation (e.g. List or String) into a long integer.
+   * Safely parses the content length Object representation (e.g. List or String) into a long
+   * integer.
    *
    * @param value the header value to parse.
    * @return the parsed content length value, or -1 if it was null or failed to parse.
