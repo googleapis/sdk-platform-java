@@ -96,28 +96,24 @@ public class TestApiTracer implements ApiTracer {
   }
 
   @Override
-  public void responseHeadersReceived(java.util.Map<String, ?> headers) {
+  public void responseHeadersReceived(java.util.Map<String, Object> headers) {
     long contentLength = extractContentLength(headers);
     if (contentLength >= 0) {
       responseReceivedSize.addAndGet(contentLength);
     }
   }
 
-  private long extractContentLength(java.util.Map<String, ?> headers) {
+  private long extractContentLength(java.util.Map<String, Object> headers) {
     if (headers == null) {
       return -1;
     }
-    for (java.util.Map.Entry<String, ?> entry : headers.entrySet()) {
+    for (java.util.Map.Entry<String, Object> entry : headers.entrySet()) {
       if ("Content-Length".equalsIgnoreCase(entry.getKey())) {
         Object value = entry.getValue();
         if (value != null) {
           try {
-            String contentLengthStr =
-                value instanceof java.util.List
-                    ? ((java.util.List<?>) value).get(0).toString()
-                    : value.toString();
-            return Long.parseLong(contentLengthStr);
-          } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            return Long.parseLong(String.valueOf(value));
+          } catch (NumberFormatException e) {
             // Ignore invalid Content-Length
           }
         }

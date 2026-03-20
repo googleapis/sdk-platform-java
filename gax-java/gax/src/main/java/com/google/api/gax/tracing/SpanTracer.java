@@ -121,7 +121,7 @@ public class SpanTracer implements ApiTracer {
   }
 
   @Override
-  public void responseHeadersReceived(java.util.Map<String, ?> headers) {
+  public void responseHeadersReceived(java.util.Map<String, Object> headers) {
     if (attemptSpan != null) {
       long contentLength = extractContentLength(headers);
       if (contentLength >= 0) {
@@ -136,11 +136,11 @@ public class SpanTracer implements ApiTracer {
    * @param headers the map of response headers.
    * @return the content length in bytes, or -1 if the header is missing or malformed.
    */
-  private long extractContentLength(java.util.Map<String, ?> headers) {
+  private long extractContentLength(java.util.Map<String, Object> headers) {
     if (headers == null) {
       return -1;
     }
-    for (Map.Entry<String, ?> entry : headers.entrySet()) {
+    for (Map.Entry<String, Object> entry : headers.entrySet()) {
       if ("Content-Length".equalsIgnoreCase(entry.getKey())) {
         return parseContentLength(entry.getValue());
       }
@@ -149,8 +149,7 @@ public class SpanTracer implements ApiTracer {
   }
 
   /**
-   * Safely parses the content length Object representation (e.g. List or String) into a long
-   * integer.
+   * Safely parses the content length Object representation into a long integer.
    *
    * @param value the header value to parse.
    * @return the parsed content length value, or -1 if it was null or failed to parse.
@@ -160,12 +159,8 @@ public class SpanTracer implements ApiTracer {
       return -1;
     }
     try {
-      String contentLengthStr =
-          value instanceof java.util.List
-              ? ((java.util.List<?>) value).get(0).toString()
-              : value.toString();
-      return Long.parseLong(contentLengthStr);
-    } catch (NumberFormatException | IndexOutOfBoundsException e) {
+      return Long.parseLong(String.valueOf(value));
+    } catch (NumberFormatException e) {
       // Ignore invalid Content-Length
       return -1;
     }

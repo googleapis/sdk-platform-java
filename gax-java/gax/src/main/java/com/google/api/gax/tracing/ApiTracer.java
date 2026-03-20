@@ -180,7 +180,7 @@ public interface ApiTracer {
   ;
 
   /** Adds an annotation that a streaming response has been received with its headers. */
-  default void responseHeadersReceived(java.util.Map<String, ?> headers) {}
+  default void responseHeadersReceived(java.util.Map<String, Object> headers) {}
   ;
 
   /** Adds an annotation that a streaming request has been sent. */
