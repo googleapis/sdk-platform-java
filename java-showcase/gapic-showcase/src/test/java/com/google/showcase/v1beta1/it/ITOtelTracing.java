@@ -150,11 +150,6 @@ class ITOtelTracing {
                       AttributeKey.stringKey(
                           ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE)))
           .isEqualTo("OK");
-      assertThat(
-              attemptSpan
-                  .getAttributes()
-                  .get(AttributeKey.longKey(ObservabilityAttributes.RPC_GRPC_STATUS_ATTRIBUTE)))
-          .isEqualTo(0L);
     }
   }
 

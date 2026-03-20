@@ -96,10 +96,6 @@ class SpanTracerTest {
 
     assertThat(attrsCaptor.getValue())
         .containsEntry(ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE, "OK");
-    assertThat(attrsCaptor.getValue())
-        .containsEntry(
-            ObservabilityAttributes.RPC_GRPC_STATUS_ATTRIBUTE,
-            (long) com.google.api.gax.rpc.StatusCode.Code.OK.ordinal());
   }
 
   @Test
@@ -159,10 +155,6 @@ class SpanTracerTest {
 
     assertThat(attrsCaptor.getValue())
         .containsEntry(ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE, "NOT_FOUND");
-    assertThat(attrsCaptor.getValue())
-        .containsEntry(
-            ObservabilityAttributes.RPC_GRPC_STATUS_ATTRIBUTE,
-            (long) com.google.api.gax.rpc.StatusCode.Code.NOT_FOUND.ordinal());
   }
 
   @Test

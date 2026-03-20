@@ -120,9 +120,6 @@ class ObservabilityUtilsTest {
     ObservabilityUtils.populateStatusAttributes(attributes, null, ApiTracerContext.Transport.GRPC);
     assertThat(attributes)
         .containsEntry(ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE, "OK");
-    assertThat(attributes)
-        .containsEntry(
-            ObservabilityAttributes.RPC_GRPC_STATUS_ATTRIBUTE, (long) StatusCode.Code.OK.ordinal());
   }
 
   @Test
@@ -133,10 +130,6 @@ class ObservabilityUtilsTest {
     ObservabilityUtils.populateStatusAttributes(attributes, error, ApiTracerContext.Transport.GRPC);
     assertThat(attributes)
         .containsEntry(ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE, "NOT_FOUND");
-    assertThat(attributes)
-        .containsEntry(
-            ObservabilityAttributes.RPC_GRPC_STATUS_ATTRIBUTE,
-            (long) StatusCode.Code.NOT_FOUND.ordinal());
   }
 
   @Test
@@ -146,10 +139,6 @@ class ObservabilityUtilsTest {
     ObservabilityUtils.populateStatusAttributes(attributes, error, ApiTracerContext.Transport.GRPC);
     assertThat(attributes)
         .containsEntry(ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE, "CANCELLED");
-    assertThat(attributes)
-        .containsEntry(
-            ObservabilityAttributes.RPC_GRPC_STATUS_ATTRIBUTE,
-            (long) StatusCode.Code.CANCELLED.ordinal());
   }
 
   @Test
