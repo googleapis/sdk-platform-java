@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.InternalApi;
 import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.BatchingCallSettings;
