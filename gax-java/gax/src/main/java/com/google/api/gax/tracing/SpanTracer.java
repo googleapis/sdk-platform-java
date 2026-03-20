@@ -47,6 +47,8 @@ public class SpanTracer implements ApiTracer {
 
   public static final String DEFAULT_LANGUAGE = "Java";
 
+  static final String CONTENT_LENGTH_KEY = "Content-Length";
+
   private final Tracer tracer;
   private final Map<String, Object> attemptAttributes;
   private final String attemptSpanName;
@@ -141,7 +143,7 @@ public class SpanTracer implements ApiTracer {
       return -1;
     }
     for (Map.Entry<String, Object> entry : headers.entrySet()) {
-      if ("Content-Length".equalsIgnoreCase(entry.getKey())) {
+      if (CONTENT_LENGTH_KEY.equalsIgnoreCase(entry.getKey())) {
         return parseContentLength(entry.getValue());
       }
     }
