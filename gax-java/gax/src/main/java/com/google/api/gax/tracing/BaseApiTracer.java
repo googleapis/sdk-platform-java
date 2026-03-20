@@ -140,11 +140,6 @@ public class BaseApiTracer implements ApiTracer {
   }
 
   @Override
-  public void responseHeadersReceived(java.util.Map<String, ?> headers) {
-    // noop
-  }
-
-  @Override
   public void requestSent() {
     // noop
   }

@@ -29,8 +29,6 @@
  */
 package com.google.api.gax.tracing;
 
-import static com.google.common.truth.Truth.assertThat;
-
 import org.junit.jupiter.api.Test;
 
 public class BaseApiTracerTest {
@@ -160,17 +158,5 @@ public class BaseApiTracerTest {
     BaseApiTracer tracer = new BaseApiTracer();
     tracer.batchRequestSent(10, 100);
     // No-op, so nothing to verify.
-  }
-
-  @Test
-  void testResponseHeadersReceived() {
-    Throwable notExpected = null;
-    try {
-      BaseApiTracer tracer = new BaseApiTracer();
-      tracer.responseHeadersReceived(java.util.Collections.emptyMap());
-    } catch (Exception ex) {
-      notExpected = ex;
-    }
-    assertThat(notExpected).isNull();
   }
 }
