@@ -237,8 +237,7 @@ class ITOtelTracing {
             .setEndpoint("localhost:7469")
             .build();
 
-    SpanTracerFactory tracingFactory =
-        new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
+    SpanTracerFactory tracingFactory = new SpanTracerFactory(openTelemetrySdk);
 
     EchoStubSettings echoStubSettings =
         (EchoStubSettings)
@@ -310,8 +309,7 @@ class ITOtelTracing {
                     .build())
             .build();
 
-    SpanTracerFactory tracingFactory =
-        new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
+    SpanTracerFactory tracingFactory = new SpanTracerFactory(openTelemetrySdk);
 
     EchoStubSettings echoStubSettings =
         (EchoStubSettings)
