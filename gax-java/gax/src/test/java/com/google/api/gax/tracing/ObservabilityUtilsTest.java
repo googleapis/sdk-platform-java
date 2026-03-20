@@ -115,6 +115,113 @@ class ObservabilityUtilsTest {
   }
 
   @Test
+  void testPopulateStatusAttributes_grpc_success() {
+    Map<String, Object> attributes = new java.util.HashMap<>();
+    ObservabilityUtils.populateStatusAttributes(attributes, null, ApiTracerContext.Transport.GRPC);
+    assertThat(attributes)
+        .containsEntry(ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE, "OK");
+    assertThat(attributes)
+        .containsEntry(
+            ObservabilityAttributes.RPC_GRPC_STATUS_ATTRIBUTE, (long) StatusCode.Code.OK.ordinal());
+  }
+
+  @Test
+  void testPopulateStatusAttributes_grpc_apiException() {
+    Map<String, Object> attributes = new java.util.HashMap<>();
+    ApiException error =
+        new ApiException("fake_error", null, new FakeStatusCode(StatusCode.Code.NOT_FOUND), false);
+    ObservabilityUtils.populateStatusAttributes(attributes, error, ApiTracerContext.Transport.GRPC);
+    assertThat(attributes)
+        .containsEntry(ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE, "NOT_FOUND");
+    assertThat(attributes)
+        .containsEntry(
+            ObservabilityAttributes.RPC_GRPC_STATUS_ATTRIBUTE,
+            (long) StatusCode.Code.NOT_FOUND.ordinal());
+  }
+
+  @Test
+  void testPopulateStatusAttributes_grpc_cancellationException() {
+    Map<String, Object> attributes = new java.util.HashMap<>();
+    Throwable error = new java.util.concurrent.CancellationException();
+    ObservabilityUtils.populateStatusAttributes(attributes, error, ApiTracerContext.Transport.GRPC);
+    assertThat(attributes)
+        .containsEntry(ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE, "CANCELLED");
+    assertThat(attributes)
+        .containsEntry(
+            ObservabilityAttributes.RPC_GRPC_STATUS_ATTRIBUTE,
+            (long) StatusCode.Code.CANCELLED.ordinal());
+  }
+
+  @Test
+  void testPopulateStatusAttributes_http_success() {
+    Map<String, Object> attributes = new java.util.HashMap<>();
+    ObservabilityUtils.populateStatusAttributes(attributes, null, ApiTracerContext.Transport.HTTP);
+    assertThat(attributes)
+        .containsEntry(ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE, 200L);
+  }
+
+  @Test
+  void testPopulateStatusAttributes_http_apiExceptionWithIntegerTransportCode() {
+    Map<String, Object> attributes = new java.util.HashMap<>();
+    ApiException error =
+        new ApiException(
+            "fake_error",
+            null,
+            new com.google.api.gax.rpc.StatusCode() {
+              @Override
+              public Code getCode() {
+                return Code.NOT_FOUND;
+              }
+
+              @Override
+              public Object getTransportCode() {
+                return 404;
+              }
+            },
+            false);
+    ObservabilityUtils.populateStatusAttributes(attributes, error, ApiTracerContext.Transport.HTTP);
+    assertThat(attributes)
+        .containsEntry(ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE, 404L);
+  }
+
+  @Test
+  void testPopulateStatusAttributes_http_apiExceptionWithNonIntegerTransportCode() {
+    Map<String, Object> attributes = new java.util.HashMap<>();
+    ApiException error =
+        new ApiException(
+            "fake_error",
+            null,
+            new com.google.api.gax.rpc.StatusCode() {
+              @Override
+              public Code getCode() {
+                return Code.NOT_FOUND;
+              }
+
+              @Override
+              public Object getTransportCode() {
+                return "Not Found";
+              }
+            },
+            false);
+    ObservabilityUtils.populateStatusAttributes(attributes, error, ApiTracerContext.Transport.HTTP);
+    assertThat(attributes)
+        .containsEntry(
+            ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE,
+            (long) StatusCode.Code.NOT_FOUND.getHttpStatusCode());
+  }
+
+  @Test
+  void testPopulateStatusAttributes_http_cancellationException() {
+    Map<String, Object> attributes = new java.util.HashMap<>();
+    Throwable error = new java.util.concurrent.CancellationException();
+    ObservabilityUtils.populateStatusAttributes(attributes, error, ApiTracerContext.Transport.HTTP);
+    assertThat(attributes)
+        .containsEntry(
+            ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE,
+            (long) StatusCode.Code.CANCELLED.getHttpStatusCode());
+  }
+
+  @Test
   void testToOtelAttributes_shouldReturnEmptyAttributes_nullInput() {
     assertThat(ObservabilityUtils.toOtelAttributes(null)).isEqualTo(Attributes.empty());
   }

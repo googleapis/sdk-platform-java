@@ -34,6 +34,7 @@ import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CancellationException;
 
 /**
  * An implementation of {@link ApiTracer} that uses a {@link TraceManager} to record traces. This
@@ -82,11 +83,44 @@ public class SpanTracer implements ApiTracer {
 
   @Override
   public void attemptSucceeded() {
-    endAttempt();
+    endAttempt(null);
   }
 
-  private void endAttempt() {
+  @Override
+  public void attemptCancelled() {
+    endAttempt(new CancellationException());
+  }
+
+  @Override
+  public void attemptFailedRetriesExhausted(Throwable error) {
+    endAttempt(error);
+  }
+
+  @Override
+  public void attemptPermanentFailure(Throwable error) {
+    endAttempt(error);
+  }
+
+  @Override
+  public void attemptFailedDuration(Throwable error, java.time.Duration delay) {
+    endAttempt(error);
+  }
+
+  @Override
+  public void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {
+    endAttempt(error);
+  }
+
+  private void endAttempt(Throwable error) {
     if (attemptHandle != null) {
+      Map<String, Object> endAttributes = new HashMap<>();
+      ObservabilityUtils.populateStatusAttributes(
+          endAttributes, error, this.apiTracerContext.transport());
+
+      if (!endAttributes.isEmpty()) {
+        attemptHandle.addAttributes(endAttributes);
+      }
+
       attemptHandle.end();
       attemptHandle = null;
     }

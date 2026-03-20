@@ -72,6 +72,13 @@ public class OpenTelemetryTraceManager implements TraceManager {
     }
 
     @Override
+    public void addAttributes(Map<String, Object> attributes) {
+      if (attributes != null) {
+        span.setAllAttributes(ObservabilityUtils.toOtelAttributes(attributes));
+      }
+    }
+
+    @Override
     public void end() {
       span.end();
     }

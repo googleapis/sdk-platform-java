@@ -76,4 +76,130 @@ class SpanTracerTest {
     assertThat(attributesCaptor.getValue())
         .containsEntry(SpanTracer.LANGUAGE_ATTRIBUTE, SpanTracer.DEFAULT_LANGUAGE);
   }
+
+  @Test
+  void testAttemptSucceeded_grpc() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .build();
+    tracer = new SpanTracer(recorder, context, ATTEMPT_SPAN_NAME);
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+    tracer.attemptSucceeded();
+
+    ArgumentCaptor<Map<String, Object>> attrsCaptor = ArgumentCaptor.forClass(Map.class);
+    verify(attemptHandle).addAttributes(attrsCaptor.capture());
+    verify(attemptHandle).end();
+
+    assertThat(attrsCaptor.getValue())
+        .containsEntry(ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE, "OK");
+    assertThat(attrsCaptor.getValue())
+        .containsEntry(
+            ObservabilityAttributes.RPC_GRPC_STATUS_ATTRIBUTE,
+            (long) com.google.api.gax.rpc.StatusCode.Code.OK.ordinal());
+  }
+
+  @Test
+  void testAttemptSucceeded_http() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.HTTP)
+            .build();
+    tracer = new SpanTracer(recorder, context, ATTEMPT_SPAN_NAME);
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    tracer.attemptStarted(new Object(), 1);
+    tracer.attemptSucceeded();
+
+    ArgumentCaptor<Map<String, Object>> attrsCaptor = ArgumentCaptor.forClass(Map.class);
+    verify(attemptHandle).addAttributes(attrsCaptor.capture());
+    verify(attemptHandle).end();
+
+    assertThat(attrsCaptor.getValue())
+        .containsEntry(ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE, 200L);
+  }
+
+  @Test
+  void testAttemptFailed_grpc() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .build();
+    tracer = new SpanTracer(recorder, context, ATTEMPT_SPAN_NAME);
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    com.google.api.gax.rpc.ApiException exception =
+        new com.google.api.gax.rpc.ApiException(
+            "error",
+            null,
+            new com.google.api.gax.rpc.StatusCode() {
+              @Override
+              public Code getCode() {
+                return Code.NOT_FOUND;
+              }
+
+              @Override
+              public Object getTransportCode() {
+                return null;
+              }
+            },
+            false);
+
+    tracer.attemptStarted(new Object(), 1);
+    tracer.attemptFailedRetriesExhausted(exception);
+
+    ArgumentCaptor<Map<String, Object>> attrsCaptor = ArgumentCaptor.forClass(Map.class);
+    verify(attemptHandle).addAttributes(attrsCaptor.capture());
+    verify(attemptHandle).end();
+
+    assertThat(attrsCaptor.getValue())
+        .containsEntry(ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE, "NOT_FOUND");
+    assertThat(attrsCaptor.getValue())
+        .containsEntry(
+            ObservabilityAttributes.RPC_GRPC_STATUS_ATTRIBUTE,
+            (long) com.google.api.gax.rpc.StatusCode.Code.NOT_FOUND.ordinal());
+  }
+
+  @Test
+  void testAttemptFailed_http() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.HTTP)
+            .build();
+    tracer = new SpanTracer(recorder, context, ATTEMPT_SPAN_NAME);
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+
+    com.google.api.gax.rpc.ApiException exception =
+        new com.google.api.gax.rpc.ApiException(
+            "error",
+            null,
+            new com.google.api.gax.rpc.StatusCode() {
+              @Override
+              public Code getCode() {
+                return Code.NOT_FOUND;
+              }
+
+              @Override
+              public Object getTransportCode() {
+                return 404;
+              }
+            },
+            false);
+
+    tracer.attemptStarted(new Object(), 1);
+    tracer.attemptFailedRetriesExhausted(exception);
+
+    ArgumentCaptor<Map<String, Object>> attrsCaptor = ArgumentCaptor.forClass(Map.class);
+    verify(attemptHandle).addAttributes(attrsCaptor.capture());
+    verify(attemptHandle).end();
+
+    assertThat(attrsCaptor.getValue())
+        .containsEntry(ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE, 404L);
+  }
 }

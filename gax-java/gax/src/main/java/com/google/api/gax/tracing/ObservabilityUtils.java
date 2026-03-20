@@ -56,6 +56,57 @@ class ObservabilityUtils {
     return statusString;
   }
 
+  static void populateStatusAttributes(
+      Map<String, Object> attributes,
+      @Nullable Throwable error,
+      ApiTracerContext.Transport transport) {
+    if (transport == ApiTracerContext.Transport.GRPC) {
+      if (error == null) {
+        attributes.put(
+            ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE, StatusCode.Code.OK.toString());
+        attributes.put(
+            ObservabilityAttributes.RPC_GRPC_STATUS_ATTRIBUTE, (long) StatusCode.Code.OK.ordinal());
+      } else if (error instanceof ApiException) {
+        attributes.put(
+            ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE,
+            ((ApiException) error).getStatusCode().getCode().toString());
+        attributes.put(
+            ObservabilityAttributes.RPC_GRPC_STATUS_ATTRIBUTE,
+            (long) ((ApiException) error).getStatusCode().getCode().ordinal());
+      } else {
+        attributes.put(ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE, extractStatus(error));
+        StatusCode.Code code = StatusCode.Code.UNKNOWN;
+        if (error instanceof CancellationException) {
+          code = StatusCode.Code.CANCELLED;
+        }
+        attributes.put(ObservabilityAttributes.RPC_GRPC_STATUS_ATTRIBUTE, (long) code.ordinal());
+      }
+    } else if (transport == ApiTracerContext.Transport.HTTP) {
+      if (error == null) {
+        attributes.put(ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE, 200L);
+      } else if (error instanceof ApiException) {
+        Object transportCode = ((ApiException) error).getStatusCode().getTransportCode();
+        if (transportCode instanceof Integer) {
+          attributes.put(
+              ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE,
+              ((Integer) transportCode).longValue());
+        } else {
+          attributes.put(
+              ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE,
+              (long) ((ApiException) error).getStatusCode().getCode().getHttpStatusCode());
+        }
+      } else {
+        StatusCode.Code code = StatusCode.Code.UNKNOWN;
+        if (error instanceof CancellationException) {
+          code = StatusCode.Code.CANCELLED;
+        }
+        attributes.put(
+            ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE,
+            (long) code.getHttpStatusCode());
+      }
+    }
+  }
+
   static Attributes toOtelAttributes(Map<String, Object> attributes) {
     AttributesBuilder attributesBuilder = Attributes.builder();
     if (attributes == null) {

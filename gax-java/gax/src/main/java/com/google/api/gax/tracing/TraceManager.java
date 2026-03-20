@@ -45,6 +45,12 @@ public interface TraceManager {
   Span createSpan(String name, Map<String, Object> attributes);
 
   interface Span {
+    /**
+     * Adds an attribute to the span. This is useful for adding attributes that are only available
+     * after the span has started, e.g. status codes.
+     */
+    void addAttributes(Map<String, Object> attributes);
+
     void end();
   }
 }

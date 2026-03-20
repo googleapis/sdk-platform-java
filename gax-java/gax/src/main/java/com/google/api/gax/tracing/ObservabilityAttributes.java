@@ -84,4 +84,10 @@ public class ObservabilityAttributes {
 
   /** The url template of the request (e.g. /v1/{name}:access). */
   public static final String URL_TEMPLATE_ATTRIBUTE = "url.template";
+
+  /** The HTTP status code of the request (e.g., 200, 404). */
+  public static final String HTTP_RESPONSE_STATUS_ATTRIBUTE = "http.response.status_code";
+
+  /** The gRPC status code of the request (e.g., 0, 14). */
+  public static final String RPC_GRPC_STATUS_ATTRIBUTE = "rpc.grpc.status_code";
 }
