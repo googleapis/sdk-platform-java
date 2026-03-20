@@ -30,16 +30,16 @@
 package com.google.api.gax.grpc;
 
 import com.google.api.core.BetaApi;
-import com.google.api.gax.rpc.ClientResourceNameExtractor;
 import com.google.api.gax.rpc.RequestMutator;
 import com.google.api.gax.rpc.RequestParamsExtractor;
+import com.google.api.gax.rpc.ResourceNameExtractor;
 import io.grpc.MethodDescriptor;
 
 /** Grpc-specific settings for creating callables. */
 public class GrpcCallSettings<RequestT, ResponseT> {
   private final MethodDescriptor<RequestT, ResponseT> methodDescriptor;
   private final RequestParamsExtractor<RequestT> paramsExtractor;
-  private final ClientResourceNameExtractor<RequestT> resourceNameExtractor;
+  private final ResourceNameExtractor<RequestT> resourceNameExtractor;
   private final RequestMutator<RequestT> requestMutator;
   private final boolean alwaysAwaitTrailers;
 
@@ -60,7 +60,7 @@ public class GrpcCallSettings<RequestT, ResponseT> {
   }
 
   @BetaApi
-  public ClientResourceNameExtractor<RequestT> getResourceNameExtractor() {
+  public ResourceNameExtractor<RequestT> getResourceNameExtractor() {
     return resourceNameExtractor;
   }
 
@@ -91,7 +91,7 @@ public class GrpcCallSettings<RequestT, ResponseT> {
   public static class Builder<RequestT, ResponseT> {
     private MethodDescriptor<RequestT, ResponseT> methodDescriptor;
     private RequestParamsExtractor<RequestT> paramsExtractor;
-    private ClientResourceNameExtractor<RequestT> resourceNameExtractor;
+    private ResourceNameExtractor<RequestT> resourceNameExtractor;
 
     private RequestMutator<RequestT> requestMutator;
     private boolean shouldAwaitTrailers;
@@ -120,7 +120,7 @@ public class GrpcCallSettings<RequestT, ResponseT> {
 
     @BetaApi
     public Builder<RequestT, ResponseT> setResourceNameExtractor(
-        ClientResourceNameExtractor<RequestT> resourceNameExtractor) {
+        ResourceNameExtractor<RequestT> resourceNameExtractor) {
       this.resourceNameExtractor = resourceNameExtractor;
       return this;
     }

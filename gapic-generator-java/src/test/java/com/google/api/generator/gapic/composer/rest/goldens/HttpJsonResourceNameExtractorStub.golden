@@ -29,18 +29,17 @@ import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
- * REST stub implementation for the ClientResourceNameExtractorTesting service API.
+ * REST stub implementation for the ResourceNameExtractorTesting service API.
  *
  * <p>This class is for advanced usage and reflects the underlying API directly.
  */
 @Generated("by gapic-generator-java")
-public class HttpJsonClientResourceNameExtractorTestingStub
-    extends ClientResourceNameExtractorTestingStub {
+public class HttpJsonResourceNameExtractorTestingStub extends ResourceNameExtractorTestingStub {
   private static final TypeRegistry typeRegistry = TypeRegistry.newBuilder().build();
 
   private static final ApiMethodDescriptor<GetFooRequest, Foo> getFooMethodDescriptor =
       ApiMethodDescriptor.<GetFooRequest, Foo>newBuilder()
-          .setFullMethodName("google.extractor.testing.ClientResourceNameExtractorTesting/GetFoo")
+          .setFullMethodName("google.extractor.testing.ResourceNameExtractorTesting/GetFoo")
           .setHttpMethod("GET")
           .setType(ApiMethodDescriptor.MethodType.UNARY)
           .setRequestFormatter(
@@ -72,7 +71,7 @@ public class HttpJsonClientResourceNameExtractorTestingStub
 
   private static final ApiMethodDescriptor<GetBarRequest, Bar> getBarMethodDescriptor =
       ApiMethodDescriptor.<GetBarRequest, Bar>newBuilder()
-          .setFullMethodName("google.extractor.testing.ClientResourceNameExtractorTesting/GetBar")
+          .setFullMethodName("google.extractor.testing.ResourceNameExtractorTesting/GetBar")
           .setHttpMethod("GET")
           .setType(ApiMethodDescriptor.MethodType.UNARY)
           .setRequestFormatter(
@@ -105,8 +104,7 @@ public class HttpJsonClientResourceNameExtractorTestingStub
   private static final ApiMethodDescriptor<ListFoosRequest, ListFoosResponse>
       listFoosMethodDescriptor =
           ApiMethodDescriptor.<ListFoosRequest, ListFoosResponse>newBuilder()
-              .setFullMethodName(
-                  "google.extractor.testing.ClientResourceNameExtractorTesting/ListFoos")
+              .setFullMethodName("google.extractor.testing.ResourceNameExtractorTesting/ListFoos")
               .setHttpMethod("GET")
               .setType(ApiMethodDescriptor.MethodType.UNARY)
               .setRequestFormatter(
@@ -143,44 +141,43 @@ public class HttpJsonClientResourceNameExtractorTestingStub
   private final BackgroundResource backgroundResources;
   private final HttpJsonStubCallableFactory callableFactory;
 
-  public static final HttpJsonClientResourceNameExtractorTestingStub create(
-      ClientResourceNameExtractorTestingStubSettings settings) throws IOException {
-    return new HttpJsonClientResourceNameExtractorTestingStub(
-        settings, ClientContext.create(settings));
+  public static final HttpJsonResourceNameExtractorTestingStub create(
+      ResourceNameExtractorTestingStubSettings settings) throws IOException {
+    return new HttpJsonResourceNameExtractorTestingStub(settings, ClientContext.create(settings));
   }
 
-  public static final HttpJsonClientResourceNameExtractorTestingStub create(
-      ClientContext clientContext) throws IOException {
-    return new HttpJsonClientResourceNameExtractorTestingStub(
-        ClientResourceNameExtractorTestingStubSettings.newBuilder().build(), clientContext);
+  public static final HttpJsonResourceNameExtractorTestingStub create(ClientContext clientContext)
+      throws IOException {
+    return new HttpJsonResourceNameExtractorTestingStub(
+        ResourceNameExtractorTestingStubSettings.newBuilder().build(), clientContext);
   }
 
-  public static final HttpJsonClientResourceNameExtractorTestingStub create(
+  public static final HttpJsonResourceNameExtractorTestingStub create(
       ClientContext clientContext, HttpJsonStubCallableFactory callableFactory) throws IOException {
-    return new HttpJsonClientResourceNameExtractorTestingStub(
-        ClientResourceNameExtractorTestingStubSettings.newBuilder().build(),
+    return new HttpJsonResourceNameExtractorTestingStub(
+        ResourceNameExtractorTestingStubSettings.newBuilder().build(),
         clientContext,
         callableFactory);
   }
 
   /**
-   * Constructs an instance of HttpJsonClientResourceNameExtractorTestingStub, using the given
-   * settings. This is protected so that it is easy to make a subclass, but otherwise, the static
-   * factory methods should be preferred.
+   * Constructs an instance of HttpJsonResourceNameExtractorTestingStub, using the given settings.
+   * This is protected so that it is easy to make a subclass, but otherwise, the static factory
+   * methods should be preferred.
    */
-  protected HttpJsonClientResourceNameExtractorTestingStub(
-      ClientResourceNameExtractorTestingStubSettings settings, ClientContext clientContext)
+  protected HttpJsonResourceNameExtractorTestingStub(
+      ResourceNameExtractorTestingStubSettings settings, ClientContext clientContext)
       throws IOException {
-    this(settings, clientContext, new HttpJsonClientResourceNameExtractorTestingCallableFactory());
+    this(settings, clientContext, new HttpJsonResourceNameExtractorTestingCallableFactory());
   }
 
   /**
-   * Constructs an instance of HttpJsonClientResourceNameExtractorTestingStub, using the given
-   * settings. This is protected so that it is easy to make a subclass, but otherwise, the static
-   * factory methods should be preferred.
+   * Constructs an instance of HttpJsonResourceNameExtractorTestingStub, using the given settings.
+   * This is protected so that it is easy to make a subclass, but otherwise, the static factory
+   * methods should be preferred.
    */
-  protected HttpJsonClientResourceNameExtractorTestingStub(
-      ClientResourceNameExtractorTestingStubSettings settings,
+  protected HttpJsonResourceNameExtractorTestingStub(
+      ResourceNameExtractorTestingStubSettings settings,
       ClientContext clientContext,
       HttpJsonStubCallableFactory callableFactory)
       throws IOException {

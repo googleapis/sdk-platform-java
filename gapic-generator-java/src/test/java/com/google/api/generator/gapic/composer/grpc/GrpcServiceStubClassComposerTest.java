@@ -115,11 +115,11 @@ class GrpcServiceStubClassComposerTest {
 
   @Test
   void generateGrpcServiceStubClass_clientResourceNameExtractor() {
-    GapicContext context = GrpcTestProtoLoader.instance().parseClientResourceNameExtractorTesting();
+    GapicContext context = GrpcTestProtoLoader.instance().parseResourceNameExtractorTesting();
     Service service = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
 
-    Assert.assertGoldenClass(this.getClass(), clazz, "GrpcClientResourceNameExtractorStub.golden");
+    Assert.assertGoldenClass(this.getClass(), clazz, "GrpcResourceNameExtractorStub.golden");
     Assert.assertEmptySamples(clazz.samples());
   }
 }

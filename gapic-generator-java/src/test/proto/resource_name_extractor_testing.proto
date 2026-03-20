@@ -3,14 +3,14 @@ syntax = "proto3";
 package google.extractor.testing;
 
 option java_multiple_files = true;
-option java_outer_classname = "ClientResourceNameExtractorTestingOuterClass";
+option java_outer_classname = "ResourceNameExtractorTestingOuterClass";
 option java_package = "com.google.extractor.testing";
 
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/resource.proto";
 
-service ClientResourceNameExtractorTesting {
+service ResourceNameExtractorTesting {
   option (google.api.default_host) = "extractor.googleapis.com";
 
   rpc GetFoo(GetFooRequest) returns (Foo) {

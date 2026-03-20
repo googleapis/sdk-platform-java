@@ -40,7 +40,7 @@ import com.google.api.core.InternalApi;
  * @param <RequestT> request message type
  */
 @InternalApi("For use by transport-specific implementations")
-public interface ClientResourceNameExtractor<RequestT> {
+public interface ResourceNameExtractor<RequestT> {
   /**
    * Extracts the destination resource name from the {@code request}.
    *

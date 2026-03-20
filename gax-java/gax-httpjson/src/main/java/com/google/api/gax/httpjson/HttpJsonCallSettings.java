@@ -29,16 +29,16 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.gax.rpc.ClientResourceNameExtractor;
 import com.google.api.gax.rpc.RequestMutator;
 import com.google.api.gax.rpc.RequestParamsExtractor;
+import com.google.api.gax.rpc.ResourceNameExtractor;
 import com.google.protobuf.TypeRegistry;
 
 /** HTTP-specific settings for creating callables. */
 public class HttpJsonCallSettings<RequestT, ResponseT> {
   private final ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor;
   private final RequestParamsExtractor<RequestT> paramsExtractor;
-  private final ClientResourceNameExtractor<RequestT> resourceNameExtractor;
+  private final ResourceNameExtractor<RequestT> resourceNameExtractor;
 
   private final RequestMutator<RequestT> requestMutator;
   private final TypeRegistry typeRegistry;
@@ -59,7 +59,7 @@ public class HttpJsonCallSettings<RequestT, ResponseT> {
     return paramsExtractor;
   }
 
-  public ClientResourceNameExtractor<RequestT> getResourceNameExtractor() {
+  public ResourceNameExtractor<RequestT> getResourceNameExtractor() {
     return resourceNameExtractor;
   }
 
@@ -91,7 +91,7 @@ public class HttpJsonCallSettings<RequestT, ResponseT> {
     private RequestMutator<RequestT> requestMutator;
     private ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor;
     private RequestParamsExtractor<RequestT> paramsExtractor;
-    private ClientResourceNameExtractor<RequestT> resourceNameExtractor;
+    private ResourceNameExtractor<RequestT> resourceNameExtractor;
     private TypeRegistry typeRegistry;
 
     private Builder() {}
@@ -117,7 +117,7 @@ public class HttpJsonCallSettings<RequestT, ResponseT> {
     }
 
     public Builder<RequestT, ResponseT> setResourceNameExtractor(
-        ClientResourceNameExtractor<RequestT> resourceNameExtractor) {
+        ResourceNameExtractor<RequestT> resourceNameExtractor) {
       this.resourceNameExtractor = resourceNameExtractor;
       return this;
     }

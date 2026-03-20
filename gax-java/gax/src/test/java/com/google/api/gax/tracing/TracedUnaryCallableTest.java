@@ -183,7 +183,7 @@ class TracedUnaryCallableTest {
   }
 
   @Test
-  void testClientResourceNameExtractorUsed() {
+  void testResourceNameExtractorUsed() {
     // Wire up tracerFactory capturing
     when(tracerFactory.newTracer(any(ApiTracer.class), any(ApiTracerContext.class)))
         .thenReturn(tracer);
