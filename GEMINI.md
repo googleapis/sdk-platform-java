@@ -65,8 +65,8 @@ mvn fmt:format
 
 The repository employs a multi-layered testing strategy to ensure the quality and correctness of the generated code:
 
-*   **Unit Tests:** Traditional unit tests for individual classes and methods.
-*   **Golden Unit Tests:** These tests generate code from test protos and compare the output to "golden" files, which are pre-approved versions of the generated code. These test cases exist inside the `gapic-generator-java` module.
+*   **Unit Tests:** Traditional unit tests for individual classes and methods. See [unit testing best practices](https://engdoc.corp.google.com/eng/doc/devguide/testing/unit/best-practices.md?cl=head&polyglot=java).
+*   **Golden Unit Tests:** These tests generate code from test protos and compare the output to "golden" files, which are pre-approved versions of the generated code. These test cases exist inside the `gapic-generator-java` module. See [GrpcServiceStubClassComposerTest](https://github.com/googleapis/sdk-platform-java/blob/main/gapic-generator-java/src/test/java/com/google/api/generator/gapic/composer/grpc/GrpcServiceStubClassComposerTest.java) for an example of golden unit tests. The steps for golden unit tests includes creating a test proto, load the test proto, generate from the test proto and compare the result with a golden file. 
 *   **Showcase Integration Tests:** These tests run the generated Showcase client against a local Showcase server to verify end-to-end functionality. This is the preferred way of testing integration tests.
 *   **Golden Integration Tests:** These tests generate full client libraries for real Google Cloud APIs and compare them to golden versions. This is an older test strategy and showcase testing is preferred.
 
@@ -74,7 +74,7 @@ Based on where the code changes are, we should add different tests, in general
 
 *   If the changes are in `gax` or `api-common` only, you _must_ add traditional unit tests, you _may_ add showcase integration tests if you are modifying a public setting. 
 *   If the changes are in `gapic-generator-java` only, showcase integration tests are most likely not needed
-      * If they are in the `composer` module, you _must_ add golden unit tests, you _may_ add traditional unit tests for better coverage and easier testing.
+      * If they are in the `composer` module, you _must_ add golden unit tests, you _may_ add traditional unit tests for better coverage and easier testing. 
       * If they are in the `parser` module, you _should_ add traditional unit tests with a test proto if possible, you _may_ add golden unit tests to easily see the changes. For example, [routing_rule_parser_testing](https://github.com/googleapis/sdk-platform-java/blob/main/gapic-generator-java/src/test/proto/routing_rule_parser_testing.proto) that is only used for testing [RoutingRuleParser](https://github.com/googleapis/sdk-platform-java/blob/main/gapic-generator-java/src/main/java/com/google/api/generator/gapic/protoparser/RoutingRuleParser.java).
       * If they are in `other modules(ast, model, writer etc.)`, you _must_ add traditional unit tests, you _may_ add golden unit tests to easily see the changes.
 - If the changes are in both `gax` and `gapic-generator-java`, you _must_ add all test layers, including traditional unit tests, golden unit tests and showcase integration tests.
@@ -144,6 +144,6 @@ Showcase integration tests are run against a local server that implements the Sh
   specification. The format is `<type>: <description>`. The type should be one of the following: fix, feat,
   build, chore, docs, test, or refactor.
 - **Issues:** All significant changes should start with a GitHub issue.
-- **Pull Requests:** All code changes must be submitted via a pull request and require review.
+- **Pull Requests:** All code changes must be submitted via a pull request and require review. Before creating a PR, always pull latest from main, merge main to local branch and resolve any conflicts.  
 - **Testing:** All new logic should be accompanied by tests.
 - For more details, see `CONTRIBUTING.md`.
