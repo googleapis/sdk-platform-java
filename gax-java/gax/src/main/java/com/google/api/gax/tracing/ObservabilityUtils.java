@@ -127,6 +127,8 @@ class ObservabilityUtils {
             attributesBuilder.put(k, (String) v);
           } else if (v instanceof Integer) {
             attributesBuilder.put(k, (long) (Integer) v);
+          } else if (v instanceof Long) {
+            attributesBuilder.put(k, (Long) v);
           }
         });
     return attributesBuilder.build();
