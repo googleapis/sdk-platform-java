@@ -195,7 +195,6 @@ public class GrpcLoggingServiceV2Stub extends LoggingServiceV2Stub {
         listLogEntriesTransportSettings =
             GrpcCallSettings.<ListLogEntriesRequest, ListLogEntriesResponse>newBuilder()
                 .setMethodDescriptor(listLogEntriesMethodDescriptor)
-                .setResourceNameExtractor(request -> request.getResourceNames())
                 .build();
     GrpcCallSettings<
             ListMonitoredResourceDescriptorsRequest, ListMonitoredResourceDescriptorsResponse>
