@@ -1508,7 +1508,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   @Nullable
   protected static LambdaExpr createResourceNameExtractorClassInstance(
       Method method, ImmutableMap<String, Message> messageTypes) {
-    Field resourceNameField = getDestinationResourceNameField(method, messageTypes);
+    Field resourceNameField = getDestinationResourceIdField(method, messageTypes);
 
     if (resourceNameField == null) {
       return null;
@@ -1531,7 +1531,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
         .build();
   }
 
-  private static Field getDestinationResourceNameField(
+  private static Field getDestinationResourceIdField(
       Method method, ImmutableMap<String, Message> messageTypes) {
     if (method.inputType().reference() == null
         || method.inputType().reference().fullName() == null) {

@@ -203,7 +203,7 @@ class TracedUnaryCallableTest {
     verify(tracerFactory).newTracer(any(ApiTracer.class), contextCaptor.capture());
 
     // Verify the extractor was triggered and injected the field
-    assertThat(contextCaptor.getValue().destinationResourceName())
+    assertThat(contextCaptor.getValue().destinationResourceId())
         .isEqualTo("extracted-resource-name");
   }
 }

@@ -85,7 +85,7 @@ public class ObservabilityAttributes {
   /** The url template of the request (e.g. /v1/{name}:access). */
   public static final String URL_TEMPLATE_ATTRIBUTE = "url.template";
 
-  public static final String DESTINATION_RESOURCE_NAME_ATTRIBUTE = "gcp.resource.destination.id";
+  public static final String DESTINATION_RESOURCE_ID_ATTRIBUTE = "gcp.resource.destination.id";
 
   // Visible for testing
 }

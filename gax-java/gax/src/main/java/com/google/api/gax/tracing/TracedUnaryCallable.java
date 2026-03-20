@@ -101,7 +101,7 @@ public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<Requ
       String resourceName =
           resourceNameExtractor != null ? resourceNameExtractor.extract(request) : null;
       if (!Strings.isNullOrEmpty(resourceName)) {
-        finalContext = finalContext.toBuilder().setDestinationResourceName(resourceName).build();
+        finalContext = finalContext.toBuilder().setDestinationResourceId(resourceName).build();
       }
       tracer = tracerFactory.newTracer(context.getTracer(), finalContext);
     } else {
