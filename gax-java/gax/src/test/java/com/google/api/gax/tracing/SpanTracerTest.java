@@ -86,4 +86,44 @@ class SpanTracerTest {
             io.opentelemetry.api.common.AttributeKey.stringKey(SpanTracer.LANGUAGE_ATTRIBUTE),
             SpanTracer.DEFAULT_LANGUAGE);
   }
+
+  @Test
+  void testResponseHeadersReceived_setsContentLengthAttribute() {
+    spanTracer.attemptStarted(new Object(), 1);
+
+    java.util.Map<String, Object> headers = new java.util.HashMap<>();
+    headers.put("Content-Length", 12345L);
+    spanTracer.responseHeadersReceived(headers);
+
+    verify(span).setAttribute(ObservabilityAttributes.HTTP_RESPONSE_BODY_SIZE, 12345L);
+  }
+
+  @Test
+  void testResponseHeadersReceived_variousContentLengthStringFormats() {
+    spanTracer.attemptStarted(new Object(), 1);
+
+    java.util.Map<String, Object> headers = new java.util.HashMap<>();
+    headers.put("content-length", "6789");
+    spanTracer.responseHeadersReceived(headers);
+
+    verify(span).setAttribute(ObservabilityAttributes.HTTP_RESPONSE_BODY_SIZE, 6789L);
+  }
+
+  @Test
+  void testResponseHeadersReceived_invalidOrMissingContentLength() {
+    spanTracer.attemptStarted(new Object(), 1);
+
+    java.util.Map<String, Object> headers = new java.util.HashMap<>();
+    headers.put("Content-Length", "invalid");
+    spanTracer.responseHeadersReceived(headers);
+
+    headers.clear();
+    headers.put("Other-Header", "123");
+    spanTracer.responseHeadersReceived(headers);
+
+    verify(span, org.mockito.Mockito.never())
+        .setAttribute(
+            org.mockito.ArgumentMatchers.eq(ObservabilityAttributes.HTTP_RESPONSE_BODY_SIZE),
+            org.mockito.ArgumentMatchers.anyLong());
+  }
 }
