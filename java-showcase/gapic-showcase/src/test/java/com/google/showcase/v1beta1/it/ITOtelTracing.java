@@ -143,6 +143,18 @@ class ITOtelTracing {
                   .get(AttributeKey.stringKey(ObservabilityAttributes.VERSION_ATTRIBUTE)))
           .isEqualTo("0.0.0-SNAPSHOT");
       // {x-version-update-end}
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(
+                      AttributeKey.stringKey(
+                          ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE)))
+          .isEqualTo("OK");
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(AttributeKey.longKey(ObservabilityAttributes.RPC_GRPC_STATUS_ATTRIBUTE)))
+          .isEqualTo(0L);
     }
   }
 
@@ -201,6 +213,12 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.HTTP_URL_TEMPLATE_ATTRIBUTE)))
           .isEqualTo("v1beta1/echo:echo");
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(
+                      AttributeKey.longKey(ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE)))
+          .isEqualTo(200L);
     }
   }
 }
