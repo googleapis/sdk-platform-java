@@ -86,10 +86,37 @@ public class SpanTracer implements ApiTracer {
   }
 
   @Override
-  public void recordResponseSize(long responseSize) {
+  public void responseHeadersReceived(java.util.Map<String, ?> headers) {
     if (attemptHandle != null) {
-      attemptHandle.setAttribute(ObservabilityAttributes.HTTP_RESPONSE_BODY_SIZE, responseSize);
+      long contentLength = extractContentLength(headers);
+      if (contentLength >= 0) {
+        attemptHandle.setAttribute(ObservabilityAttributes.HTTP_RESPONSE_BODY_SIZE, contentLength);
+      }
     }
+  }
+
+  private long extractContentLength(java.util.Map<String, ?> headers) {
+    if (headers == null) {
+      return -1;
+    }
+    for (Map.Entry<String, ?> entry : headers.entrySet()) {
+      if ("Content-Length".equalsIgnoreCase(entry.getKey())) {
+        Object value = entry.getValue();
+        if (value != null) {
+          try {
+            String contentLengthStr =
+                value instanceof java.util.List
+                    ? ((java.util.List<?>) value).get(0).toString()
+                    : value.toString();
+            return Long.parseLong(contentLengthStr);
+          } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            // Ignore invalid Content-Length
+          }
+        }
+        break;
+      }
+    }
+    return -1;
   }
 
   private void endAttempt() {

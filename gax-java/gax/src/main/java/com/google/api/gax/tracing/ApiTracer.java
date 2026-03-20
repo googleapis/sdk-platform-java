@@ -179,8 +179,8 @@ public interface ApiTracer {
   default void responseReceived() {}
   ;
 
-  /** Adds an annotation that a streaming response has been received with size. */
-  default void recordResponseSize(long responseSize) {}
+  /** Adds an annotation that a streaming response has been received with its headers. */
+  default void responseHeadersReceived(java.util.Map<String, ?> headers) {}
   ;
 
   /** Adds an annotation that a streaming request has been sent. */

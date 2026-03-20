@@ -163,11 +163,11 @@ public class BaseApiTracerTest {
   }
 
   @Test
-  void testRecordResponseSize() {
+  void testResponseHeadersReceived() {
     Throwable notExpected = null;
     try {
       BaseApiTracer tracer = new BaseApiTracer();
-      tracer.recordResponseSize(10);
+      tracer.responseHeadersReceived(java.util.Collections.emptyMap());
     } catch (Exception ex) {
       notExpected = ex;
     }

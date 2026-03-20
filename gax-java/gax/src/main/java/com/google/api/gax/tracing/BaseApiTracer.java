@@ -140,7 +140,7 @@ public class BaseApiTracer implements ApiTracer {
   }
 
   @Override
-  public void recordResponseSize(long responseSize) {
+  public void responseHeadersReceived(java.util.Map<String, ?> headers) {
     // noop
   }
 

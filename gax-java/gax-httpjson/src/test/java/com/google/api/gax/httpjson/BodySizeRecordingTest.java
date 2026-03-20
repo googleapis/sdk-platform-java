@@ -38,7 +38,6 @@ import com.google.api.gax.rpc.ResponseObserver;
 import com.google.api.gax.rpc.StreamController;
 import com.google.auth.Credentials;
 import com.google.protobuf.Field;
-import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -216,14 +215,8 @@ class BodySizeRecordingTest {
 
     assertThat(receivedResponses).hasSize(2);
 
-    // Verify response size
-    // MockHttpService server-streaming response construction adds [ ] and ,
-    String resp1Json = methodServerStreaming.getResponseParser().serialize(response1);
-    String resp2Json = methodServerStreaming.getResponseParser().serialize(response2);
-    long expectedTotalResponseSize =
-        ("[" + resp1Json + "," + resp2Json + "]").getBytes(StandardCharsets.UTF_8).length;
-
-    assertThat(tracer.getResponseReceivedSize()).isEqualTo(expectedTotalResponseSize);
+    // Verify response size (0 because streaming chunked responses don't include Content-Length)
+    assertThat(tracer.getResponseReceivedSize()).isEqualTo(0);
     // Server-streaming calls should call responseReceived() for EACH message
     assertThat(tracer.getResponsesReceived()).isEqualTo(2);
     streamingChannel.shutdownNow();
