@@ -111,11 +111,7 @@ public class TestApiTracer implements ApiTracer {
       if ("Content-Length".equalsIgnoreCase(entry.getKey())) {
         Object value = entry.getValue();
         if (value != null) {
-          try {
-            return Long.parseLong(String.valueOf(value));
-          } catch (NumberFormatException e) {
-            // Ignore invalid Content-Length
-          }
+          return Long.parseLong(String.valueOf(value));
         }
         break;
       }

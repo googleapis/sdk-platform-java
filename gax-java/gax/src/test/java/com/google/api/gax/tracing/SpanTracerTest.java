@@ -110,14 +110,10 @@ class SpanTracerTest {
   }
 
   @Test
-  void testResponseHeadersReceived_invalidOrMissingContentLength() {
+  void testResponseHeadersReceived_missingContentLength() {
     spanTracer.attemptStarted(new Object(), 1);
 
     java.util.Map<String, Object> headers = new java.util.HashMap<>();
-    headers.put("Content-Length", "invalid");
-    spanTracer.responseHeadersReceived(headers);
-
-    headers.clear();
     headers.put("Other-Header", "123");
     spanTracer.responseHeadersReceived(headers);
 

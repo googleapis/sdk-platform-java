@@ -160,12 +160,7 @@ public class SpanTracer implements ApiTracer {
     if (value == null) {
       return -1;
     }
-    try {
-      return Long.parseLong(String.valueOf(value));
-    } catch (NumberFormatException e) {
-      // Ignore invalid Content-Length
-      return -1;
-    }
+    return Long.parseLong(String.valueOf(value));
   }
 
   private void endAttempt() {
