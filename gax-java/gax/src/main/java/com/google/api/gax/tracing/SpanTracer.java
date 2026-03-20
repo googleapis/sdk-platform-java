@@ -58,14 +58,44 @@ public class SpanTracer implements ApiTracer {
    *
    * @param tracer the {@link Tracer} to use for recording spans
    * @param apiTracerContext the {@link ApiTracerContext} to use for recording spans
+   */
+  public SpanTracer(Tracer tracer, ApiTracerContext apiTracerContext) {
+    this.tracer = tracer;
+    this.apiTracerContext = apiTracerContext;
+    this.attemptSpanName = resolveAttemptSpanName(apiTracerContext);
+    this.attemptAttributes = new HashMap<>();
+    buildAttributes();
+  }
+
+  /**
+   * Creates a new instance of {@code SpanTracer} with an explicitly provided span name.
+   *
+   * @param tracer the {@link Tracer} to use for recording spans
+   * @param apiTracerContext the {@link ApiTracerContext} to use for recording spans
    * @param attemptSpanName the name of the individual attempt spans
    */
-  public SpanTracer(Tracer tracer, ApiTracerContext apiTracerContext, String attemptSpanName) {
+  @InternalApi
+  SpanTracer(Tracer tracer, ApiTracerContext apiTracerContext, String attemptSpanName) {
     this.tracer = tracer;
     this.attemptSpanName = attemptSpanName;
     this.apiTracerContext = apiTracerContext;
     this.attemptAttributes = new HashMap<>();
     buildAttributes();
+  }
+
+  private static String resolveAttemptSpanName(ApiTracerContext apiTracerContext) {
+    if (apiTracerContext.transport() == ApiTracerContext.Transport.GRPC) {
+      // gRPC Uses the full method name as span name.
+      return apiTracerContext.fullMethodName();
+    } else if (apiTracerContext.httpMethod() == null
+        || apiTracerContext.httpPathTemplate() == null) {
+      // HTTP method name without necessary components defaults to the full method name
+      return apiTracerContext.fullMethodName();
+    } else {
+      // We construct the span name with HTTP method and path template.
+      return String.format(
+          "%s %s", apiTracerContext.httpMethod(), apiTracerContext.httpPathTemplate());
+    }
   }
 
   private void buildAttributes() {

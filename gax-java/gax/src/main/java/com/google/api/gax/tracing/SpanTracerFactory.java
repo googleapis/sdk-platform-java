@@ -79,21 +79,7 @@ public class SpanTracerFactory implements ApiTracerFactory {
   @Override
   public ApiTracer newTracer(ApiTracer parent, ApiTracerContext apiTracerContext) {
     ApiTracerContext mergedContext = this.apiTracerContext.merge(apiTracerContext);
-
-    String attemptSpanName;
-    if (mergedContext.transport() == ApiTracerContext.Transport.GRPC) {
-      // gRPC Uses the full method name as span name.
-      attemptSpanName = mergedContext.fullMethodName();
-    } else if (mergedContext.httpMethod() == null || mergedContext.httpPathTemplate() == null) {
-      // HTTP method name without necessary components defaults to the full method name
-      attemptSpanName = mergedContext.fullMethodName();
-    } else {
-      // We construct the span name with HTTP method and path template.
-      attemptSpanName =
-          String.format("%s %s", mergedContext.httpMethod(), mergedContext.httpPathTemplate());
-    }
-
-    return new SpanTracer(tracer, mergedContext, attemptSpanName);
+    return new SpanTracer(tracer, mergedContext);
   }
 
   @Override
