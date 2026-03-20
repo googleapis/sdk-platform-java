@@ -45,7 +45,6 @@ import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.tracing.ApiTracerContext;
-import com.google.api.gax.tracing.SpanName;
 import com.google.api.gax.tracing.TracedUnaryCallable;
 import javax.annotation.Nonnull;
 
@@ -220,11 +219,6 @@ public class HttpJsonCallableFactory {
 
     callable = Callables.retrying(callable, streamingCallSettings, clientContext);
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
-  }
-
-  @InternalApi("Visible for testing")
-  static SpanName getSpanName(@Nonnull ApiMethodDescriptor<?, ?> methodDescriptor) {
-    return SpanName.of(getApiTracerContext(methodDescriptor));
   }
 
   static ApiTracerContext getApiTracerContext(@Nonnull ApiMethodDescriptor<?, ?> methodDescriptor) {

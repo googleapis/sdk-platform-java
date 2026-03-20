@@ -86,6 +86,4 @@ public class ObservabilityAttributes {
   public static final String URL_TEMPLATE_ATTRIBUTE = "url.template";
 
   public static final String DESTINATION_RESOURCE_ID_ATTRIBUTE = "gcp.resource.destination.id";
-
-  // Visible for testing
 }
