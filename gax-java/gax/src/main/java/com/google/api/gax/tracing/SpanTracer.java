@@ -122,10 +122,10 @@ public class SpanTracer implements ApiTracer {
 
   @Override
   public void responseHeadersReceived(java.util.Map<String, ?> headers) {
-    if (attemptHandle != null) {
+    if (attemptSpan != null) {
       long contentLength = extractContentLength(headers);
       if (contentLength >= 0) {
-        attemptHandle.setAttribute(ObservabilityAttributes.HTTP_RESPONSE_BODY_SIZE, contentLength);
+        attemptSpan.setAttribute(ObservabilityAttributes.HTTP_RESPONSE_BODY_SIZE, contentLength);
       }
     }
   }
@@ -136,22 +136,26 @@ public class SpanTracer implements ApiTracer {
     }
     for (Map.Entry<String, ?> entry : headers.entrySet()) {
       if ("Content-Length".equalsIgnoreCase(entry.getKey())) {
-        Object value = entry.getValue();
-        if (value != null) {
-          try {
-            String contentLengthStr =
-                value instanceof java.util.List
-                    ? ((java.util.List<?>) value).get(0).toString()
-                    : value.toString();
-            return Long.parseLong(contentLengthStr);
-          } catch (NumberFormatException | IndexOutOfBoundsException e) {
-            // Ignore invalid Content-Length
-          }
-        }
-        break;
+        return parseContentLength(entry.getValue());
       }
     }
     return -1;
+  }
+
+  private long parseContentLength(Object value) {
+    if (value == null) {
+      return -1;
+    }
+    try {
+      String contentLengthStr =
+          value instanceof java.util.List
+              ? ((java.util.List<?>) value).get(0).toString()
+              : value.toString();
+      return Long.parseLong(contentLengthStr);
+    } catch (NumberFormatException | IndexOutOfBoundsException e) {
+      // Ignore invalid Content-Length
+      return -1;
+    }
   }
 
   private void endAttempt() {
