@@ -47,4 +47,13 @@ public class AlreadyExistsException extends ApiException {
       Throwable cause, StatusCode statusCode, boolean retryable, ErrorDetails errorDetails) {
     super(cause, statusCode, retryable, errorDetails);
   }
+
+  public AlreadyExistsException(
+      String message,
+      Throwable cause,
+      StatusCode statusCode,
+      boolean retryable,
+      ErrorDetails errorDetails) {
+    super(message, cause, statusCode, retryable, errorDetails);
+  }
 }

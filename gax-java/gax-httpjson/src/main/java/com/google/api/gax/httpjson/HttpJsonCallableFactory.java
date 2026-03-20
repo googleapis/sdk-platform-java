@@ -45,7 +45,6 @@ import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.tracing.ApiTracerContext;
-import com.google.api.gax.tracing.SpanName;
 import com.google.api.gax.tracing.TracedUnaryCallable;
 import javax.annotation.Nonnull;
 
@@ -230,6 +229,8 @@ public class HttpJsonCallableFactory {
   static ApiTracerContext getApiTracerContext(@Nonnull ApiMethodDescriptor<?, ?> methodDescriptor) {
     return ApiTracerContext.newBuilder()
         .setFullMethodName(methodDescriptor.getFullMethodName())
+        .setHttpMethod(methodDescriptor.getHttpMethod())
+        .setHttpPathTemplate(methodDescriptor.getRequestFormatter().getPathTemplate().toRawString())
         .setTransport(ApiTracerContext.Transport.HTTP)
         .setLibraryMetadata(LibraryMetadata.empty())
         .build();
