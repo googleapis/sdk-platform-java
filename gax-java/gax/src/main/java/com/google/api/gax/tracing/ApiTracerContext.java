@@ -164,10 +164,6 @@ public abstract class ApiTracerContext {
   @Nullable
   public abstract String urlDomain();
 
-  /** The url template of the request (e.g. /v1/{name}:access). */
-  @Nullable
-  public abstract String urlTemplate();
-
   /** The destination resource name of the request (e.g. projects/p/locations/l/topics/t). */
   @Nullable
   public abstract String destinationResourceName();
@@ -282,9 +278,6 @@ public abstract class ApiTracerContext {
     if (!Strings.isNullOrEmpty(other.urlDomain())) {
       builder.setUrlDomain(other.urlDomain());
     }
-    if (other.urlTemplate() != null) {
-      builder.setUrlTemplate(other.urlTemplate());
-    }
     if (other.destinationResourceName() != null) {
       builder.setDestinationResourceName(other.destinationResourceName());
     }
@@ -322,8 +315,6 @@ public abstract class ApiTracerContext {
     public abstract Builder setServiceName(@Nullable String serviceName);
 
     public abstract Builder setUrlDomain(@Nullable String urlDomain);
-
-    public abstract Builder setUrlTemplate(@Nullable String urlTemplate);
 
     public abstract Builder setDestinationResourceName(@Nullable String destinationResourceName);
 
