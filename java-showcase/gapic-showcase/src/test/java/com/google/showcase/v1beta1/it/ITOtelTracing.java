@@ -33,7 +33,6 @@ package com.google.showcase.v1beta1.it;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.gax.tracing.ObservabilityAttributes;
-import com.google.api.gax.tracing.OpenTelemetryTraceManager;
 import com.google.api.gax.tracing.SpanTracer;
 import com.google.api.gax.tracing.SpanTracerFactory;
 import com.google.showcase.v1beta1.EchoClient;
@@ -84,8 +83,7 @@ class ITOtelTracing {
 
   @Test
   void testTracing_successfulEcho_grpc() throws Exception {
-    SpanTracerFactory tracingFactory =
-        new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
+    SpanTracerFactory tracingFactory = new SpanTracerFactory(openTelemetrySdk);
 
     try (EchoClient client =
         TestClientInitializer.createGrpcEchoClientOpentelemetry(tracingFactory)) {
@@ -148,8 +146,7 @@ class ITOtelTracing {
 
   @Test
   void testTracing_successfulEcho_httpjson() throws Exception {
-    SpanTracerFactory tracingFactory =
-        new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
+    SpanTracerFactory tracingFactory = new SpanTracerFactory(openTelemetrySdk);
 
     try (EchoClient client =
         TestClientInitializer.createHttpJsonEchoClientOpentelemetry(tracingFactory)) {
