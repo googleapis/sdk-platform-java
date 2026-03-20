@@ -481,7 +481,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setVersion(Version.VERSION).build();
   }
 
   /** Builder for CloudRedisStubSettings. */

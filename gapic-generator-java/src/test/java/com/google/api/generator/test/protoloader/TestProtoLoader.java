@@ -74,6 +74,7 @@ public class TestProtoLoader {
           + " to have the values echoed in the response trailers.";
   private static final String ECHO_SERVICE_REPOSITORY = "googleapis/sdk-platform-java";
   private static final String ECHO_SERVICE_ARTIFACT = "com.google.cloud:gapic-showcase";
+  private static final String LOGGING_SERVICE_ARTIFACT = "com.google.cloud:google-cloud-logging";
   private final String testFilesDirectory;
   private final Transport transport;
 
@@ -505,6 +506,7 @@ public class TestProtoLoader {
         .setServiceConfig(config)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(transport)
+        .setArtifact(LOGGING_SERVICE_ARTIFACT)
         .build();
   }
 

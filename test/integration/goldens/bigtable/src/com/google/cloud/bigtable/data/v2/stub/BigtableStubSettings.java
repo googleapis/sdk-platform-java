@@ -261,7 +261,7 @@ public class BigtableStubSettings extends StubSettings<BigtableStubSettings> {
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setVersion(Version.VERSION).build();
   }
 
   /** Builder for BigtableStubSettings. */
