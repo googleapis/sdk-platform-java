@@ -130,6 +130,12 @@ public class SpanTracer implements ApiTracer {
     }
   }
 
+  /**
+   * Extracts the Content-Length header value from the response headers, if available.
+   *
+   * @param headers the map of response headers.
+   * @return the content length in bytes, or -1 if the header is missing or malformed.
+   */
   private long extractContentLength(java.util.Map<String, ?> headers) {
     if (headers == null) {
       return -1;
@@ -142,6 +148,12 @@ public class SpanTracer implements ApiTracer {
     return -1;
   }
 
+  /**
+   * Safely parses the content length Object representation (e.g. List or String) into a long integer.
+   *
+   * @param value the header value to parse.
+   * @return the parsed content length value, or -1 if it was null or failed to parse.
+   */
   private long parseContentLength(Object value) {
     if (value == null) {
       return -1;

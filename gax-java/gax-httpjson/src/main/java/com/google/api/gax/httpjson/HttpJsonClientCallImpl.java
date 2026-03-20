@@ -34,7 +34,6 @@ import com.google.api.gax.httpjson.ApiMethodDescriptor.MethodType;
 import com.google.api.gax.httpjson.HttpRequestRunnable.ResultListener;
 import com.google.api.gax.httpjson.HttpRequestRunnable.RunnableResult;
 import com.google.api.gax.rpc.StatusCode;
-import com.google.api.gax.tracing.ApiTracer;
 import com.google.common.base.Preconditions;
 import com.google.errorprone.annotations.concurrent.GuardedBy;
 import java.io.IOException;
@@ -435,12 +434,6 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
     ResponseT message =
         methodDescriptor.getResponseParser().parse(responseReader, callOptions.getTypeRegistry());
 
-    ApiTracer tracer = callOptions.getTracer();
-    if (tracer != null) {
-      if (methodDescriptor.getType() == MethodType.SERVER_STREAMING) {
-        tracer.responseReceived();
-      }
-    }
     pendingNotifications.offer(new OnMessageNotificationTask<>(listener, message));
 
     return allMessagesConsumed;
