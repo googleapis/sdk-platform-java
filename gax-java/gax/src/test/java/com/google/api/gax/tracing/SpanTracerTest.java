@@ -96,7 +96,7 @@ class SpanTracerTest {
         .doesNotContainKey(ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE);
 
     // First retry
-    grpcTracer.attemptStarted(new Object(), 0);
+    grpcTracer.attemptStarted(new Object(), 1);
     verify(recorder, org.mockito.Mockito.times(2))
         .createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
     Map<String, Object> capturedAttributes = (Map<String, Object>) attributesCaptor.getValue();
@@ -106,10 +106,10 @@ class SpanTracerTest {
         .doesNotContainKey(ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE);
 
     // N-th retry
-    grpcTracer.attemptStarted(new Object(), 0);
-    grpcTracer.attemptStarted(new Object(), 0);
-    grpcTracer.attemptStarted(new Object(), 0);
-    grpcTracer.attemptStarted(new Object(), 0);
+    grpcTracer.attemptStarted(new Object(), 2);
+    grpcTracer.attemptStarted(new Object(), 3);
+    grpcTracer.attemptStarted(new Object(), 4);
+    grpcTracer.attemptStarted(new Object(), 5);
     verify(recorder, org.mockito.Mockito.times(6))
         .createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
     capturedAttributes = (Map<String, Object>) attributesCaptor.getValue();
@@ -140,7 +140,7 @@ class SpanTracerTest {
         .doesNotContainKey(ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE);
 
     // First retry
-    httpTracer.attemptStarted(new Object(), 0);
+    httpTracer.attemptStarted(new Object(), 1);
     verify(recorder, org.mockito.Mockito.times(2))
         .createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
     capturedAttributes = (Map<String, Object>) attributesCaptor.getValue();
@@ -150,10 +150,10 @@ class SpanTracerTest {
         .containsEntry(ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE, 1L);
 
     // N-th retry
-    httpTracer.attemptStarted(new Object(), 0);
-    httpTracer.attemptStarted(new Object(), 0);
-    httpTracer.attemptStarted(new Object(), 0);
-    httpTracer.attemptStarted(new Object(), 0);
+    httpTracer.attemptStarted(new Object(), 2);
+    httpTracer.attemptStarted(new Object(), 3);
+    httpTracer.attemptStarted(new Object(), 4);
+    httpTracer.attemptStarted(new Object(), 5);
     verify(recorder, org.mockito.Mockito.times(6))
         .createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
     capturedAttributes = (Map<String, Object>) attributesCaptor.getValue();
