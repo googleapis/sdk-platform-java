@@ -60,9 +60,7 @@ public interface ApiTracerFactory {
    * @param spanName the name of the new span
    * @param operationType the type of operation that the tracer will trace
    */
-  default ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    return BaseApiTracer.getInstance();
-  }
+  ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType);
 
   /**
    * Create a new {@link ApiTracer} that will be a child of the current context.
