@@ -209,6 +209,10 @@ public abstract class ApiTracerContext {
         attributes.put(ObservabilityAttributes.HTTP_URL_TEMPLATE_ATTRIBUTE, httpPathTemplate());
       }
     }
+    if (!Strings.isNullOrEmpty(destinationResourceName())) {
+      attributes.put(
+          ObservabilityAttributes.DESTINATION_RESOURCE_NAME_ATTRIBUTE, destinationResourceName());
+    }
     return attributes;
   }
 
@@ -236,10 +240,6 @@ public abstract class ApiTracerContext {
       if (!Strings.isNullOrEmpty(httpPathTemplate())) {
         attributes.put(ObservabilityAttributes.URL_TEMPLATE_ATTRIBUTE, httpPathTemplate());
       }
-    }
-    if (!Strings.isNullOrEmpty(destinationResourceName())) {
-      attributes.put(
-          ObservabilityAttributes.DESTINATION_RESOURCE_NAME_ATTRIBUTE, destinationResourceName());
     }
     return attributes;
   }

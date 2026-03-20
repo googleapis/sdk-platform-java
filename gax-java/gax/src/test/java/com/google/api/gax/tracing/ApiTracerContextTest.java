@@ -280,13 +280,13 @@ class ApiTracerContextTest {
   }
 
   @Test
-  void testGetMetricsAttributes_destinationResourceName() {
+  void testGetAttemptAttributes_destinationResourceName() {
     ApiTracerContext context =
         ApiTracerContext.newBuilder()
             .setLibraryMetadata(LibraryMetadata.empty())
             .setDestinationResourceName("projects/123/instances/abc")
             .build();
-    Map<String, Object> attributes = context.getMetricsAttributes();
+    Map<String, Object> attributes = context.getAttemptAttributes();
 
     assertThat(attributes)
         .containsEntry(
