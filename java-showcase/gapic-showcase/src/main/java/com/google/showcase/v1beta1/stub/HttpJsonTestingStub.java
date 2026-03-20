@@ -602,6 +602,7 @@ public class HttpJsonTestingStub extends TestingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<ListSessionsRequest, ListSessionsResponse> listSessionsTransportSettings =
         HttpJsonCallSettings.<ListSessionsRequest, ListSessionsResponse>newBuilder()
@@ -618,6 +619,7 @@ public class HttpJsonTestingStub extends TestingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<ReportSessionRequest, ReportSessionResponse>
         reportSessionTransportSettings =
@@ -630,6 +632,7 @@ public class HttpJsonTestingStub extends TestingStub {
                       builder.add("name", String.valueOf(request.getName()));
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getName())
                 .build();
     HttpJsonCallSettings<ListTestsRequest, ListTestsResponse> listTestsTransportSettings =
         HttpJsonCallSettings.<ListTestsRequest, ListTestsResponse>newBuilder()
@@ -641,6 +644,7 @@ public class HttpJsonTestingStub extends TestingStub {
                   builder.add("parent", String.valueOf(request.getParent()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     HttpJsonCallSettings<DeleteTestRequest, Empty> deleteTestTransportSettings =
         HttpJsonCallSettings.<DeleteTestRequest, Empty>newBuilder()
@@ -652,6 +656,7 @@ public class HttpJsonTestingStub extends TestingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<VerifyTestRequest, VerifyTestResponse> verifyTestTransportSettings =
         HttpJsonCallSettings.<VerifyTestRequest, VerifyTestResponse>newBuilder()
@@ -663,6 +668,7 @@ public class HttpJsonTestingStub extends TestingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<ListLocationsRequest, ListLocationsResponse>
         listLocationsTransportSettings =
@@ -697,6 +703,7 @@ public class HttpJsonTestingStub extends TestingStub {
                   builder.add("resource", String.valueOf(request.getResource()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getResource())
             .build();
     HttpJsonCallSettings<GetIamPolicyRequest, Policy> getIamPolicyTransportSettings =
         HttpJsonCallSettings.<GetIamPolicyRequest, Policy>newBuilder()
@@ -708,6 +715,7 @@ public class HttpJsonTestingStub extends TestingStub {
                   builder.add("resource", String.valueOf(request.getResource()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getResource())
             .build();
     HttpJsonCallSettings<TestIamPermissionsRequest, TestIamPermissionsResponse>
         testIamPermissionsTransportSettings =
@@ -720,6 +728,7 @@ public class HttpJsonTestingStub extends TestingStub {
                       builder.add("resource", String.valueOf(request.getResource()));
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getResource())
                 .build();
 
     this.createSessionCallable =
