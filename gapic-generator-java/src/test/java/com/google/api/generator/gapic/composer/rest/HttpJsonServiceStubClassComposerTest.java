@@ -213,4 +213,15 @@ class HttpJsonServiceStubClassComposerTest {
     Assert.assertGoldenClass(this.getClass(), clazz, "HttpJsonAutoPopulateFieldTestingStub.golden");
     Assert.assertEmptySamples(clazz.samples());
   }
+
+  @Test
+  void generateHttpJsonServiceStubClass_clientResourceNameExtractor() {
+    GapicContext context = RestTestProtoLoader.instance().parseClientResourceNameExtractorTesting();
+    Service service = context.services().get(0);
+    GapicClass clazz = HttpJsonServiceStubClassComposer.instance().generate(context, service);
+
+    Assert.assertGoldenClass(
+        this.getClass(), clazz, "HttpJsonClientResourceNameExtractorStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
+  }
 }

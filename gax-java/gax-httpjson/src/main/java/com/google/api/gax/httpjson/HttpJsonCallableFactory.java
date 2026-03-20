@@ -83,7 +83,8 @@ public class HttpJsonCallableFactory {
         new TracedUnaryCallable<>(
             callable,
             clientContext.getTracerFactory(),
-            getSpanName(httpJsonCallSettings.getMethodDescriptor()));
+            getApiTracerContext(httpJsonCallSettings.getMethodDescriptor()),
+            httpJsonCallSettings.getResourceNameExtractor());
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
 
@@ -223,12 +224,14 @@ public class HttpJsonCallableFactory {
 
   @InternalApi("Visible for testing")
   static SpanName getSpanName(@Nonnull ApiMethodDescriptor<?, ?> methodDescriptor) {
-    ApiTracerContext apiTracerContext =
-        ApiTracerContext.newBuilder()
-            .setFullMethodName(methodDescriptor.getFullMethodName())
-            .setTransport(ApiTracerContext.Transport.HTTP)
-            .setLibraryMetadata(LibraryMetadata.empty())
-            .build();
-    return SpanName.of(apiTracerContext);
+    return SpanName.of(getApiTracerContext(methodDescriptor));
+  }
+
+  static ApiTracerContext getApiTracerContext(@Nonnull ApiMethodDescriptor<?, ?> methodDescriptor) {
+    return ApiTracerContext.newBuilder()
+        .setFullMethodName(methodDescriptor.getFullMethodName())
+        .setTransport(ApiTracerContext.Transport.HTTP)
+        .setLibraryMetadata(LibraryMetadata.empty())
+        .build();
   }
 }

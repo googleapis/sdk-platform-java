@@ -206,6 +206,7 @@ public class GrpcEchoStub extends EchoStub {
     GrpcCallSettings<EchoRequest, EchoResponse> echoTransportSettings =
         GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(echoMethodDescriptor)
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<ExpandRequest, EchoResponse> expandTransportSettings =
         GrpcCallSettings.<ExpandRequest, EchoResponse>newBuilder()
@@ -230,6 +231,7 @@ public class GrpcEchoStub extends EchoStub {
     GrpcCallSettings<EchoRequest, Object> collideNameTransportSettings =
         GrpcCallSettings.<EchoRequest, Object>newBuilder()
             .setMethodDescriptor(collideNameMethodDescriptor)
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<EchoRequest, Object> nestedBindingTransportSettings =
         GrpcCallSettings.<EchoRequest, Object>newBuilder()
@@ -240,14 +242,17 @@ public class GrpcEchoStub extends EchoStub {
                   builder.add("foo_bar.name", String.valueOf(request.getFooBar().getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<EchoRequest, EchoResponse> chatTransportSettings =
         GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(chatMethodDescriptor)
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<EchoRequest, EchoResponse> noBindingTransportSettings =
         GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(noBindingMethodDescriptor)
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<UpdateCaseRequest, Case> updateCaseTransportSettings =
         GrpcCallSettings.<UpdateCaseRequest, Case>newBuilder()

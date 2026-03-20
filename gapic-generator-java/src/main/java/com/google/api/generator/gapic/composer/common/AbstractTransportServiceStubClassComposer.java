@@ -331,6 +331,16 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
               .build();
     }
 
+    LambdaExpr extractor = createResourceNameExtractorClassInstance(method, messageTypes);
+    if (extractor != null) {
+      callSettingsBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(callSettingsBuilderExpr)
+              .setMethodName("setResourceNameExtractor")
+              .setArguments(extractor)
+              .build();
+    }
+
     callSettingsBuilderExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(callSettingsBuilderExpr)
@@ -1493,6 +1503,50 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return fieldName ->
         methodRequestMessage.fields().stream()
             .anyMatch(field -> field.name().equals(fieldName) && field.canBeAutoPopulated());
+  }
+
+  @Nullable
+  protected static LambdaExpr createResourceNameExtractorClassInstance(
+      Method method, ImmutableMap<String, Message> messageTypes) {
+    Field resourceNameField = getDestinationResourceNameField(method, messageTypes);
+
+    if (resourceNameField == null) {
+      return null;
+    }
+
+    VariableExpr requestVarExpr = createRequestVarExpr(method);
+    List<Statement> bodyStatements = new ArrayList<>();
+    Expr returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(requestVarExpr)
+            .setMethodName(
+                String.format("get%s", JavaStyle.toUpperCamelCase(resourceNameField.name())))
+            .setReturnType(TypeNode.STRING)
+            .build();
+
+    return LambdaExpr.builder()
+        .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
+        .setBody(bodyStatements)
+        .setReturnExpr(returnExpr)
+        .build();
+  }
+
+  private static Field getDestinationResourceNameField(
+      Method method, ImmutableMap<String, Message> messageTypes) {
+    if (method.inputType().reference() == null
+        || method.inputType().reference().fullName() == null) {
+      return null;
+    }
+    String methodRequestName = method.inputType().reference().fullName();
+    Message methodRequestMessage = messageTypes.get(methodRequestName);
+    if (methodRequestMessage == null) {
+      return null;
+    }
+
+    return methodRequestMessage.fields().stream()
+        .filter(f -> f.resourceReference() != null && !f.isRepeated())
+        .findFirst()
+        .orElse(null);
   }
 
   protected LambdaExpr createRequestParamsExtractorClassInstance(

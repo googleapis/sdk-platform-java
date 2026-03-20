@@ -30,6 +30,7 @@
 package com.google.api.gax.grpc;
 
 import com.google.api.core.BetaApi;
+import com.google.api.gax.rpc.ClientResourceNameExtractor;
 import com.google.api.gax.rpc.RequestMutator;
 import com.google.api.gax.rpc.RequestParamsExtractor;
 import io.grpc.MethodDescriptor;
@@ -38,12 +39,14 @@ import io.grpc.MethodDescriptor;
 public class GrpcCallSettings<RequestT, ResponseT> {
   private final MethodDescriptor<RequestT, ResponseT> methodDescriptor;
   private final RequestParamsExtractor<RequestT> paramsExtractor;
+  private final ClientResourceNameExtractor<RequestT> resourceNameExtractor;
   private final RequestMutator<RequestT> requestMutator;
   private final boolean alwaysAwaitTrailers;
 
   private GrpcCallSettings(Builder<RequestT, ResponseT> builder) {
     this.methodDescriptor = builder.methodDescriptor;
     this.paramsExtractor = builder.paramsExtractor;
+    this.resourceNameExtractor = builder.resourceNameExtractor;
     this.requestMutator = builder.requestMutator;
     this.alwaysAwaitTrailers = builder.shouldAwaitTrailers;
   }
@@ -54,6 +57,11 @@ public class GrpcCallSettings<RequestT, ResponseT> {
 
   public RequestParamsExtractor<RequestT> getParamsExtractor() {
     return paramsExtractor;
+  }
+
+  @BetaApi
+  public ClientResourceNameExtractor<RequestT> getResourceNameExtractor() {
+    return resourceNameExtractor;
   }
 
   public RequestMutator<RequestT> getRequestMutator() {
@@ -83,6 +91,7 @@ public class GrpcCallSettings<RequestT, ResponseT> {
   public static class Builder<RequestT, ResponseT> {
     private MethodDescriptor<RequestT, ResponseT> methodDescriptor;
     private RequestParamsExtractor<RequestT> paramsExtractor;
+    private ClientResourceNameExtractor<RequestT> resourceNameExtractor;
 
     private RequestMutator<RequestT> requestMutator;
     private boolean shouldAwaitTrailers;
@@ -92,6 +101,7 @@ public class GrpcCallSettings<RequestT, ResponseT> {
     private Builder(GrpcCallSettings<RequestT, ResponseT> settings) {
       this.methodDescriptor = settings.methodDescriptor;
       this.paramsExtractor = settings.paramsExtractor;
+      this.resourceNameExtractor = settings.resourceNameExtractor;
       this.requestMutator = settings.requestMutator;
       this.shouldAwaitTrailers = settings.alwaysAwaitTrailers;
     }
@@ -105,6 +115,13 @@ public class GrpcCallSettings<RequestT, ResponseT> {
     public Builder<RequestT, ResponseT> setParamsExtractor(
         RequestParamsExtractor<RequestT> paramsExtractor) {
       this.paramsExtractor = paramsExtractor;
+      return this;
+    }
+
+    @BetaApi
+    public Builder<RequestT, ResponseT> setResourceNameExtractor(
+        ClientResourceNameExtractor<RequestT> resourceNameExtractor) {
+      this.resourceNameExtractor = resourceNameExtractor;
       return this;
     }
 
