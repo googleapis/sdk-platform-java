@@ -146,7 +146,7 @@ class ObservabilityUtilsTest {
     Map<String, Object> attributes = new java.util.HashMap<>();
     ObservabilityUtils.populateStatusAttributes(attributes, null, ApiTracerContext.Transport.HTTP);
     assertThat(attributes)
-        .containsEntry(ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE, 200L);
+        .containsEntry(ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE, StatusCode.Code.OK.getHttpStatusCode());
   }
 
   @Test
@@ -164,13 +164,14 @@ class ObservabilityUtilsTest {
 
               @Override
               public Object getTransportCode() {
-                return 404;
+                return StatusCode.Code.NOT_FOUND.getHttpStatusCode();
               }
             },
             false);
     ObservabilityUtils.populateStatusAttributes(attributes, error, ApiTracerContext.Transport.HTTP);
     assertThat(attributes)
-        .containsEntry(ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE, 404L);
+        .containsEntry(ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE,
+            StatusCode.Code.NOT_FOUND.getHttpStatusCode());
   }
 
   @Test

@@ -94,18 +94,20 @@ class SpanTracerTest {
             .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
             .setTransport(ApiTracerContext.Transport.GRPC)
             .build();
-    tracer = new SpanTracer(recorder, context, ATTEMPT_SPAN_NAME);
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    spanTracer = new SpanTracer(tracer, context, ATTEMPT_SPAN_NAME);
 
-    tracer.attemptStarted(new Object(), 1);
-    tracer.attemptSucceeded();
+    spanTracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptSucceeded();
 
-    ArgumentCaptor<Map<String, Object>> attrsCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(attemptHandle).addAttributes(attrsCaptor.capture());
-    verify(attemptHandle).end();
+    ArgumentCaptor<Attributes> attrsCaptor = ArgumentCaptor.forClass(Attributes.class);
+    verify(span).setAllAttributes(attrsCaptor.capture());
+    verify(span).end();
 
-    assertThat(attrsCaptor.getValue())
-        .containsEntry(ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE, "OK");
+    assertThat(attrsCaptor.getValue().asMap())
+        .containsEntry(
+            io.opentelemetry.api.common.AttributeKey.stringKey(
+                ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE),
+            "OK");
   }
 
   @Test
@@ -115,18 +117,20 @@ class SpanTracerTest {
             .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
             .setTransport(ApiTracerContext.Transport.HTTP)
             .build();
-    tracer = new SpanTracer(recorder, context, ATTEMPT_SPAN_NAME);
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    spanTracer = new SpanTracer(tracer, context, ATTEMPT_SPAN_NAME);
 
-    tracer.attemptStarted(new Object(), 1);
-    tracer.attemptSucceeded();
+    spanTracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptSucceeded();
 
-    ArgumentCaptor<Map<String, Object>> attrsCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(attemptHandle).addAttributes(attrsCaptor.capture());
-    verify(attemptHandle).end();
+    ArgumentCaptor<Attributes> attrsCaptor = ArgumentCaptor.forClass(Attributes.class);
+    verify(span).setAllAttributes(attrsCaptor.capture());
+    verify(span).end();
 
-    assertThat(attrsCaptor.getValue())
-        .containsEntry(ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE, 200L);
+    assertThat(attrsCaptor.getValue().asMap())
+        .containsEntry(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE),
+            200L);
   }
 
   @Test
@@ -136,8 +140,7 @@ class SpanTracerTest {
             .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
             .setTransport(ApiTracerContext.Transport.GRPC)
             .build();
-    tracer = new SpanTracer(recorder, context, ATTEMPT_SPAN_NAME);
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    spanTracer = new SpanTracer(tracer, context, ATTEMPT_SPAN_NAME);
 
     com.google.api.gax.rpc.ApiException exception =
         new com.google.api.gax.rpc.ApiException(
@@ -156,15 +159,18 @@ class SpanTracerTest {
             },
             false);
 
-    tracer.attemptStarted(new Object(), 1);
-    tracer.attemptFailedRetriesExhausted(exception);
+    spanTracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptFailedRetriesExhausted(exception);
 
-    ArgumentCaptor<Map<String, Object>> attrsCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(attemptHandle).addAttributes(attrsCaptor.capture());
-    verify(attemptHandle).end();
+    ArgumentCaptor<Attributes> attrsCaptor = ArgumentCaptor.forClass(Attributes.class);
+    verify(span).setAllAttributes(attrsCaptor.capture());
+    verify(span).end();
 
-    assertThat(attrsCaptor.getValue())
-        .containsEntry(ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE, "NOT_FOUND");
+    assertThat(attrsCaptor.getValue().asMap())
+        .containsEntry(
+            io.opentelemetry.api.common.AttributeKey.stringKey(
+                ObservabilityAttributes.RPC_RESPONSE_STATUS_ATTRIBUTE),
+            "NOT_FOUND");
   }
 
   @Test
@@ -174,8 +180,7 @@ class SpanTracerTest {
             .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
             .setTransport(ApiTracerContext.Transport.HTTP)
             .build();
-    tracer = new SpanTracer(recorder, context, ATTEMPT_SPAN_NAME);
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    spanTracer = new SpanTracer(tracer, context, ATTEMPT_SPAN_NAME);
 
     com.google.api.gax.rpc.ApiException exception =
         new com.google.api.gax.rpc.ApiException(
@@ -194,14 +199,17 @@ class SpanTracerTest {
             },
             false);
 
-    tracer.attemptStarted(new Object(), 1);
-    tracer.attemptFailedRetriesExhausted(exception);
+    spanTracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptFailedRetriesExhausted(exception);
 
-    ArgumentCaptor<Map<String, Object>> attrsCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(attemptHandle).addAttributes(attrsCaptor.capture());
-    verify(attemptHandle).end();
+    ArgumentCaptor<Attributes> attrsCaptor = ArgumentCaptor.forClass(Attributes.class);
+    verify(span).setAllAttributes(attrsCaptor.capture());
+    verify(span).end();
 
-    assertThat(attrsCaptor.getValue())
-        .containsEntry(ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE, 404L);
+    assertThat(attrsCaptor.getValue().asMap())
+        .containsEntry(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE),
+            404L);
   }
 }
