@@ -361,14 +361,15 @@ public class TestClientInitializer {
     return IdentityClient.create(identityStubSettings.createStub());
   }
 
-  public static IdentityClient createHttpJsonIdentityClientOpentelemetry(ApiTracerFactory tracerFactory)
-      throws Exception {
+  public static IdentityClient createHttpJsonIdentityClientOpentelemetry(
+      ApiTracerFactory tracerFactory) throws Exception {
     IdentitySettings httpJsonIdentitySettings =
         IdentitySettings.newHttpJsonBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
                 IdentitySettings.defaultHttpJsonTransportProviderBuilder()
-                    .setHttpTransport(new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
                     .setEndpoint(DEFAULT_HTTPJSON_ENDPOINT)
                     .build())
             .build();
