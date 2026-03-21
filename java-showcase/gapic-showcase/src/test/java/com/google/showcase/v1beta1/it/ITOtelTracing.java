@@ -45,6 +45,8 @@ import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoSettings;
+import com.google.showcase.v1beta1.GetUserRequest;
+import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import com.google.showcase.v1beta1.stub.EchoStub;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
@@ -92,20 +94,24 @@ class ITOtelTracing {
   }
 
   @Test
-  void testTracing_successfulEcho_grpc() throws Exception {
+  void testTracing_successfulIdentityGetUser_grpc() throws Exception {
     SpanTracerFactory tracingFactory = new SpanTracerFactory(openTelemetrySdk);
 
-    try (EchoClient client =
-        TestClientInitializer.createGrpcEchoClientOpentelemetry(tracingFactory)) {
+    try (IdentityClient client =
+        TestClientInitializer.createGrpcIdentityClientOpentelemetry(tracingFactory)) {
 
-      client.echo(EchoRequest.newBuilder().setContent("tracing-test").build());
+      try {
+        client.getUser(GetUserRequest.newBuilder().setName("users/test-user").build());
+      } catch (Exception e) {
+        // Ignored, the showcase server may not have this user, but trace is still generated.
+      }
 
       List<SpanData> spans = spanExporter.getFinishedSpanItems();
       assertThat(spans).isNotEmpty();
 
       SpanData attemptSpan =
           spans.stream()
-              .filter(span -> span.getName().equals("google.showcase.v1beta1.Echo/Echo"))
+              .filter(span -> span.getName().equals("google.showcase.v1beta1.Identity/GetUser"))
               .findFirst()
               .orElseThrow(() -> new AssertionError("Incorrect span name"));
       assertThat(attemptSpan.getKind()).isEqualTo(SpanKind.CLIENT);
@@ -143,7 +149,7 @@ class ITOtelTracing {
               attemptSpan
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE)))
-          .isEqualTo("google.showcase.v1beta1.Echo/Echo");
+          .isEqualTo("google.showcase.v1beta1.Identity/GetUser");
       // {x-version-update-start:gapic-showcase:current}
       assertThat(
               attemptSpan
@@ -151,27 +157,38 @@ class ITOtelTracing {
                   .get(AttributeKey.stringKey(ObservabilityAttributes.VERSION_ATTRIBUTE)))
           .isEqualTo("0.0.0-SNAPSHOT");
       // {x-version-update-end}
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(
+                      AttributeKey.stringKey(
+                          ObservabilityAttributes.DESTINATION_RESOURCE_ID_ATTRIBUTE)))
+          .isEqualTo("users/test-user");
     }
   }
 
   @Test
-  void testTracing_successfulEcho_httpjson() throws Exception {
+  void testTracing_successfulIdentityGetUser_httpjson() throws Exception {
     SpanTracerFactory tracingFactory = new SpanTracerFactory(openTelemetrySdk);
 
-    try (EchoClient client =
-        TestClientInitializer.createHttpJsonEchoClientOpentelemetry(tracingFactory)) {
+    try (IdentityClient client =
+        TestClientInitializer.createHttpJsonIdentityClientOpentelemetry(tracingFactory)) {
 
-      client.echo(EchoRequest.newBuilder().setContent("tracing-test").build());
+      try {
+        client.getUser(GetUserRequest.newBuilder().setName("users/test-user").build());
+      } catch (Exception e) {
+        // Ignored, the showcase server may not have this user, but trace is still generated.
+      }
 
       List<SpanData> spans = spanExporter.getFinishedSpanItems();
       assertThat(spans).isNotEmpty();
 
       SpanData attemptSpan =
           spans.stream()
-              .filter(span -> span.getName().equals("POST v1beta1/echo:echo"))
+              .filter(span -> span.getName().equals("GET v1beta1/{name=users/*}"))
               .findFirst()
               .orElseThrow(
-                  () -> new AssertionError("Attempt span 'POST v1beta1/echo:echo' not found"));
+                  () -> new AssertionError("Attempt span 'GET v1beta1/{name=users/*}' not found"));
       assertThat(attemptSpan.getKind()).isEqualTo(SpanKind.CLIENT);
       assertThat(
               attemptSpan
@@ -202,12 +219,19 @@ class ITOtelTracing {
               attemptSpan
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.HTTP_METHOD_ATTRIBUTE)))
-          .isEqualTo("POST");
+          .isEqualTo("GET");
       assertThat(
               attemptSpan
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.HTTP_URL_TEMPLATE_ATTRIBUTE)))
-          .isEqualTo("v1beta1/echo:echo");
+          .isEqualTo("v1beta1/{name=users/*}");
+      assertThat(
+              attemptSpan
+                  .getAttributes()
+                  .get(
+                      AttributeKey.stringKey(
+                          ObservabilityAttributes.DESTINATION_RESOURCE_ID_ATTRIBUTE)))
+          .isEqualTo("users/test-user");
     }
   }
 
