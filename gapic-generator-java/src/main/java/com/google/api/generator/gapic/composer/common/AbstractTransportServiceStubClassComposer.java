@@ -1505,6 +1505,10 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             .anyMatch(field -> field.name().equals(fieldName) && field.canBeAutoPopulated());
   }
 
+  /**
+   * The Resource Name Extractor should only be generated if the request contains a field that has
+   * resource reference (see {@link Field#hasResourceReference()})
+   */
   @Nullable
   protected static LambdaExpr createResourceNameExtractorClassInstance(
       Method method, ImmutableMap<String, Message> messageTypes) {
@@ -1514,6 +1518,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       return null;
     }
 
+    // Expected expression: request -> request.getField()
     VariableExpr requestVarExpr = createRequestVarExpr(method);
     List<Statement> bodyStatements = new ArrayList<>();
     Expr returnExpr =
@@ -1531,6 +1536,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
         .build();
   }
 
+  // Find the first field that has resource reference in a request message
   private static Field getDestinationResourceIdField(
       Method method, ImmutableMap<String, Message> messageTypes) {
     if (method.inputType().reference() == null
@@ -1544,7 +1550,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     }
 
     return methodRequestMessage.fields().stream()
-        .filter(f -> f.resourceReference() != null && !f.isRepeated())
+        .filter(Field::hasResourceReference)
+        .filter(f -> !f.isRepeated())
         .findFirst()
         .orElse(null);
   }

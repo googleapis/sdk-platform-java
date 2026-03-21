@@ -70,13 +70,6 @@ public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<Requ
   public TracedUnaryCallable(
       UnaryCallable<RequestT, ResponseT> innerCallable,
       ApiTracerFactory tracerFactory,
-      ApiTracerContext apiTracerContext) {
-    this(innerCallable, tracerFactory, apiTracerContext, null);
-  }
-
-  public TracedUnaryCallable(
-      UnaryCallable<RequestT, ResponseT> innerCallable,
-      ApiTracerFactory tracerFactory,
       ApiTracerContext apiTracerContext,
       @Nullable ResourceNameExtractor<RequestT> resourceNameExtractor) {
     this.innerCallable = innerCallable;

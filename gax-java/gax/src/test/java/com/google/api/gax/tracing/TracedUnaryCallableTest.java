@@ -80,7 +80,8 @@ class TracedUnaryCallableTest {
     if (useContext) {
       when(tracerFactory.newTracer(any(ApiTracer.class), any(ApiTracerContext.class)))
           .thenReturn(tracer);
-      tracedUnaryCallable = new TracedUnaryCallable<>(innerCallable, tracerFactory, TRACER_CONTEXT);
+      tracedUnaryCallable =
+          new TracedUnaryCallable<>(innerCallable, tracerFactory, TRACER_CONTEXT, null);
     } else {
       when(tracerFactory.newTracer(
               any(ApiTracer.class), any(SpanName.class), eq(OperationType.Unary)))
@@ -111,12 +112,13 @@ class TracedUnaryCallableTest {
   void testOperationTypeIsSet() {
     when(tracerFactory.newTracer(any(ApiTracer.class), any(ApiTracerContext.class)))
         .thenReturn(tracer);
-    tracedUnaryCallable = new TracedUnaryCallable<>(innerCallable, tracerFactory, TRACER_CONTEXT);
+    tracedUnaryCallable =
+        new TracedUnaryCallable<>(innerCallable, tracerFactory, TRACER_CONTEXT, null);
     ApiTracerContext contextWithWrongType =
         TRACER_CONTEXT.toBuilder().setOperationType(OperationType.BidiStreaming).build();
 
     tracedUnaryCallable =
-        new TracedUnaryCallable<>(innerCallable, tracerFactory, contextWithWrongType);
+        new TracedUnaryCallable<>(innerCallable, tracerFactory, contextWithWrongType, null);
 
     innerResult = SettableApiFuture.create();
     when(innerCallable.futureCall(anyString(), any(ApiCallContext.class))).thenReturn(innerResult);
@@ -209,7 +211,8 @@ class TracedUnaryCallableTest {
 
   @Test
   void testExtractResourceNameToApiTracerContext_nullExtractor() {
-    tracedUnaryCallable = new TracedUnaryCallable<>(innerCallable, tracerFactory, TRACER_CONTEXT);
+    tracedUnaryCallable =
+        new TracedUnaryCallable<>(innerCallable, tracerFactory, TRACER_CONTEXT, null);
     ApiTracerContext context = tracedUnaryCallable.extractResourceNameToApiTracerContext("request");
     assertThat(context).isEqualTo(TRACER_CONTEXT);
   }
