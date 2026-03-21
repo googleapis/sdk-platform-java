@@ -30,12 +30,16 @@
 package com.google.api.gax.tracing;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Map;
+import io.opentelemetry.api.common.Attributes;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.SpanBuilder;
+import io.opentelemetry.api.trace.SpanKind;
+import io.opentelemetry.api.trace.Tracer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,35 +49,41 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class SpanTracerTest {
-  @Mock private TraceManager recorder;
-  @Mock private TraceManager.Span attemptHandle;
-  private SpanTracer tracer;
+  @Mock private Tracer tracer;
+  @Mock private SpanBuilder spanBuilder;
+  @Mock private Span span;
+  private SpanTracer spanTracer;
   private static final String ATTEMPT_SPAN_NAME = "Service/Method/attempt";
 
   @BeforeEach
   void setUp() {
-    tracer = new SpanTracer(recorder, ApiTracerContext.empty(), ATTEMPT_SPAN_NAME);
+    when(tracer.spanBuilder(anyString())).thenReturn(spanBuilder);
+    when(spanBuilder.setSpanKind(any(SpanKind.class))).thenReturn(spanBuilder);
+    when(spanBuilder.setAllAttributes(any(Attributes.class))).thenReturn(spanBuilder);
+    when(spanBuilder.startSpan()).thenReturn(span);
+    spanTracer = new SpanTracer(tracer, ApiTracerContext.empty(), ATTEMPT_SPAN_NAME);
   }
 
   @Test
   void testAttemptLifecycle_startsAndEndsAttemptSpan() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
-    tracer.attemptStarted(new Object(), 1);
-    tracer.attemptSucceeded();
+    spanTracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptSucceeded();
 
-    verify(attemptHandle).end();
+    verify(tracer).spanBuilder(ATTEMPT_SPAN_NAME);
+    verify(spanBuilder).setSpanKind(SpanKind.CLIENT);
+    verify(span).end();
   }
 
   @Test
   void testAttemptStarted_includesLanguageAttribute() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    spanTracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptStarted(new Object(), 1);
+    ArgumentCaptor<Attributes> attributesCaptor = ArgumentCaptor.forClass(Attributes.class);
+    verify(spanBuilder).setAllAttributes(attributesCaptor.capture());
 
-    ArgumentCaptor<Map<String, Object>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(recorder).createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
-
-    assertThat(attributesCaptor.getValue())
-        .containsEntry(SpanTracer.LANGUAGE_ATTRIBUTE, SpanTracer.DEFAULT_LANGUAGE);
+    assertThat(attributesCaptor.getValue().asMap())
+        .containsEntry(
+            io.opentelemetry.api.common.AttributeKey.stringKey(SpanTracer.LANGUAGE_ATTRIBUTE),
+            SpanTracer.DEFAULT_LANGUAGE);
   }
 }

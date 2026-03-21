@@ -65,8 +65,8 @@ mvn fmt:format
 
 The repository employs a multi-layered testing strategy to ensure the quality and correctness of the generated code:
 
-*   **Unit Tests:** Traditional unit tests for individual classes and methods.
-*   **Golden Unit Tests:** These tests generate code from test protos and compare the output to "golden" files, which are pre-approved versions of the generated code. These test cases exist inside the `gapic-generator-java` module.
+*   **Unit Tests:** Traditional unit tests for individual classes and methods. See [unit testing best practices](https://engdoc.corp.google.com/eng/doc/devguide/testing/unit/best-practices.md?cl=head&polyglot=java).
+*   **Golden Unit Tests:** These tests generate code from test protos and compare the output to "golden" files, which are pre-approved versions of the generated code. These test cases exist inside the `gapic-generator-java` module. See [GrpcServiceStubClassComposerTest](https://github.com/googleapis/sdk-platform-java/blob/main/gapic-generator-java/src/test/java/com/google/api/generator/gapic/composer/grpc/GrpcServiceStubClassComposerTest.java) for an example of golden unit tests. The steps for golden unit tests include creating a test proto, loading the test proto, generating from the test proto, and comparing the result with a golden file.
 *   **Showcase Integration Tests:** These tests run the generated Showcase client against a local Showcase server to verify end-to-end functionality. This is the preferred way of testing integration tests.
 *   **Golden Integration Tests:** These tests generate full client libraries for real Google Cloud APIs and compare them to golden versions. This is an older test strategy and showcase testing is preferred.
 
@@ -144,6 +144,6 @@ Showcase integration tests are run against a local server that implements the Sh
   specification. The format is `<type>: <description>`. The type should be one of the following: fix, feat,
   build, chore, docs, test, or refactor.
 - **Issues:** All significant changes should start with a GitHub issue.
-- **Pull Requests:** All code changes must be submitted via a pull request and require review.
+- **Pull Requests:** All code changes must be submitted via a pull request and require review. Before creating a PR, always pull latest from main, merge main to local branch and resolve any conflicts.  
 - **Testing:** All new logic should be accompanied by tests.
 - For more details, see `CONTRIBUTING.md`.
