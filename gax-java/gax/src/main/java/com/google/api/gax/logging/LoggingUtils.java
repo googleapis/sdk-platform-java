@@ -152,17 +152,13 @@ public class LoggingUtils {
    * @param logContext A map containing the structured logging context (e.g., RPC service, method,
    *     error details).
    * @param loggerProvider The provider used to obtain the logger.
-   * @param level The slf4j level to log the actionable error at.
    * @param message The human-readable error message.
    */
   public static void logActionableError(
-      Map<String, Object> logContext,
-      LoggerProvider loggerProvider,
-      org.slf4j.event.Level level,
-      String message) {
+      Map<String, Object> logContext, LoggerProvider loggerProvider, String message) {
     if (loggingEnabled) {
       org.slf4j.Logger logger = loggerProvider.getLogger();
-      Slf4jUtils.log(logger, level, logContext, message);
+      Slf4jUtils.log(logger, org.slf4j.event.Level.DEBUG, logContext, message);
     }
   }
 

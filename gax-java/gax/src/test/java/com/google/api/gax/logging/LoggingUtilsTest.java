@@ -115,7 +115,7 @@ class LoggingUtilsTest {
     when(eventBuilder.addKeyValue(anyString(), any())).thenReturn(eventBuilder);
 
     Map<String, Object> context = Collections.singletonMap("key", "value");
-    LoggingUtils.logActionableError(context, loggerProvider, org.slf4j.event.Level.DEBUG, "message");
+    LoggingUtils.logActionableError(context, loggerProvider, "message");
 
     verify(loggerProvider).getLogger();
   }
