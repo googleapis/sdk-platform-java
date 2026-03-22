@@ -98,7 +98,7 @@ class LoggingUtilsTest {
     LoggerProvider loggerProvider = mock(LoggerProvider.class);
 
     LoggingUtils.logActionableError(
-        Collections.emptyMap(), loggerProvider, org.slf4j.event.Level.DEBUG, "message");
+        Collections.<String, Object>emptyMap(), loggerProvider, "message");
 
     verify(loggerProvider, never()).getLogger();
   }
