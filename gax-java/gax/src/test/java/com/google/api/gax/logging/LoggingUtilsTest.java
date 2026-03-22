@@ -120,4 +120,3 @@ class LoggingUtilsTest {
     verify(loggerProvider).getLogger();
   }
 }
-
