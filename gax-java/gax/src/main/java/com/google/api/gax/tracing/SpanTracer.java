@@ -105,18 +105,52 @@ public class SpanTracer implements ApiTracer {
 
   @Override
   public void attemptStarted(Object request, int attemptNumber) {
+    Map<String, Object> currentAttemptAttributes = new HashMap<>(this.attemptAttributes);
+
+    if (attemptNumber > 0) {
+      ApiTracerContext.Transport transport = apiTracerContext.transport();
+      if (transport == ApiTracerContext.Transport.GRPC) {
+        currentAttemptAttributes.put(
+            ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE, (long) attemptNumber);
+      } else if (transport == ApiTracerContext.Transport.HTTP) {
+        currentAttemptAttributes.put(
+            ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE, (long) attemptNumber);
+      }
+    }
+
     SpanBuilder spanBuilder = tracer.spanBuilder(attemptSpanName);
 
     // Attempt spans are of the CLIENT kind
     spanBuilder.setSpanKind(SpanKind.CLIENT);
 
-    spanBuilder.setAllAttributes(ObservabilityUtils.toOtelAttributes(this.attemptAttributes));
+    // Pass the combined attributes to the new SpanBuilder method
+    spanBuilder.setAllAttributes(ObservabilityUtils.toOtelAttributes(currentAttemptAttributes));
 
     this.attemptSpan = spanBuilder.startSpan();
   }
 
   @Override
   public void attemptSucceeded() {
+    endAttempt();
+  }
+
+  @Override
+  public void attemptCancelled() {
+    endAttempt();
+  }
+
+  @Override
+  public void attemptFailedDuration(Throwable error, java.time.Duration delay) {
+    endAttempt();
+  }
+
+  @Override
+  public void attemptFailedRetriesExhausted(Throwable error) {
+    endAttempt();
+  }
+
+  @Override
+  public void attemptPermanentFailure(Throwable error) {
     endAttempt();
   }
 

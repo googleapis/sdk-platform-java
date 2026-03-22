@@ -84,4 +84,10 @@ public class ObservabilityAttributes {
 
   /** The url template of the request (e.g. /v1/{name}:access). */
   public static final String URL_TEMPLATE_ATTRIBUTE = "url.template";
+
+  /** The resend count of the request. Only used in HTTP transport. */
+  public static final String HTTP_RESEND_COUNT_ATTRIBUTE = "http.request.resend_count";
+
+  /** The resend count of the request. Only used in gRPC transport. */
+  public static final String GRPC_RESEND_COUNT_ATTRIBUTE = "gcp.grpc.resend_count";
 }

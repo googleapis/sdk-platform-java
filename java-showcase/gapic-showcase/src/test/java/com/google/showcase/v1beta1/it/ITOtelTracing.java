@@ -31,13 +31,23 @@
 package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.gax.core.NoCredentialsProvider;
+import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.rpc.UnavailableException;
 import com.google.api.gax.tracing.ObservabilityAttributes;
 import com.google.api.gax.tracing.SpanTracer;
 import com.google.api.gax.tracing.SpanTracerFactory;
+import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
+import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import com.google.showcase.v1beta1.stub.EchoStub;
+import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import io.opentelemetry.api.GlobalOpenTelemetry;
 import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.trace.SpanKind;
@@ -199,5 +209,147 @@ class ITOtelTracing {
                   .get(AttributeKey.stringKey(ObservabilityAttributes.HTTP_URL_TEMPLATE_ATTRIBUTE)))
           .isEqualTo("v1beta1/echo:echo");
     }
+  }
+
+  @Test
+  void testTracing_retry_grpc() throws Exception {
+    final int attempts = 5;
+    final StatusCode.Code statusCode = StatusCode.Code.UNAVAILABLE;
+    // A custom EchoClient is used in this test because retries have jitter, and we cannot
+    // predict the number of attempts that are scheduled for an RPC invocation otherwise.
+    // The custom retrySettings limit to a set number of attempts before the call gives up.
+    RetrySettings retrySettings =
+        RetrySettings.newBuilder()
+            .setTotalTimeout(org.threeten.bp.Duration.ofMillis(5000L))
+            .setMaxAttempts(attempts)
+            .build();
+
+    EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
+    grpcEchoSettingsBuilder
+        .echoSettings()
+        .setRetrySettings(retrySettings)
+        .setRetryableCodes(statusCode);
+    EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
+    grpcEchoSettings =
+        grpcEchoSettings.toBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(EchoSettings.defaultGrpcTransportProviderBuilder().build())
+            .setEndpoint("localhost:7469")
+            .build();
+
+    SpanTracerFactory tracingFactory = new SpanTracerFactory(openTelemetrySdk);
+
+    EchoStubSettings echoStubSettings =
+        (EchoStubSettings)
+            grpcEchoSettings.getStubSettings().toBuilder().setTracerFactory(tracingFactory).build();
+    EchoStub stub = echoStubSettings.createStub();
+    EchoClient grpcClient = EchoClient.create(stub);
+
+    EchoRequest echoRequest =
+        EchoRequest.newBuilder()
+            .setError(Status.newBuilder().setCode(statusCode.ordinal()).build())
+            .build();
+
+    assertThrows(UnavailableException.class, () -> grpcClient.echo(echoRequest));
+
+    List<SpanData> spans = spanExporter.getFinishedSpanItems();
+    assertThat(spans).hasSize(attempts); // Expect exactly one span for the successful retry
+
+    // This single span represents the successful retry, which has resend_count=1
+    // The first attempt has no resend_count. The subsequent retries will have a resend_count,
+    // starting from 1.
+    List<Long> resendCounts =
+        spans.stream()
+            .map(
+                span ->
+                    (Long)
+                        span.getAttributes()
+                            .asMap()
+                            .get(
+                                AttributeKey.longKey(
+                                    ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE)))
+            .filter(java.util.Objects::nonNull)
+            .sorted()
+            .collect(java.util.stream.Collectors.toList());
+
+    List<Long> expectedCounts =
+        java.util.stream.LongStream.range(1, attempts)
+            .boxed()
+            .collect(java.util.stream.Collectors.toList());
+    assertThat(resendCounts).containsExactlyElementsIn(expectedCounts).inOrder();
+  }
+
+  @Test
+  void testTracing_retry_httpjson() throws Exception {
+    final int attempts = 5;
+    final StatusCode.Code statusCode = StatusCode.Code.UNAVAILABLE;
+    // A custom EchoClient is used in this test because retries have jitter, and we cannot
+    // predict the number of attempts that are scheduled for an RPC invocation otherwise.
+    // The custom retrySettings limit to a set number of attempts before the call gives up.
+    RetrySettings retrySettings =
+        RetrySettings.newBuilder()
+            .setTotalTimeout(org.threeten.bp.Duration.ofMillis(5000L))
+            .setMaxAttempts(attempts)
+            .build();
+
+    EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
+    httpJsonEchoSettingsBuilder
+        .echoSettings()
+        .setRetrySettings(retrySettings)
+        .setRetryableCodes(statusCode);
+    EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
+    httpJsonEchoSettings =
+        httpJsonEchoSettings.toBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
+
+    SpanTracerFactory tracingFactory = new SpanTracerFactory(openTelemetrySdk);
+
+    EchoStubSettings echoStubSettings =
+        (EchoStubSettings)
+            httpJsonEchoSettings.getStubSettings().toBuilder()
+                .setTracerFactory(tracingFactory)
+                .build();
+    EchoStub stub = echoStubSettings.createStub();
+    EchoClient httpClient = EchoClient.create(stub);
+
+    EchoRequest echoRequest =
+        EchoRequest.newBuilder()
+            .setError(Status.newBuilder().setCode(statusCode.ordinal()).build())
+            .build();
+
+    assertThrows(UnavailableException.class, () -> httpClient.echo(echoRequest));
+
+    List<SpanData> spans = spanExporter.getFinishedSpanItems();
+    assertThat(spans).hasSize(attempts); // Expect exactly one span for the successful retry
+
+    // This single span represents the successful retry, which has resend_count=1
+    // The first attempt has no resend_count. The subsequent retries will have a resend_count,
+    // starting from 1.
+    List<Long> resendCounts =
+        spans.stream()
+            .map(
+                span ->
+                    (Long)
+                        span.getAttributes()
+                            .asMap()
+                            .get(
+                                AttributeKey.longKey(
+                                    ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE)))
+            .filter(java.util.Objects::nonNull)
+            .sorted()
+            .collect(java.util.stream.Collectors.toList());
+
+    List<Long> expectedCounts =
+        java.util.stream.LongStream.range(1, attempts)
+            .boxed()
+            .collect(java.util.stream.Collectors.toList());
+    assertThat(resendCounts).containsExactlyElementsIn(expectedCounts).inOrder();
   }
 }

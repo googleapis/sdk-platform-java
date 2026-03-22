@@ -86,4 +86,104 @@ class SpanTracerTest {
             io.opentelemetry.api.common.AttributeKey.stringKey(SpanTracer.LANGUAGE_ATTRIBUTE),
             SpanTracer.DEFAULT_LANGUAGE);
   }
+
+  @Test
+  void testAttemptStarted_noRetryAttributes_grpc() {
+    ApiTracerContext grpcContext =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .build();
+    SpanTracer grpcTracer = new SpanTracer(tracer, grpcContext, ATTEMPT_SPAN_NAME);
+
+    // Initial attempt, attemptNumber is 0
+    grpcTracer.attemptStarted(new Object(), 0);
+    ArgumentCaptor<Attributes> attributesCaptor = ArgumentCaptor.forClass(Attributes.class);
+    verify(spanBuilder).setAllAttributes(attributesCaptor.capture());
+    assertThat(attributesCaptor.getValue().asMap())
+        .doesNotContainKey(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE));
+    assertThat(attributesCaptor.getValue().asMap())
+        .doesNotContainKey(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE));
+  }
+
+  @Test
+  void testAttemptStarted_retryAttributes_grpc() {
+    ApiTracerContext grpcContext =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .build();
+    SpanTracer grpcTracer = new SpanTracer(tracer, grpcContext, ATTEMPT_SPAN_NAME);
+
+    // N-th retry, attemptNumber is 5
+    grpcTracer.attemptStarted(new Object(), 5);
+    ArgumentCaptor<Attributes> attributesCaptor = ArgumentCaptor.forClass(Attributes.class);
+    verify(spanBuilder).setAllAttributes(attributesCaptor.capture());
+    java.util.Map<io.opentelemetry.api.common.AttributeKey<?>, Object> capturedAttributes =
+        attributesCaptor.getValue().asMap();
+    assertThat(capturedAttributes)
+        .containsEntry(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE),
+            5L);
+    assertThat(capturedAttributes)
+        .doesNotContainKey(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE));
+  }
+
+  @Test
+  void testAttemptStarted_noRetryAttributes_http() {
+    ApiTracerContext httpContext =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.HTTP)
+            .build();
+    SpanTracer httpTracer = new SpanTracer(tracer, httpContext, ATTEMPT_SPAN_NAME);
+
+    // Initial attempt, attemptNumber is 0
+    httpTracer.attemptStarted(new Object(), 0);
+    ArgumentCaptor<Attributes> attributesCaptor = ArgumentCaptor.forClass(Attributes.class);
+    verify(spanBuilder).setAllAttributes(attributesCaptor.capture());
+    java.util.Map<io.opentelemetry.api.common.AttributeKey<?>, Object> capturedAttributes =
+        attributesCaptor.getValue().asMap();
+    assertThat(capturedAttributes)
+        .doesNotContainKey(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE));
+    assertThat(capturedAttributes)
+        .doesNotContainKey(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE));
+  }
+
+  @Test
+  void testAttemptStarted_retryAttributes_http() {
+    ApiTracerContext httpContext =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.HTTP)
+            .build();
+    SpanTracer httpTracer = new SpanTracer(tracer, httpContext, ATTEMPT_SPAN_NAME);
+
+    // N-th retry, attemptNumber is 5
+    httpTracer.attemptStarted(new Object(), 5);
+    ArgumentCaptor<Attributes> attributesCaptor = ArgumentCaptor.forClass(Attributes.class);
+    verify(spanBuilder).setAllAttributes(attributesCaptor.capture());
+    java.util.Map<io.opentelemetry.api.common.AttributeKey<?>, Object> capturedAttributes =
+        attributesCaptor.getValue().asMap();
+    assertThat(capturedAttributes)
+        .doesNotContainKey(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE));
+    assertThat(capturedAttributes)
+        .containsEntry(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE),
+            5L);
+  }
 }
