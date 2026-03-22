@@ -105,17 +105,17 @@ class LoggingUtilsTest {
 
   @Test
   void testLogActionableError_success() {
-    LoggingUtils.setLoggingV2Enabled(true);
+    LoggingUtils.setLoggingEnabled(true);
     LoggerProvider loggerProvider = mock(LoggerProvider.class);
     Logger logger = mock(Logger.class);
     when(loggerProvider.getLogger()).thenReturn(logger);
 
     org.slf4j.spi.LoggingEventBuilder eventBuilder = mock(org.slf4j.spi.LoggingEventBuilder.class);
-    when(logger.atInfo()).thenReturn(eventBuilder);
+    when(logger.atDebug()).thenReturn(eventBuilder);
     when(eventBuilder.addKeyValue(anyString(), any())).thenReturn(eventBuilder);
 
     Map<String, Object> context = Collections.singletonMap("key", "value");
-    LoggingUtils.logActionableError(context, loggerProvider, org.slf4j.event.Level.INFO, "message");
+    LoggingUtils.logActionableError(context, loggerProvider, org.slf4j.event.Level.DEBUG, "message");
 
     verify(loggerProvider).getLogger();
   }

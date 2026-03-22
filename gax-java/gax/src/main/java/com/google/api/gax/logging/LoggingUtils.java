@@ -37,27 +37,16 @@ import java.util.Map;
 public class LoggingUtils {
 
   static final String GOOGLE_SDK_JAVA_LOGGING = "GOOGLE_SDK_JAVA_LOGGING";
-  static final String GOOGLE_SDK_JAVA_LOGGING_V2 = "GOOGLE_SDK_JAVA_LOGGING_V2";
 
   private static boolean loggingEnabled = checkLoggingEnabled(GOOGLE_SDK_JAVA_LOGGING);
-  private static boolean loggingV2Enabled = checkLoggingEnabled(GOOGLE_SDK_JAVA_LOGGING_V2);
 
   /**
-   * Returns whether client-side logging is enabled (V1 or V2).
+   * Returns whether client-side logging is enabled.
    *
    * @return true if logging is enabled, false otherwise.
    */
-  public static boolean isLoggingEnabled() {
-    return loggingEnabled || loggingV2Enabled;
-  }
-
-  /**
-   * Returns whether client-side logging V2 (Actionable Errors) is enabled.
-   *
-   * @return true if V2 logging is enabled, false otherwise.
-   */
-  public static boolean isLoggingV2Enabled() {
-    return loggingV2Enabled;
+  static boolean isLoggingEnabled() {
+    return loggingEnabled;
   }
 
   /**
@@ -65,17 +54,9 @@ public class LoggingUtils {
    *
    * @param enabled true to enable logging, false to disable.
    */
-  public static void setLoggingEnabled(boolean enabled) {
+  @com.google.common.annotations.VisibleForTesting
+  static void setLoggingEnabled(boolean enabled) {
     loggingEnabled = enabled;
-  }
-
-  /**
-   * Sets whether client-side logging V2 is enabled. Visible for testing.
-   *
-   * @param enabled true to enable logging, false to disable.
-   */
-  public static void setLoggingV2Enabled(boolean enabled) {
-    loggingV2Enabled = enabled;
   }
 
   private static boolean checkLoggingEnabled(String envVar) {
