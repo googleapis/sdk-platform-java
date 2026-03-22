@@ -94,11 +94,11 @@ class LoggingUtilsTest {
 
   @Test
   void testLogActionableError_loggingDisabled() {
-    LoggingUtils.setLoggingV2Enabled(false);
+    LoggingUtils.setLoggingEnabled(false);
     LoggerProvider loggerProvider = mock(LoggerProvider.class);
 
     LoggingUtils.logActionableError(
-        Collections.emptyMap(), loggerProvider, org.slf4j.event.Level.INFO, "message");
+        Collections.emptyMap(), loggerProvider, org.slf4j.event.Level.DEBUG, "message");
 
     verify(loggerProvider, never()).getLogger();
   }
@@ -120,3 +120,4 @@ class LoggingUtilsTest {
     verify(loggerProvider).getLogger();
   }
 }
+

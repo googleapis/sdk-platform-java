@@ -179,7 +179,7 @@ public class LoggingUtils {
       LoggerProvider loggerProvider,
       org.slf4j.event.Level level,
       String message) {
-    if (loggingV2Enabled) {
+    if (loggingEnabled) {
       org.slf4j.Logger logger = loggerProvider.getLogger();
       Slf4jUtils.log(logger, level, logContext, message);
     }
