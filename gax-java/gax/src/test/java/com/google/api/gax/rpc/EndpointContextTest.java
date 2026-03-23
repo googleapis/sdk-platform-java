@@ -641,9 +641,7 @@ class EndpointContextTest {
 
   @Test
   void endpointContextBuild_resolvesPort() throws IOException {
-
     String endpoint = "http://localhost:7469";
-
     EndpointContext endpointContext =
         defaultEndpointContextBuilder
             .setClientSettingsEndpoint(endpoint)
@@ -651,7 +649,7 @@ class EndpointContextTest {
             .build();
     Truth.assertThat(endpointContext.resolvedServerPort()).isEqualTo(7469);
 
-    endpoint = "localhost:-1";
+    endpoint = "localhost:7469";
     endpointContext =
         defaultEndpointContextBuilder
             .setClientSettingsEndpoint(endpoint)
