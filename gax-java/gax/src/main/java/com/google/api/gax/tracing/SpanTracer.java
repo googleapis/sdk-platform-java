@@ -147,7 +147,11 @@ public class SpanTracer implements ApiTracer {
     if (headers == null || headerGetter.get() == null) {
       return -1;
     }
-    return Long.parseLong(String.valueOf(headerGetter.get()));
+    try {
+      return Long.parseLong(String.valueOf(headerGetter.get()));
+    } catch (NumberFormatException ex) {
+      return -1;
+    }
   }
 
   private void endAttempt() {
