@@ -65,6 +65,8 @@ class ObservabilityUtils {
         (k, v) -> {
           if (v instanceof String) {
             attributesBuilder.put(k, (String) v);
+          } else if (v instanceof Long) {
+            attributesBuilder.put(k, (Long) v);
           } else if (v instanceof Integer) {
             attributesBuilder.put(k, (long) (Integer) v);
           }
