@@ -164,7 +164,7 @@ public abstract class ApiTracerContext {
   @Nullable
   public abstract String urlDomain();
 
-  /** The destination resource name of the request (e.g. projects/p/locations/l/topics/t). */
+  /** The destination resource id of the request (e.g. projects/p/locations/l/topics/t). */
   @Nullable
   public abstract String destinationResourceId();
 

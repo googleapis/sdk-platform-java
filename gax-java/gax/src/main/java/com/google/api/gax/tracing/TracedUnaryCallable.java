@@ -112,7 +112,6 @@ public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<Requ
   @VisibleForTesting
   ApiTracerContext extractResourceNameToApiTracerContext(RequestT request) {
     ApiTracerContext finalContext = apiTracerContext;
-    // Extract the resource name early
     String resourceName =
         resourceNameExtractor != null ? resourceNameExtractor.extract(request) : null;
     if (!Strings.isNullOrEmpty(resourceName)) {
