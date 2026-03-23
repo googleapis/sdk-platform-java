@@ -59,8 +59,11 @@ public class GrpcCallSettings<RequestT, ResponseT> {
     return paramsExtractor;
   }
 
+  /**
+   * Gets the extractor capable of extracting the destination resource name from the RPC request.
+   */
   @BetaApi
-  public ResourceNameExtractor<RequestT> getResourceNameExtractor() {
+  ResourceNameExtractor<RequestT> getResourceNameExtractor() {
     return resourceNameExtractor;
   }
 
@@ -118,6 +121,9 @@ public class GrpcCallSettings<RequestT, ResponseT> {
       return this;
     }
 
+    /**
+     * Sets the extractor capable of extracting the destination resource name from the RPC request.
+     */
     @BetaApi
     public Builder<RequestT, ResponseT> setResourceNameExtractor(
         ResourceNameExtractor<RequestT> resourceNameExtractor) {

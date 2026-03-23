@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.httpjson;
 
+import com.google.api.core.BetaApi;
 import com.google.api.gax.rpc.RequestMutator;
 import com.google.api.gax.rpc.RequestParamsExtractor;
 import com.google.api.gax.rpc.ResourceNameExtractor;
@@ -59,7 +60,11 @@ public class HttpJsonCallSettings<RequestT, ResponseT> {
     return paramsExtractor;
   }
 
-  public ResourceNameExtractor<RequestT> getResourceNameExtractor() {
+  /**
+   * Gets the extractor capable of extracting the destination resource name from the RPC request.
+   */
+  @BetaApi
+  ResourceNameExtractor<RequestT> getResourceNameExtractor() {
     return resourceNameExtractor;
   }
 
@@ -116,6 +121,9 @@ public class HttpJsonCallSettings<RequestT, ResponseT> {
       return this;
     }
 
+    /**
+     * Sets the extractor capable of extracting the destination resource name from the RPC request.
+     */
     public Builder<RequestT, ResponseT> setResourceNameExtractor(
         ResourceNameExtractor<RequestT> resourceNameExtractor) {
       this.resourceNameExtractor = resourceNameExtractor;
