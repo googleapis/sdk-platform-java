@@ -470,7 +470,7 @@ public abstract class EndpointContext {
       try {
         setResolvedServerAddress(parseServerAddress(resolvedEndpoint()));
         setResolvedServerPort(parseServerPort(resolvedEndpoint()));
-      } catch (Throwable throwable) {
+      } catch (Exception throwable) {
         // Server address and server port are only used for observability.
         // We should ignore any errors parsing them and not affect the main client requests.
       }
