@@ -38,6 +38,8 @@ import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.Tracer;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.function.Supplier;
 
 /** An implementation of {@link ApiTracer} that uses OpenTelemetry to record traces. */
 @BetaApi
@@ -138,29 +140,14 @@ public class SpanTracer implements ApiTracer {
    * @param headers the map of response headers.
    * @return the content length in bytes, or -1 if the header is missing or malformed.
    */
-  private long extractContentLength(java.util.Map<String, Object> headers) {
-    if (headers == null) {
+  private long extractContentLength(final java.util.Map<String, Object> headers) {
+    final Map<String, Object> iHeaders = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    iHeaders.putAll(headers);
+    Supplier<Object> headerGetter = () -> iHeaders.get(CONTENT_LENGTH_KEY);
+    if (headers == null || headerGetter.get() == null) {
       return -1;
     }
-    for (Map.Entry<String, Object> entry : headers.entrySet()) {
-      if (CONTENT_LENGTH_KEY.equalsIgnoreCase(entry.getKey())) {
-        return parseContentLength(entry.getValue());
-      }
-    }
-    return -1;
-  }
-
-  /**
-   * Safely parses the content length Object representation into a long integer.
-   *
-   * @param value the header value to parse.
-   * @return the parsed content length value, or -1 if it was null or failed to parse.
-   */
-  private long parseContentLength(Object value) {
-    if (value == null) {
-      return -1;
-    }
-    return Long.parseLong(String.valueOf(value));
+    return Long.parseLong(String.valueOf(headerGetter.get()));
   }
 
   private void endAttempt() {
