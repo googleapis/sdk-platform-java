@@ -641,7 +641,9 @@ class EndpointContextTest {
 
   @Test
   void endpointContextBuild_resolvesPort() throws IOException {
+
     String endpoint = "http://localhost:7469";
+
     EndpointContext endpointContext =
         defaultEndpointContextBuilder
             .setClientSettingsEndpoint(endpoint)
@@ -649,7 +651,7 @@ class EndpointContextTest {
             .build();
     Truth.assertThat(endpointContext.resolvedServerPort()).isEqualTo(7469);
 
-    endpoint = "localhost:7469";
+    endpoint = "localhost:-1";
     endpointContext =
         defaultEndpointContextBuilder
             .setClientSettingsEndpoint(endpoint)
@@ -681,6 +683,21 @@ class EndpointContextTest {
             .setClientSettingsEndpoint(endpoint)
             .setTransportChannelProviderEndpoint(null)
             .build();
+    Truth.assertThat(endpointContext.resolvedServerPort()).isNull();
+  }
+
+  @Test
+  void endpointContextBuild_resolvesInvalidEndpointAndPort() throws Exception {
+
+    String endpoint = "localhost:-1";
+
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder
+            .setClientSettingsEndpoint(endpoint)
+            .setTransportChannelProviderEndpoint(null)
+            .build();
+
+    Truth.assertThat(endpointContext.resolvedServerAddress()).isNull();
     Truth.assertThat(endpointContext.resolvedServerPort()).isNull();
   }
 }
