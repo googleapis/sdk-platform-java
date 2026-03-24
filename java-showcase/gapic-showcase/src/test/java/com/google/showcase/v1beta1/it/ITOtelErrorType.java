@@ -65,7 +65,6 @@ import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.BindException;
-import java.net.ConnectException;
 import java.net.NoRouteToHostException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -228,7 +227,9 @@ class ITOtelErrorType {
                 .build());
 
     try (EchoClient client = EchoClient.create(echoStubSettingsBuilder.build().createStub())) {
-      assertThrows(UnavailableException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      assertThrows(
+          UnavailableException.class,
+          () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
       verifyErrorTypeAttribute("CLIENT_CONNECTION_ERROR");
     }
   }
@@ -249,21 +250,28 @@ class ITOtelErrorType {
     EchoStubSettings.Builder echoStubSettingsBuilder =
         (EchoStubSettings.Builder) grpcEchoSettings.getStubSettings().toBuilder();
     echoStubSettingsBuilder.setTracerFactory(tracingFactory);
-    echoStubSettingsBuilder.echoSettings().setRetrySettings(
-        echoStubSettingsBuilder.echoSettings().getRetrySettings().toBuilder()
-            .setMaxAttempts(1)
-            .build());
+    echoStubSettingsBuilder
+        .echoSettings()
+        .setRetrySettings(
+            echoStubSettingsBuilder.echoSettings().getRetrySettings().toBuilder()
+                .setMaxAttempts(1)
+                .build());
 
     try (EchoClient client = EchoClient.create(echoStubSettingsBuilder.build().createStub())) {
-      assertThrows(UnavailableException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      assertThrows(
+          UnavailableException.class,
+          () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
       verifyErrorTypeAttribute("CLIENT_CONNECTION_ERROR");
     }
   }
 
   @Test
   void testTracing_clientConnectionError_SSLHandshakeException_grpc() throws Exception {
-    try (EchoClient client = createInterceptorClient(new SSLHandshakeException("Mock SSL failure"))) {
-      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+    try (EchoClient client =
+        createInterceptorClient(new SSLHandshakeException("Mock SSL failure"))) {
+      assertThrows(
+          RuntimeException.class,
+          () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
       verifyErrorTypeAttribute("CLIENT_CONNECTION_ERROR");
     }
   }
@@ -271,7 +279,9 @@ class ITOtelErrorType {
   @Test
   void testTracing_clientConnectionError_UnresolvedAddressException_grpc() throws Exception {
     try (EchoClient client = createInterceptorClient(new UnresolvedAddressException())) {
-      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      assertThrows(
+          RuntimeException.class,
+          () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
       verifyErrorTypeAttribute("CLIENT_CONNECTION_ERROR");
     }
   }
@@ -279,7 +289,9 @@ class ITOtelErrorType {
   @Test
   void testTracing_clientConnectionError_NoRouteToHostException_grpc() throws Exception {
     try (EchoClient client = createInterceptorClient(new NoRouteToHostException())) {
-      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      assertThrows(
+          RuntimeException.class,
+          () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
       verifyErrorTypeAttribute("CLIENT_CONNECTION_ERROR");
     }
   }
@@ -287,7 +299,9 @@ class ITOtelErrorType {
   @Test
   void testTracing_clientConnectionError_BindException_grpc() throws Exception {
     try (EchoClient client = createInterceptorClient(new BindException())) {
-      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      assertThrows(
+          RuntimeException.class,
+          () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
       verifyErrorTypeAttribute("CLIENT_CONNECTION_ERROR");
     }
   }
@@ -295,7 +309,9 @@ class ITOtelErrorType {
   @Test
   void testTracing_clientTimeout_SocketTimeoutException_grpc() throws Exception {
     try (EchoClient client = createInterceptorClient(new SocketTimeoutException())) {
-      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      assertThrows(
+          RuntimeException.class,
+          () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
       verifyErrorTypeAttribute("CLIENT_TIMEOUT");
     }
   }
@@ -307,38 +323,44 @@ class ITOtelErrorType {
 
     try (ServerSocket serverSocket = new ServerSocket(0)) {
       int port = serverSocket.getLocalPort();
-      Thread serverThread = new Thread(() -> {
-        try {
-          try (Socket ignored = serverSocket.accept()) {
-            Thread.sleep(1000);
-          }
-        } catch (Exception ignored) {}
-      });
+      Thread serverThread =
+          new Thread(
+              () -> {
+                try {
+                  try (Socket ignored = serverSocket.accept()) {
+                    Thread.sleep(1000);
+                  }
+                } catch (Exception ignored) {
+                }
+              });
       serverThread.start();
 
       EchoSettings grpcEchoSettings =
           EchoSettings.newBuilder()
               .setTransportChannelProvider(
-                EchoSettings.defaultGrpcTransportProviderBuilder()
-                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                    .build())
+                  EchoSettings.defaultGrpcTransportProviderBuilder()
+                      .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                      .build())
               .setEndpoint("localhost:" + port)
               .build();
 
       EchoStubSettings.Builder echoStubSettingsBuilder =
           (EchoStubSettings.Builder) grpcEchoSettings.getStubSettings().toBuilder();
       echoStubSettingsBuilder.setTracerFactory(tracingFactory);
-      echoStubSettingsBuilder.echoSettings().setRetrySettings(
-          echoStubSettingsBuilder.echoSettings().getRetrySettings().toBuilder()
-              .setTotalTimeoutDuration(Duration.ofMillis(100))
-              .setInitialRpcTimeoutDuration(Duration.ofMillis(100))
-              .setMaxRpcTimeoutDuration(Duration.ofMillis(100))
-              .setMaxAttempts(1)
-              .build()
-      );
+      echoStubSettingsBuilder
+          .echoSettings()
+          .setRetrySettings(
+              echoStubSettingsBuilder.echoSettings().getRetrySettings().toBuilder()
+                  .setTotalTimeoutDuration(Duration.ofMillis(100))
+                  .setInitialRpcTimeoutDuration(Duration.ofMillis(100))
+                  .setMaxRpcTimeoutDuration(Duration.ofMillis(100))
+                  .setMaxAttempts(1)
+                  .build());
 
       try (EchoClient client = EchoClient.create(echoStubSettingsBuilder.build().createStub())) {
-        assertThrows(DeadlineExceededException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+        assertThrows(
+            DeadlineExceededException.class,
+            () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
         verifyErrorTypeAttribute("CLIENT_TIMEOUT");
       } finally {
         serverThread.join();
@@ -348,15 +370,31 @@ class ITOtelErrorType {
 
   @Test
   void testTracing_clientAuthenticationError_GeneralSecurityException_grpc() throws Exception {
-    Credentials credentials = new Credentials() {
-        @Override public String getAuthenticationType() { return "mock"; }
-        @Override public Map<String, List<String>> getRequestMetadata(URI uri) throws IOException {
+    Credentials credentials =
+        new Credentials() {
+          @Override
+          public String getAuthenticationType() {
+            return "mock";
+          }
+
+          @Override
+          public Map<String, List<String>> getRequestMetadata(URI uri) throws IOException {
             throw new IOException("Mock auth failure", new GeneralSecurityException("Root cause"));
-        }
-        @Override public boolean hasRequestMetadata() { return true; }
-        @Override public boolean hasRequestMetadataOnly() { return true; }
-        @Override public void refresh() throws IOException {}
-    };
+          }
+
+          @Override
+          public boolean hasRequestMetadata() {
+            return true;
+          }
+
+          @Override
+          public boolean hasRequestMetadataOnly() {
+            return true;
+          }
+
+          @Override
+          public void refresh() throws IOException {}
+        };
 
     SpanTracerFactory tracingFactory =
         new SpanTracerFactory(new OpenTelemetryTraceManager(openTelemetrySdk));
@@ -375,7 +413,8 @@ class ITOtelErrorType {
     echoStubSettingsBuilder.setTracerFactory(tracingFactory);
 
     try (EchoClient client = EchoClient.create(echoStubSettingsBuilder.build().createStub())) {
-      assertThrows(Exception.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      assertThrows(
+          Exception.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
       verifyErrorTypeAttribute("CLIENT_AUTHENTICATION_ERROR");
     }
   }
@@ -383,7 +422,9 @@ class ITOtelErrorType {
   @Test
   void testTracing_clientAuthenticationError_FileNotFoundException_grpc() throws Exception {
     try (EchoClient client = createInterceptorClient(new FileNotFoundException("Key not found"))) {
-      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      assertThrows(
+          RuntimeException.class,
+          () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
       // Wrapping non-RuntimeExceptions in RuntimeException during interceptCall()
       // means the simple class name of the exception being recorded is "RuntimeException"
       verifyErrorTypeAttribute("RuntimeException");
@@ -392,13 +433,22 @@ class ITOtelErrorType {
 
   @Test
   void testTracing_clientRequestError_IllegalArgumentException_grpc() throws Exception {
-    try (EchoClient client = createInterceptorClient(new IllegalArgumentException("Mock request error"))) {
-      assertThrows(IllegalArgumentException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+    try (EchoClient client =
+        createInterceptorClient(new IllegalArgumentException("Mock request error"))) {
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
       verifyErrorTypeAttribute("CLIENT_REQUEST_ERROR");
-      
+
       SpanData errorSpan =
           spanExporter.getFinishedSpanItems().stream()
-              .filter(span -> span.getAttributes().get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)) != null)
+              .filter(
+                  span ->
+                      span.getAttributes()
+                              .get(
+                                  AttributeKey.stringKey(
+                                      ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE))
+                          != null)
               .findFirst()
               .orElseThrow(() -> new AssertionError("Span with error.type not found"));
 
@@ -418,7 +468,9 @@ class ITOtelErrorType {
   @Test
   void testTracing_clientRedirectError_grpc() throws Exception {
     try (EchoClient client = createInterceptorClient(new RuntimeException("Too many redirects"))) {
-      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      assertThrows(
+          RuntimeException.class,
+          () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
       // Heuristic mapping of "redirect" in message has been removed.
       // Expected result is now the simple class name of the exception.
       verifyErrorTypeAttribute("RuntimeException");
@@ -430,7 +482,9 @@ class ITOtelErrorType {
     // Creating a custom exception class whose name contains "Unknown"
     class MyUnknownException extends RuntimeException {}
     try (EchoClient client = createInterceptorClient(new MyUnknownException())) {
-      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      assertThrows(
+          RuntimeException.class,
+          () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
       // Heuristic mapping of "Unknown" in class name has been removed.
       // Expected result is now the simple class name of the exception.
       verifyErrorTypeAttribute("MyUnknownException");
@@ -439,9 +493,13 @@ class ITOtelErrorType {
 
   @Test
   void testTracing_clientRequestError_RestSerializationException_httpjson() throws Exception {
-    try (EchoClient client = createInterceptorClient(new RestSerializationException("failed to serialize", null))) {
-      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
-      // RestSerializationException is not handled due to ambiguity (serialization vs deserialization).
+    try (EchoClient client =
+        createInterceptorClient(new RestSerializationException("failed to serialize", null))) {
+      assertThrows(
+          RuntimeException.class,
+          () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      // RestSerializationException is not handled due to ambiguity (serialization vs
+      // deserialization).
       // Expected result is now its simple class name.
       verifyErrorTypeAttribute("RestSerializationException");
     }
