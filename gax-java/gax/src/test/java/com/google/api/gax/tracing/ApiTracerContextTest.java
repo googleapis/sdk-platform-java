@@ -280,6 +280,21 @@ class ApiTracerContextTest {
   }
 
   @Test
+  void testGetAttemptAttributes_destinationResourceId() {
+    ApiTracerContext context =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setDestinationResourceId("projects/123/instances/abc")
+            .build();
+    Map<String, Object> attributes = context.getAttemptAttributes();
+
+    assertThat(attributes)
+        .containsEntry(
+            ObservabilityAttributes.DESTINATION_RESOURCE_ID_ATTRIBUTE,
+            "projects/123/instances/abc");
+  }
+
+  @Test
   void testGetMetricsAttributes_urlDomain_notHttp() {
     ApiTracerContext context =
         ApiTracerContext.newBuilder()
@@ -334,6 +349,30 @@ class ApiTracerContextTest {
     assertThat(merged.libraryMetadata().repository()).isNull();
     assertThat(merged.fullMethodName()).isEqualTo("method2");
     assertThat(merged.transport()).isEqualTo(ApiTracerContext.Transport.GRPC);
+  }
+
+  @Test
+  void testMerge_destinationResourceId() {
+    ApiTracerContext context1 =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setDestinationResourceId("name1")
+            .build();
+
+    ApiTracerContext context2 =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(LibraryMetadata.empty())
+            .setDestinationResourceId("name2")
+            .build();
+
+    ApiTracerContext merged = context1.merge(context2);
+    assertThat(merged.destinationResourceId()).isEqualTo("name2");
+
+    ApiTracerContext context3 =
+        ApiTracerContext.newBuilder().setLibraryMetadata(LibraryMetadata.empty()).build();
+    ApiTracerContext merged2 = context1.merge(context3);
+    assertThat(merged2.destinationResourceId())
+        .isEqualTo("name1"); // Should retain old if new is null/empty
   }
 
   @Test

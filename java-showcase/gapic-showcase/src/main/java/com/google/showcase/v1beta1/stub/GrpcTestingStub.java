@@ -271,6 +271,7 @@ public class GrpcTestingStub extends TestingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<ListSessionsRequest, ListSessionsResponse> listSessionsTransportSettings =
         GrpcCallSettings.<ListSessionsRequest, ListSessionsResponse>newBuilder()
@@ -285,6 +286,7 @@ public class GrpcTestingStub extends TestingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<ReportSessionRequest, ReportSessionResponse> reportSessionTransportSettings =
         GrpcCallSettings.<ReportSessionRequest, ReportSessionResponse>newBuilder()
@@ -295,6 +297,7 @@ public class GrpcTestingStub extends TestingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<ListTestsRequest, ListTestsResponse> listTestsTransportSettings =
         GrpcCallSettings.<ListTestsRequest, ListTestsResponse>newBuilder()
@@ -305,6 +308,7 @@ public class GrpcTestingStub extends TestingStub {
                   builder.add("parent", String.valueOf(request.getParent()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     GrpcCallSettings<DeleteTestRequest, Empty> deleteTestTransportSettings =
         GrpcCallSettings.<DeleteTestRequest, Empty>newBuilder()
@@ -315,6 +319,7 @@ public class GrpcTestingStub extends TestingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<VerifyTestRequest, VerifyTestResponse> verifyTestTransportSettings =
         GrpcCallSettings.<VerifyTestRequest, VerifyTestResponse>newBuilder()
@@ -325,6 +330,7 @@ public class GrpcTestingStub extends TestingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<ListLocationsRequest, ListLocationsResponse> listLocationsTransportSettings =
         GrpcCallSettings.<ListLocationsRequest, ListLocationsResponse>newBuilder()
@@ -355,6 +361,7 @@ public class GrpcTestingStub extends TestingStub {
                   builder.add("resource", String.valueOf(request.getResource()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getResource())
             .build();
     GrpcCallSettings<GetIamPolicyRequest, Policy> getIamPolicyTransportSettings =
         GrpcCallSettings.<GetIamPolicyRequest, Policy>newBuilder()
@@ -365,6 +372,7 @@ public class GrpcTestingStub extends TestingStub {
                   builder.add("resource", String.valueOf(request.getResource()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getResource())
             .build();
     GrpcCallSettings<TestIamPermissionsRequest, TestIamPermissionsResponse>
         testIamPermissionsTransportSettings =
@@ -376,6 +384,7 @@ public class GrpcTestingStub extends TestingStub {
                       builder.add("resource", String.valueOf(request.getResource()));
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getResource())
                 .build();
 
     this.createSessionCallable =

@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.InternalApi;
 import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.BatchingCallSettings;
@@ -82,7 +81,8 @@ public class HttpJsonCallableFactory {
         new TracedUnaryCallable<>(
             callable,
             clientContext.getTracerFactory(),
-            getApiTracerContext(httpJsonCallSettings.getMethodDescriptor()));
+            getApiTracerContext(httpJsonCallSettings.getMethodDescriptor()),
+            httpJsonCallSettings.getResourceNameExtractor());
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
 
@@ -220,7 +220,6 @@ public class HttpJsonCallableFactory {
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
 
-  @InternalApi("Visible for testing")
   static ApiTracerContext getApiTracerContext(@Nonnull ApiMethodDescriptor<?, ?> methodDescriptor) {
     return ApiTracerContext.newBuilder()
         .setFullMethodName(methodDescriptor.getFullMethodName())

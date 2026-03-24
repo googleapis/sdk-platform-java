@@ -800,6 +800,7 @@ public class HttpJsonMessagingStub extends MessagingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<UpdateRoomRequest, Room> updateRoomTransportSettings =
         HttpJsonCallSettings.<UpdateRoomRequest, Room>newBuilder()
@@ -822,6 +823,7 @@ public class HttpJsonMessagingStub extends MessagingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<ListRoomsRequest, ListRoomsResponse> listRoomsTransportSettings =
         HttpJsonCallSettings.<ListRoomsRequest, ListRoomsResponse>newBuilder()
@@ -838,6 +840,7 @@ public class HttpJsonMessagingStub extends MessagingStub {
                   builder.add("parent", String.valueOf(request.getParent()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     HttpJsonCallSettings<GetBlurbRequest, Blurb> getBlurbTransportSettings =
         HttpJsonCallSettings.<GetBlurbRequest, Blurb>newBuilder()
@@ -849,6 +852,7 @@ public class HttpJsonMessagingStub extends MessagingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<UpdateBlurbRequest, Blurb> updateBlurbTransportSettings =
         HttpJsonCallSettings.<UpdateBlurbRequest, Blurb>newBuilder()
@@ -871,6 +875,7 @@ public class HttpJsonMessagingStub extends MessagingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<ListBlurbsRequest, ListBlurbsResponse> listBlurbsTransportSettings =
         HttpJsonCallSettings.<ListBlurbsRequest, ListBlurbsResponse>newBuilder()
@@ -882,6 +887,7 @@ public class HttpJsonMessagingStub extends MessagingStub {
                   builder.add("parent", String.valueOf(request.getParent()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     HttpJsonCallSettings<SearchBlurbsRequest, Operation> searchBlurbsTransportSettings =
         HttpJsonCallSettings.<SearchBlurbsRequest, Operation>newBuilder()
@@ -893,6 +899,7 @@ public class HttpJsonMessagingStub extends MessagingStub {
                   builder.add("parent", String.valueOf(request.getParent()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     HttpJsonCallSettings<StreamBlurbsRequest, StreamBlurbsResponse> streamBlurbsTransportSettings =
         HttpJsonCallSettings.<StreamBlurbsRequest, StreamBlurbsResponse>newBuilder()
@@ -904,6 +911,7 @@ public class HttpJsonMessagingStub extends MessagingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<ListLocationsRequest, ListLocationsResponse>
         listLocationsTransportSettings =
@@ -938,6 +946,7 @@ public class HttpJsonMessagingStub extends MessagingStub {
                   builder.add("resource", String.valueOf(request.getResource()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getResource())
             .build();
     HttpJsonCallSettings<GetIamPolicyRequest, Policy> getIamPolicyTransportSettings =
         HttpJsonCallSettings.<GetIamPolicyRequest, Policy>newBuilder()
@@ -949,6 +958,7 @@ public class HttpJsonMessagingStub extends MessagingStub {
                   builder.add("resource", String.valueOf(request.getResource()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getResource())
             .build();
     HttpJsonCallSettings<TestIamPermissionsRequest, TestIamPermissionsResponse>
         testIamPermissionsTransportSettings =
@@ -961,6 +971,7 @@ public class HttpJsonMessagingStub extends MessagingStub {
                       builder.add("resource", String.valueOf(request.getResource()));
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getResource())
                 .build();
 
     this.createRoomCallable =

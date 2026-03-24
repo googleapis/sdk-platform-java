@@ -347,6 +347,7 @@ public class GrpcMessagingStub extends MessagingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<UpdateRoomRequest, Room> updateRoomTransportSettings =
         GrpcCallSettings.<UpdateRoomRequest, Room>newBuilder()
@@ -367,6 +368,7 @@ public class GrpcMessagingStub extends MessagingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<ListRoomsRequest, ListRoomsResponse> listRoomsTransportSettings =
         GrpcCallSettings.<ListRoomsRequest, ListRoomsResponse>newBuilder()
@@ -381,6 +383,7 @@ public class GrpcMessagingStub extends MessagingStub {
                   builder.add("parent", String.valueOf(request.getParent()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     GrpcCallSettings<GetBlurbRequest, Blurb> getBlurbTransportSettings =
         GrpcCallSettings.<GetBlurbRequest, Blurb>newBuilder()
@@ -391,6 +394,7 @@ public class GrpcMessagingStub extends MessagingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<UpdateBlurbRequest, Blurb> updateBlurbTransportSettings =
         GrpcCallSettings.<UpdateBlurbRequest, Blurb>newBuilder()
@@ -411,6 +415,7 @@ public class GrpcMessagingStub extends MessagingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<ListBlurbsRequest, ListBlurbsResponse> listBlurbsTransportSettings =
         GrpcCallSettings.<ListBlurbsRequest, ListBlurbsResponse>newBuilder()
@@ -421,6 +426,7 @@ public class GrpcMessagingStub extends MessagingStub {
                   builder.add("parent", String.valueOf(request.getParent()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     GrpcCallSettings<SearchBlurbsRequest, Operation> searchBlurbsTransportSettings =
         GrpcCallSettings.<SearchBlurbsRequest, Operation>newBuilder()
@@ -431,6 +437,7 @@ public class GrpcMessagingStub extends MessagingStub {
                   builder.add("parent", String.valueOf(request.getParent()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     GrpcCallSettings<StreamBlurbsRequest, StreamBlurbsResponse> streamBlurbsTransportSettings =
         GrpcCallSettings.<StreamBlurbsRequest, StreamBlurbsResponse>newBuilder()
@@ -441,6 +448,7 @@ public class GrpcMessagingStub extends MessagingStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<CreateBlurbRequest, SendBlurbsResponse> sendBlurbsTransportSettings =
         GrpcCallSettings.<CreateBlurbRequest, SendBlurbsResponse>newBuilder()
@@ -451,6 +459,7 @@ public class GrpcMessagingStub extends MessagingStub {
                   builder.add("parent", String.valueOf(request.getParent()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     GrpcCallSettings<ConnectRequest, StreamBlurbsResponse> connectTransportSettings =
         GrpcCallSettings.<ConnectRequest, StreamBlurbsResponse>newBuilder()
@@ -485,6 +494,7 @@ public class GrpcMessagingStub extends MessagingStub {
                   builder.add("resource", String.valueOf(request.getResource()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getResource())
             .build();
     GrpcCallSettings<GetIamPolicyRequest, Policy> getIamPolicyTransportSettings =
         GrpcCallSettings.<GetIamPolicyRequest, Policy>newBuilder()
@@ -495,6 +505,7 @@ public class GrpcMessagingStub extends MessagingStub {
                   builder.add("resource", String.valueOf(request.getResource()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getResource())
             .build();
     GrpcCallSettings<TestIamPermissionsRequest, TestIamPermissionsResponse>
         testIamPermissionsTransportSettings =
@@ -506,6 +517,7 @@ public class GrpcMessagingStub extends MessagingStub {
                       builder.add("resource", String.valueOf(request.getResource()));
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getResource())
                 .build();
 
     this.createRoomCallable =

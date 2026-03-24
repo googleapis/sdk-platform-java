@@ -208,6 +208,7 @@ public class GrpcEchoStub extends EchoStub {
     GrpcCallSettings<EchoRequest, EchoResponse> echoTransportSettings =
         GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(echoMethodDescriptor)
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<ExpandRequest, EchoResponse> expandTransportSettings =
         GrpcCallSettings.<ExpandRequest, EchoResponse>newBuilder()
@@ -216,14 +217,17 @@ public class GrpcEchoStub extends EchoStub {
     GrpcCallSettings<EchoRequest, EchoResponse> collectTransportSettings =
         GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(collectMethodDescriptor)
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<EchoRequest, EchoResponse> chatTransportSettings =
         GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(chatMethodDescriptor)
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<EchoRequest, EchoResponse> chatAgainTransportSettings =
         GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(chatAgainMethodDescriptor)
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<PagedExpandRequest, PagedExpandResponse> pagedExpandTransportSettings =
         GrpcCallSettings.<PagedExpandRequest, PagedExpandResponse>newBuilder()
@@ -244,6 +248,7 @@ public class GrpcEchoStub extends EchoStub {
     GrpcCallSettings<EchoRequest, Object> collideNameTransportSettings =
         GrpcCallSettings.<EchoRequest, Object>newBuilder()
             .setMethodDescriptor(collideNameMethodDescriptor)
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<PagedExpandLegacyRequest, PagedExpandResponse>
         pagedExpandLegacyTransportSettings =

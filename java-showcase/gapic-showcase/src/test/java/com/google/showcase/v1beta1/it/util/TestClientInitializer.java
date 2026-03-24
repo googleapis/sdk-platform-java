@@ -340,4 +340,45 @@ public class TestClientInitializer {
 
     return EchoClient.create(stub);
   }
+
+  public static IdentityClient createGrpcIdentityClientOpentelemetry(ApiTracerFactory tracerFactory)
+      throws Exception {
+    IdentitySettings grpcIdentitySettings =
+        IdentitySettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                IdentitySettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .setEndpoint(DEFAULT_GRPC_ENDPOINT)
+            .build();
+
+    com.google.showcase.v1beta1.stub.IdentityStubSettings identityStubSettings =
+        (com.google.showcase.v1beta1.stub.IdentityStubSettings)
+            grpcIdentitySettings.getStubSettings().toBuilder()
+                .setTracerFactory(tracerFactory)
+                .build();
+    return IdentityClient.create(identityStubSettings.createStub());
+  }
+
+  public static IdentityClient createHttpJsonIdentityClientOpentelemetry(
+      ApiTracerFactory tracerFactory) throws Exception {
+    IdentitySettings httpJsonIdentitySettings =
+        IdentitySettings.newHttpJsonBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                IdentitySettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint(DEFAULT_HTTPJSON_ENDPOINT)
+                    .build())
+            .build();
+
+    com.google.showcase.v1beta1.stub.IdentityStubSettings identityStubSettings =
+        (com.google.showcase.v1beta1.stub.IdentityStubSettings)
+            httpJsonIdentitySettings.getStubSettings().toBuilder()
+                .setTracerFactory(tracerFactory)
+                .build();
+    return IdentityClient.create(identityStubSettings.createStub());
+  }
 }
