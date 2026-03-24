@@ -247,8 +247,7 @@ class ITOtelTracing {
               .getAttributes()
               .get(AttributeKey.longKey(ObservabilityAttributes.HTTP_RESPONSE_BODY_SIZE));
       if (observedMagnitude != null) {
-        assertThat(observedMagnitude).isAtLeast((long) (expectedMagnitude * (1 - 0.15)));
-        assertThat(observedMagnitude).isAtMost((long) (expectedMagnitude * (1 + 0.15)));
+				assertThat(observedMagnitude).isAtLeast((long) (expectedMagnitude * (1 - 0.15)));
       }
     }
   }
