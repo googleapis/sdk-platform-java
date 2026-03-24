@@ -33,6 +33,7 @@ import com.google.auto.populate.field.AutoPopulateFieldTestingOuterClass;
 import com.google.bookshop.v1beta1.BookshopProto;
 import com.google.cloud.bigquery.v2.JobProto;
 import com.google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTestingOuterClass;
+import com.google.extractor.testing.ResourceNameExtractorTestingOuterClass;
 import com.google.logging.v2.LogEntryProto;
 import com.google.logging.v2.LoggingConfigProto;
 import com.google.logging.v2.LoggingMetricsProto;
@@ -573,6 +574,27 @@ public class TestProtoLoader {
         .setResourceNames(resourceNames)
         .setServices(services)
         .setServiceConfig(config)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(transport)
+        .build();
+  }
+
+  public GapicContext parseResourceNameExtractorTesting() {
+    FileDescriptor fileDescriptor = ResourceNameExtractorTestingOuterClass.getDescriptor();
+    ServiceDescriptor serviceDescriptor = fileDescriptor.getServices().get(0);
+    assertEquals("ResourceNameExtractorTesting", serviceDescriptor.getName());
+
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(transport)
         .build();

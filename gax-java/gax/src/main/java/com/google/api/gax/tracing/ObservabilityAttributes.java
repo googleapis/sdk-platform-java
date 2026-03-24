@@ -90,4 +90,7 @@ public class ObservabilityAttributes {
 
   /** The resend count of the request. Only used in gRPC transport. */
   public static final String GRPC_RESEND_COUNT_ATTRIBUTE = "gcp.grpc.resend_count";
+
+  /** The destination resource id of the request (e.g. projects/p/locations/l/topics/t). */
+  public static final String DESTINATION_RESOURCE_ID_ATTRIBUTE = "gcp.resource.destination.id";
 }

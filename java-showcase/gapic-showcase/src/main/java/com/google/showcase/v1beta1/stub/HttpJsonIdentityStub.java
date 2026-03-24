@@ -490,6 +490,7 @@ public class HttpJsonIdentityStub extends IdentityStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<UpdateUserRequest, User> updateUserTransportSettings =
         HttpJsonCallSettings.<UpdateUserRequest, User>newBuilder()
@@ -512,6 +513,7 @@ public class HttpJsonIdentityStub extends IdentityStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<ListUsersRequest, ListUsersResponse> listUsersTransportSettings =
         HttpJsonCallSettings.<ListUsersRequest, ListUsersResponse>newBuilder()
@@ -551,6 +553,7 @@ public class HttpJsonIdentityStub extends IdentityStub {
                   builder.add("resource", String.valueOf(request.getResource()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getResource())
             .build();
     HttpJsonCallSettings<GetIamPolicyRequest, Policy> getIamPolicyTransportSettings =
         HttpJsonCallSettings.<GetIamPolicyRequest, Policy>newBuilder()
@@ -562,6 +565,7 @@ public class HttpJsonIdentityStub extends IdentityStub {
                   builder.add("resource", String.valueOf(request.getResource()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getResource())
             .build();
     HttpJsonCallSettings<TestIamPermissionsRequest, TestIamPermissionsResponse>
         testIamPermissionsTransportSettings =
@@ -574,6 +578,7 @@ public class HttpJsonIdentityStub extends IdentityStub {
                       builder.add("resource", String.valueOf(request.getResource()));
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getResource())
                 .build();
 
     this.createUserCallable =

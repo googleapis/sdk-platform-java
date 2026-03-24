@@ -164,6 +164,10 @@ public abstract class ApiTracerContext {
   @Nullable
   public abstract String urlDomain();
 
+  /** The destination resource id of the request (e.g. projects/p/locations/l/topics/t). */
+  @Nullable
+  public abstract String destinationResourceId();
+
   /**
    * @return a map of attributes to be included in attempt-level spans
    */
@@ -200,6 +204,10 @@ public abstract class ApiTracerContext {
       if (!Strings.isNullOrEmpty(httpPathTemplate())) {
         attributes.put(ObservabilityAttributes.HTTP_URL_TEMPLATE_ATTRIBUTE, httpPathTemplate());
       }
+    }
+    if (!Strings.isNullOrEmpty(destinationResourceId())) {
+      attributes.put(
+          ObservabilityAttributes.DESTINATION_RESOURCE_ID_ATTRIBUTE, destinationResourceId());
     }
     return attributes;
   }
@@ -270,6 +278,9 @@ public abstract class ApiTracerContext {
     if (!Strings.isNullOrEmpty(other.urlDomain())) {
       builder.setUrlDomain(other.urlDomain());
     }
+    if (other.destinationResourceId() != null) {
+      builder.setDestinationResourceId(other.destinationResourceId());
+    }
     return builder.build();
   }
 
@@ -304,6 +315,8 @@ public abstract class ApiTracerContext {
     public abstract Builder setServiceName(@Nullable String serviceName);
 
     public abstract Builder setUrlDomain(@Nullable String urlDomain);
+
+    public abstract Builder setDestinationResourceId(@Nullable String destinationResourceId);
 
     public abstract ApiTracerContext build();
   }

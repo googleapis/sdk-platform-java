@@ -447,6 +447,7 @@ public class HttpJsonEchoStub extends EchoStub {
         HttpJsonCallSettings.<EchoRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(echoMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<ExpandRequest, EchoResponse> expandTransportSettings =
         HttpJsonCallSettings.<ExpandRequest, EchoResponse>newBuilder()
@@ -478,6 +479,7 @@ public class HttpJsonEchoStub extends EchoStub {
         HttpJsonCallSettings.<EchoRequest, Object>newBuilder()
             .setMethodDescriptor(collideNameMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<PagedExpandLegacyRequest, PagedExpandResponse>
         pagedExpandLegacyTransportSettings =

@@ -166,6 +166,7 @@ public class GrpcMetricsServiceV2Stub extends MetricsServiceV2Stub {
                       builder.add("parent", String.valueOf(request.getParent()));
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getParent())
                 .build();
     GrpcCallSettings<GetLogMetricRequest, LogMetric> getLogMetricTransportSettings =
         GrpcCallSettings.<GetLogMetricRequest, LogMetric>newBuilder()
@@ -176,6 +177,7 @@ public class GrpcMetricsServiceV2Stub extends MetricsServiceV2Stub {
                   builder.add("metric_name", String.valueOf(request.getMetricName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getMetricName())
             .build();
     GrpcCallSettings<CreateLogMetricRequest, LogMetric> createLogMetricTransportSettings =
         GrpcCallSettings.<CreateLogMetricRequest, LogMetric>newBuilder()
@@ -186,6 +188,7 @@ public class GrpcMetricsServiceV2Stub extends MetricsServiceV2Stub {
                   builder.add("parent", String.valueOf(request.getParent()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     GrpcCallSettings<UpdateLogMetricRequest, LogMetric> updateLogMetricTransportSettings =
         GrpcCallSettings.<UpdateLogMetricRequest, LogMetric>newBuilder()
@@ -196,6 +199,7 @@ public class GrpcMetricsServiceV2Stub extends MetricsServiceV2Stub {
                   builder.add("metric_name", String.valueOf(request.getMetricName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getMetricName())
             .build();
     GrpcCallSettings<DeleteLogMetricRequest, Empty> deleteLogMetricTransportSettings =
         GrpcCallSettings.<DeleteLogMetricRequest, Empty>newBuilder()
@@ -206,6 +210,7 @@ public class GrpcMetricsServiceV2Stub extends MetricsServiceV2Stub {
                   builder.add("metric_name", String.valueOf(request.getMetricName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getMetricName())
             .build();
 
     this.listLogMetricsCallable =

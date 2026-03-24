@@ -109,7 +109,8 @@ public class GrpcCallableFactory {
         new TracedUnaryCallable<>(
             callable,
             clientContext.getTracerFactory(),
-            getApiTracerContext(grpcCallSettings.getMethodDescriptor()));
+            getApiTracerContext(grpcCallSettings.getMethodDescriptor()),
+            grpcCallSettings.getResourceNameExtractor());
 
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }

@@ -29,14 +29,17 @@
  */
 package com.google.api.gax.httpjson;
 
+import com.google.api.core.BetaApi;
 import com.google.api.gax.rpc.RequestMutator;
 import com.google.api.gax.rpc.RequestParamsExtractor;
+import com.google.api.gax.rpc.ResourceNameExtractor;
 import com.google.protobuf.TypeRegistry;
 
 /** HTTP-specific settings for creating callables. */
 public class HttpJsonCallSettings<RequestT, ResponseT> {
   private final ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor;
   private final RequestParamsExtractor<RequestT> paramsExtractor;
+  private final ResourceNameExtractor<RequestT> resourceNameExtractor;
 
   private final RequestMutator<RequestT> requestMutator;
   private final TypeRegistry typeRegistry;
@@ -44,6 +47,7 @@ public class HttpJsonCallSettings<RequestT, ResponseT> {
   private HttpJsonCallSettings(Builder<RequestT, ResponseT> builder) {
     this.methodDescriptor = builder.methodDescriptor;
     this.paramsExtractor = builder.paramsExtractor;
+    this.resourceNameExtractor = builder.resourceNameExtractor;
     this.requestMutator = builder.requestMutator;
     this.typeRegistry = builder.typeRegistry;
   }
@@ -54,6 +58,14 @@ public class HttpJsonCallSettings<RequestT, ResponseT> {
 
   public RequestParamsExtractor<RequestT> getParamsExtractor() {
     return paramsExtractor;
+  }
+
+  /**
+   * Gets the extractor capable of extracting the destination resource name from the RPC request.
+   */
+  @BetaApi
+  ResourceNameExtractor<RequestT> getResourceNameExtractor() {
+    return resourceNameExtractor;
   }
 
   public RequestMutator<RequestT> getRequestMutator() {
@@ -84,12 +96,17 @@ public class HttpJsonCallSettings<RequestT, ResponseT> {
     private RequestMutator<RequestT> requestMutator;
     private ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor;
     private RequestParamsExtractor<RequestT> paramsExtractor;
+    private ResourceNameExtractor<RequestT> resourceNameExtractor;
     private TypeRegistry typeRegistry;
 
     private Builder() {}
 
     private Builder(HttpJsonCallSettings<RequestT, ResponseT> settings) {
       this.methodDescriptor = settings.methodDescriptor;
+      this.paramsExtractor = settings.paramsExtractor;
+      this.resourceNameExtractor = settings.resourceNameExtractor;
+      this.requestMutator = settings.requestMutator;
+      this.typeRegistry = settings.typeRegistry;
     }
 
     public Builder<RequestT, ResponseT> setMethodDescriptor(
@@ -101,6 +118,15 @@ public class HttpJsonCallSettings<RequestT, ResponseT> {
     public Builder<RequestT, ResponseT> setParamsExtractor(
         RequestParamsExtractor<RequestT> paramsExtractor) {
       this.paramsExtractor = paramsExtractor;
+      return this;
+    }
+
+    /**
+     * Sets the extractor capable of extracting the destination resource name from the RPC request.
+     */
+    public Builder<RequestT, ResponseT> setResourceNameExtractor(
+        ResourceNameExtractor<RequestT> resourceNameExtractor) {
+      this.resourceNameExtractor = resourceNameExtractor;
       return this;
     }
 

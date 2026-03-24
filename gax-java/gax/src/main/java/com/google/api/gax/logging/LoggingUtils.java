@@ -36,11 +36,31 @@ import java.util.Map;
 @InternalApi
 public class LoggingUtils {
 
-  private static boolean loggingEnabled = isLoggingEnabled();
   static final String GOOGLE_SDK_JAVA_LOGGING = "GOOGLE_SDK_JAVA_LOGGING";
 
+  private static boolean loggingEnabled = checkLoggingEnabled(GOOGLE_SDK_JAVA_LOGGING);
+
+  /**
+   * Returns whether client-side logging is enabled.
+   *
+   * @return true if logging is enabled, false otherwise.
+   */
   static boolean isLoggingEnabled() {
-    String enableLogging = System.getenv(GOOGLE_SDK_JAVA_LOGGING);
+    return loggingEnabled;
+  }
+
+  /**
+   * Sets whether client-side logging is enabled. Visible for testing.
+   *
+   * @param enabled true to enable logging, false to disable.
+   */
+  @com.google.common.annotations.VisibleForTesting
+  static void setLoggingEnabled(boolean enabled) {
+    loggingEnabled = enabled;
+  }
+
+  private static boolean checkLoggingEnabled(String envVar) {
+    String enableLogging = System.getenv(envVar);
     return "true".equalsIgnoreCase(enableLogging);
   }
 
@@ -123,6 +143,22 @@ public class LoggingUtils {
       RespT message, LogData.Builder logDataBuilder, LoggerProvider loggerProvider) {
     if (loggingEnabled) {
       Slf4jLoggingHelpers.logRequest(message, logDataBuilder, loggerProvider);
+    }
+  }
+
+  /**
+   * Logs an actionable error message with structured context at a specific log level.
+   *
+   * @param logContext A map containing the structured logging context (e.g., RPC service, method,
+   *     error details).
+   * @param loggerProvider The provider used to obtain the logger.
+   * @param message The human-readable error message.
+   */
+  public static void logActionableError(
+      Map<String, Object> logContext, LoggerProvider loggerProvider, String message) {
+    if (loggingEnabled) {
+      org.slf4j.Logger logger = loggerProvider.getLogger();
+      Slf4jUtils.log(logger, org.slf4j.event.Level.DEBUG, logContext, message);
     }
   }
 
