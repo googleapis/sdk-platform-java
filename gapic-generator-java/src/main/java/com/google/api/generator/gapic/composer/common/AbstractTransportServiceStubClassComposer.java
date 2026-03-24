@@ -331,6 +331,16 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
               .build();
     }
 
+    LambdaExpr extractor = createResourceNameExtractorClassInstance(method, messageTypes);
+    if (extractor != null) {
+      callSettingsBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(callSettingsBuilderExpr)
+              .setMethodName("setResourceNameExtractor")
+              .setArguments(extractor)
+              .build();
+    }
+
     callSettingsBuilderExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(callSettingsBuilderExpr)
@@ -1493,6 +1503,57 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return fieldName ->
         methodRequestMessage.fields().stream()
             .anyMatch(field -> field.name().equals(fieldName) && field.canBeAutoPopulated());
+  }
+
+  /**
+   * The Resource Name Extractor should only be generated if the request contains a field that has
+   * resource reference (see {@link Field#hasResourceReference()})
+   */
+  @Nullable
+  protected static LambdaExpr createResourceNameExtractorClassInstance(
+      Method method, ImmutableMap<String, Message> messageTypes) {
+    Field resourceNameField = getDestinationResourceIdField(method, messageTypes);
+
+    if (resourceNameField == null) {
+      return null;
+    }
+
+    // Expected expression: request -> request.getField()
+    VariableExpr requestVarExpr = createRequestVarExpr(method);
+    List<Statement> bodyStatements = new ArrayList<>();
+    Expr returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(requestVarExpr)
+            .setMethodName(
+                String.format("get%s", JavaStyle.toUpperCamelCase(resourceNameField.name())))
+            .setReturnType(TypeNode.STRING)
+            .build();
+
+    return LambdaExpr.builder()
+        .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
+        .setBody(bodyStatements)
+        .setReturnExpr(returnExpr)
+        .build();
+  }
+
+  // Find the first field that has resource reference in a request message
+  private static Field getDestinationResourceIdField(
+      Method method, ImmutableMap<String, Message> messageTypes) {
+    if (method.inputType().reference() == null
+        || method.inputType().reference().fullName() == null) {
+      return null;
+    }
+    String methodRequestName = method.inputType().reference().fullName();
+    Message methodRequestMessage = messageTypes.get(methodRequestName);
+    if (methodRequestMessage == null) {
+      return null;
+    }
+
+    return methodRequestMessage.fields().stream()
+        .filter(Field::hasResourceReference)
+        .filter(f -> !f.isRepeated())
+        .findFirst()
+        .orElse(null);
   }
 
   protected LambdaExpr createRequestParamsExtractorClassInstance(

@@ -553,6 +553,7 @@ public class HttpJsonSequenceServiceStub extends SequenceServiceStub {
                       builder.add("name", String.valueOf(request.getName()));
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getName())
                 .build();
     HttpJsonCallSettings<GetStreamingSequenceReportRequest, StreamingSequenceReport>
         getStreamingSequenceReportTransportSettings =
@@ -566,6 +567,7 @@ public class HttpJsonSequenceServiceStub extends SequenceServiceStub {
                       builder.add("name", String.valueOf(request.getName()));
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getName())
                 .build();
     HttpJsonCallSettings<AttemptSequenceRequest, Empty> attemptSequenceTransportSettings =
         HttpJsonCallSettings.<AttemptSequenceRequest, Empty>newBuilder()
@@ -577,6 +579,7 @@ public class HttpJsonSequenceServiceStub extends SequenceServiceStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<AttemptStreamingSequenceRequest, AttemptStreamingSequenceResponse>
         attemptStreamingSequenceTransportSettings =
@@ -590,6 +593,7 @@ public class HttpJsonSequenceServiceStub extends SequenceServiceStub {
                       builder.add("name", String.valueOf(request.getName()));
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getName())
                 .build();
     HttpJsonCallSettings<ListLocationsRequest, ListLocationsResponse>
         listLocationsTransportSettings =
@@ -624,6 +628,7 @@ public class HttpJsonSequenceServiceStub extends SequenceServiceStub {
                   builder.add("resource", String.valueOf(request.getResource()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getResource())
             .build();
     HttpJsonCallSettings<GetIamPolicyRequest, Policy> getIamPolicyTransportSettings =
         HttpJsonCallSettings.<GetIamPolicyRequest, Policy>newBuilder()
@@ -635,6 +640,7 @@ public class HttpJsonSequenceServiceStub extends SequenceServiceStub {
                   builder.add("resource", String.valueOf(request.getResource()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getResource())
             .build();
     HttpJsonCallSettings<TestIamPermissionsRequest, TestIamPermissionsResponse>
         testIamPermissionsTransportSettings =
@@ -647,6 +653,7 @@ public class HttpJsonSequenceServiceStub extends SequenceServiceStub {
                       builder.add("resource", String.valueOf(request.getResource()));
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getResource())
                 .build();
 
     this.createSequenceCallable =

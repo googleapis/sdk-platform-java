@@ -34,8 +34,11 @@ import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.ApiCallContext;
+import com.google.api.gax.rpc.ResourceNameExtractor;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Strings;
 import com.google.common.util.concurrent.MoreExecutors;
 import javax.annotation.Nullable;
 
@@ -51,6 +54,7 @@ public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<Requ
   private final ApiTracerFactory tracerFactory;
   private final SpanName spanName;
   @Nullable private final ApiTracerContext apiTracerContext;
+  @Nullable private final ResourceNameExtractor<RequestT> resourceNameExtractor;
 
   public TracedUnaryCallable(
       UnaryCallable<RequestT, ResponseT> innerCallable,
@@ -60,17 +64,20 @@ public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<Requ
     this.tracerFactory = tracerFactory;
     this.spanName = spanName;
     this.apiTracerContext = null;
+    this.resourceNameExtractor = null;
   }
 
   public TracedUnaryCallable(
       UnaryCallable<RequestT, ResponseT> innerCallable,
       ApiTracerFactory tracerFactory,
-      ApiTracerContext apiTracerContext) {
+      ApiTracerContext apiTracerContext,
+      @Nullable ResourceNameExtractor<RequestT> resourceNameExtractor) {
     this.innerCallable = innerCallable;
     this.tracerFactory = tracerFactory;
     this.apiTracerContext =
         apiTracerContext.toBuilder().setOperationType(OperationType.Unary).build();
     this.spanName = SpanName.of(apiTracerContext);
+    this.resourceNameExtractor = resourceNameExtractor;
   }
 
   /**
@@ -83,7 +90,8 @@ public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<Requ
   public ApiFuture<ResponseT> futureCall(RequestT request, ApiCallContext context) {
     ApiTracer tracer;
     if (apiTracerContext != null) {
-      tracer = tracerFactory.newTracer(context.getTracer(), apiTracerContext);
+      ApiTracerContext finalContext = extractResourceNameToApiTracerContext(request);
+      tracer = tracerFactory.newTracer(context.getTracer(), finalContext);
     } else {
       tracer = tracerFactory.newTracer(context.getTracer(), spanName, OperationType.Unary);
     }
@@ -99,5 +107,16 @@ public class TracedUnaryCallable<RequestT, ResponseT> extends UnaryCallable<Requ
       finisher.onFailure(e);
       throw e;
     }
+  }
+
+  @VisibleForTesting
+  ApiTracerContext extractResourceNameToApiTracerContext(RequestT request) {
+    ApiTracerContext finalContext = apiTracerContext;
+    String resourceName =
+        resourceNameExtractor != null ? resourceNameExtractor.extract(request) : null;
+    if (!Strings.isNullOrEmpty(resourceName)) {
+      finalContext = finalContext.toBuilder().setDestinationResourceId(resourceName).build();
+    }
+    return finalContext;
   }
 }

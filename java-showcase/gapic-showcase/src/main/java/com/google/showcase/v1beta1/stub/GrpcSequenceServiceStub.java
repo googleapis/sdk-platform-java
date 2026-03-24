@@ -267,6 +267,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<GetStreamingSequenceReportRequest, StreamingSequenceReport>
         getStreamingSequenceReportTransportSettings =
@@ -279,6 +280,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
                       builder.add("name", String.valueOf(request.getName()));
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getName())
                 .build();
     GrpcCallSettings<AttemptSequenceRequest, Empty> attemptSequenceTransportSettings =
         GrpcCallSettings.<AttemptSequenceRequest, Empty>newBuilder()
@@ -289,6 +291,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<AttemptStreamingSequenceRequest, AttemptStreamingSequenceResponse>
         attemptStreamingSequenceTransportSettings =
@@ -301,6 +304,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
                       builder.add("name", String.valueOf(request.getName()));
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getName())
                 .build();
     GrpcCallSettings<ListLocationsRequest, ListLocationsResponse> listLocationsTransportSettings =
         GrpcCallSettings.<ListLocationsRequest, ListLocationsResponse>newBuilder()
@@ -331,6 +335,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
                   builder.add("resource", String.valueOf(request.getResource()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getResource())
             .build();
     GrpcCallSettings<GetIamPolicyRequest, Policy> getIamPolicyTransportSettings =
         GrpcCallSettings.<GetIamPolicyRequest, Policy>newBuilder()
@@ -341,6 +346,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
                   builder.add("resource", String.valueOf(request.getResource()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getResource())
             .build();
     GrpcCallSettings<TestIamPermissionsRequest, TestIamPermissionsResponse>
         testIamPermissionsTransportSettings =
@@ -352,6 +358,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
                       builder.add("resource", String.valueOf(request.getResource()));
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getResource())
                 .build();
 
     this.createSequenceCallable =

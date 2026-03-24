@@ -222,6 +222,7 @@ public class GrpcBigtableStub extends BigtableStub {
                       request.getAppProfileId(), "app_profile_id", READ_ROWS_1_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getTableName())
             .build();
     GrpcCallSettings<SampleRowKeysRequest, SampleRowKeysResponse> sampleRowKeysTransportSettings =
         GrpcCallSettings.<SampleRowKeysRequest, SampleRowKeysResponse>newBuilder()
@@ -235,6 +236,7 @@ public class GrpcBigtableStub extends BigtableStub {
                       request.getAppProfileId(), "app_profile_id", SAMPLE_ROW_KEYS_1_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getTableName())
             .build();
     GrpcCallSettings<MutateRowRequest, MutateRowResponse> mutateRowTransportSettings =
         GrpcCallSettings.<MutateRowRequest, MutateRowResponse>newBuilder()
@@ -247,6 +249,7 @@ public class GrpcBigtableStub extends BigtableStub {
                       request.getAppProfileId(), "app_profile_id", MUTATE_ROW_1_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getTableName())
             .build();
     GrpcCallSettings<MutateRowsRequest, MutateRowsResponse> mutateRowsTransportSettings =
         GrpcCallSettings.<MutateRowsRequest, MutateRowsResponse>newBuilder()
@@ -259,6 +262,7 @@ public class GrpcBigtableStub extends BigtableStub {
                       request.getAppProfileId(), "app_profile_id", MUTATE_ROWS_1_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getTableName())
             .build();
     GrpcCallSettings<CheckAndMutateRowRequest, CheckAndMutateRowResponse>
         checkAndMutateRowTransportSettings =
@@ -277,6 +281,7 @@ public class GrpcBigtableStub extends BigtableStub {
                           CHECK_AND_MUTATE_ROW_1_PATH_TEMPLATE);
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getTableName())
                 .build();
     GrpcCallSettings<PingAndWarmRequest, PingAndWarmResponse> pingAndWarmTransportSettings =
         GrpcCallSettings.<PingAndWarmRequest, PingAndWarmResponse>newBuilder()
@@ -289,6 +294,7 @@ public class GrpcBigtableStub extends BigtableStub {
                       request.getAppProfileId(), "app_profile_id", PING_AND_WARM_1_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<ReadModifyWriteRowRequest, ReadModifyWriteRowResponse>
         readModifyWriteRowTransportSettings =
@@ -307,6 +313,7 @@ public class GrpcBigtableStub extends BigtableStub {
                           READ_MODIFY_WRITE_ROW_1_PATH_TEMPLATE);
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getTableName())
                 .build();
 
     this.readRowsCallable =

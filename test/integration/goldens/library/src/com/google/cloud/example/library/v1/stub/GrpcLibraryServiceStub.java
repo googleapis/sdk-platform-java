@@ -232,6 +232,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<ListShelvesRequest, ListShelvesResponse> listShelvesTransportSettings =
         GrpcCallSettings.<ListShelvesRequest, ListShelvesResponse>newBuilder()
@@ -246,6 +247,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<MergeShelvesRequest, Shelf> mergeShelvesTransportSettings =
         GrpcCallSettings.<MergeShelvesRequest, Shelf>newBuilder()
@@ -256,6 +258,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<CreateBookRequest, Book> createBookTransportSettings =
         GrpcCallSettings.<CreateBookRequest, Book>newBuilder()
@@ -266,6 +269,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
                   builder.add("parent", String.valueOf(request.getParent()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     GrpcCallSettings<GetBookRequest, Book> getBookTransportSettings =
         GrpcCallSettings.<GetBookRequest, Book>newBuilder()
@@ -276,6 +280,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<ListBooksRequest, ListBooksResponse> listBooksTransportSettings =
         GrpcCallSettings.<ListBooksRequest, ListBooksResponse>newBuilder()
@@ -286,6 +291,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
                   builder.add("parent", String.valueOf(request.getParent()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     GrpcCallSettings<DeleteBookRequest, Empty> deleteBookTransportSettings =
         GrpcCallSettings.<DeleteBookRequest, Empty>newBuilder()
@@ -296,6 +302,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<UpdateBookRequest, Book> updateBookTransportSettings =
         GrpcCallSettings.<UpdateBookRequest, Book>newBuilder()
@@ -316,6 +323,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
 
     this.createShelfCallable =
