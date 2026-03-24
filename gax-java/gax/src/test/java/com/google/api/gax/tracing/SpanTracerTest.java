@@ -218,9 +218,7 @@ class SpanTracerTest {
     tracer.attemptFailedRetriesExhausted(new RedirectException("redirect failed"));
 
     verify(attemptHandle)
-        .addAttribute(
-            ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
-            ErrorTypeUtil.ErrorType.CLIENT_REDIRECT_ERROR.toString());
+        .addAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "RedirectException");
     verify(attemptHandle).end();
   }
 
@@ -248,9 +246,7 @@ class SpanTracerTest {
     tracer.attemptFailedRetriesExhausted(new UnknownClientException());
 
     verify(attemptHandle)
-        .addAttribute(
-            ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
-            ErrorTypeUtil.ErrorType.CLIENT_UNKNOWN_ERROR.toString());
+        .addAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "UnknownClientException");
     verify(attemptHandle).end();
   }
 

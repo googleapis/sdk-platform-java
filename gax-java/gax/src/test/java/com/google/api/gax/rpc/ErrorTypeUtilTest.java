@@ -33,7 +33,6 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.gax.rpc.testing.FakeStatusCode;
 import com.google.api.gax.tracing.ErrorTypeUtil;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.BindException;
 import java.net.ConnectException;
@@ -113,7 +112,8 @@ class ErrorTypeUtilTest {
   void testExtractErrorType_realSSLHandshakeException() throws Exception {
     // Emulating a reliable SSLHandshakeException (vs a generic SSLException) requires
     // complex keystore setups which are brittle. We instantiate it directly here.
-    assertThat(ErrorTypeUtil.extractErrorType(new SSLHandshakeException("Cert path building failed")))
+    assertThat(
+            ErrorTypeUtil.extractErrorType(new SSLHandshakeException("Cert path building failed")))
         .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_CONNECTION_ERROR.toString());
   }
 
@@ -135,15 +135,16 @@ class ErrorTypeUtilTest {
   void testExtractErrorType_clientTimeout_others() {
     assertThat(ErrorTypeUtil.extractErrorType(new WatchdogTimeoutException("timeout", false)))
         .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_TIMEOUT.toString());
-    assertThat(ErrorTypeUtil.extractErrorType(new DeadlineExceededException("timeout", null, new FakeStatusCode(StatusCode.Code.DEADLINE_EXCEEDED), false)))
+    assertThat(
+            ErrorTypeUtil.extractErrorType(
+                new DeadlineExceededException(
+                    "timeout", null, new FakeStatusCode(StatusCode.Code.DEADLINE_EXCEEDED), false)))
         .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_TIMEOUT.toString());
   }
 
   @Test
   void testExtractErrorType_clientAuthenticationError() {
     assertThat(ErrorTypeUtil.extractErrorType(new GeneralSecurityException("auth fail")))
-        .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_AUTHENTICATION_ERROR.toString());
-    assertThat(ErrorTypeUtil.extractErrorType(new FileNotFoundException("key not found")))
         .isEqualTo(ErrorTypeUtil.ErrorType.CLIENT_AUTHENTICATION_ERROR.toString());
   }
 
@@ -177,7 +178,19 @@ class ErrorTypeUtilTest {
 
   @Test
   void testExtractErrorType_unknownException() {
-      assertThat(ErrorTypeUtil.extractErrorType(new Exception("Unknown stuff")))
-          .isEqualTo("Exception");
+    assertThat(ErrorTypeUtil.extractErrorType(new Exception("Unknown stuff")))
+        .isEqualTo("Exception");
+  }
+
+  @Test
+  void testExtractErrorType_redirectFallback() {
+    assertThat(ErrorTypeUtil.extractErrorType(new Exception("redirect"))).isEqualTo("Exception");
+  }
+
+  @Test
+  void testExtractErrorType_unknownClassNameFallback() {
+    class UnknownClientException extends Exception {}
+    assertThat(ErrorTypeUtil.extractErrorType(new UnknownClientException()))
+        .isEqualTo("UnknownClientException");
   }
 }

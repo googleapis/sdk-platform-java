@@ -34,7 +34,6 @@ import com.google.api.gax.rpc.DeadlineExceededException;
 import com.google.api.gax.rpc.WatchdogTimeoutException;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
-import java.io.FileNotFoundException;
 import java.net.BindException;
 import java.net.ConnectException;
 import java.net.NoRouteToHostException;
@@ -52,10 +51,14 @@ public class ErrorTypeUtil {
     CLIENT_TIMEOUT,
     CLIENT_CONNECTION_ERROR,
     CLIENT_REQUEST_ERROR,
+    /** Placeholder for potential future request body errors. */
     CLIENT_REQUEST_BODY_ERROR,
+    /** Placeholder for potential future response decode errors. */
     CLIENT_RESPONSE_DECODE_ERROR,
+    /** Placeholder for potential future redirect errors. */
     CLIENT_REDIRECT_ERROR,
     CLIENT_AUTHENTICATION_ERROR,
+    /** Placeholder for potential future unknown errors. */
     CLIENT_UNKNOWN_ERROR,
     INTERNAL;
 
@@ -66,7 +69,7 @@ public class ErrorTypeUtil {
   }
 
   private static final Set<Class<? extends Throwable>> AUTHENTICATION_EXCEPTION_CLASSES =
-      ImmutableSet.of(GeneralSecurityException.class, FileNotFoundException.class);
+      ImmutableSet.of(GeneralSecurityException.class);
 
   private static final Set<Class<? extends Throwable>> CLIENT_TIMEOUT_EXCEPTION_CLASSES =
       ImmutableSet.of(
@@ -193,15 +196,9 @@ public class ErrorTypeUtil {
     if (isClientAuthenticationError(error)) {
       return ErrorType.CLIENT_AUTHENTICATION_ERROR.toString();
     }
-    if (isClientRedirectError(error)) {
-      return ErrorType.CLIENT_REDIRECT_ERROR.toString();
-    }
     // This covers CLIENT_REQUEST_ERROR for general illegal arguments in client requests.
     if (error instanceof IllegalArgumentException) {
       return ErrorType.CLIENT_REQUEST_ERROR.toString();
-    }
-    if (isClientUnknownError(error)) {
-      return ErrorType.CLIENT_UNKNOWN_ERROR.toString();
     }
     return null;
   }
@@ -228,38 +225,8 @@ public class ErrorTypeUtil {
     return hasErrorClassInCauseChain(e, CLIENT_CONNECTION_EXCEPTIONS);
   }
 
-  /**
-   * Checks if the given Throwable represents a client-side redirect error. This is identified by
-   * the presence of "redirect" in the exception message.
-   *
-   * @param e The Throwable to check.
-   * @return true if the error is a client redirect error, false otherwise.
-   */
-  private static boolean isClientRedirectError(Throwable e) {
-    return e.getMessage() != null && e.getMessage().contains("redirect");
-  }
-
-  /**
-   * Checks if the given Throwable represents a client-side authentication error. This is identified
-   * by exceptions related to the auth library.
-   *
-   * @param e The Throwable to check.
-   * @return true if the error is a client authentication error, false otherwise.
-   */
   private static boolean isClientAuthenticationError(Throwable e) {
     return hasErrorClassInCauseChain(e, AUTHENTICATION_EXCEPTION_CLASSES);
-  }
-
-  /**
-   * Checks if the given Throwable represents an unknown client-side error. This is a general
-   * fallback for exceptions whose class name contains "unknown", indicating an unclassified
-   * client-side issue.
-   *
-   * @param e The Throwable to check.
-   * @return true if the error is an unknown client error, false otherwise.
-   */
-  private static boolean isClientUnknownError(Throwable e) {
-    return e.getClass().getName().toLowerCase().contains("unknown");
   }
 
   /**

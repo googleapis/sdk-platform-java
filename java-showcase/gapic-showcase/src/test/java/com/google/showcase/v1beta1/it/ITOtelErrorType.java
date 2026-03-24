@@ -34,6 +34,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.api.gax.httpjson.RestSerializationException;
 import com.google.api.gax.rpc.DeadlineExceededException;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.UnavailableException;
@@ -383,7 +384,9 @@ class ITOtelErrorType {
   void testTracing_clientAuthenticationError_FileNotFoundException_grpc() throws Exception {
     try (EchoClient client = createInterceptorClient(new FileNotFoundException("Key not found"))) {
       assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
-      verifyErrorTypeAttribute("CLIENT_AUTHENTICATION_ERROR");
+      // Wrapping non-RuntimeExceptions in RuntimeException during interceptCall()
+      // means the simple class name of the exception being recorded is "RuntimeException"
+      verifyErrorTypeAttribute("RuntimeException");
     }
   }
 
@@ -399,7 +402,9 @@ class ITOtelErrorType {
   void testTracing_clientRedirectError_grpc() throws Exception {
     try (EchoClient client = createInterceptorClient(new RuntimeException("Too many redirects"))) {
       assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
-      verifyErrorTypeAttribute("CLIENT_REDIRECT_ERROR");
+      // Heuristic mapping of "redirect" in message has been removed.
+      // Expected result is now the simple class name of the exception.
+      verifyErrorTypeAttribute("RuntimeException");
     }
   }
 
@@ -409,7 +414,19 @@ class ITOtelErrorType {
     class MyUnknownException extends RuntimeException {}
     try (EchoClient client = createInterceptorClient(new MyUnknownException())) {
       assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
-      verifyErrorTypeAttribute("CLIENT_UNKNOWN_ERROR");
+      // Heuristic mapping of "Unknown" in class name has been removed.
+      // Expected result is now the simple class name of the exception.
+      verifyErrorTypeAttribute("MyUnknownException");
+    }
+  }
+
+  @Test
+  void testTracing_clientRequestError_RestSerializationException_httpjson() throws Exception {
+    try (EchoClient client = createInterceptorClient(new RestSerializationException("failed to serialize", null))) {
+      assertThrows(RuntimeException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
+      // RestSerializationException is not handled due to ambiguity (serialization vs deserialization).
+      // Expected result is now its simple class name.
+      verifyErrorTypeAttribute("RestSerializationException");
     }
   }
 }
