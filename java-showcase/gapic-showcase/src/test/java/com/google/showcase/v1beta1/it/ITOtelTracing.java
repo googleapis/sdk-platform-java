@@ -33,7 +33,9 @@ package com.google.showcase.v1beta1.it;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
+import java.util.UUID;
 import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.showcase.v1beta1.GetUserRequest;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.StatusCode;
@@ -41,12 +43,14 @@ import com.google.api.gax.rpc.UnavailableException;
 import com.google.api.gax.tracing.ObservabilityAttributes;
 import com.google.api.gax.tracing.SpanTracer;
 import com.google.api.gax.tracing.SpanTracerFactory;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.Message;
 import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoSettings;
-import com.google.showcase.v1beta1.GetUserRequest;
 import com.google.showcase.v1beta1.IdentityClient;
+import com.google.showcase.v1beta1.User;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import com.google.showcase.v1beta1.stub.EchoStub;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
@@ -58,6 +62,7 @@ import io.opentelemetry.sdk.testing.exporter.InMemorySpanExporter;
 import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import io.opentelemetry.sdk.trace.data.SpanData;
 import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -234,7 +239,24 @@ class ITOtelTracing {
                       AttributeKey.stringKey(
                           ObservabilityAttributes.DESTINATION_RESOURCE_ID_ATTRIBUTE)))
           .isEqualTo("users/test-user");
+
+      User fetchedUser = User.newBuilder().setName("users/test-user").build();
+      long expectedMagnitude = computeExpectedHttpJsonResponseSize(fetchedUser);
+      Long observedMagnitude =
+          attemptSpan
+              .getAttributes()
+              .get(AttributeKey.longKey(ObservabilityAttributes.HTTP_RESPONSE_BODY_SIZE));
+      if (observedMagnitude != null) {
+        assertThat(observedMagnitude).isAtLeast((long) (expectedMagnitude * (1 - 0.15)));
+        assertThat(observedMagnitude).isAtMost((long) (expectedMagnitude * (1 + 0.15)));
+      }
     }
+  }
+
+  private long computeExpectedHttpJsonResponseSize(Message message)
+      throws InvalidProtocolBufferException {
+    String jsonPayload = com.google.protobuf.util.JsonFormat.printer().print(message);
+    return jsonPayload.getBytes(StandardCharsets.UTF_8).length;
   }
 
   @Test
