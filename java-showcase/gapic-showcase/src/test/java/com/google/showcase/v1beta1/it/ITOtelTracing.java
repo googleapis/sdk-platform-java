@@ -97,14 +97,14 @@ class ITOtelTracing {
 
   @Test
   void testTracing_successfulIdentityGetUser_grpc() throws Exception {
-		final String username = "users/test-user";
+    final String username = "users/test-user";
     SpanTracerFactory tracingFactory = new SpanTracerFactory(openTelemetrySdk);
 
     try (IdentityClient client =
         TestClientInitializer.createGrpcIdentityClientOpentelemetry(tracingFactory)) {
 
       try {
-				client.getUser(GetUserRequest.newBuilder().setName(username).build());
+        client.getUser(GetUserRequest.newBuilder().setName(username).build());
       } catch (Exception e) {
         // Ignored, the showcase server may not have this user, but trace is still generated.
       }
@@ -179,14 +179,15 @@ class ITOtelTracing {
 
   @Test
   void testTracing_successfulIdentityGetUser_httpjson() throws Exception {
-		final String username = "users/test-user";
+    final String username = "users/test-user";
     SpanTracerFactory tracingFactory = new SpanTracerFactory(openTelemetrySdk);
 
     try (IdentityClient client =
         TestClientInitializer.createHttpJsonIdentityClientOpentelemetry(tracingFactory)) {
 
       try {
-				client.createUser(CreateUserRequest.newBuilder().setUser(User.newBuilder().setName(username)).build());
+        client.createUser(
+            CreateUserRequest.newBuilder().setUser(User.newBuilder().setName(username)).build());
         client.getUser(GetUserRequest.newBuilder().setName("users/test-user").build());
       } catch (Exception e) {
         // Ignored, the showcase server may not have this user, but trace is still generated.
