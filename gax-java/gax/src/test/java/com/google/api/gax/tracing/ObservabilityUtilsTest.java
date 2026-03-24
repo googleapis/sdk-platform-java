@@ -146,7 +146,9 @@ class ObservabilityUtilsTest {
     Map<String, Object> attributes = new java.util.HashMap<>();
     ObservabilityUtils.populateStatusAttributes(attributes, null, ApiTracerContext.Transport.HTTP);
     assertThat(attributes)
-        .containsEntry(ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE, StatusCode.Code.OK.getHttpStatusCode());
+        .containsEntry(
+            ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE,
+            (long) StatusCode.Code.OK.getHttpStatusCode());
   }
 
   @Test
@@ -170,8 +172,9 @@ class ObservabilityUtilsTest {
             false);
     ObservabilityUtils.populateStatusAttributes(attributes, error, ApiTracerContext.Transport.HTTP);
     assertThat(attributes)
-        .containsEntry(ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE,
-            StatusCode.Code.NOT_FOUND.getHttpStatusCode());
+        .containsEntry(
+            ObservabilityAttributes.HTTP_RESPONSE_STATUS_ATTRIBUTE,
+            (long) StatusCode.Code.NOT_FOUND.getHttpStatusCode());
   }
 
   @Test
