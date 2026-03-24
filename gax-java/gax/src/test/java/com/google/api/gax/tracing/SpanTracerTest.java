@@ -137,6 +137,17 @@ class SpanTracerTest {
             org.mockito.ArgumentMatchers.eq(-1));
   }
 
+  @Test
+  void testResponseHeadersReceived_listContentLength() {
+    spanTracer.attemptStarted(new Object(), 1);
+
+    java.util.Map<String, Object> headers = new java.util.HashMap<>();
+    headers.put("Content-Length", java.util.Arrays.asList(98765L));
+    spanTracer.responseHeadersReceived(headers);
+
+    verify(span).setAttribute(ObservabilityAttributes.HTTP_RESPONSE_BODY_SIZE, 98765L);
+  }
+
   void testAttemptStarted_noRetryAttributes_grpc() {
     ApiTracerContext grpcContext =
         ApiTracerContext.newBuilder()

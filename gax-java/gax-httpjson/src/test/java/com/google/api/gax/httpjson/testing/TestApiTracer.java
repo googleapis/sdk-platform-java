@@ -104,19 +104,23 @@ public class TestApiTracer implements ApiTracer {
   }
 
   private long extractContentLength(java.util.Map<String, Object> headers) {
-    if (headers == null) {
+    if (headers == null || headers.isEmpty()) return -1;
+    Object value =
+        headers.entrySet().stream()
+            .filter(e -> "Content-Length".equalsIgnoreCase(e.getKey()))
+            .map(java.util.Map.Entry::getValue)
+            .findFirst()
+            .orElse(null);
+
+    if (value instanceof java.util.Collection) {
+      value = ((java.util.Collection<?>) value).stream().findFirst().orElse(null);
+    }
+
+    try {
+      return Long.parseLong(String.valueOf(value));
+    } catch (NumberFormatException | NullPointerException e) {
       return -1;
     }
-    for (java.util.Map.Entry<String, Object> entry : headers.entrySet()) {
-      if ("Content-Length".equalsIgnoreCase(entry.getKey())) {
-        Object value = entry.getValue();
-        if (value != null) {
-          return Long.parseLong(String.valueOf(value));
-        }
-        break;
-      }
-    }
-    return -1;
   }
 }
 ;

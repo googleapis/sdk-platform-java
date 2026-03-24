@@ -38,8 +38,6 @@ import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.Tracer;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
-import java.util.function.Supplier;
 
 /** An implementation of {@link ApiTracer} that uses OpenTelemetry to record traces. */
 @BetaApi
@@ -151,19 +149,42 @@ public class SpanTracer implements ApiTracer {
   /**
    * Extracts the Content-Length header value from the response headers, if available.
    *
+   * <p>Note: google-http-java-client's HttpHeaders.java returns some headers (like Content-Length)
+   * as a List<Long> instead of a single value.
+   * https://github.com/googleapis/google-http-java-client/blob/main/google-http-client/src/main/java/com/google/api/client/http/HttpHeaders.java#L162
+   *
    * @param headers the map of response headers.
    * @return the content length in bytes, or -1 if the header is missing or malformed.
    */
-  private long extractContentLength(final java.util.Map<String, Object> headers) {
-    final Map<String, Object> iHeaders = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    iHeaders.putAll(headers);
-    Supplier<Object> headerGetter = () -> iHeaders.get(CONTENT_LENGTH_KEY);
-    if (headers == null || headerGetter.get() == null) {
-      return -1;
+  private long extractContentLength(java.util.Map<String, Object> headers) {
+    System.out.println("DEBUG SPANTRACER headers: " + headers);
+    if (headers == null || headers.isEmpty()) return -1;
+    // google-http-client HttpHeaders uses a case-insensitive map but we copy it for safety
+    // and to handle potential different implementations.
+    Object value =
+        headers.entrySet().stream()
+            .filter(e -> CONTENT_LENGTH_KEY.equalsIgnoreCase(e.getKey()))
+            .map(Map.Entry::getValue)
+            .findFirst()
+            .orElse(null);
+
+    System.out.println(
+        "DEBUG SPANTRACER value extracted: "
+            + value
+            + " type: "
+            + (value == null ? "null" : value.getClass()));
+
+    if (value instanceof java.util.Collection) {
+      value = ((java.util.Collection<?>) value).stream().findFirst().orElse(null);
+      System.out.println("DEBUG SPANTRACER value after unwrapping collection: " + value);
     }
+
     try {
-      return Long.parseLong(String.valueOf(headerGetter.get()));
-    } catch (NumberFormatException ex) {
+      long res = Long.parseLong(value.toString());
+      System.out.println("DEBUG SPANTRACER returning val: " + res);
+      return res;
+    } catch (NumberFormatException | NullPointerException e) {
+      System.out.println("DEBUG SPANTRACER exception: " + e);
       return -1;
     }
   }
