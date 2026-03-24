@@ -1,0 +1,88 @@
+*** gpkg: Maven is using Corp Airlock (go/corp-airlock) by default!
+*** gpkg: Check package availability at http://airlock/
+[INFO] Scanning for projects...
+[INFO] Inspecting build with total of 1 modules...
+[INFO] Installing Nexus Staging features:
+[INFO]   ... total of 1 executions of maven-deploy-plugin replaced with nexus-staging-maven-plugin
+[INFO] 
+[INFO] ------------------< com.google.cloud:gapic-showcase >-------------------
+[INFO] Building GAPIC Showcase Client 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce) @ gapic-showcase ---
+[INFO] Skipping Rule Enforcement.
+[INFO] 
+[INFO] --- checkstyle:3.6.0:check (checkstyle) @ gapic-showcase ---
+[INFO] 
+[INFO] --- jacoco:0.8.13:prepare-agent (default) @ gapic-showcase ---
+[INFO] argLine set to -javaagent:/home/diegomarquezp/.m2/repository/org/jacoco/org.jacoco.agent/0.8.13/org.jacoco.agent-0.8.13-runtime.jar=destfile=/home/diegomarquezp/google/sdk-platform-java-4/java-showcase/gapic-showcase/target/jacoco.exec
+[INFO] 
+[INFO] --- build-helper:3.6.0:add-resource (add-main-proto-resources) @ gapic-showcase ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ gapic-showcase ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] skip non existing resourceDirectory /home/diegomarquezp/google/sdk-platform-java-4/java-showcase/gapic-showcase/src/main/proto
+[INFO] 
+[INFO] --- flatten:1.3.0:flatten (flatten) @ gapic-showcase ---
+[INFO] Generating flattened POM of project com.google.cloud:gapic-showcase:jar:0.0.1-SNAPSHOT...
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ gapic-showcase ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- build-helper:3.6.0:add-test-resource (add-test-proto-resources) @ gapic-showcase ---
+[INFO] 
+[INFO] --- download:1.6.8:wget (download-compliance-suite) @ gapic-showcase ---
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ gapic-showcase ---
+[INFO] Copying 4 resources from src/test/resources to target/test-classes
+[INFO] skip non existing resourceDirectory /home/diegomarquezp/google/sdk-platform-java-4/java-showcase/gapic-showcase/src/test/proto
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ gapic-showcase ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- animal-sniffer:1.24:check (java8) @ gapic-showcase ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ gapic-showcase ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.google.showcase.v1beta1.it.ITOtelTracing
+[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.674 s <<< FAILURE! -- in com.google.showcase.v1beta1.it.ITOtelTracing
+[ERROR] com.google.showcase.v1beta1.it.ITOtelTracing.testTracing_successfulIdentityGetUser_httpjson -- Time elapsed: 1.563 s <<< ERROR!
+java.lang.NullPointerException
+	at com.google.common.base.Preconditions.checkNotNull(Preconditions.java:902)
+	at com.google.common.truth.ComparableSubject.isAtLeast(ComparableSubject.java:117)
+	at com.google.showcase.v1beta1.it.ITOtelTracing.testTracing_successfulIdentityGetUser_httpjson(ITOtelTracing.java:234)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Errors: 
+[ERROR]   ITOtelTracing.testTracing_successfulIdentityGetUser_httpjson:234 » NullPointer
+[INFO] 
+[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.692 s
+[INFO] Finished at: 2026-03-24T15:30:53-04:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.2:test (default-test) on project gapic-showcase: 
+[ERROR] 
+[ERROR] See /home/diegomarquezp/google/sdk-platform-java-4/java-showcase/gapic-showcase/target/surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

@@ -157,7 +157,6 @@ public class SpanTracer implements ApiTracer {
    * @return the content length in bytes, or -1 if the header is missing or malformed.
    */
   private long extractContentLength(java.util.Map<String, Object> headers) {
-    System.out.println("DEBUG SPANTRACER headers: " + headers);
     if (headers == null || headers.isEmpty()) return -1;
     // google-http-client HttpHeaders uses a case-insensitive map but we copy it for safety
     // and to handle potential different implementations.
@@ -168,23 +167,13 @@ public class SpanTracer implements ApiTracer {
             .findFirst()
             .orElse(null);
 
-    System.out.println(
-        "DEBUG SPANTRACER value extracted: "
-            + value
-            + " type: "
-            + (value == null ? "null" : value.getClass()));
-
     if (value instanceof java.util.Collection) {
       value = ((java.util.Collection<?>) value).stream().findFirst().orElse(null);
-      System.out.println("DEBUG SPANTRACER value after unwrapping collection: " + value);
     }
 
     try {
-      long res = Long.parseLong(value.toString());
-      System.out.println("DEBUG SPANTRACER returning val: " + res);
-      return res;
+      return Long.parseLong(value.toString());
     } catch (NumberFormatException | NullPointerException e) {
-      System.out.println("DEBUG SPANTRACER exception: " + e);
       return -1;
     }
   }
