@@ -144,11 +144,14 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.GRPC_RPC_METHOD_ATTRIBUTE)))
           .isEqualTo("google.showcase.v1beta1.Echo/Echo");
+      assertThat(attemptSpan.getInstrumentationScopeInfo().getName()).isEqualTo(SHOWCASE_ARTIFACT);
       // {x-version-update-start:gapic-showcase:current}
       assertThat(
               attemptSpan
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.VERSION_ATTRIBUTE)))
+          .isEqualTo("0.0.0-SNAPSHOT");
+      assertThat(attemptSpan.getInstrumentationScopeInfo().getVersion())
           .isEqualTo("0.0.0-SNAPSHOT");
       // {x-version-update-end}
     }
@@ -208,6 +211,11 @@ class ITOtelTracing {
                   .getAttributes()
                   .get(AttributeKey.stringKey(ObservabilityAttributes.HTTP_URL_TEMPLATE_ATTRIBUTE)))
           .isEqualTo("v1beta1/echo:echo");
+      assertThat(attemptSpan.getInstrumentationScopeInfo().getName()).isEqualTo(SHOWCASE_ARTIFACT);
+      // {x-version-update-start:gapic-showcase:current}
+      assertThat(attemptSpan.getInstrumentationScopeInfo().getVersion())
+          .isEqualTo("0.0.0-SNAPSHOT");
+      // {x-version-update-end}
     }
   }
 
