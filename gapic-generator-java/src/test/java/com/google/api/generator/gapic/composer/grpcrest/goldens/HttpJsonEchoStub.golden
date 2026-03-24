@@ -479,6 +479,7 @@ public class HttpJsonEchoStub extends EchoStub {
         HttpJsonCallSettings.<EchoRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(echoMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<ExpandRequest, EchoResponse> expandTransportSettings =
         HttpJsonCallSettings.<ExpandRequest, EchoResponse>newBuilder()
@@ -510,6 +511,7 @@ public class HttpJsonEchoStub extends EchoStub {
         HttpJsonCallSettings.<EchoRequest, Object>newBuilder()
             .setMethodDescriptor(collideNameMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<EchoRequest, Object> nestedBindingTransportSettings =
         HttpJsonCallSettings.<EchoRequest, Object>newBuilder()
@@ -521,6 +523,7 @@ public class HttpJsonEchoStub extends EchoStub {
                   builder.add("foo_bar.name", String.valueOf(request.getFooBar().getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<UpdateCaseRequest, Case> updateCaseTransportSettings =
         HttpJsonCallSettings.<UpdateCaseRequest, Case>newBuilder()

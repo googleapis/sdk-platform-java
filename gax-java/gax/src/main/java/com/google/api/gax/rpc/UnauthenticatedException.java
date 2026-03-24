@@ -47,4 +47,13 @@ public class UnauthenticatedException extends ApiException {
       Throwable cause, StatusCode statusCode, boolean retryable, ErrorDetails errorDetails) {
     super(cause, statusCode, retryable, errorDetails);
   }
+
+  public UnauthenticatedException(
+      String message,
+      Throwable cause,
+      StatusCode statusCode,
+      boolean retryable,
+      ErrorDetails errorDetails) {
+    super(message, cause, statusCode, retryable, errorDetails);
+  }
 }

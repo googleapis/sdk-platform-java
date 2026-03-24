@@ -151,6 +151,7 @@ public class GrpcIamCredentialsStub extends IamCredentialsStub {
                       builder.add("name", String.valueOf(request.getName()));
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getName())
                 .build();
     GrpcCallSettings<GenerateIdTokenRequest, GenerateIdTokenResponse>
         generateIdTokenTransportSettings =
@@ -162,6 +163,7 @@ public class GrpcIamCredentialsStub extends IamCredentialsStub {
                       builder.add("name", String.valueOf(request.getName()));
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getName())
                 .build();
     GrpcCallSettings<SignBlobRequest, SignBlobResponse> signBlobTransportSettings =
         GrpcCallSettings.<SignBlobRequest, SignBlobResponse>newBuilder()
@@ -172,6 +174,7 @@ public class GrpcIamCredentialsStub extends IamCredentialsStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<SignJwtRequest, SignJwtResponse> signJwtTransportSettings =
         GrpcCallSettings.<SignJwtRequest, SignJwtResponse>newBuilder()
@@ -182,6 +185,7 @@ public class GrpcIamCredentialsStub extends IamCredentialsStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
 
     this.generateAccessTokenCallable =

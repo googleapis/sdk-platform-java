@@ -55,6 +55,7 @@ import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.rpc.UnknownException;
+import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.UncheckedExecutionException;
@@ -75,7 +76,7 @@ class RetryingTest {
       ApiMethodDescriptor.newBuilder()
           .setFullMethodName("google.cloud.v1.Fake/FakeMethodForRequestMutator")
           .setHttpMethod(HttpMethods.POST)
-          .setRequestFormatter(Mockito.mock(HttpRequestFormatter.class))
+          .setRequestFormatter(createMockRequestFormatter())
           .setResponseParser(Mockito.mock(HttpResponseParser.class))
           .build();
 
@@ -112,6 +113,13 @@ class RetryingTest {
           .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(2L))
           .setTotalTimeoutDuration(java.time.Duration.ofMillis(10L))
           .build();
+
+  private HttpRequestFormatter createMockRequestFormatter() {
+    HttpRequestFormatter formatter = Mockito.mock(HttpRequestFormatter.class);
+    PathTemplate template = PathTemplate.create("/test/path/template");
+    Mockito.when(formatter.getPathTemplate()).thenReturn(template);
+    return formatter;
+  }
 
   @BeforeEach
   void resetClock() {

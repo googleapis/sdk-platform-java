@@ -16,7 +16,6 @@ from pathlib import Path
 import glob
 from synthtool.languages import java
 
-
 root = Path(".").resolve()
 
 # Until the generator generates license headers on generated proto

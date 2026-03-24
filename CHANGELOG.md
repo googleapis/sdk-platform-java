@@ -1,5 +1,33 @@
 # Changelog
 
+## [2.68.0](https://github.com/googleapis/sdk-platform-java/compare/v2.67.0...v2.68.0) (2026-03-17)
+
+
+### Features
+
+* Add client request duration metric. ([#4132](https://github.com/googleapis/sdk-platform-java/issues/4132)) ([6a76397](https://github.com/googleapis/sdk-platform-java/commit/6a763979c2c5427f0a7ba23708fb7948520662d8))
+* Add more attributes to golden signals metrics. ([#4135](https://github.com/googleapis/sdk-platform-java/issues/4135)) ([59d0624](https://github.com/googleapis/sdk-platform-java/commit/59d0624ec5a85580a503f719897597161f529e3f))
+* **gax-httpjson:** add HttpJsonErrorParser utility ([#4137](https://github.com/googleapis/sdk-platform-java/issues/4137)) ([a1b7565](https://github.com/googleapis/sdk-platform-java/commit/a1b7565ef752259d79d3f1288b85120c6ac7452b))
+* **generator:** add extra allowed modules that will not be removed from the monorepo if they are present ([#4124](https://github.com/googleapis/sdk-platform-java/issues/4124)) ([774fe6e](https://github.com/googleapis/sdk-platform-java/commit/774fe6ede6bf25e150fb405dfe3bac9d85e21169))
+* **o11y:** introduce `gcp.client.repo` and `gcp.client.artifact` attributes ([#4120](https://github.com/googleapis/sdk-platform-java/issues/4120)) ([105f644](https://github.com/googleapis/sdk-platform-java/commit/105f644209cb78845a423d949cb7633a86d07868))
+* **o11y:** Introduce `rpc.system.name` and `rpc.method` in gRPC ([#4121](https://github.com/googleapis/sdk-platform-java/issues/4121)) ([7ab6d2e](https://github.com/googleapis/sdk-platform-java/commit/7ab6d2e5784f264558b7aca6f23e771361dbea3a))
+* **o11y:** introduce server.port attribute ([#4128](https://github.com/googleapis/sdk-platform-java/issues/4128)) ([56aa343](https://github.com/googleapis/sdk-platform-java/commit/56aa3438393e1992bb8f688291fb12030ec9bc0e))
+
+
+### Bug Fixes
+
+* add null checks for ApiTracerFactory in ClientContext ([#4122](https://github.com/googleapis/sdk-platform-java/issues/4122)) ([4b3dbe2](https://github.com/googleapis/sdk-platform-java/commit/4b3dbe29b32dd0fba6c7a5f4a08fafa2798eeca5))
+* Decrease log level for directpath warnings outside GCE ([#4139](https://github.com/googleapis/sdk-platform-java/issues/4139)) ([c9651e7](https://github.com/googleapis/sdk-platform-java/commit/c9651e7fa1501726798c0e38365e4b7c0acabc55))
+* **gax-grpc:** add pick_first fallback to direct path service config ([#4143](https://github.com/googleapis/sdk-platform-java/issues/4143)) ([b150fe9](https://github.com/googleapis/sdk-platform-java/commit/b150fe9ccfd5a97319388be4079699722aa033dc))
+* Populate method level attributes in metrics recording ([#4149](https://github.com/googleapis/sdk-platform-java/issues/4149)) ([7b7e6c9](https://github.com/googleapis/sdk-platform-java/commit/7b7e6c99251e1aecb1831084f5576aa9e8e48930))
+* suppress warnings in generated projects for non-idiomatic durations ([#4119](https://github.com/googleapis/sdk-platform-java/issues/4119)) ([4206e6e](https://github.com/googleapis/sdk-platform-java/commit/4206e6ed7546d6b8330dcb8dc29179e59677ccd3))
+* Use ServiceName + MethodName as the regex for Otel ([#2543](https://github.com/googleapis/sdk-platform-java/issues/2543)) ([b9ae73f](https://github.com/googleapis/sdk-platform-java/commit/b9ae73fba59ba32e9688d11c2b3db51fe0d68d8d))
+
+
+### Documentation
+
+* **hermetic_build:** fix config field name in readme ([#4130](https://github.com/googleapis/sdk-platform-java/issues/4130)) ([a0c8f67](https://github.com/googleapis/sdk-platform-java/commit/a0c8f67f5a425d9a365b8e451b18add2c5947a11))
+
 ## [2.67.0](https://github.com/googleapis/sdk-platform-java/compare/v2.66.1...v2.67.0) (2026-02-18)
 
 

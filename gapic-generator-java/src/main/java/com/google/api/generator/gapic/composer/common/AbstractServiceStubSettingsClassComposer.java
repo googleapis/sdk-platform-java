@@ -1063,7 +1063,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT));
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createClassConstructor(service, methodSettingsMemberVarExprs, typeStore));
-    javaMethods.add(createGetLibraryMetadataMethod(context));
+    javaMethods.add(createGetLibraryMetadataMethod(context, service));
     return javaMethods;
   }
 
@@ -2107,7 +2107,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         .build();
   }
 
-  private MethodDefinition createGetLibraryMetadataMethod(GapicContext context) {
+  private MethodDefinition createGetLibraryMetadataMethod(GapicContext context, Service service) {
     TypeNode returnType = FIXED_TYPESTORE.get("LibraryMetadata");
     MethodInvocationExpr libraryMetadataBuilderExpr =
         MethodInvocationExpr.builder()
@@ -2132,6 +2132,23 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
               .setArguments(ValueExpr.withValue(StringObjectValue.withValue(context.repo())))
               .build();
     }
+
+    libraryMetadataBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(libraryMetadataBuilderExpr)
+            .setMethodName("setVersion")
+            .setArguments(
+                VariableExpr.builder()
+                    .setStaticReferenceType(
+                        TypeNode.withReference(
+                            VaporReference.builder()
+                                .setName("Version")
+                                .setPakkage(String.format("%s.stub", service.pakkage()))
+                                .build()))
+                    .setVariable(
+                        Variable.builder().setName("VERSION").setType(TypeNode.STRING).build())
+                    .build())
+            .build();
 
     Expr returnExpr =
         MethodInvocationExpr.builder()

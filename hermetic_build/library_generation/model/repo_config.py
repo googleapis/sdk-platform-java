@@ -14,7 +14,6 @@
 # limitations under the License.
 from common.model.library_config import LibraryConfig
 
-
 GRPC_PREFIX = "grpc-"
 PROTO_PREFIX = "proto-"
 NEW_CLIENT_VERSION = "0.0.0"

@@ -519,6 +519,7 @@ public class HttpJsonLibraryServiceStub extends LibraryServiceStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<ListShelvesRequest, ListShelvesResponse> listShelvesTransportSettings =
         HttpJsonCallSettings.<ListShelvesRequest, ListShelvesResponse>newBuilder()
@@ -535,6 +536,7 @@ public class HttpJsonLibraryServiceStub extends LibraryServiceStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<MergeShelvesRequest, Shelf> mergeShelvesTransportSettings =
         HttpJsonCallSettings.<MergeShelvesRequest, Shelf>newBuilder()
@@ -546,6 +548,7 @@ public class HttpJsonLibraryServiceStub extends LibraryServiceStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<CreateBookRequest, Book> createBookTransportSettings =
         HttpJsonCallSettings.<CreateBookRequest, Book>newBuilder()
@@ -557,6 +560,7 @@ public class HttpJsonLibraryServiceStub extends LibraryServiceStub {
                   builder.add("parent", String.valueOf(request.getParent()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     HttpJsonCallSettings<GetBookRequest, Book> getBookTransportSettings =
         HttpJsonCallSettings.<GetBookRequest, Book>newBuilder()
@@ -568,6 +572,7 @@ public class HttpJsonLibraryServiceStub extends LibraryServiceStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<ListBooksRequest, ListBooksResponse> listBooksTransportSettings =
         HttpJsonCallSettings.<ListBooksRequest, ListBooksResponse>newBuilder()
@@ -579,6 +584,7 @@ public class HttpJsonLibraryServiceStub extends LibraryServiceStub {
                   builder.add("parent", String.valueOf(request.getParent()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     HttpJsonCallSettings<DeleteBookRequest, Empty> deleteBookTransportSettings =
         HttpJsonCallSettings.<DeleteBookRequest, Empty>newBuilder()
@@ -590,6 +596,7 @@ public class HttpJsonLibraryServiceStub extends LibraryServiceStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     HttpJsonCallSettings<UpdateBookRequest, Book> updateBookTransportSettings =
         HttpJsonCallSettings.<UpdateBookRequest, Book>newBuilder()
@@ -612,6 +619,7 @@ public class HttpJsonLibraryServiceStub extends LibraryServiceStub {
                   builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
 
     this.createShelfCallable =

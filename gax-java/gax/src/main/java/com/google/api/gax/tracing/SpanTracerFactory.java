@@ -33,25 +33,27 @@ package com.google.api.gax.tracing;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.common.annotations.VisibleForTesting;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.trace.Tracer;
 
 /**
  * A {@link ApiTracerFactory} to build instances of {@link SpanTracer}.
  *
- * <p>This class wraps the {@link TraceManager} and pass it to {@link SpanTracer}. It will be used
- * to record traces in {@link SpanTracer}.
+ * <p>This class wraps the {@link Tracer} and pass it to {@link SpanTracer}. It will be used to
+ * record traces in {@link SpanTracer}.
  *
  * <p>This class is expected to be initialized once during client initialization.
  */
 @BetaApi
 @InternalApi
 public class SpanTracerFactory implements ApiTracerFactory {
-  private final TraceManager traceManager;
+  private final Tracer tracer;
 
   private final ApiTracerContext apiTracerContext;
 
   /** Creates a SpanTracerFactory */
-  public SpanTracerFactory(TraceManager traceManager) {
-    this(traceManager, ApiTracerContext.empty());
+  public SpanTracerFactory(OpenTelemetry openTelemetry) {
+    this(openTelemetry.getTracer("gax-java"), ApiTracerContext.empty());
   }
 
   /**
@@ -60,8 +62,8 @@ public class SpanTracerFactory implements ApiTracerFactory {
    * internally.
    */
   @VisibleForTesting
-  SpanTracerFactory(TraceManager traceManager, ApiTracerContext apiTracerContext) {
-    this.traceManager = traceManager;
+  SpanTracerFactory(Tracer tracer, ApiTracerContext apiTracerContext) {
+    this.tracer = tracer;
     this.apiTracerContext = apiTracerContext;
   }
 
@@ -71,25 +73,13 @@ public class SpanTracerFactory implements ApiTracerFactory {
     // feature is developed.
     String attemptSpanName = spanName.getClientName() + "/" + spanName.getMethodName() + "/attempt";
 
-    SpanTracer spanTracer = new SpanTracer(traceManager, this.apiTracerContext, attemptSpanName);
-    return spanTracer;
+    return new SpanTracer(tracer, this.apiTracerContext, attemptSpanName);
   }
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, ApiTracerContext apiTracerContext) {
-    ApiTracerContext context = this.apiTracerContext.merge(apiTracerContext);
-
-    String attemptSpanName;
-    if (context.transport() == ApiTracerContext.Transport.GRPC) {
-      attemptSpanName = context.fullMethodName();
-    } else {
-      // TODO(diegomarquezp): this is a placeholder for the HTTP span name and will be adjusted as
-      // the
-      // feature is developed.
-      attemptSpanName = context.fullMethodName() + "/attempt";
-    }
-
-    return new SpanTracer(traceManager, context, attemptSpanName);
+    ApiTracerContext mergedContext = this.apiTracerContext.merge(apiTracerContext);
+    return new SpanTracer(tracer, mergedContext);
   }
 
   @Override
@@ -99,6 +89,6 @@ public class SpanTracerFactory implements ApiTracerFactory {
 
   @Override
   public ApiTracerFactory withContext(ApiTracerContext context) {
-    return new SpanTracerFactory(traceManager, apiTracerContext.merge(context));
+    return new SpanTracerFactory(tracer, apiTracerContext.merge(context));
   }
 }

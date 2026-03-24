@@ -33,11 +33,20 @@ package com.google.api.gax.logging;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.google.api.gax.logging.LoggingUtils.ThrowingRunnable;
+import java.util.Collections;
+import java.util.Map;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.slf4j.Logger;
 
 class LoggingUtilsTest {
 
@@ -76,5 +85,38 @@ class LoggingUtilsTest {
     assertDoesNotThrow(() -> LoggingUtils.executeWithTryCatch(action));
     // Verify that the action was executed (despite the error)
     verify(action).run();
+  }
+
+  @AfterEach
+  void tearDown() {
+    LoggingUtils.setLoggingEnabled(false);
+  }
+
+  @Test
+  void testLogActionableError_loggingDisabled() {
+    LoggingUtils.setLoggingEnabled(false);
+    LoggerProvider loggerProvider = mock(LoggerProvider.class);
+
+    LoggingUtils.logActionableError(
+        Collections.<String, Object>emptyMap(), loggerProvider, "message");
+
+    verify(loggerProvider, never()).getLogger();
+  }
+
+  @Test
+  void testLogActionableError_success() {
+    LoggingUtils.setLoggingEnabled(true);
+    LoggerProvider loggerProvider = mock(LoggerProvider.class);
+    Logger logger = mock(Logger.class);
+    when(loggerProvider.getLogger()).thenReturn(logger);
+
+    org.slf4j.spi.LoggingEventBuilder eventBuilder = mock(org.slf4j.spi.LoggingEventBuilder.class);
+    when(logger.atDebug()).thenReturn(eventBuilder);
+    when(eventBuilder.addKeyValue(anyString(), any())).thenReturn(eventBuilder);
+
+    Map<String, Object> context = Collections.singletonMap("key", "value");
+    LoggingUtils.logActionableError(context, loggerProvider, "message");
+
+    verify(loggerProvider).getLogger();
   }
 }

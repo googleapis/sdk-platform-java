@@ -404,7 +404,7 @@ public class AddressesStubSettings extends StubSettings<AddressesStubSettings> {
 
   @Override
   protected LibraryMetadata getLibraryMetadata() {
-    return LibraryMetadata.newBuilder().build();
+    return LibraryMetadata.newBuilder().setVersion(Version.VERSION).build();
   }
 
   /** Builder for AddressesStubSettings. */

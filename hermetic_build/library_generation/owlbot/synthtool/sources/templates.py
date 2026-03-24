@@ -17,7 +17,6 @@ from pathlib import Path
 import jinja2
 import tempfile
 
-
 PathOrStr = Union[str, Path]
 
 

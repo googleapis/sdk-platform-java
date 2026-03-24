@@ -47,4 +47,13 @@ public class OutOfRangeException extends ApiException {
       Throwable cause, StatusCode statusCode, boolean retryable, ErrorDetails errorDetails) {
     super(cause, statusCode, retryable, errorDetails);
   }
+
+  public OutOfRangeException(
+      String message,
+      Throwable cause,
+      StatusCode statusCode,
+      boolean retryable,
+      ErrorDetails errorDetails) {
+    super(message, cause, statusCode, retryable, errorDetails);
+  }
 }

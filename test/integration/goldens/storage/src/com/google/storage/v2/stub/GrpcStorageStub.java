@@ -569,6 +569,7 @@ public class GrpcStorageStub extends StorageStub {
                   builder.add(request.getName(), "bucket", DELETE_BUCKET_0_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<GetBucketRequest, Bucket> getBucketTransportSettings =
         GrpcCallSettings.<GetBucketRequest, Bucket>newBuilder()
@@ -579,6 +580,7 @@ public class GrpcStorageStub extends StorageStub {
                   builder.add(request.getName(), "bucket", GET_BUCKET_0_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<CreateBucketRequest, Bucket> createBucketTransportSettings =
         GrpcCallSettings.<CreateBucketRequest, Bucket>newBuilder()
@@ -589,6 +591,7 @@ public class GrpcStorageStub extends StorageStub {
                   builder.add(request.getParent(), "project", CREATE_BUCKET_0_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     GrpcCallSettings<ListBucketsRequest, ListBucketsResponse> listBucketsTransportSettings =
         GrpcCallSettings.<ListBucketsRequest, ListBucketsResponse>newBuilder()
@@ -599,6 +602,7 @@ public class GrpcStorageStub extends StorageStub {
                   builder.add(request.getParent(), "project", LIST_BUCKETS_0_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     GrpcCallSettings<LockBucketRetentionPolicyRequest, Bucket>
         lockBucketRetentionPolicyTransportSettings =
@@ -613,6 +617,7 @@ public class GrpcStorageStub extends StorageStub {
                           LOCK_BUCKET_RETENTION_POLICY_0_PATH_TEMPLATE);
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getBucket())
                 .build();
     GrpcCallSettings<GetIamPolicyRequest, Policy> getIamPolicyTransportSettings =
         GrpcCallSettings.<GetIamPolicyRequest, Policy>newBuilder()
@@ -624,6 +629,7 @@ public class GrpcStorageStub extends StorageStub {
                   builder.add(request.getResource(), "bucket", GET_IAM_POLICY_1_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getResource())
             .build();
     GrpcCallSettings<SetIamPolicyRequest, Policy> setIamPolicyTransportSettings =
         GrpcCallSettings.<SetIamPolicyRequest, Policy>newBuilder()
@@ -635,6 +641,7 @@ public class GrpcStorageStub extends StorageStub {
                   builder.add(request.getResource(), "bucket", SET_IAM_POLICY_1_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getResource())
             .build();
     GrpcCallSettings<TestIamPermissionsRequest, TestIamPermissionsResponse>
         testIamPermissionsTransportSettings =
@@ -649,6 +656,7 @@ public class GrpcStorageStub extends StorageStub {
                           request.getResource(), "bucket", TEST_IAM_PERMISSIONS_1_PATH_TEMPLATE);
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getResource())
                 .build();
     GrpcCallSettings<UpdateBucketRequest, Bucket> updateBucketTransportSettings =
         GrpcCallSettings.<UpdateBucketRequest, Bucket>newBuilder()
@@ -672,6 +680,7 @@ public class GrpcStorageStub extends StorageStub {
                   builder.add(request.getName(), "bucket", DELETE_NOTIFICATION_0_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<GetNotificationRequest, Notification> getNotificationTransportSettings =
         GrpcCallSettings.<GetNotificationRequest, Notification>newBuilder()
@@ -682,6 +691,7 @@ public class GrpcStorageStub extends StorageStub {
                   builder.add(request.getName(), "bucket", GET_NOTIFICATION_0_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getName())
             .build();
     GrpcCallSettings<CreateNotificationRequest, Notification> createNotificationTransportSettings =
         GrpcCallSettings.<CreateNotificationRequest, Notification>newBuilder()
@@ -692,6 +702,7 @@ public class GrpcStorageStub extends StorageStub {
                   builder.add(request.getParent(), "bucket", CREATE_NOTIFICATION_0_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     GrpcCallSettings<ListNotificationsRequest, ListNotificationsResponse>
         listNotificationsTransportSettings =
@@ -704,6 +715,7 @@ public class GrpcStorageStub extends StorageStub {
                           request.getParent(), "bucket", LIST_NOTIFICATIONS_0_PATH_TEMPLATE);
                       return builder.build();
                     })
+                .setResourceNameExtractor(request -> request.getParent())
                 .build();
     GrpcCallSettings<ComposeObjectRequest, Object> composeObjectTransportSettings =
         GrpcCallSettings.<ComposeObjectRequest, Object>newBuilder()
@@ -719,6 +731,7 @@ public class GrpcStorageStub extends StorageStub {
                   }
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getKmsKey())
             .build();
     GrpcCallSettings<DeleteObjectRequest, Empty> deleteObjectTransportSettings =
         GrpcCallSettings.<DeleteObjectRequest, Empty>newBuilder()
@@ -788,6 +801,7 @@ public class GrpcStorageStub extends StorageStub {
                   builder.add(request.getParent(), "bucket", LIST_OBJECTS_0_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getParent())
             .build();
     GrpcCallSettings<RewriteObjectRequest, RewriteResponse> rewriteObjectTransportSettings =
         GrpcCallSettings.<RewriteObjectRequest, RewriteResponse>newBuilder()
@@ -801,6 +815,7 @@ public class GrpcStorageStub extends StorageStub {
                       request.getDestinationBucket(), "bucket", REWRITE_OBJECT_1_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getDestinationBucket())
             .build();
     GrpcCallSettings<StartResumableWriteRequest, StartResumableWriteResponse>
         startResumableWriteTransportSettings =
@@ -840,6 +855,7 @@ public class GrpcStorageStub extends StorageStub {
                   builder.add(request.getProject(), "project", GET_SERVICE_ACCOUNT_0_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getProject())
             .build();
     GrpcCallSettings<CreateHmacKeyRequest, CreateHmacKeyResponse> createHmacKeyTransportSettings =
         GrpcCallSettings.<CreateHmacKeyRequest, CreateHmacKeyResponse>newBuilder()
@@ -850,6 +866,7 @@ public class GrpcStorageStub extends StorageStub {
                   builder.add(request.getProject(), "project", CREATE_HMAC_KEY_0_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getProject())
             .build();
     GrpcCallSettings<DeleteHmacKeyRequest, Empty> deleteHmacKeyTransportSettings =
         GrpcCallSettings.<DeleteHmacKeyRequest, Empty>newBuilder()
@@ -860,6 +877,7 @@ public class GrpcStorageStub extends StorageStub {
                   builder.add(request.getProject(), "project", DELETE_HMAC_KEY_0_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getProject())
             .build();
     GrpcCallSettings<GetHmacKeyRequest, HmacKeyMetadata> getHmacKeyTransportSettings =
         GrpcCallSettings.<GetHmacKeyRequest, HmacKeyMetadata>newBuilder()
@@ -870,6 +888,7 @@ public class GrpcStorageStub extends StorageStub {
                   builder.add(request.getProject(), "project", GET_HMAC_KEY_0_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getProject())
             .build();
     GrpcCallSettings<ListHmacKeysRequest, ListHmacKeysResponse> listHmacKeysTransportSettings =
         GrpcCallSettings.<ListHmacKeysRequest, ListHmacKeysResponse>newBuilder()
@@ -880,6 +899,7 @@ public class GrpcStorageStub extends StorageStub {
                   builder.add(request.getProject(), "project", LIST_HMAC_KEYS_0_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setResourceNameExtractor(request -> request.getProject())
             .build();
     GrpcCallSettings<UpdateHmacKeyRequest, HmacKeyMetadata> updateHmacKeyTransportSettings =
         GrpcCallSettings.<UpdateHmacKeyRequest, HmacKeyMetadata>newBuilder()

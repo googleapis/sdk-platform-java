@@ -30,8 +30,8 @@
 package com.google.api.gax.tracing;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -41,9 +41,13 @@ import com.google.api.gax.rpc.StatusCode;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.Any;
 import com.google.rpc.ErrorInfo;
+import io.opentelemetry.api.common.Attributes;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.SpanBuilder;
+import io.opentelemetry.api.trace.SpanKind;
+import io.opentelemetry.api.trace.Tracer;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,43 +57,147 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class SpanTracerTest {
-  @Mock private TraceManager recorder;
-  @Mock private TraceManager.Span attemptHandle;
-  private SpanTracer tracer;
+  @Mock private Tracer tracer;
+  @Mock private SpanBuilder spanBuilder;
+  @Mock private Span span;
+  private SpanTracer spanTracer;
   private static final String ATTEMPT_SPAN_NAME = "Service/Method/attempt";
 
   @BeforeEach
   void setUp() {
-    tracer = new SpanTracer(recorder, ApiTracerContext.empty(), ATTEMPT_SPAN_NAME);
+    when(tracer.spanBuilder(anyString())).thenReturn(spanBuilder);
+    when(spanBuilder.setSpanKind(any(SpanKind.class))).thenReturn(spanBuilder);
+    when(spanBuilder.setAllAttributes(any(Attributes.class))).thenReturn(spanBuilder);
+    when(spanBuilder.startSpan()).thenReturn(span);
+    spanTracer = new SpanTracer(tracer, ApiTracerContext.empty(), ATTEMPT_SPAN_NAME);
   }
 
   @Test
   void testAttemptLifecycle_startsAndEndsAttemptSpan() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
-    tracer.attemptStarted(new Object(), 1);
-    tracer.attemptSucceeded();
+    spanTracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptSucceeded();
 
-    verify(attemptHandle).end();
+    verify(tracer).spanBuilder(ATTEMPT_SPAN_NAME);
+    verify(spanBuilder).setSpanKind(SpanKind.CLIENT);
+    verify(span).end();
   }
 
   @Test
   void testAttemptStarted_includesLanguageAttribute() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    spanTracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptStarted(new Object(), 1);
+    ArgumentCaptor<Attributes> attributesCaptor = ArgumentCaptor.forClass(Attributes.class);
+    verify(spanBuilder).setAllAttributes(attributesCaptor.capture());
 
-    ArgumentCaptor<Map<String, Object>> attributesCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(recorder).createSpan(eq(ATTEMPT_SPAN_NAME), attributesCaptor.capture());
+    assertThat(attributesCaptor.getValue().asMap())
+        .containsEntry(
+            io.opentelemetry.api.common.AttributeKey.stringKey(SpanTracer.LANGUAGE_ATTRIBUTE),
+            SpanTracer.DEFAULT_LANGUAGE);
+  }
 
-    assertThat(attributesCaptor.getValue())
-        .containsEntry(SpanTracer.LANGUAGE_ATTRIBUTE, SpanTracer.DEFAULT_LANGUAGE);
+  @Test
+  void testAttemptStarted_noRetryAttributes_grpc() {
+    ApiTracerContext grpcContext =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .build();
+    SpanTracer grpcTracer = new SpanTracer(tracer, grpcContext, ATTEMPT_SPAN_NAME);
+
+    // Initial attempt, attemptNumber is 0
+    grpcTracer.attemptStarted(new Object(), 0);
+    ArgumentCaptor<Attributes> attributesCaptor = ArgumentCaptor.forClass(Attributes.class);
+    verify(spanBuilder).setAllAttributes(attributesCaptor.capture());
+    assertThat(attributesCaptor.getValue().asMap())
+        .doesNotContainKey(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE));
+    assertThat(attributesCaptor.getValue().asMap())
+        .doesNotContainKey(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE));
+  }
+
+  @Test
+  void testAttemptStarted_retryAttributes_grpc() {
+    ApiTracerContext grpcContext =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.GRPC)
+            .build();
+    SpanTracer grpcTracer = new SpanTracer(tracer, grpcContext, ATTEMPT_SPAN_NAME);
+
+    // N-th retry, attemptNumber is 5
+    grpcTracer.attemptStarted(new Object(), 5);
+    ArgumentCaptor<Attributes> attributesCaptor = ArgumentCaptor.forClass(Attributes.class);
+    verify(spanBuilder).setAllAttributes(attributesCaptor.capture());
+    java.util.Map<io.opentelemetry.api.common.AttributeKey<?>, Object> capturedAttributes =
+        attributesCaptor.getValue().asMap();
+    assertThat(capturedAttributes)
+        .containsEntry(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE),
+            5L);
+    assertThat(capturedAttributes)
+        .doesNotContainKey(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE));
+  }
+
+  @Test
+  void testAttemptStarted_noRetryAttributes_http() {
+    ApiTracerContext httpContext =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.HTTP)
+            .build();
+    SpanTracer httpTracer = new SpanTracer(tracer, httpContext, ATTEMPT_SPAN_NAME);
+
+    // Initial attempt, attemptNumber is 0
+    httpTracer.attemptStarted(new Object(), 0);
+    ArgumentCaptor<Attributes> attributesCaptor = ArgumentCaptor.forClass(Attributes.class);
+    verify(spanBuilder).setAllAttributes(attributesCaptor.capture());
+    java.util.Map<io.opentelemetry.api.common.AttributeKey<?>, Object> capturedAttributes =
+        attributesCaptor.getValue().asMap();
+    assertThat(capturedAttributes)
+        .doesNotContainKey(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE));
+    assertThat(capturedAttributes)
+        .doesNotContainKey(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE));
+  }
+
+  @Test
+  void testAttemptStarted_retryAttributes_http() {
+    ApiTracerContext httpContext =
+        ApiTracerContext.newBuilder()
+            .setLibraryMetadata(com.google.api.gax.rpc.LibraryMetadata.empty())
+            .setTransport(ApiTracerContext.Transport.HTTP)
+            .build();
+    SpanTracer httpTracer = new SpanTracer(tracer, httpContext, ATTEMPT_SPAN_NAME);
+
+    // N-th retry, attemptNumber is 5
+    httpTracer.attemptStarted(new Object(), 5);
+    ArgumentCaptor<Attributes> attributesCaptor = ArgumentCaptor.forClass(Attributes.class);
+    verify(spanBuilder).setAllAttributes(attributesCaptor.capture());
+    java.util.Map<io.opentelemetry.api.common.AttributeKey<?>, Object> capturedAttributes =
+        attributesCaptor.getValue().asMap();
+    assertThat(capturedAttributes)
+        .doesNotContainKey(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.GRPC_RESEND_COUNT_ATTRIBUTE));
+    assertThat(capturedAttributes)
+        .containsEntry(
+            io.opentelemetry.api.common.AttributeKey.longKey(
+                ObservabilityAttributes.HTTP_RESEND_COUNT_ATTRIBUTE),
+            5L);
   }
 
   @Test
   void testAttemptFailed_errorInfoReason() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
-
-    tracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptStarted(new Object(), 1);
 
     ErrorInfo errorInfo = ErrorInfo.newBuilder().setReason("RATE_LIMIT_EXCEEDED").build();
     ErrorDetails errorDetails =
@@ -113,18 +221,15 @@ class SpanTracerTest {
             true,
             errorDetails);
 
-    tracer.attemptFailedRetriesExhausted(apiException);
+    spanTracer.attemptFailedRetriesExhausted(apiException);
 
-    verify(attemptHandle)
-        .addAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "RATE_LIMIT_EXCEEDED");
-    verify(attemptHandle).end();
+    verify(span).setAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "RATE_LIMIT_EXCEEDED");
+    verify(span).end();
   }
 
   @Test
   void testAttemptFailed_specificServerErrorCodeGrpc() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
-
-    tracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptStarted(new Object(), 1);
 
     ApiException apiException =
         new ApiException(
@@ -143,18 +248,15 @@ class SpanTracerTest {
             },
             true);
 
-    tracer.attemptFailedRetriesExhausted(apiException);
+    spanTracer.attemptFailedRetriesExhausted(apiException);
 
-    verify(attemptHandle)
-        .addAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "PERMISSION_DENIED");
-    verify(attemptHandle).end();
+    verify(span).setAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "PERMISSION_DENIED");
+    verify(span).end();
   }
 
   @Test
   void testAttemptFailed_specificServerErrorCodeHttp() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
-
-    tracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptStarted(new Object(), 1);
 
     ApiException apiException =
         new ApiException(
@@ -173,161 +275,142 @@ class SpanTracerTest {
             },
             true);
 
-    tracer.attemptFailedRetriesExhausted(apiException);
+    spanTracer.attemptFailedRetriesExhausted(apiException);
 
-    verify(attemptHandle).addAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "403");
-    verify(attemptHandle).end();
+    verify(span).setAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "403");
+    verify(span).end();
   }
 
   @Test
   void testAttemptFailed_clientTimeout() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    spanTracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptFailedRetriesExhausted(new SocketTimeoutException());
 
-    tracer.attemptFailedRetriesExhausted(new SocketTimeoutException());
-
-    verify(attemptHandle)
-        .addAttribute(
+    verify(span)
+        .setAttribute(
             ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
             ErrorTypeUtil.ErrorType.CLIENT_TIMEOUT.toString());
-    verify(attemptHandle).end();
+    verify(span).end();
   }
 
   @Test
   void testAttemptFailed_clientConnectionError() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    spanTracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptFailedRetriesExhausted(new ConnectException("connection failed"));
 
-    tracer.attemptFailedRetriesExhausted(new ConnectException("connection failed"));
-
-    verify(attemptHandle)
-        .addAttribute(
+    verify(span)
+        .setAttribute(
             ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
             ErrorTypeUtil.ErrorType.CLIENT_CONNECTION_ERROR.toString());
-    verify(attemptHandle).end();
+    verify(span).end();
   }
 
   @Test
   void testAttemptFailed_clientRedirectError() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    spanTracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptFailedRetriesExhausted(new RedirectException("redirect failed"));
 
-    tracer.attemptFailedRetriesExhausted(new RedirectException("redirect failed"));
-
-    verify(attemptHandle)
-        .addAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "RedirectException");
-    verify(attemptHandle).end();
+    verify(span).setAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "RedirectException");
+    verify(span).end();
   }
 
   @Test
   void testAttemptFailed_clientRequestError() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    spanTracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptFailedRetriesExhausted(new IllegalArgumentException());
 
-    tracer.attemptFailedRetriesExhausted(new IllegalArgumentException());
-
-    verify(attemptHandle)
-        .addAttribute(
+    verify(span)
+        .setAttribute(
             ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
             ErrorTypeUtil.ErrorType.CLIENT_REQUEST_ERROR.toString());
-    verify(attemptHandle).end();
+    verify(span).end();
   }
 
   @Test
   void testAttemptFailed_clientUnknownError() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    spanTracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptFailedRetriesExhausted(new UnknownClientException());
 
-    tracer.attemptFailedRetriesExhausted(new UnknownClientException());
-
-    verify(attemptHandle)
-        .addAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "UnknownClientException");
-    verify(attemptHandle).end();
+    verify(span)
+        .setAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "UnknownClientException");
+    verify(span).end();
   }
 
   @Test
   void testAttemptFailed_languageSpecificFallback() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    spanTracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptFailedRetriesExhausted(new IllegalStateException("illegal state"));
 
-    tracer.attemptFailedRetriesExhausted(new IllegalStateException("illegal state"));
-
-    verify(attemptHandle)
-        .addAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "IllegalStateException");
-    verify(attemptHandle).end();
+    verify(span)
+        .setAttribute(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, "IllegalStateException");
+    verify(span).end();
   }
 
   @Test
   void testAttemptFailed_internalFallback() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    spanTracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptStarted(new Object(), 1);
-
-    tracer.attemptFailedRetriesExhausted(new Throwable() {});
+    spanTracer.attemptFailedRetriesExhausted(new Throwable() {});
 
     // For an anonymous inner class Throwable, getSimpleName() is empty string, which triggers the
     // fallback
-    verify(attemptHandle)
-        .addAttribute(
+    verify(span)
+        .setAttribute(
             ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
             ErrorTypeUtil.ErrorType.INTERNAL.toString());
-    verify(attemptHandle).end();
+    verify(span).end();
   }
 
   @Test
   void testAttemptFailed_internalFallback_nullError() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    spanTracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptStarted(new Object(), 1);
-
-    tracer.attemptFailedRetriesExhausted(null);
+    spanTracer.attemptFailedRetriesExhausted(null);
 
     // For an anonymous inner class Throwable, getSimpleName() is empty string, which triggers the
     // fallback
-    verify(attemptHandle)
-        .addAttribute(
+    verify(span)
+        .setAttribute(
             ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE,
             ErrorTypeUtil.ErrorType.INTERNAL.toString());
-    verify(attemptHandle).end();
+    verify(span).end();
   }
 
   @Test
   void testAttemptFailed_populatesExceptionTypeAndMessage() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
-    tracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptStarted(new Object(), 1);
 
-    tracer.attemptFailedRetriesExhausted(new IllegalStateException("custom error message"));
+    spanTracer.attemptFailedRetriesExhausted(new IllegalStateException("custom error message"));
 
-    verify(attemptHandle)
-        .addAttribute(
+    verify(span)
+        .setAttribute(
             ObservabilityAttributes.EXCEPTION_TYPE_ATTRIBUTE, "java.lang.IllegalStateException");
-    verify(attemptHandle)
-        .addAttribute(ObservabilityAttributes.STATUS_MESSAGE_ATTRIBUTE, "custom error message");
-    verify(attemptHandle).end();
+    verify(span)
+        .setAttribute(ObservabilityAttributes.STATUS_MESSAGE_ATTRIBUTE, "custom error message");
+    verify(span).end();
   }
 
   @Test
   void testAttemptFailed_recursiveMessageSearch() {
-    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
-    tracer.attemptStarted(new Object(), 1);
+    spanTracer.attemptStarted(new Object(), 1);
 
     Throwable cause = new IllegalArgumentException("root cause message");
     Throwable wrapper = new IllegalStateException("", cause);
 
-    tracer.attemptFailedRetriesExhausted(wrapper);
+    spanTracer.attemptFailedRetriesExhausted(wrapper);
 
-    verify(attemptHandle)
-        .addAttribute(
+    verify(span)
+        .setAttribute(
             ObservabilityAttributes.EXCEPTION_TYPE_ATTRIBUTE, "java.lang.IllegalStateException");
-    verify(attemptHandle)
-        .addAttribute(ObservabilityAttributes.STATUS_MESSAGE_ATTRIBUTE, "root cause message");
-    verify(attemptHandle).end();
+    verify(span)
+        .setAttribute(ObservabilityAttributes.STATUS_MESSAGE_ATTRIBUTE, "root cause message");
+    verify(span).end();
   }
 
   private static class RedirectException extends RuntimeException {
