@@ -109,8 +109,31 @@ public class SpanTracer implements ApiTracer {
     if (attemptHandle != null) {
       attemptHandle.addAttribute(
           ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE, ObservabilityUtils.extractErrorType(error));
+
+      if (error != null) {
+        attemptHandle.addAttribute(
+            ObservabilityAttributes.EXCEPTION_TYPE_ATTRIBUTE, error.getClass().getName());
+
+        String errorMessage = extractErrorMessage(error);
+        if (errorMessage != null) {
+          attemptHandle.addAttribute(
+              ObservabilityAttributes.STATUS_MESSAGE_ATTRIBUTE, errorMessage);
+        }
+      }
+
       endAttempt();
     }
+  }
+
+  private String extractErrorMessage(Throwable error) {
+    Throwable cause = error;
+    while (cause != null) {
+      if (cause.getMessage() != null && !cause.getMessage().isEmpty()) {
+        return cause.getMessage();
+      }
+      cause = cause.getCause();
+    }
+    return null;
   }
 
   private void endAttempt() {

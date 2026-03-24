@@ -79,4 +79,10 @@ public class ObservabilityAttributes {
    * Code, Client-Side Network/Operational Error (e.g., CLIENT_TIMEOUT) or internal fallback.
    */
   public static final String ERROR_TYPE_ATTRIBUTE = "error.type";
+
+  /** A human-readable error message, which may include details from the exception or response. */
+  public static final String STATUS_MESSAGE_ATTRIBUTE = "status.message";
+
+  /** If the error was caused by an exception, the exception class name. */
+  public static final String EXCEPTION_TYPE_ATTRIBUTE = "exception.type";
 }

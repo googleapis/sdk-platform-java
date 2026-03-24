@@ -297,6 +297,39 @@ class SpanTracerTest {
     verify(attemptHandle).end();
   }
 
+  @Test
+  void testAttemptFailed_populatesExceptionTypeAndMessage() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    tracer.attemptStarted(new Object(), 1);
+
+    tracer.attemptFailedRetriesExhausted(new IllegalStateException("custom error message"));
+
+    verify(attemptHandle)
+        .addAttribute(
+            ObservabilityAttributes.EXCEPTION_TYPE_ATTRIBUTE, "java.lang.IllegalStateException");
+    verify(attemptHandle)
+        .addAttribute(ObservabilityAttributes.STATUS_MESSAGE_ATTRIBUTE, "custom error message");
+    verify(attemptHandle).end();
+  }
+
+  @Test
+  void testAttemptFailed_recursiveMessageSearch() {
+    when(recorder.createSpan(eq(ATTEMPT_SPAN_NAME), anyMap())).thenReturn(attemptHandle);
+    tracer.attemptStarted(new Object(), 1);
+
+    Throwable cause = new IllegalArgumentException("root cause message");
+    Throwable wrapper = new IllegalStateException("", cause);
+
+    tracer.attemptFailedRetriesExhausted(wrapper);
+
+    verify(attemptHandle)
+        .addAttribute(
+            ObservabilityAttributes.EXCEPTION_TYPE_ATTRIBUTE, "java.lang.IllegalStateException");
+    verify(attemptHandle)
+        .addAttribute(ObservabilityAttributes.STATUS_MESSAGE_ATTRIBUTE, "root cause message");
+    verify(attemptHandle).end();
+  }
+
   private static class RedirectException extends RuntimeException {
     public RedirectException(String message) {
       super(message);

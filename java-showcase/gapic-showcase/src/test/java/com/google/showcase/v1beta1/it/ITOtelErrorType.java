@@ -395,6 +395,23 @@ class ITOtelErrorType {
     try (EchoClient client = createInterceptorClient(new IllegalArgumentException("Mock request error"))) {
       assertThrows(IllegalArgumentException.class, () -> client.echo(EchoRequest.newBuilder().setContent("test").build()));
       verifyErrorTypeAttribute("CLIENT_REQUEST_ERROR");
+      
+      SpanData errorSpan =
+          spanExporter.getFinishedSpanItems().stream()
+              .filter(span -> span.getAttributes().get(AttributeKey.stringKey(ObservabilityAttributes.ERROR_TYPE_ATTRIBUTE)) != null)
+              .findFirst()
+              .orElseThrow(() -> new AssertionError("Span with error.type not found"));
+
+      assertThat(
+              errorSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.EXCEPTION_TYPE_ATTRIBUTE)))
+          .isEqualTo("java.lang.IllegalArgumentException");
+      assertThat(
+              errorSpan
+                  .getAttributes()
+                  .get(AttributeKey.stringKey(ObservabilityAttributes.STATUS_MESSAGE_ATTRIBUTE)))
+          .isEqualTo("Mock request error");
     }
   }
 
