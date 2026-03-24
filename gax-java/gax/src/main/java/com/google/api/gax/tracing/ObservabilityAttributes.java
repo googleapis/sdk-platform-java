@@ -90,4 +90,7 @@ public class ObservabilityAttributes {
 
   /** The resend count of the request. Only used in gRPC transport. */
   public static final String GRPC_RESEND_COUNT_ATTRIBUTE = "gcp.grpc.resend_count";
+
+  /** The full URL of the HTTP request, with sensitive query parameters redacted. */
+  public static final String HTTP_URL_FULL_ATTRIBUTE = "url.full";
 }
