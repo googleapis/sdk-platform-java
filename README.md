@@ -1,4 +1,4 @@
-**_THIS REPOSITORY IS DEPRECATED. ALL OF ITS CONTENT AND HISTORY HAS BEEN MOVED TO [GOOGLE-CLOUD-JAVA](https://github.com/googleapis/google-cloud-java/tree/main/java-bigquerystorage)_**
+**_THIS REPOSITORY IS DEPRECATED. ALL OF ITS CONTENT AND HISTORY HAS BEEN MOVED TO [GOOGLE-CLOUD-JAVA](https://github.com/googleapis/google-cloud-java/tree/main/sdk-platform-java)_**
 
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=googleapis_gapic-generator-java&metric=coverage)](https://sonarcloud.io/summary/new_code?id=googleapis_gapic-generator-java)
 
