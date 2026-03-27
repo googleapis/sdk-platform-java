@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.69.0](https://github.com/googleapis/sdk-platform-java/compare/v2.68.0...v2.69.0) (2026-03-27)
+
+
+### Features
+
+* Extract resource name from unary requests for tracing ([#4159](https://github.com/googleapis/sdk-platform-java/issues/4159)) ([6b79267](https://github.com/googleapis/sdk-platform-java/commit/6b7926771ab4f0681703d30971c25231c5995528))
+* **gax-httpjson:** populate ErrorDetails in HttpJsonApiExceptionFactory ([#4145](https://github.com/googleapis/sdk-platform-java/issues/4145)) ([6169067](https://github.com/googleapis/sdk-platform-java/commit/6169067bab1788ac2bf10a6daf870011bb3d3b56))
+* **gax:** add utility for logging actionable errors ([#4144](https://github.com/googleapis/sdk-platform-java/issues/4144)) ([adb06fe](https://github.com/googleapis/sdk-platform-java/commit/adb06fe45be0d706f632ecb140d55259b313b1e4))
+
+
+### Dependencies
+
+* update dependencies.txt for grpc-gcp to 1.9.2 ([#4164](https://github.com/googleapis/sdk-platform-java/issues/4164)) ([a889654](https://github.com/googleapis/sdk-platform-java/commit/a889654c85fa5ea5028b02bc0deca8a14e046f1b))
+
 ## [2.68.0](https://github.com/googleapis/sdk-platform-java/compare/v2.67.0...v2.68.0) (2026-03-17)
 
 
