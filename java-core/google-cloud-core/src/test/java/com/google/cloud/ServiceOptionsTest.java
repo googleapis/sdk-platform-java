@@ -37,6 +37,8 @@ import com.google.api.client.testing.http.MockLowLevelHttpRequest;
 import com.google.api.client.testing.http.MockLowLevelHttpResponse;
 import com.google.api.core.ApiClock;
 import com.google.api.core.CurrentMillisClock;
+import com.google.api.gax.rpc.FixedHeaderProvider;
+import com.google.api.gax.tracing.ApiTracer;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.spi.ServiceRpcFactory;
@@ -205,6 +207,11 @@ class ServiceOptionsTest {
           .setProjectId("project-id")
           .setRetrySettings(ServiceOptions.getNoRetrySettings())
           .setQuotaProjectId("quota-project-id")
+          .setHeaderProvider(FixedHeaderProvider.create("testHeader", "testValue"))
+          .setUniverseDomain("test-universe-domain")
+          .setTransportOptions(new TransportOptions() {})
+          .setClientLibToken("gccl")
+          .setApiTracerFactory(((apiTracer, spanName, operationType) -> new ApiTracer() {}))
           .build();
   private static final TestServiceOptions OPTIONS_NO_CREDENTIALS =
       TestServiceOptions.newBuilder()

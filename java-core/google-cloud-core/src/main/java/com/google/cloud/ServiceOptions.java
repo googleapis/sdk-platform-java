@@ -157,6 +157,7 @@ public abstract class ServiceOptions<
       serviceRpcFactory = options.serviceRpcFactory;
       clock = options.clock;
       transportOptions = options.transportOptions;
+      headerProvider = options.headerProvider;
       clientLibToken = options.clientLibToken;
       quotaProjectId = options.quotaProjectId;
       apiTracerFactory = options.apiTracerFactory;
@@ -740,22 +741,32 @@ public abstract class ServiceOptions<
   protected int baseHashCode() {
     return Objects.hash(
         projectId,
+        universeDomain,
         host,
         credentials,
         retrySettings,
         serviceFactoryClassName,
         serviceRpcFactoryClassName,
+        transportOptions,
+        headerProvider,
+        clientLibToken,
+        apiTracerFactory,
         clock,
         quotaProjectId);
   }
 
   protected boolean baseEquals(ServiceOptions<?, ?> other) {
     return Objects.equals(projectId, other.projectId)
+        && Objects.equals(universeDomain, other.universeDomain)
         && Objects.equals(host, other.host)
         && Objects.equals(credentials, other.credentials)
         && Objects.equals(retrySettings, other.retrySettings)
         && Objects.equals(serviceFactoryClassName, other.serviceFactoryClassName)
         && Objects.equals(serviceRpcFactoryClassName, other.serviceRpcFactoryClassName)
+        && Objects.equals(transportOptions, other.transportOptions)
+        && Objects.equals(headerProvider, other.headerProvider)
+        && Objects.equals(clientLibToken, other.clientLibToken)
+        && Objects.equals(apiTracerFactory, other.apiTracerFactory)
         && Objects.equals(clock, other.clock)
         && Objects.equals(quotaProjectId, other.quotaProjectId);
   }
