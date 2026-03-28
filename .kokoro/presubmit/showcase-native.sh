@@ -52,6 +52,18 @@ tar -xf showcase-*
 popd
 
 # Run showcase tests with `native` profile
+echo "Install GraalVM 25"
+echo "$JAVA_HOME"
+pwd
+mkdir -p ~/tools/jdk
+pushd ~/tools/jdk
+wget https://download.oracle.com/graalvm/25/latest/graalvm-jdk-25_linux-x64_bin.tar.gz
+tar -xf graalvm-jdk-25_linux-x64_bin.tar.gz
+export JAVA_HOME=~/tools/jdk/graalvm-jdk-25+37.1
+export PATH=$JAVA_HOME/bin:$PATH
+java -version
+echo "Running native image tests..."
+popd
 pushd java-showcase
 mvn test -Pnative,-showcase \
   -Denforcer.skip=true \
