@@ -16,7 +16,7 @@
 # with the transferred source code and jars
 
 
-FROM docker.io/library/maven:3.9.9-eclipse-temurin-17-alpine@sha256:969014ee8852c9910ff5ef09de17541c2587819364b79d7dc044634dfb8a3388 AS ggj-build
+FROM docker.io/library/maven:3.9.9-eclipse-temurin-17-alpine@sha256:c1b318f88ab1bcf7aae3e0fceff4f5890fe6f7c910ead1c538bd5cada01df6c6 AS ggj-build
 
 WORKDIR /sdk-platform-java
 COPY . .
