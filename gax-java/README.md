@@ -34,27 +34,27 @@ If you are using Maven, add this to your pom.xml file
 <dependency>
   <groupId>com.google.api</groupId>
   <artifactId>gax</artifactId>
-  <version>2.77.0</version>
+  <version>2.76.0</version>
 </dependency>
 <dependency>
   <groupId>com.google.api</groupId>
   <artifactId>gax-grpc</artifactId>
-  <version>2.77.0</version>
+  <version>2.76.0</version>
 </dependency>
 ```
 
 If you are using Gradle, add this to your dependencies
 
 ```Groovy
-compile 'com.google.api:gax:2.77.0',
-  'com.google.api:gax-grpc:2.77.0'
+compile 'com.google.api:gax:2.76.0',
+  'com.google.api:gax-grpc:2.76.0'
 ```
 
 If you are using SBT, add this to your dependencies
 
 ```Scala
-libraryDependencies += "com.google.api" % "gax" % "2.77.0"
-libraryDependencies += "com.google.api" % "gax-grpc" % "2.77.0"
+libraryDependencies += "com.google.api" % "gax" % "2.76.0"
+libraryDependencies += "com.google.api" % "gax-grpc" % "2.76.0"
 ```
 [//]: # ({x-version-update-end})
 
@@ -183,4 +183,3 @@ BSD - See [LICENSE] for more information.
 
 [CONTRIBUTING]:https://github.com/googleapis/gax-java/blob/main/CONTRIBUTING.md
 [LICENSE]: https://github.com/googleapis/gax-java/blob/main/LICENSE
-
