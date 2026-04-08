@@ -29,55 +29,58 @@
  */
 package com.google.api.gax.tracing;
 
-import com.google.api.core.BetaApi;
-import com.google.api.core.InternalApi;
-import io.opentelemetry.api.OpenTelemetry;
+import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * A {@link ApiTracerFactory} to build instances of {@link GoldenSignalsMetricsTracer}.
- *
- * <p>This class is expected to be initialized once during client initialization.
+ * A composite implementation of {@link ApiTracerFactory} that bundles multiple tracing factories
+ * and produces a {@link CompositeTracer} out of them.
  */
-@BetaApi
-@InternalApi
-public class GoldenSignalsMetricsTracerFactory implements ApiTracerFactory {
+public class CompositeTracerFactory extends BaseApiTracerFactory {
+  private final List<ApiTracerFactory> apiTracerFactories;
 
-  private ApiTracerContext clientLevelTracerContext;
-  private final OpenTelemetry openTelemetry;
-  private GoldenSignalsMetricsRecorder metricsRecorder;
-
-  public GoldenSignalsMetricsTracerFactory(OpenTelemetry openTelemetry) {
-    this.openTelemetry = openTelemetry;
-    this.clientLevelTracerContext = ApiTracerContext.empty();
+  public CompositeTracerFactory(List<ApiTracerFactory> apiTracerFactories) {
+    this.apiTracerFactories = ImmutableList.copyOf(apiTracerFactories);
   }
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    if (metricsRecorder == null) {
-      // This should never happen, in case it happens, create a no-op api tracer to not block
-      // regular requests.
-      return new BaseApiTracer();
+    List<ApiTracer> children = new ArrayList<>(apiTracerFactories.size());
+
+    for (ApiTracerFactory factory : apiTracerFactories) {
+      children.add(factory.newTracer(parent, spanName, operationType));
     }
-    return new GoldenSignalsMetricsTracer(metricsRecorder, clientLevelTracerContext);
+    return new CompositeTracer(children);
   }
 
   @Override
-  public ApiTracer newTracer(ApiTracer parent, ApiTracerContext methodLevelTracerContext) {
-    if (metricsRecorder == null) {
-      // This should never happen, in case it happens, create a no-op api tracer to not block
-      // regular requests.
-      return new BaseApiTracer();
+  public ApiTracer newTracer(ApiTracer parent, ApiTracerContext tracerContext) {
+    List<ApiTracer> children = new ArrayList<>(apiTracerFactories.size());
+
+    for (ApiTracerFactory factory : apiTracerFactories) {
+      children.add(factory.newTracer(parent, tracerContext));
     }
-    ApiTracerContext mergedTracerContext = clientLevelTracerContext.merge(methodLevelTracerContext);
-    return new GoldenSignalsMetricsTracer(metricsRecorder, mergedTracerContext);
+    return new CompositeTracer(children);
+  }
+
+  @Override
+  public boolean needsContext() {
+    for (ApiTracerFactory factory : apiTracerFactories) {
+      if (factory.needsContext()) {
+        return true;
+      }
+    }
+    return false;
   }
 
   @Override
   public ApiTracerFactory withContext(ApiTracerContext context) {
-    this.clientLevelTracerContext = context;
-    this.metricsRecorder =
-        new GoldenSignalsMetricsRecorder(
-            openTelemetry, clientLevelTracerContext.libraryMetadata().artifactName());
-    return this;
+    List<ApiTracerFactory> contextualizedChildren = new ArrayList<>(apiTracerFactories.size());
+
+    for (ApiTracerFactory factory : apiTracerFactories) {
+      contextualizedChildren.add(factory.withContext(context));
+    }
+    return new CompositeTracerFactory(contextualizedChildren);
   }
 }

@@ -30,6 +30,7 @@
 
 package com.google.api.gax.tracing;
 
+import com.google.api.client.util.Strings;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import io.opentelemetry.api.trace.Span;
@@ -38,14 +39,14 @@ import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.Tracer;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CancellationException;
 
 /** An implementation of {@link ApiTracer} that uses OpenTelemetry to record traces. */
 @BetaApi
 @InternalApi
-public class SpanTracer implements ApiTracer {
-  public static final String LANGUAGE_ATTRIBUTE = "gcp.client.language";
+class OpenTelemetryTracingTracer implements ApiTracer {
 
-  public static final String DEFAULT_LANGUAGE = "Java";
+  static final String CONTENT_LENGTH_KEY = "Content-Length";
 
   private final Tracer tracer;
   private final Map<String, Object> attemptAttributes;
@@ -53,13 +54,30 @@ public class SpanTracer implements ApiTracer {
   private final ApiTracerContext apiTracerContext;
   private Span attemptSpan;
 
+  @Override
+  public void injectTraceContext(java.util.Map<String, String> carrier) {
+    if (attemptSpan != null) {
+      io.opentelemetry.context.Context context =
+          io.opentelemetry.context.Context.current().with(attemptSpan);
+      io.opentelemetry.api.trace.propagation.W3CTraceContextPropagator.getInstance()
+          .inject(
+              context,
+              carrier,
+              (c, k, v) -> {
+                if (c != null) {
+                  c.put(k, v);
+                }
+              });
+    }
+  }
+
   /**
-   * Creates a new instance of {@code SpanTracer}.
+   * Creates a new instance of {@code OpenTelemetryTracingTracer}.
    *
    * @param tracer the {@link Tracer} to use for recording spans
    * @param apiTracerContext the {@link ApiTracerContext} to use for recording spans
    */
-  public SpanTracer(Tracer tracer, ApiTracerContext apiTracerContext) {
+  OpenTelemetryTracingTracer(Tracer tracer, ApiTracerContext apiTracerContext) {
     this.tracer = tracer;
     this.apiTracerContext = apiTracerContext;
     this.attemptSpanName = resolveAttemptSpanName(apiTracerContext);
@@ -68,14 +86,16 @@ public class SpanTracer implements ApiTracer {
   }
 
   /**
-   * Creates a new instance of {@code SpanTracer} with an explicitly provided span name.
+   * Creates a new instance of {@code OpenTelemetryTracingTracer} with an explicitly provided span
+   * name.
    *
    * @param tracer the {@link Tracer} to use for recording spans
    * @param apiTracerContext the {@link ApiTracerContext} to use for recording spans
    * @param attemptSpanName the name of the individual attempt spans
    */
   @InternalApi
-  SpanTracer(Tracer tracer, ApiTracerContext apiTracerContext, String attemptSpanName) {
+  OpenTelemetryTracingTracer(
+      Tracer tracer, ApiTracerContext apiTracerContext, String attemptSpanName) {
     this.tracer = tracer;
     this.attemptSpanName = attemptSpanName;
     this.apiTracerContext = apiTracerContext;
@@ -99,7 +119,6 @@ public class SpanTracer implements ApiTracer {
   }
 
   private void buildAttributes() {
-    this.attemptAttributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
     this.attemptAttributes.putAll(this.apiTracerContext.getAttemptAttributes());
   }
 
@@ -131,33 +150,107 @@ public class SpanTracer implements ApiTracer {
 
   @Override
   public void attemptSucceeded() {
-    endAttempt();
+    recordErrorAndEndAttempt(null);
+  }
+
+  @Override
+  public void responseHeadersReceived(java.util.Map<String, Object> headers) {
+    if (attemptSpan == null) {
+      return;
+    }
+    long contentLength = extractContentLength(headers);
+    if (contentLength >= 0) {
+      attemptSpan.setAttribute(ObservabilityAttributes.HTTP_RESPONSE_BODY_SIZE, contentLength);
+    }
+  }
+
+  /**
+   * Extracts the Content-Length header value from the response headers, if available.
+   *
+   * <p>Note: google-http-java-client's HttpHeaders.java returns some headers (like Content-Length)
+   * as a List<Long> instead of a single value.
+   * https://github.com/googleapis/google-http-java-client/blob/main/google-http-client/src/main/java/com/google/api/client/http/HttpHeaders.java#L162
+   *
+   * @param headers the map of response headers.
+   * @return the content length in bytes, or -1 if the header is missing or malformed.
+   */
+  private long extractContentLength(java.util.Map<String, Object> headers) {
+    try {
+      if (headers == null || headers.isEmpty()) return -1;
+      // google-http-client HttpHeaders uses a case-insensitive map but we copy it for safety
+      // and to handle potential different implementations.
+      Object value =
+          headers.entrySet().stream()
+              .filter(e -> CONTENT_LENGTH_KEY.equalsIgnoreCase(e.getKey()))
+              .map(Map.Entry::getValue)
+              .findFirst()
+              .orElse(null);
+
+      if (value instanceof java.util.Collection) {
+        value = ((java.util.Collection<?>) value).stream().findFirst().orElse(null);
+      }
+      return Long.parseLong(value.toString());
+    } catch (Exception e) {
+      return -1;
+    }
   }
 
   @Override
   public void attemptCancelled() {
-    endAttempt();
+    recordErrorAndEndAttempt(new CancellationException());
   }
 
   @Override
   public void attemptFailedDuration(Throwable error, java.time.Duration delay) {
-    endAttempt();
+    recordErrorAndEndAttempt(error);
   }
 
   @Override
   public void attemptFailedRetriesExhausted(Throwable error) {
-    endAttempt();
+    recordErrorAndEndAttempt(error);
   }
 
   @Override
   public void attemptPermanentFailure(Throwable error) {
+    recordErrorAndEndAttempt(error);
+  }
+
+  private void recordErrorAndEndAttempt(Throwable error) {
+    if (attemptSpan == null) {
+      return;
+    }
+    Map<String, Object> responseAttributes =
+        ObservabilityUtils.getResponseAttributes(error, this.apiTracerContext.transport());
+    if (!responseAttributes.isEmpty()) {
+      attemptSpan.setAllAttributes(ObservabilityUtils.toOtelAttributes(responseAttributes));
+    }
+
+    if (error != null && !Strings.isNullOrEmpty(error.getMessage())) {
+      attemptSpan.setAttribute(
+          ObservabilityAttributes.STATUS_MESSAGE_ATTRIBUTE, error.getMessage());
+    }
+
     endAttempt();
   }
 
   private void endAttempt() {
-    if (attemptSpan != null) {
-      attemptSpan.end();
-      attemptSpan = null;
+    if (attemptSpan == null) {
+      return;
     }
+
+    attemptSpan.end();
+    attemptSpan = null;
+  }
+
+  @Override
+  public void requestUrlResolved(String url) {
+    if (attemptSpan == null) {
+      return;
+    }
+    String sanitizedUrlString = ObservabilityUtils.sanitizeUrlFull(url);
+    if (sanitizedUrlString.isEmpty()) {
+      return;
+    }
+    attemptSpan.setAttribute(ObservabilityAttributes.HTTP_URL_FULL_ATTRIBUTE, sanitizedUrlString);
   }
 }

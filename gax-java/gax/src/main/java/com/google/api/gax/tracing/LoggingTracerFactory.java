@@ -32,63 +32,50 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import com.google.api.gax.logging.LoggingUtils;
 import com.google.common.annotations.VisibleForTesting;
-import io.opentelemetry.api.OpenTelemetry;
-import io.opentelemetry.api.trace.Tracer;
 
 /**
- * A {@link ApiTracerFactory} to build instances of {@link SpanTracer}.
- *
- * <p>This class wraps the {@link Tracer} and pass it to {@link SpanTracer}. It will be used to
- * record traces in {@link SpanTracer}.
- *
- * <p>This class is expected to be initialized once during client initialization.
+ * A {@link ApiTracerFactory} that creates instances of {@link LoggingTracer}. This class is
+ * intended for internal framework use only. Manual instantiation is discouraged; the lifecycle is
+ * managed automatically by the system, when {@link LoggingUtils#isLoggingEnabled()} returning
+ * {@code true}.
  */
 @BetaApi
 @InternalApi
-public class SpanTracerFactory implements ApiTracerFactory {
-  private final Tracer tracer;
-
+public class LoggingTracerFactory implements ApiTracerFactory {
   private final ApiTracerContext apiTracerContext;
 
-  /** Creates a SpanTracerFactory */
-  public SpanTracerFactory(OpenTelemetry openTelemetry) {
-    this(openTelemetry.getTracer("gax-java"), ApiTracerContext.empty());
+  public LoggingTracerFactory() {
+    this(ApiTracerContext.empty());
   }
 
-  /**
-   * Pass in a Map of client level attributes which will be added to every single SpanTracer created
-   * from the ApiTracerFactory. This is package private since span attributes are determined
-   * internally.
-   */
-  @VisibleForTesting
-  SpanTracerFactory(Tracer tracer, ApiTracerContext apiTracerContext) {
-    this.tracer = tracer;
+  private LoggingTracerFactory(ApiTracerContext apiTracerContext) {
     this.apiTracerContext = apiTracerContext;
   }
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    // TODO(diegomarquezp): this is a placeholder for span names and will be adjusted as the
-    // feature is developed.
-    String attemptSpanName = spanName.getClientName() + "/" + spanName.getMethodName() + "/attempt";
-
-    return new SpanTracer(tracer, this.apiTracerContext, attemptSpanName);
+    return new LoggingTracer(apiTracerContext);
   }
 
   @Override
-  public ApiTracer newTracer(ApiTracer parent, ApiTracerContext apiTracerContext) {
-    ApiTracerContext mergedContext = this.apiTracerContext.merge(apiTracerContext);
-    return new SpanTracer(tracer, mergedContext);
+  public ApiTracer newTracer(ApiTracer parent, ApiTracerContext context) {
+    return new LoggingTracer(apiTracerContext.merge(context));
   }
 
-  @Override
-  public ApiTracerContext getApiTracerContext() {
+  @VisibleForTesting
+  ApiTracerContext getApiTracerContext() {
     return apiTracerContext;
   }
 
   @Override
+  public boolean needsContext() {
+    return apiTracerContext == null || apiTracerContext.equals(ApiTracerContext.empty());
+  }
+
+  @Override
   public ApiTracerFactory withContext(ApiTracerContext context) {
-    return new SpanTracerFactory(tracer, apiTracerContext.merge(context));
+    return new LoggingTracerFactory(apiTracerContext.merge(context));
   }
 }
